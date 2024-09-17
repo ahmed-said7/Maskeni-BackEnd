@@ -2,7 +2,6 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcryptjs from 'bcrypt';
-import { ConfigService } from '@nestjs/config';
 import * as crypto from 'crypto';
 import { User, UserDocument } from './user.schema';
 import { SignupUserDto } from './dto/signup.dto';
@@ -20,7 +19,6 @@ import { ApiService } from 'src/common/Api/api.service';
 @Injectable()
 export class UserService {
   constructor(
-    private config: ConfigService,
     @InjectModel(User.name) private Usermodel: Model<UserDocument>,
     private messagingService: MessagingService,
     private authService: AuthService,
