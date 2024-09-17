@@ -3,6 +3,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -29,5 +30,10 @@ export class UserController {
   @UseGuards(AuthenticationAdminGuard)
   getUser(@Param('userId', ValidateObjectIdPipe) userId: string) {
     return this.userService.getUser(userId);
+  }
+  @Patch(':userId')
+  @UseGuards(AuthenticationAdminGuard)
+  updateUser(@Param('userId', ValidateObjectIdPipe) userId: string) {
+    return this.userService.blockUser(userId);
   }
 }

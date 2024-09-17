@@ -121,7 +121,19 @@ export class UserService {
     const updated = await this.Usermodel.findByIdAndUpdate(userId, body, {
       new: true,
     });
+    if (!updated) {
+      throw new HttpException('user not found', 400);
+    }
     return { status: 'updated', user: updated };
+  }
+  async blockUser(userId: string) {
+    const updated = await this.Usermodel.findByIdAndUpdate(userId, {
+      isBlocked: true,
+    });
+    if (!updated) {
+      throw new HttpException('user not found', 400);
+    }
+    return { status: 'blocked' };
   }
   async deleteUser(userId: string) {
     const deleted = await this.Usermodel.findByIdAndDelete(userId);

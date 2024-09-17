@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsEmail,
   IsMobilePhone,
   IsNotEmpty,
@@ -30,6 +31,13 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   icon: string;
+}
+
+export class UpdateUserByAdminDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  isBlocked: boolean;
 }
 
 export class ForgetPassowrdBody {

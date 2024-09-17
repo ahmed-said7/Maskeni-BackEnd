@@ -63,6 +63,8 @@ export class User extends Document {
     lowercase: true,
   })
   fcm: string;
+  @Prop({ type: Boolean, default: false })
+  isBlocked: boolean;
 }
 export type UserDocument = HydratedDocument<User>;
 export const UserSchema = SchemaFactory.createForClass(User);
