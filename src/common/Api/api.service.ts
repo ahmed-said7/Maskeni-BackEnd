@@ -50,7 +50,7 @@ export class ApiService<T, I extends IQuery> {
       const sort = this.queryObj.sort.split(',').join(' ');
       this.query.sort(sort);
     } else {
-      this.query.sort('-createdAt');
+      this.query.sort('-updatedAt');
     }
     return this;
   }

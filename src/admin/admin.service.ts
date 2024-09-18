@@ -5,19 +5,19 @@ import * as bcryptjs from 'bcrypt';
 import { Admin, AdminDocument } from './admin.schema';
 import { LoginAdminDto } from './dto/login.dto';
 import { UpdatePasswordDto } from './dto/update.password.dto';
-import { AuthService } from 'src/refresh/auth.service';
 import { ApiService } from 'src/common/Api/api.service';
 import { FindQuery } from 'src/common/types';
 import { SignupAdminDto } from './dto/signup.dto';
 import { UpdateAdminDto } from './dto/update.user.dto';
 import { ConfigService } from '@nestjs/config';
 import { Admin_Role } from 'src/common/enum';
+import { RefreshService } from 'src/refresh/refresh.service';
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectModel(Admin.name) private AdminModel: Model<AdminDocument>,
-    private authService: AuthService,
+    private refreshService: RefreshService,
     private apiService: ApiService<AdminDocument, FindQuery>,
     config: ConfigService,
   ) {
@@ -55,7 +55,7 @@ export class AdminService {
     if (!valid) {
       throw new HttpException('password or email is not correct', 400);
     }
-    const token = this.authService.createAdminTokens(
+    const token = this.refreshService.createAdminTokens(
       user._id.toString(),
       user.role,
     );

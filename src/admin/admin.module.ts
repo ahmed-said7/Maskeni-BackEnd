@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApiModule } from 'src/common/Api/api.module';
-import { AuthModule } from 'src/refresh/auth.module';
 import { AdminService } from './admin.service';
 import { Admin, AdminSchema } from './admin.schema';
 import { AdminProfileController } from './profile.controller';
 import { AdminAuthController } from './auth.controller';
+import { RefreshModule } from 'src/refresh/refresh.module';
 
 @Module({
   controllers: [
@@ -16,7 +16,7 @@ import { AdminAuthController } from './auth.controller';
   providers: [AdminService],
   imports: [
     ApiModule,
-    AuthModule,
+    RefreshModule,
     MongooseModule.forFeature([
       { name: Admin.name, schema: AdminSchema },
       //   { name: User.name, schema: UserSchema },

@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  HttpException,
+  Injectable,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
@@ -10,6 +15,12 @@ export class AuthorizationGuard implements CanActivate {
     if (!roles) {
       return false;
     }
-    return roles.includes(req.role);
+    if (!roles.includes(req.role)) {
+      throw new HttpException(
+        `you are not allowed to activate ${req.role}`,
+        400,
+      );
+    }
+    return true;
   }
 }

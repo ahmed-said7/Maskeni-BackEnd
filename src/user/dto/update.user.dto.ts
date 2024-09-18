@@ -31,6 +31,10 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   icon: string;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  email: string;
 }
 
 export class UpdateUserByAdminDto {

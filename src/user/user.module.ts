@@ -7,16 +7,18 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { UserAuthController } from './auth.controller';
 import { ApiModule } from 'src/common/Api/api.module';
 import { UserProfileController } from './profile.controller';
-import { AuthModule } from 'src/refresh/auth.module';
-import { MessagingModule } from 'src/messaging/messaging.module';
+import { RefreshModule } from 'src/refresh/refresh.module';
+import { TwilioModule } from 'src/twilio/twilio.module';
+import { FirebaseModule } from 'src/firebase/firebase.module';
 
 @Module({
   controllers: [UserController, UserAuthController, UserProfileController],
   providers: [UserService],
   imports: [
     ApiModule,
-    MessagingModule,
-    AuthModule,
+    TwilioModule,
+    RefreshModule,
+    FirebaseModule,
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Admin.name, schema: AdminSchema },

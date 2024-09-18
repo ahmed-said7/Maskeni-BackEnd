@@ -4,17 +4,21 @@ import { User_Role } from 'src/common/enum';
 
 @Schema({ timestamps: true })
 export class User extends Document {
-  @Prop({ type: String, required: true, trim: true, minlength: 4 })
+  @Prop({ type: String, trim: true, minlength: 4 })
   name: string;
 
-  @Prop({ type: String, required: true, unique: true, trim: true })
+  @Prop({ type: String, trim: true })
   mobile: string;
 
-  @Prop({ type: String, required: true, minlength: 6 })
-  password: string;
+  @Prop({ type: String, trim: true })
+  provider: string;
+
+  @Prop({ type: String, trim: true })
+  uid: string;
 
   @Prop({ type: String })
   bio: string;
+
   @Prop({ type: String, default: User_Role.User })
   role: string;
 
@@ -23,21 +27,6 @@ export class User extends Document {
 
   //   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
   //   followers: Types.ObjectId[];
-
-  @Prop({ type: Date })
-  passwordChangedAt: Date;
-
-  @Prop({ type: String })
-  passwordResetCode: string;
-
-  @Prop({ type: Date })
-  passwordResetCodeExpiresIn: Date;
-
-  @Prop({ type: Boolean })
-  passwordResetCodeVerified: boolean;
-
-  @Prop({ type: Boolean, default: false })
-  mobileVerified: boolean;
 
   @Prop({ type: Boolean, default: true })
   active: boolean;
@@ -63,6 +52,7 @@ export class User extends Document {
     lowercase: true,
   })
   fcm: string;
+
   @Prop({ type: Boolean, default: false })
   isBlocked: boolean;
 }

@@ -5,9 +5,9 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
+// import * as cookieParser from 'cookie-parser';
 // import * as bodyParser from 'body-parser';
-import * as helmet from '@fastify/helmet';
+// import * as helmet from '@fastify/helmet';
 import fastifyMultipart from '@fastify/multipart';
 import { AppModule } from './app.module';
 import fastifyStatic from '@fastify/static';
@@ -32,9 +32,9 @@ async function bootstrap() {
     credentials: true,
   });
   app.setGlobalPrefix('api/v1');
-  app.use(cookieParser());
+  // app.use(cookieParser());
   // app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-  await app.register(helmet);
+  // await app.register(helmet);
   const config = new DocumentBuilder()
     .setTitle('Maskeni')
     .addBearerAuth({

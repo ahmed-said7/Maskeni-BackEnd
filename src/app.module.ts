@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UploadModule } from './upload/upload.module';
 import { APP_FILTER } from '@nestjs/core';
 import { CatchAppExceptionsFilter } from './common/filter/global-filter';
-import { AuthModule } from './refresh/auth.module';
+import { RefreshModule } from './refresh/refresh.module';
 import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -22,7 +22,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       },
     }),
     UploadModule,
-    AuthModule,
+    RefreshModule,
     UserModule,
     AdminModule,
   ],

@@ -8,33 +8,33 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UpdatePasswordDto } from './dto/update.password.dto';
 import { UpdateUserDto } from './dto/update.user.dto';
-import { AuthenticationUserGuard } from 'src/common/guards/authentication.user.guard';
+import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
+import { All_Role } from 'src/common/enum';
+import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
+import { Roles } from 'src/common/decorator/roles';
 
 @Controller('profile')
 export class UserProfileController {
   constructor(private userService: UserService) {}
-  @Patch('password')
-  @UseGuards(AuthenticationUserGuard)
-  updatePassword(@Body() body: UpdatePasswordDto, @Req() req: any) {
-    return this.userService.updatepassword(body, req.userId);
-  }
 
   @Delete()
-  @UseGuards(AuthenticationUserGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
   deleteUser(@Req() req: any) {
     return this.userService.deleteUser(req.userId);
   }
 
   @Get()
-  @UseGuards(AuthenticationUserGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
   getUser(@Req() req: any) {
     return this.userService.getUser(req.userId);
   }
 
   @Patch()
-  @UseGuards(AuthenticationUserGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
   updateUser(@Req() req: any, @Body() body: UpdateUserDto) {
     return this.userService.updateUser(body, req.userId);
   }
