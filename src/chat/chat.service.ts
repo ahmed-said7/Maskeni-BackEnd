@@ -6,6 +6,7 @@ import { Chat, ChatDocument } from './chat.schema';
 import { User, UserDocument } from 'src/user/user.schema';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
+import { MessageService } from 'src/message/message.service';
 
 @Injectable()
 export class ChatService {
@@ -13,6 +14,7 @@ export class ChatService {
     @InjectModel(Chat.name) private chatModel: Model<ChatDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private apiService: ApiService<ChatDocument, FindQuery>,
+    private msgService: MessageService,
   ) {}
   async createChat(body: CreateChatDto, user: string) {
     body.admin = user;
@@ -27,10 +29,14 @@ export class ChatService {
       ],
     });
     if (chatExist) {
-      return { chat: chatExist };
+      const result = await this.msgService.getChatMessages(
+        chatExist._id.toString(),
+        user,
+      );
+      return { chat: chatExist, ...result };
     }
     const chat = await this.chatModel.create(body);
-    return { chat };
+    return { chat, messages: [] };
   }
   async getChats(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
