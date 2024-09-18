@@ -44,7 +44,8 @@ export class PostService {
     if (user.toString() != post.user.toString()) {
       throw new HttpException('you are not post owner', 400);
     }
-    await post.deleteOne();
+    post.isDeleted = true;
+    await post.save();
     return { status: 'deleted' };
   }
   async updatePost(body: UpdatePostDto, postId: string, user: string) {
@@ -205,7 +206,7 @@ export class PostService {
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedGroupPost: { post: postId } },
     });
-    return { status: 'saved added post' };
+    return { status: 'saved deleted post' };
   }
   async getAllSaved(postId: string, user: string, query: FindQuery) {
     const post = await this.postModel.findOne({

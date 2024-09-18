@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Group } from 'src/group/group.schema';
-import { User } from 'src/user/user.schema';
 
 @Schema({ timestamps: true })
 export class Post {
@@ -11,7 +10,7 @@ export class Post {
   @Prop({ type: String })
   image?: string;
 
-  @Prop({ type: Types.ObjectId, ref: User.name })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   user: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: Group.name })
@@ -20,7 +19,7 @@ export class Post {
   @Prop([
     {
       _id: Types.ObjectId,
-      user: { type: Types.ObjectId, ref: User.name },
+      user: { type: Types.ObjectId, ref: 'User' },
       createdAt: { type: Date, default: new Date() },
     },
   ])
@@ -28,7 +27,7 @@ export class Post {
 
   @Prop({
     _id: Types.ObjectId,
-    user: { type: Types.ObjectId, ref: User.name },
+    user: { type: Types.ObjectId, ref: 'User' },
     createdAt: { type: Date, default: new Date() },
   })
   saved: { user: Types.ObjectId; createdAt?: Date; _id: Types.ObjectId }[];
@@ -36,7 +35,7 @@ export class Post {
   @Prop([
     {
       _id: Types.ObjectId,
-      user: { type: Types.ObjectId, ref: User.name },
+      user: { type: Types.ObjectId, ref: 'User' },
       content: { type: String },
       createdAt: { type: Date, default: new Date() },
     },
@@ -56,6 +55,12 @@ export class Post {
 
   @Prop({ type: Number, default: 0 })
   savedCount: number;
+  @Prop({ type: Boolean, default: false })
+  isDeleted: boolean;
+  @Prop({ type: Boolean, default: false })
+  isAccepted: boolean;
+  @Prop({ type: Boolean, default: false })
+  isArchived: boolean;
 }
 
 export type PostDocument = HydratedDocument<Post>;

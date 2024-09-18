@@ -41,3 +41,16 @@ export class FindQuery {
   @IsOptional()
   keyword?: string;
 }
+export enum Event_Type {
+  community = 'مجتمعي',
+  cultural = 'ثقافي',
+  art = 'فن',
+  youth = 'لمة شباب',
+  food = 'طعام',
+  education = 'تعليم',
+}
+export enum Gender_Type {
+  male = 'ذكر',
+  female = 'أنثى',
+  all = 'الكل',
+}

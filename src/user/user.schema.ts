@@ -1,10 +1,10 @@
-import { Post } from '@nestjs/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { User_Role } from 'src/common/enum';
+import { Post } from 'src/post/post.schema';
 
 @Schema({ timestamps: true })
-export class User extends Document {
+export class User {
   @Prop({ type: String, trim: true, minlength: 4 })
   name: string;
 
@@ -30,6 +30,17 @@ export class User extends Document {
   })
   savedGroupPost: {
     post: Types.ObjectId;
+    createdAt?: Date;
+    _id: Types.ObjectId;
+  }[];
+
+  @Prop({
+    _id: Types.ObjectId,
+    event: { type: Types.ObjectId, ref: Event.name },
+    createdAt: { type: Date, default: new Date() },
+  })
+  savedEvent: {
+    event: Types.ObjectId;
     createdAt?: Date;
     _id: Types.ObjectId;
   }[];
