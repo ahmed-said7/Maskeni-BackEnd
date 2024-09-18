@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Group_Privacy } from 'src/common/enum';
 import { User } from 'src/user/user.schema';
 
@@ -15,14 +15,14 @@ export class Group {
   privacy: string;
 
   @Prop({
-    type: MongooseSchema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: User.name,
     required: true,
   })
-  admin: MongooseSchema.Types.ObjectId;
+  admin: Types.ObjectId;
 
-  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: User.name }] }) // Array of user references
-  users: MongooseSchema.Types.ObjectId[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: User.name }] }) // Array of user references
+  users: Types.ObjectId[];
 }
 export type GroupDocument = HydratedDocument<Group>;
 // Generate the schema for Mongoose using the SchemaFactory

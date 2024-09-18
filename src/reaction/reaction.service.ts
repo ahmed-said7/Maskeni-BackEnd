@@ -1,13 +1,13 @@
 import { Model } from 'mongoose';
-import { IEntity } from './dto/interface.entity.dto';
+import { IEntityType } from './dto/interface.entity.dto';
 import { CreateCommentDto } from './dto/comment.create.dto';
 import { HttpException } from '@nestjs/common';
 import { ArrayPagination } from 'src/common/Api/array.pagination';
 
-export class ReactionService {
+export class ReactionService<T extends IEntityType> {
   constructor(private paginationArray: ArrayPagination) {}
-  private PostModel: Model<IEntity>;
-  setModel(PostModel: Model<IEntity>) {
+  private PostModel: Model<T>;
+  setModel(PostModel: Model<T>) {
     this.PostModel = PostModel;
     return this;
   }
@@ -23,7 +23,7 @@ export class ReactionService {
     post.commentCount = post.comments.length;
     await post.save();
   }
-  async getAllComments(query: { page: number; limit: number }, id: string) {
+  async getAllComments(query: { page?: string; limit?: string }, id: string) {
     const post = await this.PostModel.findById(id)
       .populate('comments.user')
       .select('comments');
@@ -41,7 +41,7 @@ export class ReactionService {
       },
       { new: true },
     );
-    if (!post && post.owner.toString() == userId) {
+    if (!post && post.user.toString() == userId) {
       post = await this.PostModel.findByIdAndUpdate(
         postId,
         {
@@ -62,13 +62,10 @@ export class ReactionService {
         likes: { user: userId },
       },
     });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
     post.likeCount = post.likes.length;
     await post.save();
   }
-  async getAllLikes(query: { page: number; limit: number }, id: string) {
+  async getAllLikes(query: { page?: string; limit?: string }, id: string) {
     const post = await this.PostModel.findById(id)
       .populate('likes.user')
       .select('likes');
@@ -94,13 +91,10 @@ export class ReactionService {
         saved: { user: userId },
       },
     });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
     post.savedCount = post.saved.length;
     await post.save();
   }
-  async getAllSaved(query: { page: number; limit: number }, id: string) {
+  async getAllSaved(query: { page?: string; limit?: string }, id: string) {
     const post = await this.PostModel.findById(id)
       .populate('saved.user')
       .select('saved');

@@ -5,10 +5,10 @@ export class ArrayPagination {
     previousPage: null,
     nextPage: null,
   };
-  apiPagination(query: { page: number; limit: number }, data: Array<any>) {
+  apiPagination(query: { page?: string; limit?: string }, data: Array<any>) {
     this.paginationObj.count = data.length;
-    this.paginationObj.currentPage = query.page || 1;
-    this.paginationObj.limit = query.limit || 10;
+    this.paginationObj.currentPage = parseInt(query.page) || 1;
+    this.paginationObj.limit = parseInt(query.limit) || 10;
     this.paginationObj.numOfPages = Math.ceil(
       this.paginationObj.count / this.paginationObj.limit,
     );

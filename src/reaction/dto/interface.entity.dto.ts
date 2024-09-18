@@ -1,11 +1,12 @@
-import { Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
-export interface IEntity extends Document {
-  saved: { user: string; createdAt?: Date }[];
-  likes: { user: string; createdAt?: Date }[];
-  comments: { content: string; user: string; _id?: Types.ObjectId }[];
+interface IEntity {
+  saved: { user: Types.ObjectId; createdAt?: Date }[];
+  likes: { user: Types.ObjectId; createdAt?: Date }[];
+  comments: { content: string; user: Types.ObjectId; _id?: Types.ObjectId }[];
   likeCount: number;
   commentCount: number;
   savedCount: number;
-  owner: Types.ObjectId;
+  user: Types.ObjectId;
 }
+export type IEntityType = HydratedDocument<IEntity>;
