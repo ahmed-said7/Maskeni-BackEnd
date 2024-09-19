@@ -52,7 +52,7 @@ export class EventController {
   ) {
     return this.eventService.deleteEvent(eventId, req.userId);
   }
-  @Post(':eventId/comment')
+  @Post('/:eventId/comment')
   createEventComment(
     @Param('eventId', ValidateObjectIdPipe) eventId: string,
     @Body() body: CreateCommentDto,
@@ -60,7 +60,7 @@ export class EventController {
   ) {
     return this.eventService.addComment(body, eventId, req.userId);
   }
-  @Post(':eventId/comment')
+  @Get(':eventId/comment')
   getEventComment(
     @Param('eventId', ValidateObjectIdPipe) eventId: string,
     @Query() query: FindQuery,

@@ -92,11 +92,11 @@ export class User {
   //   _id: Types.ObjectId;
   // }[];
 
-  //   @Prop({ type: [{ type: Types.ObjectId, ref: 'Event' }] })
-  //   savedEvents: Types.ObjectId[];
+  // @Prop({ type: [{ type: Types.ObjectId, ref: 'Event' }] })
+  // savedEvents: Types.ObjectId[];
 
-  //   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
-  //   followers: Types.ObjectId[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
+  followers: Types.ObjectId[];
 
   @Prop({ type: Boolean, default: true })
   active: boolean;
