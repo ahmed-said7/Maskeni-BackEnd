@@ -54,3 +54,10 @@ export enum Gender_Type {
   female = 'أنثى',
   all = 'الكل',
 }
+export enum Jop_Type {
+  deliveryService = 'خدمة توصيل',
+  grocery = 'البقاله',
+  homeServices = 'خدمات منزليه',
+  education = 'تعليم',
+  pharmacyService = 'خدمة صيدليه',
+}

@@ -9,6 +9,7 @@ import { RefreshModule } from './refresh/refresh.module';
 import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { EventModule } from './event/event.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     RefreshModule,
     UserModule,
     AdminModule,
+    EventModule,
   ],
   controllers: [AppController],
   providers: [

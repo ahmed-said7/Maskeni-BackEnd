@@ -52,13 +52,20 @@ export class EventController {
   ) {
     return this.eventService.deleteEvent(eventId, req.userId);
   }
-  @Post(':eventId')
+  @Post(':eventId/comment')
   createEventComment(
     @Param('eventId', ValidateObjectIdPipe) eventId: string,
     @Body() body: CreateCommentDto,
     @Req() req: any,
   ) {
     return this.eventService.addComment(body, eventId, req.userId);
+  }
+  @Post(':eventId/comment')
+  getEventComment(
+    @Param('eventId', ValidateObjectIdPipe) eventId: string,
+    @Query() query: FindQuery,
+  ) {
+    return this.eventService.getComments(eventId, query);
   }
   @Delete(':eventId/comment/:commentId')
   deleteEventComment(
@@ -103,9 +110,12 @@ export class EventController {
   ) {
     return this.eventService.deleteSaved(eventId, req.userId);
   }
-  @Get('saved')
-  getSavedEvents(@Req() req: any) {
-    return this.eventService.getAllEvents(req.userId);
+  @Get('saved/:eventId')
+  getSavedEvents(
+    @Param('eventId', ValidateObjectIdPipe) eventId: string,
+    @Query() query: QueryEventDto,
+  ) {
+    return this.eventService.getAllSaved(eventId, query);
   }
   @Get(':eventId')
   getEvent(@Param('eventId', ValidateObjectIdPipe) eventId: string) {

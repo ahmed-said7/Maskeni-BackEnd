@@ -23,6 +23,12 @@ export class EventService {
   ) {}
   async createEvent(body: CreateEventDto, user: string) {
     body.user = user;
+    if (!body.date) {
+      const year = body.startedAt.getFullYear();
+      const month = body.startedAt.getMonth();
+      const day = body.startedAt.getDate();
+      body.date = new Date(year, month, day);
+    }
     const event = await this.eventModel.create(body);
     return { event };
   }
@@ -143,7 +149,7 @@ export class EventService {
       .deleteComment(eventId, commentId, user);
     return { status: 'comment removed' };
   }
-  async getComments(eventId: string, user: string, query: FindQuery) {
+  async getComments(eventId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, eventId);
   }
   async addSaved(eventId: string, user: string) {
@@ -157,7 +163,7 @@ export class EventService {
       .setModel(this.eventModel)
       .createSaved(eventId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedGroupPost: { post: eventId } },
+      $addToSet: { savedEvent: { post: eventId } },
     });
     return { status: 'saved added post' };
   }
@@ -172,11 +178,11 @@ export class EventService {
       .setModel(this.eventModel)
       .deleteSaved(eventId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $pull: { savedEvents: { event: eventId } },
+      $pull: { savedEvent: { event: eventId } },
     });
     return { status: 'saved deleted post' };
   }
-  async getAllSaved(eventId: string, user: string, query: FindQuery) {
+  async getAllSaved(eventId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, eventId);
   }
 }

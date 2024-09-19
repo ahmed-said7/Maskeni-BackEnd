@@ -8,6 +8,9 @@ export class ReactionService<T extends IEntityType> {
   constructor(private paginationArray: ArrayPagination) {}
   private PostModel: Model<T>;
   setModel(PostModel: Model<T>) {
+    if (this.PostModel) {
+      return this;
+    }
     this.PostModel = PostModel;
     return this;
   }

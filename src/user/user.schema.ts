@@ -2,6 +2,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { User_Role } from 'src/common/enum';
 import { Post } from 'src/post/post.schema';
+import { Question } from 'src/question/question.schema';
+import { Share } from 'src/share/share.schema';
+import { Voluntary } from 'src/voluntary/voluntary.schema';
 
 @Schema({ timestamps: true })
 export class User {
@@ -44,6 +47,50 @@ export class User {
     createdAt?: Date;
     _id: Types.ObjectId;
   }[];
+
+  @Prop({
+    _id: Types.ObjectId,
+    share: { type: Types.ObjectId, ref: Share.name },
+    createdAt: { type: Date, default: new Date() },
+  })
+  savedShare: {
+    share: Types.ObjectId;
+    createdAt?: Date;
+    _id: Types.ObjectId;
+  }[];
+
+  @Prop({
+    _id: Types.ObjectId,
+    question: { type: Types.ObjectId, ref: Question.name },
+    createdAt: { type: Date, default: new Date() },
+  })
+  savedQuestion: {
+    question: Types.ObjectId;
+    createdAt?: Date;
+    _id: Types.ObjectId;
+  }[];
+
+  @Prop({
+    _id: Types.ObjectId,
+    voluntary: { type: Types.ObjectId, ref: Voluntary.name },
+    createdAt: { type: Date, default: new Date() },
+  })
+  savedVoluntary: {
+    voluntary: Types.ObjectId;
+    createdAt?: Date;
+    _id: Types.ObjectId;
+  }[];
+
+  // @Prop({
+  //   _id: Types.ObjectId,
+  //   service: { type: Types.ObjectId, ref: Jop },
+  //   createdAt: { type: Date, default: new Date() },
+  // })
+  // savedJops: {
+  //   service: Types.ObjectId;
+  //   createdAt?: Date;
+  //   _id: Types.ObjectId;
+  // }[];
 
   //   @Prop({ type: [{ type: Types.ObjectId, ref: 'Event' }] })
   //   savedEvents: Types.ObjectId[];
