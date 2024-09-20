@@ -1,5 +1,8 @@
 import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
-import { CreateMessageDto } from './dto/create.message.dto';
+import {
+  CreateAdminMessageDto,
+  CreateMessageDto,
+} from './dto/create.message.dto';
 import { ValidateObjectIdPipe } from 'src/common/pipe/validate.mongo.pipe';
 import { QueryMessageDto } from './dto/query.message.dto';
 import { CustomerServiceMessageService } from './customer-service-message.service';
@@ -10,6 +13,14 @@ export class CustomerServiceMessageController {
   @Post()
   createMessage(@Body() body: CreateMessageDto, @Req() req: any) {
     return this.msgService.createMessage(body, req.userId, req.role);
+  }
+  @Get('admin-msg/:user')
+  adminMessage(
+    @Param('user', ValidateObjectIdPipe) user: string,
+    @Req() req: any,
+    @Body() body: CreateAdminMessageDto,
+  ) {
+    return this.msgService.sendMessageByAdmin(body, user, req.userId);
   }
   @Get('scroll/:chatId')
   onScroll(
@@ -24,13 +35,13 @@ export class CustomerServiceMessageController {
     @Param('chatId', ValidateObjectIdPipe) chatId: string,
     @Req() req: any,
   ) {
-    return this.msgService.joinChatByUser(chatId, req.userId, req.role);
+    return this.msgService.joinChatByUser(chatId, req.userId);
   }
-  @Get('user-join/:chatId')
+  @Get('admin-join/:chatId')
   joinAdmin(
     @Param('chatId', ValidateObjectIdPipe) chatId: string,
     @Req() req: any,
   ) {
-    return this.msgService.joinChatByAdmin(chatId, req.userId, req.role);
+    return this.msgService.joinChatByAdmin(chatId, req.userId);
   }
 }

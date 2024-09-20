@@ -12,3 +12,11 @@ export class CreateMessageDto {
   type: string;
   user: string;
 }
+
+export class CreateAdminMessageDto {
+  @IsString()
+  content: string;
+  chat: string;
+  type: string;
+  user: string;
+}

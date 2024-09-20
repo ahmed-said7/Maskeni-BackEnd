@@ -25,6 +25,8 @@ export class MessagingGateway
     private gatewayMap: GatewayMap,
     @InjectModel(User.name) private UserModel: Model<UserDocument>,
     @InjectModel(Admin.name) private AdminModel: Model<UserDocument>,
+    // @InjectModel(Admin.name) private AdminModel: Model<UserDocument>,
+    // @InjectModel(Admin.name) private AdminModel: Model<UserDocument>,
   ) {}
   handleConnection(client: IAuthSocket) {
     if (client.type == All_Role.User) {

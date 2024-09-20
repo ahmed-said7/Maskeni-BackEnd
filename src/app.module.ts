@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventModule } from './event/event.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { EventModule } from './event/event.module';
     UserModule,
     AdminModule,
     EventModule,
+    EventEmitterModule.forRoot({ global: true }),
   ],
   controllers: [AppController],
   providers: [

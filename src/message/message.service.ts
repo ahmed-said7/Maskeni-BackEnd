@@ -6,12 +6,15 @@ import { Chat, ChatDocument } from 'src/chat/chat.schema';
 import { Message, MessageDocument } from './messahe.schema';
 import { UpdateMessageDto } from './dto/update.message.dto';
 import { QueryMessageDto } from './dto/query.message.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { emittedEvents } from 'src/common/enum';
 
 @Injectable()
 export class MessageService {
   constructor(
     @InjectModel(Chat.name) private chatModel: Model<ChatDocument>,
     @InjectModel(Message.name) private msgModel: Model<MessageDocument>,
+    private eventEmitter: EventEmitter2,
   ) {}
   async createMessage(body: CreateMessageDto, user: string) {
     if (!body.content && !body.image) {
@@ -22,6 +25,14 @@ export class MessageService {
     const message = await this.msgModel.create(body);
     await this.chatModel.findByIdAndUpdate(chat.id, {
       lastMessage: message._id,
+    });
+    const sender = user == chat.user.toString() ? chat.user : chat.admin;
+    const recipient = user == chat.user.toString() ? chat.admin : chat.user;
+    this.eventEmitter.emit(emittedEvents.MessageCreated, {
+      message,
+      sender,
+      recipient,
+      chat,
     });
     return { message };
   }
@@ -74,6 +85,10 @@ export class MessageService {
       .sort('-createdAt')
       .populate('user')
       .limit(20);
+    this.eventEmitter.emit(emittedEvents.UserJoined, {
+      user,
+      chat,
+    });
     return { messages };
   }
   async onScroll(chatId: string, user: string, query: QueryMessageDto) {

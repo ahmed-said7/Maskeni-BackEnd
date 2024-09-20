@@ -14,14 +14,18 @@ export class CustomerServiceChatService {
     @InjectModel(CustomerServiceChat.name)
     private chatModel: Model<CustomerServiceChatDocument>,
     private apiService: ApiService<CustomerServiceChatDocument, FindQuery>,
+    // private customerServiceMsg: CustomerServiceMessageService,
+    // private eventEmitter: EventEmitter2,
   ) {}
   async createChat(user: string) {
-    const chatExist = await this.chatModel.findOne({ user });
+    const chatExist = await this.chatModel
+      .findOne({ user })
+      .populate('lastMessage');
     if (chatExist) {
-      return { chat: chatExist };
+      return chatExist;
     }
     const chat = await this.chatModel.create({ user });
-    return { chat, messages: [] };
+    return { chat };
   }
   async getChatMemebers(user: string) {
     const chat = await this.chatModel

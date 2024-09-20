@@ -7,6 +7,8 @@ import { User, UserDocument } from 'src/user/user.schema';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { MessageService } from 'src/message/message.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { emittedEvents } from 'src/common/enum';
 
 @Injectable()
 export class ChatService {
@@ -15,6 +17,7 @@ export class ChatService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private apiService: ApiService<ChatDocument, FindQuery>,
     private msgService: MessageService,
+    private eventEmitter: EventEmitter2,
   ) {}
   async createChat(body: CreateChatDto, user: string) {
     body.admin = user;
@@ -36,6 +39,7 @@ export class ChatService {
       return { chat: chatExist, ...result };
     }
     const chat = await this.chatModel.create(body);
+    this.eventEmitter.emit(emittedEvents.UserJoined, { chat, user });
     return { chat, messages: [] };
   }
   async getChats(obj: FindQuery, user: string) {

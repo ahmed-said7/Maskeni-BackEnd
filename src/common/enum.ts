@@ -15,3 +15,9 @@ export enum Group_Privacy {
   Private = 'private',
   Public = 'public',
 }
+export enum emittedEvents {
+  MessageCreated = 'messageCreated',
+  UserJoined = 'UserJoinedChat',
+  AdminMessageCreated = 'adminMessageCreated',
+  AdminChatJoined = 'JoinedAdminChat',
+}

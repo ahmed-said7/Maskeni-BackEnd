@@ -1,7 +1,10 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateMessageDto } from './dto/create.message.dto';
+import {
+  CreateAdminMessageDto,
+  CreateMessageDto,
+} from './dto/create.message.dto';
 import { QueryMessageDto } from './dto/query.message.dto';
 import {
   CustomerServiceChat,
@@ -13,7 +16,8 @@ import {
 } from './customer-service-message.schema';
 import { Admin } from 'src/admin/admin.schema';
 import { User } from 'src/user/user.schema';
-import { All_Role } from 'src/common/enum';
+import { All_Role, emittedEvents } from 'src/common/enum';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class CustomerServiceMessageService {
@@ -22,6 +26,7 @@ export class CustomerServiceMessageService {
     private chatModel: Model<CustomerServiceChatDocument>,
     @InjectModel(CustomerServiceMessage.name)
     private msgModel: Model<CustomerServiceMessageDocument>,
+    private eventEmitter: EventEmitter2,
   ) {}
   async createMessage(body: CreateMessageDto, user: string, role: string) {
     const chat = await this.validateChat(body.chat, user);
@@ -31,18 +36,38 @@ export class CustomerServiceMessageService {
     body.user = user;
     body.type = role == All_Role.User ? User.name : Admin.name;
     const message = await this.msgModel.create(body);
+    const sender =
+      user == chat.user.toString() ? chat.user : chat.customer_service;
+    const recipient =
+      user == chat.user.toString() ? chat.customer_service : chat.user;
     await this.chatModel.findByIdAndUpdate(chat.id, {
       lastMessage: message._id,
     });
-    this.handleMessageCreated(role);
+    this.eventEmitter.emit(emittedEvents.AdminMessageCreated, {
+      chat,
+      sender,
+      recipient,
+      message,
+    });
     return { message };
   }
-  private handleMessageCreated(role: string) {
-    // socket event
-    return role;
+  async sendMessageByAdmin(
+    body: CreateAdminMessageDto,
+    user: string,
+    admin: string,
+  ) {
+    let chat = await this.chatModel.findOne({ user });
+    if (!chat) {
+      chat = await this.chatModel.create({ user });
+    }
+    body.chat = chat._id.toString();
+    body.type = Admin.name;
+    body.user = admin;
+    await this.msgModel.create(body);
+    return { status: 'success! message sent' };
   }
-  private handleChatJoin(role: string) {
-    // socket event
+  private handleChatJoin(role: string, user: string, chat: string) {
+    this.eventEmitter.emit(emittedEvents.AdminChatJoined, { chat, user, role });
     return role;
   }
   private async validateChat(chatId: string, user: string) {
@@ -58,20 +83,7 @@ export class CustomerServiceMessageService {
     }
     return chat;
   }
-  private async validateAdminJoined(chatId: string, user: string) {
-    const chat = await this.chatModel.findById(chatId);
-    if (!chat) {
-      throw new HttpException('chat not found', 400);
-    }
-    if (
-      chat.user.toString() != user &&
-      chat.customer_service.toString() != user
-    ) {
-      throw new HttpException('you are not chat member', 400);
-    }
-    return chat;
-  }
-  async joinChatByAdmin(chatId: string, user: string, role: string) {
+  async joinChatByAdmin(chatId: string, user: string) {
     const chat = await this.chatModel.findOne({
       _id: chatId,
       $or: [{ isBusy: true }, { customer_service: user }],
@@ -95,10 +107,10 @@ export class CustomerServiceMessageService {
         customer_service: user,
       });
     }
-    this.handleChatJoin(role);
+    this.handleChatJoin(All_Role.Admin, user, chat._id.toString());
     return { messages };
   }
-  async joinChatByUser(chatId: string, user: string, role: string) {
+  async joinChatByUser(chatId: string, user: string) {
     const chat = await this.chatModel.findOne({
       _id: chatId,
       user,
@@ -116,7 +128,7 @@ export class CustomerServiceMessageService {
         { path: 'user', model: User.name, options: { strictPopulate: false } },
       ])
       .limit(20);
-    this.handleChatJoin(role);
+    this.handleChatJoin(All_Role.User, user, chat._id.toString());
     return { messages };
   }
   async onScroll(chatId: string, user: string, query: QueryMessageDto) {

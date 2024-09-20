@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Jop_Type } from 'src/common/types';
 import { Likes } from 'src/likes/likes.schema';
-import { User } from 'src/user/user.schema';
 
 @Schema({ timestamps: true })
 export class Offered {
