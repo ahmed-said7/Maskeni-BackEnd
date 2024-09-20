@@ -1,14 +1,28 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { Jop_Type } from 'src/common/types';
 import { Likes } from 'src/likes/likes.schema';
+import { User } from 'src/user/user.schema';
 
 @Schema({ timestamps: true })
-export class Question {
-  @Prop({ type: String, required: true, trim: true })
-  content: string;
+export class Offered {
+  @Prop({ type: [Types.ObjectId], ref: 'Comment', default: [] })
+  comments: Types.ObjectId[]; // References to Comment
 
-  @Prop({ type: String, default: 'question' })
+  @Prop({ type: [Types.ObjectId], ref: Likes.name, default: [] })
+  likes: Types.ObjectId[]; // References to Comment
+
+  @Prop({ type: String, required: true, trim: true })
+  name: string;
+
+  @Prop({ type: String, default: 'service' })
   postType?: string;
+
+  @Prop({ type: String })
+  details?: string;
+
+  @Prop({ type: String, enum: Jop_Type, default: Jop_Type.education })
+  type?: string;
 
   @Prop({
     type: {
@@ -42,11 +56,12 @@ export class Question {
   })
   saved: { user: Types.ObjectId; createdAt?: Date; _id: Types.ObjectId }[];
 
-  @Prop({ type: [Types.ObjectId], ref: 'Comment', default: [] })
-  comments: Types.ObjectId[]; // References to Comment
-
-  @Prop({ type: [Types.ObjectId], ref: Likes.name, default: [] })
-  likes: Types.ObjectId[]; // References to Comment
+  @Prop({
+    _id: Types.ObjectId,
+    user: { type: Types.ObjectId, ref: 'User' },
+    createdAt: { type: Date, default: new Date() },
+  })
+  requested: { user: Types.ObjectId; createdAt?: Date; _id: Types.ObjectId }[];
 
   @Prop({ type: Number, default: 0 })
   likeCount: number;
@@ -57,6 +72,12 @@ export class Question {
   @Prop({ type: Number, default: 0 })
   savedCount: number;
 
+  @Prop({ type: Number, default: 0 })
+  price: number;
+
+  @Prop({ type: Number, default: 0 })
+  requestedCount: number;
+
   @Prop([String])
   images: string[];
 
@@ -64,5 +85,5 @@ export class Question {
   user: Types.ObjectId;
 }
 
-export type QuestionDocument = HydratedDocument<Question>;
-export const QuestionSchema = SchemaFactory.createForClass(Question);
+export type OfferedDocument = HydratedDocument<Offered>;
+export const OfferedSchema = SchemaFactory.createForClass(Offered);

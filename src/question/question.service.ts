@@ -4,12 +4,12 @@ import { Model } from 'mongoose';
 import { ApiService } from 'src/common/Api/api.service';
 import { ReactionService } from 'src/reaction/reaction.service';
 import { FindQuery } from 'src/common/types';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { User, UserDocument } from 'src/user/user.schema';
 import { Question, QuestionDocument } from './question.schema';
 import { CreateShareDto } from 'src/share/dto/create.share.dto';
 import { UpdateQuestionDto } from './dto/update.question.dto';
 import { QueryQuestionDto } from './dto/query.question.dto';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Injectable()
 export class QuestionService {
@@ -75,31 +75,19 @@ export class QuestionService {
     return { questions, pagination: paginationObj };
   }
   async addLike(questionId: string, user: string) {
-    const post = await this.questionModel.findOne({
-      _id: questionId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+    return this.reactionService
       .setModel(this.questionModel)
       .createLike(questionId, user);
     return { status: 'like added' };
   }
   async removeLike(questionId: string, user: string) {
-    const post = await this.questionModel.findOne({
-      _id: questionId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+    return this.reactionService
       .setModel(this.questionModel)
       .deleteLike(questionId, user);
     return { status: 'like removed' };
   }
   async getLikes(questionId: string, query: FindQuery) {
-    return this.reactionService.getAllLikes(query, questionId);
+    return this.reactionService.getAllLikes(questionId, query);
   }
   async addComment(body: CreateCommentDto, questionId: string, user: string) {
     const post = await this.questionModel.findOne({
@@ -109,23 +97,13 @@ export class QuestionService {
       throw new HttpException('post not found', 400);
     }
     body.user = user;
-    await this.reactionService.createComment(body, questionId);
-    return {
-      status: 'comment added',
-      comment: body,
-    };
+    body.post = questionId;
+    return this.reactionService.createComment(body);
   }
-  async removeComment(questionId: string, commentId: string, user: string) {
-    const post = await this.questionModel.findOne({
-      _id: questionId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+  async removeComment(commentId: string, user: string) {
+    return this.reactionService
       .setModel(this.questionModel)
-      .deleteComment(questionId, commentId, user);
-    return { status: 'comment removed' };
+      .deleteComment(commentId, user);
   }
   async getComments(questionId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, questionId);

@@ -9,8 +9,10 @@ import { ApiService } from 'src/common/Api/api.service';
 import { ReactionService } from 'src/reaction/reaction.service';
 import { FindQuery } from 'src/common/types';
 import { Group_Privacy } from 'src/common/enum';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { User, UserDocument } from 'src/user/user.schema';
+import { LikesService } from 'src/likes/likes.service';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
+import { CommentService } from 'src/comment/comment.service';
 
 @Injectable()
 export class PostService {
@@ -20,9 +22,12 @@ export class PostService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private reactionService: ReactionService<PostDocument>,
     private apiService: ApiService<GroupDocument, FindQuery>,
+    private likesService: LikesService,
+    private commentService: CommentService,
   ) {}
   async createPost(body: CreatePostDto, user: string) {
     body.user = user;
+
     await this.validateGroup(body.group, user);
     const post = await this.postModel.create(body);
     return { post };
@@ -96,10 +101,9 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     await this.validateGroup(post.group.toString(), user);
-    await this.reactionService
+    return this.reactionService
       .setModel(this.postModel)
       .createLike(postId, user);
-    return { status: 'like added' };
   }
   private async validateGroup(groupId: string, user: string) {
     const groupExist = await this.groupModel.findOne({
@@ -125,10 +129,9 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     await this.validateGroup(post.group.toString(), user);
-    await this.reactionService
+    return this.reactionService
       .setModel(this.postModel)
       .deleteLike(postId, user);
-    return { status: 'like removed' };
   }
   async getLikes(postId: string, user: string, query: FindQuery) {
     const post = await this.postModel.findOne({
@@ -138,7 +141,7 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     await this.validateGroup(post.group.toString(), user);
-    return this.reactionService.getAllLikes(query, postId);
+    return this.likesService.getPostLikes(post.likes, query);
   }
   async addComment(body: CreateCommentDto, postId: string, user: string) {
     const post = await this.postModel.findOne({
@@ -148,23 +151,13 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     body.user = user;
-    await this.reactionService.createComment(body, postId);
-    return {
-      status: 'comment added',
-      comment: body,
-    };
+    body.post = postId;
+    return this.reactionService.createComment(body);
   }
-  async removeComment(postId: string, commentId: string, user: string) {
-    const post = await this.postModel.findOne({
-      _id: postId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+  async removeComment(commentId: string, user: string) {
+    return this.reactionService
       .setModel(this.postModel)
-      .deleteComment(postId, commentId, user);
-    return { status: 'comment removed' };
+      .deleteComment(commentId, user);
   }
   async getComments(postId: string, user: string, query: FindQuery) {
     const post = await this.postModel
@@ -176,7 +169,7 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     await this.validateGroup(post.group.toString(), user);
-    return this.reactionService.getAllComments(query, postId);
+    return this.commentService.getPostComments(post.comments, query);
   }
   async addSaved(postId: string, user: string) {
     const post = await this.postModel.findOne({

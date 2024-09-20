@@ -4,13 +4,13 @@ import { Model } from 'mongoose';
 import { ApiService } from 'src/common/Api/api.service';
 import { ReactionService } from 'src/reaction/reaction.service';
 import { FindQuery } from 'src/common/types';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { User, UserDocument } from 'src/user/user.schema';
 import { EventDocument } from './event.schema';
 import { QueryEventDto } from './dto/query.event.dto';
 import { CreateEventDto } from './dto/create.event.dto';
 import { UpdateEventDto } from './dto/update.event.dto';
 import { Ticket, TicketDocument } from 'src/ticket/ticket.schema';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Injectable()
 export class EventService {
@@ -97,31 +97,17 @@ export class EventService {
     return { events, pagination: paginationObj };
   }
   async addLike(eventId: string, user: string) {
-    const post = await this.eventModel.findOne({
-      _id: eventId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+    return this.reactionService
       .setModel(this.eventModel)
       .createLike(eventId, user);
-    return { status: 'like added' };
   }
   async removeLike(eventId: string, user: string) {
-    const post = await this.eventModel.findOne({
-      _id: eventId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+    return this.reactionService
       .setModel(this.eventModel)
       .deleteLike(eventId, user);
-    return { status: 'like removed' };
   }
   async getLikes(eventId: string, query: FindQuery) {
-    return this.reactionService.getAllLikes(query, eventId);
+    return this.reactionService.getAllLikes(eventId, query);
   }
   async addComment(body: CreateCommentDto, eventId: string, user: string) {
     const post = await this.eventModel.findOne({
@@ -131,23 +117,13 @@ export class EventService {
       throw new HttpException('post not found', 400);
     }
     body.user = user;
-    await this.reactionService.createComment(body, eventId);
-    return {
-      status: 'comment added',
-      comment: body,
-    };
+    body.post = eventId;
+    return this.reactionService.createComment(body);
   }
-  async removeComment(eventId: string, commentId: string, user: string) {
-    const post = await this.eventModel.findOne({
-      _id: eventId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+  async removeComment(commentId: string, user: string) {
+    return this.reactionService
       .setModel(this.eventModel)
-      .deleteComment(eventId, commentId, user);
-    return { status: 'comment removed' };
+      .deleteComment(commentId, user);
   }
   async getComments(eventId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, eventId);

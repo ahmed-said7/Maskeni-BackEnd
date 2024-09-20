@@ -10,12 +10,12 @@ import {
   Req,
 } from '@nestjs/common';
 import { ValidateObjectIdPipe } from 'src/common/pipe/validate.mongo.pipe';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { FindQuery } from 'src/common/types';
 import { ShareService } from './share.service';
 import { CreateShareDto } from './dto/create.share.dto';
 import { QueryShareDto } from './dto/query.share.dto';
 import { UpdateShareDto } from './dto/update.share.dto';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Controller('share')
 export class ShareController {
@@ -44,7 +44,7 @@ export class ShareController {
   ) {
     return this.shareService.deleteShare(shareId, req.userId);
   }
-  @Post(':shareId/comment')
+  @Post('comment/:shareId')
   createShareComment(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Body() body: CreateCommentDto,
@@ -52,20 +52,19 @@ export class ShareController {
   ) {
     return this.shareService.addComment(body, shareId, req.userId);
   }
-  @Post(':shareId/comment')
+  @Get('comment/:shareId')
   getShareComment(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Query() query: FindQuery,
   ) {
     return this.shareService.getComments(shareId, query);
   }
-  @Delete(':shareId/comment/:commentId')
+  @Delete('comment/:commentId')
   deleteShareComment(
-    @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Param('commentId', ValidateObjectIdPipe) commentId: string,
     @Req() req: any,
   ) {
-    return this.shareService.removeComment(shareId, commentId, req.userId);
+    return this.shareService.removeComment(commentId, req.userId);
   }
   @Post('likes/:shareId')
   addShareLike(

@@ -10,12 +10,12 @@ import {
   Req,
 } from '@nestjs/common';
 import { ValidateObjectIdPipe } from 'src/common/pipe/validate.mongo.pipe';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { FindQuery } from 'src/common/types';
 import { VoluntaryService } from './voluntary.service';
 import { CreateVoluntaryDto } from './dto/voluntary.create.dto';
 import { QueryVoluntaryDto } from './dto/voluntary.query.dto';
 import { UpdateVoluntaryDto } from './dto/voluntary.update.dto';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Controller('voluntary')
 export class VoluntaryController {
@@ -44,7 +44,7 @@ export class VoluntaryController {
   ) {
     return this.voluntaryService.deleteVoluntary(voluntaryId, req.userId);
   }
-  @Post(':voluntaryId/comment')
+  @Post('comment/:voluntaryId')
   createVoluntaryComment(
     @Param('voluntaryId', ValidateObjectIdPipe) voluntaryId: string,
     @Body() body: CreateCommentDto,
@@ -52,14 +52,14 @@ export class VoluntaryController {
   ) {
     return this.voluntaryService.addComment(body, voluntaryId, req.userId);
   }
-  @Post(':voluntaryId/comment')
+  @Get('comment/:voluntaryId')
   getVoluntaryComment(
     @Param('voluntaryId', ValidateObjectIdPipe) voluntaryId: string,
     @Query() query: FindQuery,
   ) {
     return this.voluntaryService.getComments(voluntaryId, query);
   }
-  @Delete(':voluntaryId/comment/:commentId')
+  @Delete('comment/:voluntaryId')
   deleteVoluntaryComment(
     @Param('voluntaryId', ValidateObjectIdPipe) voluntaryId: string,
     @Param('commentId', ValidateObjectIdPipe) commentId: string,

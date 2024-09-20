@@ -4,12 +4,12 @@ import { Model } from 'mongoose';
 import { ApiService } from 'src/common/Api/api.service';
 import { ReactionService } from 'src/reaction/reaction.service';
 import { FindQuery } from 'src/common/types';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { User, UserDocument } from 'src/user/user.schema';
 import { QueryVoluntaryDto } from './dto/voluntary.query.dto';
 import { CreateVoluntaryDto } from './dto/voluntary.create.dto';
 import { UpdateVoluntaryDto } from './dto/voluntary.update.dto';
 import { Voluntary, VoluntaryDocument } from './voluntary.schema';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Injectable()
 export class VoluntaryService {
@@ -106,7 +106,7 @@ export class VoluntaryService {
     return { status: 'like removed' };
   }
   async getLikes(voluntaryId: string, query: FindQuery) {
-    return this.reactionService.getAllLikes(query, voluntaryId);
+    return this.reactionService.getAllLikes(voluntaryId, query);
   }
   async addComment(body: CreateCommentDto, voluntaryId: string, user: string) {
     const post = await this.voluntaryModel.findOne({
@@ -116,23 +116,13 @@ export class VoluntaryService {
       throw new HttpException('post not found', 400);
     }
     body.user = user;
-    await this.reactionService.createComment(body, voluntaryId);
-    return {
-      status: 'comment added',
-      comment: body,
-    };
+    body.post = voluntaryId;
+    return this.reactionService.createComment(body);
   }
   async removeComment(voluntaryId: string, commentId: string, user: string) {
-    const post = await this.voluntaryModel.findOne({
-      _id: voluntaryId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+    return this.reactionService
       .setModel(this.voluntaryModel)
-      .deleteComment(voluntaryId, commentId, user);
-    return { status: 'comment removed' };
+      .deleteComment(commentId, user);
   }
   async getComments(voluntaryId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, voluntaryId);

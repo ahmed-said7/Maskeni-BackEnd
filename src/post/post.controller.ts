@@ -14,12 +14,12 @@ import { CreatePostDto } from './dto/post.create.dto';
 import { UpdatePostDto } from './dto/post.update.dto';
 import { ValidateObjectIdPipe } from 'src/common/pipe/validate.mongo.pipe';
 import { FindQuery } from 'src/common/types';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Controller('post')
 export class PostController {
   constructor(private postService: PostService) {}
-  @Get('comments/:id')
+  @Get('comment/:id')
   getPostComments(
     @Req() req: any,
     @Param('id', ValidateObjectIdPipe) postId: string,
@@ -27,7 +27,7 @@ export class PostController {
   ) {
     return this.postService.getComments(postId, req.userId, query);
   }
-  @Post('comments/:id')
+  @Post('comment/:id')
   addPostComment(
     @Body() body: CreateCommentDto,
     @Req() req: any,
@@ -35,13 +35,12 @@ export class PostController {
   ) {
     return this.postService.addComment(body, postId, req.userId);
   }
-  @Delete('comments/post/:postId/comment/:commentId')
+  @Delete('comment/:commentId')
   deletePostComment(
     @Req() req: any,
-    @Param('postId', ValidateObjectIdPipe) postId: string,
     @Param('commentId', ValidateObjectIdPipe) commentId: string,
   ) {
-    return this.postService.removeComment(postId, commentId, req.userId);
+    return this.postService.removeComment(commentId, req.userId);
   }
   @Post('likes/:postId')
   addLike(

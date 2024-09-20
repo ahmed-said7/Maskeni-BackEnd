@@ -3,6 +3,7 @@ import { HydratedDocument, Types } from 'mongoose';
 import { User_Role } from 'src/common/enum';
 import { Post } from 'src/post/post.schema';
 import { Question } from 'src/question/question.schema';
+import { Offered } from 'src/service/offered-service.schema';
 import { Share } from 'src/share/share.schema';
 import { Voluntary } from 'src/voluntary/voluntary.schema';
 
@@ -36,7 +37,6 @@ export class User {
     createdAt?: Date;
     _id: Types.ObjectId;
   }[];
-
   @Prop({
     _id: Types.ObjectId,
     event: { type: Types.ObjectId, ref: Event.name },
@@ -81,22 +81,49 @@ export class User {
     _id: Types.ObjectId;
   }[];
 
-  // @Prop({
-  //   _id: Types.ObjectId,
-  //   service: { type: Types.ObjectId, ref: Jop },
-  //   createdAt: { type: Date, default: new Date() },
-  // })
-  // savedJops: {
-  //   service: Types.ObjectId;
-  //   createdAt?: Date;
-  //   _id: Types.ObjectId;
-  // }[];
+  @Prop({
+    _id: Types.ObjectId,
+    user: { type: Types.ObjectId, ref: 'User' },
+    createdAt: { type: Date, default: new Date() },
+  })
+  followers: {
+    user: Types.ObjectId;
+    createdAt?: Date;
+    _id: Types.ObjectId;
+  }[];
 
-  // @Prop({ type: [{ type: Types.ObjectId, ref: 'Event' }] })
-  // savedEvents: Types.ObjectId[];
+  @Prop({
+    _id: Types.ObjectId,
+    user: { type: Types.ObjectId, ref: 'User' },
+    createdAt: { type: Date, default: new Date() },
+  })
+  following: {
+    user: Types.ObjectId;
+    createdAt?: Date;
+    _id: Types.ObjectId;
+  }[];
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
-  followers: Types.ObjectId[];
+  @Prop({
+    _id: Types.ObjectId,
+    service: { type: Types.ObjectId, ref: Offered.name },
+    createdAt: { type: Date, default: new Date() },
+  })
+  savedService: {
+    service: Types.ObjectId;
+    createdAt?: Date;
+    _id: Types.ObjectId;
+  }[];
+
+  @Prop({
+    _id: Types.ObjectId,
+    service: { type: Types.ObjectId, ref: Offered.name },
+    createdAt: { type: Date, default: new Date() },
+  })
+  requestedService: {
+    service: Types.ObjectId;
+    createdAt?: Date;
+    _id: Types.ObjectId;
+  }[];
 
   @Prop({ type: Boolean, default: true })
   active: boolean;

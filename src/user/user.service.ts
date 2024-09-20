@@ -11,6 +11,7 @@ import { ApiService } from 'src/common/Api/api.service';
 import { TwilioService } from 'src/twilio/twilio.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { v4 } from 'uuid';
+import { ArrayPagination } from 'src/common/Api/array.pagination';
 
 @Injectable()
 export class UserService {
@@ -20,6 +21,7 @@ export class UserService {
     private refreshService: RefreshService,
     private apiService: ApiService<UserDocument, FindQuery>,
     private firebaseService: FirebaseService,
+    private arrayPagination: ArrayPagination,
   ) {}
   async getAllUsers(obj: FindQuery) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
@@ -150,38 +152,79 @@ export class UserService {
     }
     return { user };
   }
-  //   async addFollow(userId: mongodbId, user: UserDoc) {
-  //     const followingUser = await this.Usermodel.findById(userId);
-  //     if (!followingUser) {
-  //       throw new HttpException('User not found', 400);
-  //     }
-  //     if (followingUser.followers.includes(user._id)) {
-  //       throw new HttpException('user already added ', 400);
-  //     }
-  //     followingUser.followers.push(user._id);
-  //     await followingUser.save();
-  //     return { status: 'follow sent' };
-  //   }
-  //   async removeFollow(userId: mongodbId, user: UserDoc) {
-  //     const followingUser = await this.Usermodel.findById(userId);
-  //     if (!followingUser) {
-  //       throw new HttpException('User not found', 400);
-  //     }
-  //     if (!followingUser.followers.includes(user._id)) {
-  //       throw new HttpException('you are not in user followers list', 400);
-  //     }
-  //     followingUser.followers = followingUser.followers.filter(
-  //       (id) => id.toString() != user._id.toString(),
-  //     );
-  //     await followingUser.save();
-  //     return { status: 'follow removed' };
-  //   }
-  //   async getUserFollowers(userId: mongodbId) {
-  //     const followingUser =
-  //       await this.Usermodel.findById(userId).populate('followers');
-  //     if (!followingUser) {
-  //       throw new HttpException('User not found', 400);
-  //     }
-  //     return { followers: followingUser.followers };
-  //   }
+  async addFollow(userId: string, user: string) {
+    const followingUser = await this.Usermodel.findByIdAndUpdate(userId, {
+      $addToSet: { followers: { user } },
+    });
+    if (!followingUser) {
+      throw new HttpException('User not found', 400);
+    }
+    await this.Usermodel.findByIdAndUpdate(user, {
+      $addToSet: { following: { user: userId } },
+    });
+    return { status: 'follow sent' };
+  }
+  async removeFollow(userId: string, user: string) {
+    const followingUser = await this.Usermodel.findByIdAndUpdate(userId, {
+      $pull: { followers: { user } },
+    });
+    if (!followingUser) {
+      throw new HttpException('User not found', 400);
+    }
+    await this.Usermodel.findByIdAndUpdate(user, {
+      $pull: { following: { user: userId } },
+    });
+    return { status: 'follow removed' };
+  }
+  async getUserFollowers(userId: string, query: FindQuery) {
+    const followingUser = await this.Usermodel.findById(userId).populate({
+      path: 'followers.user',
+      select: 'name icon',
+    });
+    if (!followingUser) {
+      throw new HttpException('User not found', 400);
+    }
+    return this.arrayPagination.apiPagination(query, followingUser.followers);
+  }
+  // ['savedGroupPost','savedEvent','savedShare','savedQuestion','savedVoluntary']
+  async getUserFollowing(userId: string, query: FindQuery) {
+    const followingUser = await this.Usermodel.findById(userId).populate({
+      path: 'following.user',
+      select: 'name icon',
+    });
+    if (!followingUser) {
+      throw new HttpException('User not found', 400);
+    }
+    return this.arrayPagination.apiPagination(query, followingUser.following);
+  }
+  async getUserSavedShare(userId: string, query: FindQuery) {
+    const user = await this.Usermodel.findById(userId).populate({
+      path: 'savedShare.share',
+    });
+    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  }
+  async getUserSavedQuestion(userId: string, query: FindQuery) {
+    const user = await this.Usermodel.findById(userId).populate({
+      path: 'savedQuestion.question',
+    });
+    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  }
+  async getUserSavedVoluntary(userId: string, query: FindQuery) {
+    const user = await this.Usermodel.findById(userId).populate({
+      path: 'savedVoluntary.voluntary',
+    });
+    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  }
+  async getUserSavedGroupPosts(userId: string, query: FindQuery) {
+    const user = await this.Usermodel.findById(userId).populate({
+      path: 'savedGroupPost.post',
+    });
+    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  }
+  async getUserSavedEvent(userId: string, query: FindQuery) {
+    const user = await this.Usermodel.findById(userId).populate({
+      path: 'savedEvent.event',
+    });
+    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  }
 }

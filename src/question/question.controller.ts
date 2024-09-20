@@ -10,12 +10,12 @@ import {
   Req,
 } from '@nestjs/common';
 import { ValidateObjectIdPipe } from 'src/common/pipe/validate.mongo.pipe';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { FindQuery } from 'src/common/types';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create.question.dto';
 import { QueryQuestionDto } from './dto/query.question.dto';
 import { UpdateQuestionDto } from './dto/update.question.dto';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Controller('question')
 export class QuestionController {
@@ -44,7 +44,7 @@ export class QuestionController {
   ) {
     return this.questionService.deleteQuestion(questionId, req.userId);
   }
-  @Post(':questionId/comment')
+  @Post('comment/:questionId')
   createQuestionComment(
     @Param('questionId', ValidateObjectIdPipe) questionId: string,
     @Body() body: CreateCommentDto,
@@ -52,24 +52,19 @@ export class QuestionController {
   ) {
     return this.questionService.addComment(body, questionId, req.userId);
   }
-  @Post(':questionId/comment')
+  @Get('comment/:questionId')
   getQuestionComment(
     @Param('questionId', ValidateObjectIdPipe) questionId: string,
     @Query() query: FindQuery,
   ) {
     return this.questionService.getComments(questionId, query);
   }
-  @Delete(':questionId/comment/:commentId')
+  @Delete('comment/:commentId')
   deleteQuestionComment(
-    @Param('questionId', ValidateObjectIdPipe) questionId: string,
     @Param('commentId', ValidateObjectIdPipe) commentId: string,
     @Req() req: any,
   ) {
-    return this.questionService.removeComment(
-      questionId,
-      commentId,
-      req.userId,
-    );
+    return this.questionService.removeComment(commentId, req.userId);
   }
   @Post('likes/:questionId')
   addQuestionLike(

@@ -4,12 +4,12 @@ import { Model } from 'mongoose';
 import { ApiService } from 'src/common/Api/api.service';
 import { ReactionService } from 'src/reaction/reaction.service';
 import { FindQuery } from 'src/common/types';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { User, UserDocument } from 'src/user/user.schema';
 import { Share, ShareDocument } from './share.schema';
 import { CreateShareDto } from './dto/create.share.dto';
 import { UpdateShareDto } from './dto/update.share.dto';
 import { QueryShareDto } from './dto/query.share.dto';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Injectable()
 export class ShareService {
@@ -67,31 +67,17 @@ export class ShareService {
     return { events, pagination: paginationObj };
   }
   async addLike(shareId: string, user: string) {
-    const post = await this.shareModel.findOne({
-      _id: shareId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+    return this.reactionService
       .setModel(this.shareModel)
       .createLike(shareId, user);
-    return { status: 'like added' };
   }
   async removeLike(shareId: string, user: string) {
-    const post = await this.shareModel.findOne({
-      _id: shareId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+    return this.reactionService
       .setModel(this.shareModel)
       .deleteLike(shareId, user);
-    return { status: 'like removed' };
   }
   async getLikes(shareId: string, query: FindQuery) {
-    return this.reactionService.getAllLikes(query, shareId);
+    return this.reactionService.getAllLikes(shareId, query);
   }
   async addComment(body: CreateCommentDto, shareId: string, user: string) {
     const post = await this.shareModel.findOne({
@@ -101,23 +87,17 @@ export class ShareService {
       throw new HttpException('post not found', 400);
     }
     body.user = user;
-    await this.reactionService.createComment(body, shareId);
+    body.post = shareId;
+    await this.reactionService.createComment(body);
     return {
       status: 'comment added',
       comment: body,
     };
   }
-  async removeComment(shareId: string, commentId: string, user: string) {
-    const post = await this.shareModel.findOne({
-      _id: shareId,
-    });
-    if (!post) {
-      throw new HttpException('post not found', 400);
-    }
-    await this.reactionService
+  async removeComment(commentId: string, user: string) {
+    return this.reactionService
       .setModel(this.shareModel)
-      .deleteComment(shareId, commentId, user);
-    return { status: 'comment removed' };
+      .deleteComment(commentId, user);
   }
   async getComments(shareId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, shareId);

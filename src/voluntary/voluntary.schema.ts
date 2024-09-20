@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Event_Type, Gender_Type } from 'src/common/types';
+import { Likes } from 'src/likes/likes.schema';
 
 @Schema({ timestamps: true })
 export class Voluntary {
@@ -59,15 +60,6 @@ export class Voluntary {
   @Prop({ type: Boolean, default: false })
   isArchived: boolean;
 
-  @Prop([
-    {
-      _id: Types.ObjectId,
-      user: { type: Types.ObjectId, ref: 'User' },
-      createdAt: { type: Date, default: new Date() },
-    },
-  ])
-  likes: { user: Types.ObjectId; createdAt: Date; _id: Types.ObjectId }[];
-
   @Prop({
     _id: Types.ObjectId,
     user: { type: Types.ObjectId, ref: 'User' },
@@ -75,20 +67,11 @@ export class Voluntary {
   })
   saved: { user: Types.ObjectId; createdAt?: Date; _id: Types.ObjectId }[];
 
-  @Prop([
-    {
-      _id: Types.ObjectId,
-      user: { type: Types.ObjectId, ref: 'User' },
-      content: { type: String },
-      createdAt: { type: Date, default: new Date() },
-    },
-  ])
-  comments: {
-    _id: Types.ObjectId;
-    user: Types.ObjectId;
-    content: string;
-    createdAt: Date;
-  }[];
+  @Prop({ type: [Types.ObjectId], ref: 'Comment', default: [] })
+  comments: Types.ObjectId[]; // References to Comment
+
+  @Prop({ type: [Types.ObjectId], ref: Likes.name, default: [] })
+  likes: Types.ObjectId[]; // References to Comment
 
   @Prop({ type: Number, default: 0 })
   likeCount: number;

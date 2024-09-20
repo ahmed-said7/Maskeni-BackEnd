@@ -14,8 +14,8 @@ import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create.event.dto';
 import { QueryEventDto } from './dto/query.event.dto';
 import { ValidateObjectIdPipe } from 'src/common/pipe/validate.mongo.pipe';
-import { CreateCommentDto } from 'src/reaction/dto/comment.create.dto';
 import { FindQuery } from 'src/common/types';
+import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 
 @Controller('event')
 export class EventController {
@@ -52,7 +52,7 @@ export class EventController {
   ) {
     return this.eventService.deleteEvent(eventId, req.userId);
   }
-  @Post('/:eventId/comment')
+  @Post('comment/:eventId')
   createEventComment(
     @Param('eventId', ValidateObjectIdPipe) eventId: string,
     @Body() body: CreateCommentDto,
@@ -60,20 +60,20 @@ export class EventController {
   ) {
     return this.eventService.addComment(body, eventId, req.userId);
   }
-  @Get(':eventId/comment')
+  @Get('comment/:eventId')
   getEventComment(
     @Param('eventId', ValidateObjectIdPipe) eventId: string,
     @Query() query: FindQuery,
   ) {
     return this.eventService.getComments(eventId, query);
   }
-  @Delete(':eventId/comment/:commentId')
+  @Delete('comment/:commentId')
   deleteEventComment(
     @Param('eventId', ValidateObjectIdPipe) eventId: string,
     @Param('commentId', ValidateObjectIdPipe) commentId: string,
     @Req() req: any,
   ) {
-    return this.eventService.removeComment(eventId, commentId, req.userId);
+    return this.eventService.removeComment(commentId, req.userId);
   }
   @Post('likes/:eventId')
   addEventLike(
