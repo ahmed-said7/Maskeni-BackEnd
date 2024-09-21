@@ -17,7 +17,13 @@ export class TicketService {
   async getTicket(ticketId: string) {
     const ticketExists = await this.ticketModel
       .findById(ticketId)
-      .populate(['owner', 'user', 'event']);
+      .populate({ path: 'user', select: 'name mobile icon', model: 'User' })
+      .populate({ path: 'owner', select: 'name mobile icon', model: 'User' })
+      .populate({
+        path: 'event',
+        select: 'name details images type',
+        model: Event.name,
+      });
     if (!ticketExists) {
       throw new HttpException('ticket not found', 400);
     }
@@ -30,10 +36,17 @@ export class TicketService {
       obj,
       filter,
     );
-    const posts = await query.populate('user');
+    const posts = await query
+      .populate({ path: 'user', select: 'name mobile icon', model: 'User' })
+      .populate({ path: 'owner', select: 'name mobile icon', model: 'User' })
+      .populate({
+        path: 'event',
+        select: 'name details images type',
+        model: Event.name,
+      });
     return { posts, pagination: paginationObj };
   }
-  async createTicket(eventId: string, user: string) {
+  async createTicket(eventId: string, quantity: number, user: string) {
     const event = await this.eventModel.findById(eventId);
     if (!event) {
       throw new HttpException('event not found', 400);
@@ -44,6 +57,7 @@ export class TicketService {
       owner: event.user.toString(),
       event: event._id.toString(),
       isPaid: false,
+      quantity,
     });
     const qrCodeUrl = await QRCode.toDataURL(
       JSON.stringify({

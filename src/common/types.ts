@@ -1,5 +1,12 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 export interface Payload {
   userId?: string;
   role?: string;
@@ -60,4 +67,14 @@ export enum Jop_Type {
   homeServices = 'خدمات منزليه',
   education = 'تعليم',
   pharmacyService = 'خدمة صيدليه',
+}
+export class ValidateLocation {
+  @IsString()
+  @IsOptional()
+  type: string;
+  @IsArray()
+  @ArrayMinSize(2)
+  @ArrayMaxSize(2)
+  @IsNumber({}, { each: true })
+  coordinates: number[];
 }

@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Likes, LikesDocument } from './likes.schema';
+import { LikesDocument } from './likes.schema';
 import { ApiService } from 'src/common/Api/api.service';
 import { LikeDto } from './dto/create.likes.dto';
 import { LikesQueryDto } from './dto/query.likes.dto';
@@ -14,8 +14,8 @@ import { CommentDocument } from 'src/comment/comment.schema';
 @Injectable()
 export class LikesService {
   constructor(
-    @InjectModel(Likes.name) private likesModel: Model<LikesDocument>,
-    @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
+    @InjectModel('Likes') private likesModel: Model<LikesDocument>,
+    @InjectModel('Comment') private commentModel: Model<CommentDocument>,
     private apiService: ApiService<LikesDocument, LikesQueryDto>,
   ) {}
   // Add a new like, but ensure the user hasn't liked the post before
@@ -40,13 +40,13 @@ export class LikesService {
     return like;
   }
   async addlikeToComment(comment: string, user: string) {
-    const like = await this.likesModel.findOne({ user, comment });
+    let like = await this.likesModel.findOne({ user, comment });
     if (like) {
       return { status: 'like add before' };
     }
-    await this.likesModel.create({ user, comment });
+    like = await this.likesModel.create({ user, comment });
     await this.commentModel.findByIdAndUpdate(comment, {
-      $addToSet: { likes: like._id.toString() },
+      $addToSet: { likes: like._id },
       $inc: { likesCount: 1 },
     });
     return { status: 'like added' };
@@ -57,7 +57,7 @@ export class LikesService {
       return { status: 'you do not have added like before' };
     }
     await this.commentModel.findByIdAndUpdate(comment, {
-      $pull: { likes: like._id.toString() },
+      $pull: { likes: like._id },
       $inc: { likesCount: -1 },
     });
     return { status: 'like removed' };
@@ -72,7 +72,11 @@ export class LikesService {
       obj,
       { _id: { $in: comment.likes } },
     );
-    const likes = await query;
+    const likes = await query.populate({
+      path: 'user',
+      model: 'User',
+      select: 'name mobile icon',
+    });
     return { likes, pagination: paginationObj };
   }
   // Get all likes for a specific post
@@ -82,7 +86,11 @@ export class LikesService {
       obj,
       { _id: { $in: ids } },
     );
-    const likes = await query;
+    const likes = await query.populate({
+      path: 'user',
+      model: 'User',
+      select: 'name mobile icon',
+    });
     return { likes, pagination: paginationObj };
   }
 }

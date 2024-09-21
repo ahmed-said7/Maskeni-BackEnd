@@ -10,7 +10,7 @@ import { CommentQueryDto } from './dto/query.comment.dto';
 @Injectable()
 export class CommentService {
   constructor(
-    @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
+    @InjectModel('Comment') private commentModel: Model<CommentDocument>,
     private apiService: ApiService<CommentDocument, CommentQueryDto>,
   ) {}
   // Create a new comment
@@ -18,7 +18,7 @@ export class CommentService {
     const newComment = await this.commentModel.create(body);
     if (newComment.parentComment) {
       await this.commentModel.findByIdAndUpdate(body.parentComment, {
-        $addToSet: { replies: newComment.parentComment },
+        $addToSet: { replies: newComment._id },
         $inc: { replyCount: 1 },
       });
     }
@@ -67,7 +67,7 @@ export class CommentService {
     }
     return comment;
   }
-  private async getComments(ids: string[], obj: CommentQueryDto) {
+  private async getComments(ids: any[], obj: CommentQueryDto) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.commentModel.find(),
       obj,
@@ -75,7 +75,7 @@ export class CommentService {
     );
     const comments = await query.populate({
       path: 'replies',
-      options: { limit: 3 }, // Only load the first few replies (can increase limit)
+      options: { limit: 1 }, // Only load the first few replies (can increase limit)
     });
     return { comments, pagination: paginationObj };
   }
@@ -84,8 +84,7 @@ export class CommentService {
     if (!comment) {
       throw new NotFoundException(`Comment with ID "${commentId}" not found`);
     }
-    const ids = comment.replies.map((reply) => reply.toString());
-    return this.getComments(ids, obj);
+    return this.getComments(comment.replies, obj);
   }
   async getPostComments(ids: any[], obj: CommentQueryDto) {
     return this.getComments(ids, obj);

@@ -1,49 +1,61 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
-  ArrayMaxSize,
-  ArrayMinSize,
+  // ArrayMaxSize,
+  // ArrayMinSize,
   IsArray,
   IsDateString,
   IsNumber,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
+import { ValidateLocation } from 'src/common/types';
 
 export class CreateEventDto {
   @IsString()
+  @ApiProperty()
   name: string;
 
   @IsString()
+  @ApiProperty()
   details: string;
 
-  @IsArray()
-  @ArrayMinSize(2)
-  @ArrayMaxSize(2)
-  @IsNumber({}, { each: true })
-  location: [number, number];
+  @ValidateNested()
+  @ApiProperty()
+  @Type(() => ValidateLocation)
+  location: ValidateLocation;
 
   @IsDateString()
-  startedAt: Date;
+  @ApiProperty()
+  startedAt: string;
 
   @IsDateString()
+  @ApiPropertyOptional()
   @IsOptional()
-  date: Date;
+  date: string;
 
   @IsDateString()
-  endedAt: Date;
+  @ApiProperty()
+  endedAt: string;
 
   @IsArray()
+  @ApiProperty()
   @IsString({ each: true })
   images: string;
 
   @IsNumber()
+  @ApiProperty()
   startAge: number;
 
   @IsNumber()
+  @ApiProperty()
   endAge: number;
 
   user: string;
 
   @IsOptional()
+  @ApiPropertyOptional()
   @IsNumber()
   price: number;
 }

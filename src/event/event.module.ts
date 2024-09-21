@@ -8,12 +8,16 @@ import { EventService } from './event.service';
 import { EventController } from './event.controller';
 import { ReactionModule } from 'src/reaction/reaction.module';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
+import { CommentSchema } from 'src/comment/comment.schema';
+import { LikesSchema } from 'src/likes/likes.schema';
 
 @Module({
   imports: [
     ApiModule,
     ReactionModule,
     MongooseModule.forFeature([
+      { name: 'Likes', schema: LikesSchema },
+      { name: 'Comment', schema: CommentSchema },
       {
         name: User.name,
         schema: UserSchema,

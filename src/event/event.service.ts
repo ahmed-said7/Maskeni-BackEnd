@@ -20,14 +20,17 @@ export class EventService {
     @InjectModel(Ticket.name) private ticketModel: Model<TicketDocument>,
     private reactionService: ReactionService<EventDocument>,
     private apiService: ApiService<EventDocument, QueryEventDto>,
-  ) {}
+  ) {
+    this.reactionService.setModel(eventModel);
+  }
   async createEvent(body: CreateEventDto, user: string) {
     body.user = user;
     if (!body.date) {
-      const year = body.startedAt.getFullYear();
-      const month = body.startedAt.getMonth();
-      const day = body.startedAt.getDate();
-      body.date = new Date(year, month, day);
+      const date = new Date(body.startedAt);
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      body.date = new Date(year, month, day).toISOString();
     }
     const event = await this.eventModel.create(body);
     return { event };
@@ -60,7 +63,13 @@ export class EventService {
   async getEvent(eventId: string) {
     const eventExists = await this.eventModel
       .findById(eventId)
-      .populate('user');
+      .populate('user')
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     if (!eventExists) {
       throw new HttpException('event not found', 400);
     }
@@ -71,40 +80,45 @@ export class EventService {
       this.eventModel.find(),
       obj,
     );
-    const events = await query.populate('user');
+    const events = await query.populate('user').populate({
+      path: 'comments',
+      select: '-likes -comments -replies',
+      populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      options: { limit: 1 }, // Only load the first few replies (can increase limit)
+    });
     return { events, pagination: paginationObj };
   }
   async getAllPreviousReservedEvents(obj: QueryEventDto, user: string) {
-    const tickets = await this.ticketModel.find({ user }).populate('event');
+    const tickets = await this.ticketModel.find({ user });
     const ids = tickets.map(({ event }) => event.toString());
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.eventModel.find(),
       obj,
       { _id: { $in: ids }, endedAt: { $lt: new Date() } },
     );
-    const events = await query.populate('user');
+    const events = await query
+      .populate({ path: 'user', select: 'name mobile icon' })
+      .select('-comments -likes -saved');
     return { events, pagination: paginationObj };
   }
   async getAllFutureEvents(obj: QueryEventDto, user: string) {
-    const tickets = await this.ticketModel.find({ user }).populate('event');
+    const tickets = await this.ticketModel.find({ user });
     const ids = tickets.map(({ event }) => event.toString());
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.eventModel.find(),
       obj,
       { _id: { $in: ids }, endedAt: { $gt: new Date() } },
     );
-    const events = await query.populate('user');
+    const events = await query
+      .populate({ path: 'user', select: 'name mobile icon' })
+      .select('-comments -likes -saved');
     return { events, pagination: paginationObj };
   }
   async addLike(eventId: string, user: string) {
-    return this.reactionService
-      .setModel(this.eventModel)
-      .createLike(eventId, user);
+    return this.reactionService.createLike(eventId, user);
   }
   async removeLike(eventId: string, user: string) {
-    return this.reactionService
-      .setModel(this.eventModel)
-      .deleteLike(eventId, user);
+    return this.reactionService.deleteLike(eventId, user);
   }
   async getLikes(eventId: string, query: FindQuery) {
     return this.reactionService.getAllLikes(eventId, query);
@@ -121,9 +135,7 @@ export class EventService {
     return this.reactionService.createComment(body);
   }
   async removeComment(commentId: string, user: string) {
-    return this.reactionService
-      .setModel(this.eventModel)
-      .deleteComment(commentId, user);
+    return this.reactionService.deleteComment(commentId, user);
   }
   async getComments(eventId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, eventId);
@@ -135,28 +147,24 @@ export class EventService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.eventModel)
-      .createSaved(eventId, user);
+    await this.reactionService.createSaved(eventId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedEvent: { post: eventId } },
+      $addToSet: { savedEvent: { event: eventId } },
     });
     return { status: 'saved added post' };
   }
   async deleteSaved(eventId: string, user: string) {
-    const post = await this.eventModel.findOne({
+    const event = await this.eventModel.findOne({
       _id: eventId,
     });
-    if (!post) {
-      throw new HttpException('post not found', 400);
+    if (!event) {
+      throw new HttpException('event not found', 400);
     }
-    await this.reactionService
-      .setModel(this.eventModel)
-      .deleteSaved(eventId, user);
+    await this.reactionService.deleteSaved(eventId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedEvent: { event: eventId } },
     });
-    return { status: 'saved deleted post' };
+    return { status: 'saved deleted event' };
   }
   async getAllSaved(eventId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, eventId);

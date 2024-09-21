@@ -5,7 +5,8 @@ import { ApiModule } from 'src/common/Api/api.module';
 import { Ticket, TicketSchema } from './ticket.schema';
 import { EventSchema } from 'src/event/event.schema';
 import { User, UserSchema } from 'src/user/user.schema';
-import { TicketController } from './event.controller';
+import { TicketController } from './ticket.controller';
+import { Admin, AdminSchema } from 'src/admin/admin.schema';
 
 @Module({
   imports: [
@@ -22,6 +23,10 @@ import { TicketController } from './event.controller';
       {
         name: User.name,
         schema: UserSchema,
+      },
+      {
+        name: Admin.name,
+        schema: AdminSchema,
       },
     ]),
   ],

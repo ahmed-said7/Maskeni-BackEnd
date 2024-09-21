@@ -6,6 +6,8 @@ import { User } from 'src/user/user.schema';
 export class Ticket {
   @Prop({ type: Boolean, default: false })
   isPaid?: Date;
+  @Prop({ type: Number, default: 1 })
+  quantity?: number;
   @Prop({ type: String })
   qrCode?: string;
 

@@ -7,11 +7,15 @@ import { APP_FILTER } from '@nestjs/core';
 import { CatchAppExceptionsFilter } from './common/filter/global-filter';
 import { RefreshModule } from './refresh/refresh.module';
 import { UserModule } from './user/user.module';
-import { AdminModule } from './admin/admin.module';
+// import { AdminModule } from './admin/admin.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventModule } from './event/event.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ReviewModule } from './reviews/review.module';
+import { LikesModule } from './likes/likes.module';
+import { CommentModule } from './comment/comment.module';
+import { TicketModule } from './ticket/ticket.module';
+import { GroupModule } from './group/group.module';
 
 @Module({
   imports: [
@@ -27,9 +31,13 @@ import { ReviewModule } from './reviews/review.module';
     UploadModule,
     RefreshModule,
     UserModule,
-    AdminModule,
+    // AdminModule,
     ReviewModule,
     EventModule,
+    LikesModule,
+    CommentModule,
+    TicketModule,
+    GroupModule,
     EventEmitterModule.forRoot({ global: true }),
   ],
   controllers: [AppController],

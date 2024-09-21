@@ -1,11 +1,12 @@
 import { Model } from 'mongoose';
 import { IEntityType } from './dto/interface.entity.dto';
-import { HttpException } from '@nestjs/common';
+import { HttpException, Injectable, Scope } from '@nestjs/common';
 import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 import { CommentService } from 'src/comment/comment.service';
 import { LikesService } from 'src/likes/likes.service';
 import { FindQuery } from 'src/common/types';
 
+@Injectable({ scope: Scope.TRANSIENT })
 export class ReactionService<T extends IEntityType> {
   constructor(
     private commentService: CommentService,
@@ -21,7 +22,7 @@ export class ReactionService<T extends IEntityType> {
   }
   async createComment(body: CreateCommentDto) {
     const comment = await this.commentService.create(body);
-    if (comment.parentComment) {
+    if (!comment.parentComment) {
       return comment;
     }
     await this.PostModel.findByIdAndUpdate(body.post, {
@@ -31,7 +32,12 @@ export class ReactionService<T extends IEntityType> {
     return comment;
   }
   async getAllComments(query: FindQuery, id: string) {
-    const post = await this.PostModel.findById(id);
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const post = await this.PostModel.findById(id).select({
+      comments: { $slice: [skip, limit] },
+    });
     if (!post) {
       throw new HttpException('post not found', 400);
     }
@@ -74,9 +80,14 @@ export class ReactionService<T extends IEntityType> {
     return { status: 'like created' };
   }
   async getAllLikes(postId: string, query: FindQuery) {
-    const post = await this.PostModel.findById(postId);
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const post = await this.PostModel.findById(postId).select({
+      likes: { $slice: [skip, limit] },
+    });
     if (!post) {
-      throw new HttpException('post not found', 400);
+      throw new HttpException('document not found', 400);
     }
     return this.likesService.getPostLikes(post.likes, query);
   }
@@ -92,9 +103,13 @@ export class ReactionService<T extends IEntityType> {
     return { status: 'like deleted' };
   }
   async createSaved(postId: string, userId: string) {
+    const post = await this.PostModel.findOne({ 'saved.user': userId });
+    if (post) {
+      throw new HttpException('already saved', 400);
+    }
     await this.PostModel.findByIdAndUpdate(postId, {
       $addToSet: {
-        saved: { user: userId },
+        saved: { user: userId, createdAt: new Date() },
         $inc: { savedCount: 1 },
       },
     });
@@ -109,13 +124,21 @@ export class ReactionService<T extends IEntityType> {
           $slice: [skip, limit],
         },
       })
-      .populate('saved.user');
+      .populate({
+        select: 'name mobile icon',
+        model: 'User',
+        path: 'saved.user',
+      });
     if (!post) {
       throw new HttpException('post not found', 400);
     }
     return { totalPages: post.savedCount, page, limit, saved: post.saved };
   }
   async deleteSaved(postId: string, userId: string) {
+    const post = await this.PostModel.findOne({ 'saved.user': userId });
+    if (!post) {
+      throw new HttpException('not saved', 400);
+    }
     await this.PostModel.findByIdAndUpdate(
       postId,
       {
@@ -128,7 +151,7 @@ export class ReactionService<T extends IEntityType> {
   async createRequestedService(postId: string, userId: string) {
     await this.PostModel.findByIdAndUpdate(postId, {
       $addToSet: {
-        requested: { user: userId },
+        requested: { user: userId, createdAt: new Date() },
       },
       $inc: { requestedCount: 1 },
     });

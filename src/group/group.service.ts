@@ -1,4 +1,4 @@
-import { HttpException } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Group, GroupDocument } from './group.schema';
@@ -9,6 +9,7 @@ import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { Group_Privacy } from 'src/common/enum';
 
+@Injectable()
 export class GroupServices {
   constructor(
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
@@ -59,6 +60,29 @@ export class GroupServices {
     );
     return { group: updatedGroup };
   }
+  async leaveGroup(groupId: string, user: string) {
+    const group = await this.groupModel.findOne({ _id: groupId, users: user });
+    if (!group) {
+      throw new HttpException('Group not found', 400);
+    }
+    if (group.admin.toString() == user) {
+      throw new HttpException('you are group owner', 400);
+    }
+    await this.groupModel.findByIdAndUpdate(groupId, {
+      $pull: { users: user },
+    });
+    return { status: 'user leaved group' };
+  }
+  async joinGroup(groupId: string, user: string) {
+    const group = await this.groupModel.findOne({ _id: groupId });
+    if (!group) {
+      throw new HttpException('Group not found', 400);
+    }
+    await this.groupModel.findByIdAndUpdate(groupId, {
+      $addToSet: { users: user },
+    });
+    return { status: 'user joined group' };
+  }
   async deleteGroup(groupId: string, req: any) {
     const group = await this.groupModel.findOne({ _id: groupId });
     if (!group) {
@@ -73,8 +97,8 @@ export class GroupServices {
   async getGroupMembers(groupId: string, req: any) {
     const group = await this.groupModel
       .findOne({ _id: groupId })
-      .populate({ path: 'users', select: 'name image' })
-      .populate({ path: 'admin', select: 'name image' });
+      .populate({ path: 'users', select: 'name mobile icon', model: 'User' })
+      .populate({ path: 'admin', select: 'name mobile icon', model: 'User' });
     if (!group) {
       throw new HttpException('Group not found', 400);
     }
