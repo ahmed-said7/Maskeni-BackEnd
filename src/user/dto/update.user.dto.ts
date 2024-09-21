@@ -1,9 +1,7 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsBoolean,
-  IsEmail,
   IsMobilePhone,
-  IsNotEmpty,
   IsOptional,
   IsString,
   MinLength,
@@ -42,11 +40,4 @@ export class UpdateUserByAdminDto {
   @IsOptional()
   @IsBoolean()
   isBlocked: boolean;
-}
-
-export class ForgetPassowrdBody {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsEmail({}, { message: 'provide valid email address' })
-  email: string;
 }

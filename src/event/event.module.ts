@@ -7,6 +7,7 @@ import { Ticket, TicketSchema } from 'src/ticket/ticket.schema';
 import { EventService } from './event.service';
 import { EventController } from './event.controller';
 import { ReactionModule } from 'src/reaction/reaction.module';
+import { Admin, AdminSchema } from 'src/admin/admin.schema';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { ReactionModule } from 'src/reaction/reaction.module';
       {
         name: User.name,
         schema: UserSchema,
+      },
+      {
+        name: Admin.name,
+        schema: AdminSchema,
       },
       {
         name: Event.name,

@@ -31,6 +31,15 @@ async function bootstrap() {
     origin: '*',
     credentials: true,
   });
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
   app.setGlobalPrefix('api/v1');
   // app.use(cookieParser());
   // app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -49,15 +58,6 @@ async function bootstrap() {
       swaggerOptions: {},
     });
   }
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
-  );
   await app.listen(3000);
 }
 bootstrap();

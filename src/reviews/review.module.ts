@@ -4,6 +4,7 @@ import { ReviewService } from './review.service';
 import { ReviewController } from './review.controller';
 import { Review, ReviewSchema } from './review.schema';
 import { User, UserSchema } from 'src/user/user.schema';
+import { Admin, AdminSchema } from 'src/admin/admin.schema';
 
 @Module({
   imports: [
@@ -15,6 +16,10 @@ import { User, UserSchema } from 'src/user/user.schema';
       {
         name: User.name,
         schema: UserSchema,
+      },
+      {
+        name: Admin.name,
+        schema: AdminSchema,
       },
     ]),
   ],

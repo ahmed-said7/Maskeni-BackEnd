@@ -103,6 +103,11 @@ export class User {
     _id: Types.ObjectId;
   }[];
 
+  @Prop({ type: Number, default: 0 })
+  followersCount: number;
+  @Prop({ type: Number, default: 0 })
+  followingCount: number;
+
   @Prop({
     _id: Types.ObjectId,
     service: { type: Types.ObjectId, ref: Offered.name },

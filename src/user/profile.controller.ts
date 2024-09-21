@@ -14,7 +14,7 @@ import { All_Role } from 'src/common/enum';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 import { Roles } from 'src/common/decorator/roles';
 
-@Controller('profile')
+@Controller('user/profile')
 export class UserProfileController {
   constructor(private userService: UserService) {}
 

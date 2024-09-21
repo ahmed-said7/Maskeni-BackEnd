@@ -10,15 +10,22 @@ import { UserProfileController } from './profile.controller';
 import { RefreshModule } from 'src/refresh/refresh.module';
 import { TwilioModule } from 'src/twilio/twilio.module';
 import { FirebaseModule } from 'src/firebase/firebase.module';
+import { UserFollowController } from './follow.controller';
 
 @Module({
-  controllers: [UserController, UserAuthController, UserProfileController],
+  controllers: [
+    UserController,
+    UserAuthController,
+    UserProfileController,
+    UserFollowController,
+  ],
   providers: [UserService],
   imports: [
     ApiModule,
     TwilioModule,
     RefreshModule,
     FirebaseModule,
+    // UserFollowController,
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Admin.name, schema: AdminSchema },

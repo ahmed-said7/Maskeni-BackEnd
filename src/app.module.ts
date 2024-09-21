@@ -11,6 +11,7 @@ import { AdminModule } from './admin/admin.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventModule } from './event/event.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ReviewModule } from './reviews/review.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     RefreshModule,
     UserModule,
     AdminModule,
+    ReviewModule,
     EventModule,
     EventEmitterModule.forRoot({ global: true }),
   ],

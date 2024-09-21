@@ -84,7 +84,9 @@ export class UserService {
   }
   async register(request: any) {
     const firebaseUser = await this.firebaseService.checkFirebaseToken(request);
-    console.log(firebaseUser);
+    if (!firebaseUser) {
+      throw new HttpException('Invalid Firebase token', 401);
+    }
     let user = await this.Usermodel.findOne({ uid: firebaseUser.uid });
     if (!user) {
       user = await this.Usermodel.create({
@@ -153,78 +155,113 @@ export class UserService {
     return { user };
   }
   async addFollow(userId: string, user: string) {
+    console.log(user);
     const followingUser = await this.Usermodel.findByIdAndUpdate(userId, {
-      $addToSet: { followers: { user } },
+      $addToSet: { followers: { user, createdAt: new Date() } },
+      $inc: { followersCount: 1 },
     });
     if (!followingUser) {
       throw new HttpException('User not found', 400);
     }
     await this.Usermodel.findByIdAndUpdate(user, {
-      $addToSet: { following: { user: userId } },
+      $addToSet: { following: { user: userId, createdAt: new Date() } },
+      $inc: { followingCount: 1 },
     });
     return { status: 'follow sent' };
   }
   async removeFollow(userId: string, user: string) {
     const followingUser = await this.Usermodel.findByIdAndUpdate(userId, {
       $pull: { followers: { user } },
+      $inc: { followersCount: -1 },
     });
     if (!followingUser) {
       throw new HttpException('User not found', 400);
     }
     await this.Usermodel.findByIdAndUpdate(user, {
       $pull: { following: { user: userId } },
+      $inc: { followingCount: -1 },
     });
     return { status: 'follow removed' };
   }
   async getUserFollowers(userId: string, query: FindQuery) {
-    const followingUser = await this.Usermodel.findById(userId).populate({
-      path: 'followers.user',
-      select: 'name icon',
-    });
-    if (!followingUser) {
-      throw new HttpException('User not found', 400);
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        followers: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'followers.user',
+        model: User.name,
+        select: 'name icon mobile',
+      });
+    if (!user) {
+      throw new HttpException('post not found', 400);
     }
-    return this.arrayPagination.apiPagination(query, followingUser.followers);
+    return {
+      totalPages: user.followersCount,
+      page,
+      limit,
+      followers: user.followers,
+    };
   }
   // ['savedGroupPost','savedEvent','savedShare','savedQuestion','savedVoluntary']
-  async getUserFollowing(userId: string, query: FindQuery) {
-    const followingUser = await this.Usermodel.findById(userId).populate({
-      path: 'following.user',
-      select: 'name icon',
-    });
-    if (!followingUser) {
-      throw new HttpException('User not found', 400);
+  async getUserFollwing(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        following: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'following.user',
+        model: User.name,
+        select: 'name icon mobile',
+      });
+    if (!user) {
+      throw new HttpException('post not found', 400);
     }
-    return this.arrayPagination.apiPagination(query, followingUser.following);
+    return {
+      totalPages: user.followingCount,
+      page,
+      limit,
+      followers: user.following,
+    };
   }
-  async getUserSavedShare(userId: string, query: FindQuery) {
-    const user = await this.Usermodel.findById(userId).populate({
-      path: 'savedShare.share',
-    });
-    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  }
-  async getUserSavedQuestion(userId: string, query: FindQuery) {
-    const user = await this.Usermodel.findById(userId).populate({
-      path: 'savedQuestion.question',
-    });
-    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  }
-  async getUserSavedVoluntary(userId: string, query: FindQuery) {
-    const user = await this.Usermodel.findById(userId).populate({
-      path: 'savedVoluntary.voluntary',
-    });
-    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  }
-  async getUserSavedGroupPosts(userId: string, query: FindQuery) {
-    const user = await this.Usermodel.findById(userId).populate({
-      path: 'savedGroupPost.post',
-    });
-    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  }
-  async getUserSavedEvent(userId: string, query: FindQuery) {
-    const user = await this.Usermodel.findById(userId).populate({
-      path: 'savedEvent.event',
-    });
-    return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  }
+  // async getUserSavedShare(userId: string, query: FindQuery) {
+  //   const user = await this.Usermodel.findById(userId).populate({
+  //     path: 'savedShare.share',
+  //   });
+  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  // }
+  // async getUserSavedQuestion(userId: string, query: FindQuery) {
+  //   const user = await this.Usermodel.findById(userId).populate({
+  //     path: 'savedQuestion.question',
+  //   });
+  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  // }
+  // async getUserSavedVoluntary(userId: string, query: FindQuery) {
+  //   const user = await this.Usermodel.findById(userId).populate({
+  //     path: 'savedVoluntary.voluntary',
+  //   });
+  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  // }
+  // async getUserSavedGroupPosts(userId: string, query: FindQuery) {
+  //   const user = await this.Usermodel.findById(userId).populate({
+  //     path: 'savedGroupPost.post',
+  //   });
+  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  // }
+  // async getUserSavedEvent(userId: string, query: FindQuery) {
+  //   const user = await this.Usermodel.findById(userId).populate({
+  //     path: 'savedEvent.event',
+  //   });
+  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
+  // }
 }

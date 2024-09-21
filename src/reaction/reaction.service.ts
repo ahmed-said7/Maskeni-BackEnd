@@ -1,7 +1,6 @@
 import { Model } from 'mongoose';
 import { IEntityType } from './dto/interface.entity.dto';
 import { HttpException } from '@nestjs/common';
-import { ArrayPagination } from 'src/common/Api/array.pagination';
 import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 import { CommentService } from 'src/comment/comment.service';
 import { LikesService } from 'src/likes/likes.service';
@@ -9,7 +8,6 @@ import { FindQuery } from 'src/common/types';
 
 export class ReactionService<T extends IEntityType> {
   constructor(
-    private paginationArray: ArrayPagination,
     private commentService: CommentService,
     private likesService: LikesService,
   ) {}
