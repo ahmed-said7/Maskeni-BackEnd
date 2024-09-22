@@ -53,6 +53,7 @@ import { FaxModule } from './fax/fax.module';
     QuestionModule,
     PostModule,
     FaxModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [

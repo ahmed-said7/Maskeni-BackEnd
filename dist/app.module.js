@@ -63,6 +63,7 @@ exports.AppModule = AppModule = __decorate([
             question_module_1.QuestionModule,
             post_module_1.PostModule,
             fax_module_1.FaxModule,
+            address_module_1.AddressModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [
