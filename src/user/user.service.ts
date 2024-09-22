@@ -155,7 +155,13 @@ export class UserService {
     return { user };
   }
   async addFollow(userId: string, user: string) {
-    console.log(user);
+    const followExist = await this.Usermodel.findOne({
+      _id: userId,
+      'followers.user': user,
+    });
+    if (followExist) {
+      throw new HttpException('Already following', 400);
+    }
     const followingUser = await this.Usermodel.findByIdAndUpdate(userId, {
       $addToSet: { followers: { user, createdAt: new Date() } },
       $inc: { followersCount: 1 },
@@ -170,6 +176,13 @@ export class UserService {
     return { status: 'follow sent' };
   }
   async removeFollow(userId: string, user: string) {
+    const followExist = await this.Usermodel.findOne({
+      _id: userId,
+      'followers.user': user,
+    });
+    if (!followExist) {
+      throw new HttpException('you are not follow user', 400);
+    }
     const followingUser = await this.Usermodel.findByIdAndUpdate(userId, {
       $pull: { followers: { user } },
       $inc: { followersCount: -1 },

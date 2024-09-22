@@ -63,7 +63,11 @@ export class EventService {
   async getEvent(eventId: string) {
     const eventExists = await this.eventModel
       .findById(eventId)
-      .populate('user')
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
       .populate({
         path: 'comments',
         select: '-likes -comments -replies',
@@ -80,12 +84,18 @@ export class EventService {
       this.eventModel.find(),
       obj,
     );
-    const events = await query.populate('user').populate({
-      path: 'comments',
-      select: '-likes -comments -replies',
-      populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-      options: { limit: 1 }, // Only load the first few replies (can increase limit)
-    });
+    const events = await query
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     return { events, pagination: paginationObj };
   }
   async getAllPreviousReservedEvents(obj: QueryEventDto, user: string) {
