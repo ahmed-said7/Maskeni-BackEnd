@@ -40,6 +40,7 @@ const chat_module_1 = require("./chat/chat.module");
 const customer_service_message_module_1 = require("./customer-service-message/customer-service-message.module");
 const customer_service_chat_module_1 = require("./customer-service-chat/customer-service-chat.module");
 const gateway_module_1 = require("./websocket/gateway.module");
+const analysis_module_1 = require("./analysis/analysis.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -82,6 +83,7 @@ exports.AppModule = AppModule = __decorate([
             customer_service_message_module_1.CustomerServiceMessageModule,
             customer_service_chat_module_1.CustomerServiceChatModule,
             gateway_module_1.GatewayModule,
+            analysis_module_1.AnalysisModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [
