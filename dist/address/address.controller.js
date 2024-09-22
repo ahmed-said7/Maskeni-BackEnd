@@ -18,6 +18,10 @@ const address_service_1 = require("./address.service");
 const query_address_dto_1 = require("./dto/query.address.dto");
 const update_address_dto_1 = require("./dto/update.address.dto");
 const create_address_dto_1 = require("./dto/create.address.dto");
+const enum_1 = require("../common/enum");
+const authentication_guard_1 = require("../common/guards/authentication.guard");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
+const roles_1 = require("../common/decorator/roles");
 let AddressController = class AddressController {
     constructor(addressService) {
         this.addressService = addressService;
@@ -39,6 +43,8 @@ let AddressController = class AddressController {
 exports.AddressController = AddressController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -47,6 +53,8 @@ __decorate([
 ], AddressController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -55,6 +63,8 @@ __decorate([
 ], AddressController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -63,6 +73,8 @@ __decorate([
 ], AddressController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

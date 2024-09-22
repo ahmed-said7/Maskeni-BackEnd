@@ -10,20 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateAddressDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateAddressDto {
 }
 exports.CreateAddressDto = CreateAddressDto;
 __decorate([
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateAddressDto.prototype, "city", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateAddressDto.prototype, "country", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateAddressDto.prototype, "quarter", void 0);
 //# sourceMappingURL=create.address.dto.js.map

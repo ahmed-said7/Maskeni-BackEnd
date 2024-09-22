@@ -24,6 +24,7 @@ const likes_module_1 = require("./likes/likes.module");
 const comment_module_1 = require("./comment/comment.module");
 const ticket_module_1 = require("./ticket/ticket.module");
 const group_module_1 = require("./group/group.module");
+const address_module_1 = require("./address/address.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -49,6 +50,7 @@ exports.AppModule = AppModule = __decorate([
             ticket_module_1.TicketModule,
             group_module_1.GroupModule,
             event_emitter_1.EventEmitterModule.forRoot({ global: true }),
+            address_module_1.AddressModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [
