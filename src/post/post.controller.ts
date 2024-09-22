@@ -87,6 +87,12 @@ export class PostController {
   createPost(@Req() req: any, @Body() body: CreatePostDto) {
     return this.postService.createPost(body, req.userId);
   }
+  @Get('my-groups')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  getUserGroupsPosts(@Req() req: any, @Query() query: FindQuery) {
+    return this.postService.getUserGroupsPosts(req.userId, query);
+  }
   @Get(':id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
