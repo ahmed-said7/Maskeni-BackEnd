@@ -82,7 +82,7 @@ let EventService = class EventService {
     if (!eventExists) {
       throw new common_1.HttpException('event not found', 400);
     }
-    if (eventExists.user.toString() != user.toString()) {
+    if (eventExists.user.toString() != user) {
       throw new common_1.HttpException(
         'you are not allowed to delete event',
         400,

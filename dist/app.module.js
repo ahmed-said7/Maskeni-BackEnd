@@ -38,6 +38,7 @@ const comment_module_1 = require('./comment/comment.module');
 const ticket_module_1 = require('./ticket/ticket.module');
 const group_module_1 = require('./group/group.module');
 const address_module_1 = require('./address/address.module');
+const voluntary_module_1 = require('./voluntary/voluntary.module');
 let AppModule = class AppModule {};
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate(
@@ -64,6 +65,7 @@ exports.AppModule = AppModule = __decorate(
         group_module_1.GroupModule,
         event_emitter_1.EventEmitterModule.forRoot({ global: true }),
         address_module_1.AddressModule,
+        voluntary_module_1.VoluntaryModule,
       ],
       controllers: [app_controller_1.AppController],
       providers: [

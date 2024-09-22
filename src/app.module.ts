@@ -17,6 +17,7 @@ import { CommentModule } from './comment/comment.module';
 import { TicketModule } from './ticket/ticket.module';
 import { GroupModule } from './group/group.module';
 import { AddressModule } from './address/address.module';
+import { VoluntaryModule } from './voluntary/voluntary.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { AddressModule } from './address/address.module';
     GroupModule,
     EventEmitterModule.forRoot({ global: true }),
     AddressModule,
+    VoluntaryModule,
   ],
   controllers: [AppController],
   providers: [

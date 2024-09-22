@@ -53,7 +53,7 @@ export class EventService {
     if (!eventExists) {
       throw new HttpException('event not found', 400);
     }
-    if (eventExists.user.toString() != user.toString()) {
+    if (eventExists.user.toString() != user) {
       throw new HttpException('you are not allowed to delete event', 400);
     }
     eventExists.isDeleted = true;

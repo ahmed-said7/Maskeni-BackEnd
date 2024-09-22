@@ -70,7 +70,17 @@ export class VoluntaryService {
   async getVoluntary(voluntaryId: string) {
     const voluntaryExists = await this.voluntaryModel
       .findById(voluntaryId)
-      .populate('user');
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     if (!voluntaryExists) {
       throw new HttpException('voluntary not found', 400);
     }
@@ -81,11 +91,18 @@ export class VoluntaryService {
       this.voluntaryModel.find(),
       obj,
     );
-    const voluntary = await query.populate({
-      path: 'user',
-      model: 'User',
-      select: 'mobile name icon',
-    });
+    const voluntary = await query
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     return { voluntary, pagination: paginationObj };
   }
   async addLike(voluntaryId: string, user: string) {
@@ -146,9 +163,7 @@ export class VoluntaryService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.voluntaryModel)
-      .deleteSaved(voluntaryId, user);
+    await this.reactionService.deleteSaved(voluntaryId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedVoluntary: { voluntary: voluntaryId } },
     });
