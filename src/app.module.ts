@@ -23,6 +23,7 @@ import { ServiceModule } from './service/offered-service.module';
 import { QuestionModule } from './question/question.module';
 import { PostModule } from './post/post.module';
 import { FaxModule } from './fax/fax.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -38,7 +39,7 @@ import { FaxModule } from './fax/fax.module';
     UploadModule,
     RefreshModule,
     UserModule,
-    // AdminModule,
+    AdminModule,
     ReviewModule,
     EventModule,
     LikesModule,
