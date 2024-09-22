@@ -36,7 +36,6 @@ exports.CustomerServiceChatModule = CustomerServiceChatModule = __decorate([
                     schema: admin_schema_1.AdminSchema,
                 },
             ]),
-            api_module_1.ApiModule,
         ],
         controllers: [customer_service_chat_controller_1.CustomerServiceChatController],
         providers: [customer_service_chat_service_1.CustomerServiceChatService],

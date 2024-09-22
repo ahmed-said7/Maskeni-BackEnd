@@ -27,7 +27,6 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
         schema: AdminSchema,
       },
     ]),
-    ApiModule,
   ],
   controllers: [CustomerServiceChatController],
   providers: [CustomerServiceChatService],

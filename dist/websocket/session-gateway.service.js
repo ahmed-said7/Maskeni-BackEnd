@@ -12,6 +12,7 @@ let GatewayMap = class GatewayMap {
     constructor() {
         this.admins = new Map();
         this.users = new Map();
+        this.ids = [];
     }
     getAdminSocket(id) {
         return this.admins.get(id);
@@ -20,10 +21,15 @@ let GatewayMap = class GatewayMap {
         this.admins.set(userId, socket);
     }
     removeAdminSocket(userId) {
+        this.ids.splice(this.ids.indexOf(userId), 1);
         this.admins.delete(userId);
     }
     getUserSocket(id) {
+        this.ids.push(id);
         return this.users.get(id);
+    }
+    getIds() {
+        return this.ids;
     }
     setUserSocket(userId, socket) {
         this.users.set(userId, socket);
