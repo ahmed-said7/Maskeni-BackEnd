@@ -11,8 +11,11 @@ const multipart_1 = __importDefault(require("@fastify/multipart"));
 const app_module_1 = require("./app.module");
 const static_1 = __importDefault(require("@fastify/static"));
 const path_1 = require("path");
+const gateway_adpter_1 = require("./websocket/gateway.adpter");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_fastify_1.FastifyAdapter());
+    const adapter = new gateway_adpter_1.WebsocketAdapter(app);
+    app.useWebSocketAdapter(adapter);
     app
         .getHttpAdapter()
         .getInstance()

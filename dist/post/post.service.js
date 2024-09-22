@@ -52,7 +52,8 @@ let PostService = class PostService {
             _id: post.group,
         });
         if (groupExist.admin.toString() == user.toString()) {
-            await post.deleteOne();
+            post.isDeleted = true;
+            await post.save();
             return { status: 'deleted' };
         }
         if (user != post.user.toString()) {

@@ -39,7 +39,10 @@ export class ChatService {
       return { chat: chatExist, ...result };
     }
     const chat = await this.chatModel.create(body);
-    this.eventEmitter.emit(emittedEvents.UserJoined, { chat, user });
+    this.eventEmitter.emit(emittedEvents.UserJoined, {
+      chat: chat._id.toString(),
+      user,
+    });
     return { chat, messages: [] };
   }
   async getChats(obj: FindQuery, user: string) {

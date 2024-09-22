@@ -47,7 +47,10 @@ let ChatService = class ChatService {
             return { chat: chatExist, ...result };
         }
         const chat = await this.chatModel.create(body);
-        this.eventEmitter.emit(enum_1.emittedEvents.UserJoined, { chat, user });
+        this.eventEmitter.emit(enum_1.emittedEvents.UserJoined, {
+            chat: chat._id.toString(),
+            user,
+        });
         return { chat, messages: [] };
     }
     async getChats(obj, user) {

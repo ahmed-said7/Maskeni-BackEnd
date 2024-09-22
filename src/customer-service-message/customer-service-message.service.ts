@@ -36,17 +36,15 @@ export class CustomerServiceMessageService {
     body.user = user;
     body.type = role == All_Role.User ? User.name : Admin.name;
     const message = await this.msgModel.create(body);
-    const sender =
-      user == chat.user.toString() ? chat.user : chat.customer_service;
-    const recipient =
-      user == chat.user.toString() ? chat.customer_service : chat.user;
+    const userId = chat.user.toString();
+    const admin = chat.customer_service?.toString();
     await this.chatModel.findByIdAndUpdate(chat.id, {
       lastMessage: message._id,
     });
     this.eventEmitter.emit(emittedEvents.AdminMessageCreated, {
-      chat,
-      sender,
-      recipient,
+      chat: chat._id.toString(),
+      user: userId,
+      admin,
       message,
     });
     return { message };

@@ -26,13 +26,13 @@ export class MessageService {
     await this.chatModel.findByIdAndUpdate(chat.id, {
       lastMessage: message._id,
     });
-    const sender = user == chat.user.toString() ? chat.user : chat.admin;
-    const recipient = user == chat.user.toString() ? chat.admin : chat.user;
+    const sender = chat.user.toString();
+    const recipient = chat.admin.toString();
     this.eventEmitter.emit(emittedEvents.MessageCreated, {
       message,
       sender,
       recipient,
-      chat,
+      chat: chat._id.toString(),
     });
     return { message };
   }
@@ -87,7 +87,7 @@ export class MessageService {
       .limit(20);
     this.eventEmitter.emit(emittedEvents.UserJoined, {
       user,
-      chat,
+      chat: chatId,
     });
     return { messages };
   }

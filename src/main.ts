@@ -12,12 +12,15 @@ import fastifyMultipart from '@fastify/multipart';
 import { AppModule } from './app.module';
 import fastifyStatic from '@fastify/static';
 import { join } from 'path';
+import { WebsocketAdapter } from './websocket/gateway.adpter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
   );
+  const adapter = new WebsocketAdapter(app);
+  app.useWebSocketAdapter(adapter);
   app
     .getHttpAdapter()
     .getInstance()

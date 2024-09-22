@@ -36,13 +36,13 @@ let MessageService = class MessageService {
         await this.chatModel.findByIdAndUpdate(chat.id, {
             lastMessage: message._id,
         });
-        const sender = user == chat.user.toString() ? chat.user : chat.admin;
-        const recipient = user == chat.user.toString() ? chat.admin : chat.user;
+        const sender = chat.user.toString();
+        const recipient = chat.admin.toString();
         this.eventEmitter.emit(enum_1.emittedEvents.MessageCreated, {
             message,
             sender,
             recipient,
-            chat,
+            chat: chat._id.toString(),
         });
         return { message };
     }
@@ -96,7 +96,7 @@ let MessageService = class MessageService {
             .limit(20);
         this.eventEmitter.emit(enum_1.emittedEvents.UserJoined, {
             user,
-            chat,
+            chat: chatId,
         });
         return { messages };
     }
