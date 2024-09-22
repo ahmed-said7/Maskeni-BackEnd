@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApiModule } from 'src/common/Api/api.module';
-import { User, UserSchema } from 'src/user/user.schema';
+import { UserSchema } from 'src/user/user.schema';
 import { ReactionModule } from 'src/reaction/reaction.module';
 import { QuestionController } from './question.controller';
 import { QuestionService } from './question.service';
 import { Question, QuestionSchema } from './question.schema';
+import { Admin, AdminSchema } from 'src/admin/admin.schema';
 
 @Module({
   imports: [
@@ -13,8 +14,12 @@ import { Question, QuestionSchema } from './question.schema';
     ReactionModule,
     MongooseModule.forFeature([
       {
-        name: User.name,
+        name: 'User',
         schema: UserSchema,
+      },
+      {
+        name: Admin.name,
+        schema: AdminSchema,
       },
       {
         name: Question.name,

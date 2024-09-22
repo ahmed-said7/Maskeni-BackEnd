@@ -9,17 +9,19 @@ import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 import { QueryOfferedDto } from './dto/query.service.dto';
 import { CreateOfferedDto } from './dto/create.service.dto';
 import { UpdateOfferedDto } from './dto/update.service.dto';
-import { OfferedDocument } from './offered-service.schema';
+import { Offered, OfferedDocument } from './offered-service.schema';
 
 @Injectable()
 export class OfferedService {
   constructor(
-    @InjectModel(OfferedService.name)
+    @InjectModel(Offered.name)
     private serviceModel: Model<OfferedDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private reactionService: ReactionService<OfferedDocument>,
     private apiService: ApiService<OfferedDocument, QueryOfferedDto>,
-  ) {}
+  ) {
+    this.reactionService.setModel(this.serviceModel);
+  }
   async createService(body: CreateOfferedDto, user: string) {
     body.user = user;
     const service = await this.serviceModel.create(body);
@@ -43,7 +45,7 @@ export class OfferedService {
     if (!serviceExists) {
       throw new HttpException('service not found', 400);
     }
-    if (serviceExists.user.toString() != user.toString()) {
+    if (serviceExists.user.toString() != user) {
       throw new HttpException('you are not allowed to delete service', 400);
     }
     serviceExists.isDeleted = true;
@@ -53,7 +55,17 @@ export class OfferedService {
   async getService(serviceId: string) {
     const serviceExists = await this.serviceModel
       .findById(serviceId)
-      .populate('user');
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     if (!serviceExists) {
       throw new HttpException('service not found', 400);
     }
@@ -64,18 +76,25 @@ export class OfferedService {
       this.serviceModel.find(),
       obj,
     );
-    const services = await query.populate('user');
+    const services = await query
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     return { services, pagination: paginationObj };
   }
   async addLike(serviceId: string, user: string) {
-    return this.reactionService
-      .setModel(this.serviceModel)
-      .createLike(serviceId, user);
+    return this.reactionService.createLike(serviceId, user);
   }
   async removeLike(serviceId: string, user: string) {
-    return this.reactionService
-      .setModel(this.serviceModel)
-      .deleteLike(serviceId, user);
+    return this.reactionService.deleteLike(serviceId, user);
   }
   async getLikes(serviceId: string, query: FindQuery) {
     return this.reactionService.getAllLikes(serviceId, query);
@@ -92,9 +111,7 @@ export class OfferedService {
     return this.reactionService.createComment(body);
   }
   async removeComment(commentId: string, user: string) {
-    return this.reactionService
-      .setModel(this.serviceModel)
-      .deleteComment(commentId, user);
+    return this.reactionService.deleteComment(commentId, user);
   }
   async getComments(serviceId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, serviceId);
@@ -106,11 +123,11 @@ export class OfferedService {
     if (!service) {
       throw new HttpException('service not found', 400);
     }
-    await this.reactionService
-      .setModel(this.serviceModel)
-      .createSaved(serviceId, user);
+    await this.reactionService.createSaved(serviceId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedservice: { post: serviceId } },
+      $addToSet: {
+        savedservice: { service: serviceId, createdAt: new Date() },
+      },
     });
     return { status: 'saved added post' };
   }
@@ -121,11 +138,9 @@ export class OfferedService {
     if (!service) {
       throw new HttpException('service not found', 400);
     }
-    await this.reactionService
-      .setModel(this.serviceModel)
-      .deleteSaved(serviceId, user);
+    await this.reactionService.deleteSaved(serviceId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $pull: { savedEvent: { event: serviceId } },
+      $pull: { savedService: { service: serviceId } },
     });
     return { status: 'saved deleted post' };
   }
@@ -139,11 +154,11 @@ export class OfferedService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.serviceModel)
-      .createSaved(serviceId, user);
+    await this.reactionService.createRequestedService(serviceId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { requestedService: { post: serviceId } },
+      $addToSet: {
+        requestedService: { service: serviceId, createdAt: new Date() },
+      },
     });
     return { status: 'saved added post' };
   }
@@ -154,9 +169,7 @@ export class OfferedService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.serviceModel)
-      .deleteRequestedService(serviceId, user);
+    await this.reactionService.deleteRequestedService(serviceId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { requestedService: { service: serviceId } },
     });

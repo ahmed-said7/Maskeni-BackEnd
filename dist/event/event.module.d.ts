@@ -1,1 +1,2 @@
-export declare class EventModule {}
+export declare class EventModule {
+}

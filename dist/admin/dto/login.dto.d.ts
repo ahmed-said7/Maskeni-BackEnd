@@ -1,4 +1,4 @@
 export declare class LoginAdminDto {
-  mobile: string;
-  password: string;
+    mobile: string;
+    password: string;
 }

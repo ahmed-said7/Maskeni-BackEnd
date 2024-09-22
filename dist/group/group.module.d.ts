@@ -1,1 +1,2 @@
-export declare class GroupModule {}
+export declare class GroupModule {
+}

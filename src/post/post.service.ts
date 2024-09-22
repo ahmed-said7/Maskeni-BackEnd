@@ -24,10 +24,11 @@ export class PostService {
     private apiService: ApiService<GroupDocument, FindQuery>,
     private likesService: LikesService,
     private commentService: CommentService,
-  ) {}
+  ) {
+    this.reactionService.setModel(this.postModel);
+  }
   async createPost(body: CreatePostDto, user: string) {
     body.user = user;
-
     await this.validateGroup(body.group, user);
     const post = await this.postModel.create(body);
     return { post };
@@ -75,7 +76,11 @@ export class PostService {
         group: groupId,
       },
     );
-    const posts = await query.populate('user');
+    const posts = await query.populate({
+      path: 'user',
+      model: 'User',
+      select: 'name mobile icon',
+    });
     return { posts, pagination: paginationObj };
   }
   async getUserGroupsPosts(user: string, obj: FindQuery) {
@@ -90,7 +95,13 @@ export class PostService {
         group: { $in: ids },
       },
     );
-    const posts = await query.populate(['user', 'group']);
+    const posts = await query
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'name mobile icon',
+      })
+      .populate({ path: 'group', model: 'Group', select: 'name image' });
     return { posts, pagination: paginationObj };
   }
   async addLike(postId: string, user: string) {
@@ -101,9 +112,7 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     await this.validateGroup(post.group.toString(), user);
-    return this.reactionService
-      .setModel(this.postModel)
-      .createLike(postId, user);
+    return this.reactionService.createLike(postId, user);
   }
   private async validateGroup(groupId: string, user: string) {
     const groupExist = await this.groupModel.findOne({
@@ -129,9 +138,7 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     await this.validateGroup(post.group.toString(), user);
-    return this.reactionService
-      .setModel(this.postModel)
-      .deleteLike(postId, user);
+    return this.reactionService.deleteLike(postId, user);
   }
   async getLikes(postId: string, user: string, query: FindQuery) {
     const post = await this.postModel.findOne({
@@ -155,9 +162,7 @@ export class PostService {
     return this.reactionService.createComment(body);
   }
   async removeComment(commentId: string, user: string) {
-    return this.reactionService
-      .setModel(this.postModel)
-      .deleteComment(commentId, user);
+    return this.reactionService.deleteComment(commentId, user);
   }
   async getComments(postId: string, user: string, query: FindQuery) {
     const post = await this.postModel
@@ -178,9 +183,7 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.postModel)
-      .createSaved(postId, user);
+    await this.reactionService.createSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: { savedGroupPost: { post: postId } },
     });
@@ -193,9 +196,7 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.postModel)
-      .deleteSaved(postId, user);
+    await this.reactionService.deleteSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedGroupPost: { post: postId } },
     });

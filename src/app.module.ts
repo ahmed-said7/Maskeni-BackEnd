@@ -18,6 +18,9 @@ import { TicketModule } from './ticket/ticket.module';
 import { GroupModule } from './group/group.module';
 import { AddressModule } from './address/address.module';
 import { VoluntaryModule } from './voluntary/voluntary.module';
+import { ShareModule } from './share/share.module';
+import { ServiceModule } from './service/offered-service.module';
+import { QuestionModule } from './question/question.module';
 
 @Module({
   imports: [
@@ -43,6 +46,9 @@ import { VoluntaryModule } from './voluntary/voluntary.module';
     EventEmitterModule.forRoot({ global: true }),
     AddressModule,
     VoluntaryModule,
+    ShareModule,
+    ServiceModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [

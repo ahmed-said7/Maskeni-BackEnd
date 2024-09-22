@@ -152,7 +152,9 @@ export class VoluntaryService {
     }
     await this.reactionService.createSaved(voluntaryId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedVoluntary: { voluntary: voluntaryId } },
+      $addToSet: {
+        savedVoluntary: { voluntary: voluntaryId, createdAt: new Date() },
+      },
     });
     return { status: 'saved added post' };
   }

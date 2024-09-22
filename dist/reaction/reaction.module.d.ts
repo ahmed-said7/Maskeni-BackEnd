@@ -1,1 +1,2 @@
-export declare class ReactionModule {}
+export declare class ReactionModule {
+}

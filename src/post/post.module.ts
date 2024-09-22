@@ -8,9 +8,15 @@ import { PostSchema, Post } from './post.schema';
 import { User, UserSchema } from 'src/user/user.schema';
 import { Group, GroupSchema } from 'src/group/group.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
+import { LikesModule } from 'src/likes/likes.module';
+import { CommentModule } from 'src/comment/comment.module';
 
 @Module({
   imports: [
+    ApiModule,
+    ReactionModule,
+    LikesModule,
+    CommentModule,
     MongooseModule.forFeature([
       {
         name: Post.name,
@@ -30,7 +36,7 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
       },
     ]),
   ],
-  providers: [PostService, ReactionModule, ApiModule],
+  providers: [PostService],
   controllers: [PostController],
 })
 export class PostModule {}

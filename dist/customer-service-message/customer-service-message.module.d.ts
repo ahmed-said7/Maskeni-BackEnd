@@ -1,1 +1,2 @@
-export declare class CustomerServiceMessageModule {}
+export declare class CustomerServiceMessageModule {
+}

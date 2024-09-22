@@ -10,6 +10,8 @@ import { Offered, OfferedSchema } from './offered-service.schema';
 
 @Module({
   imports: [
+    ReactionModule,
+    ApiModule,
     MongooseModule.forFeature([
       {
         name: Offered.name,
@@ -25,7 +27,7 @@ import { Offered, OfferedSchema } from './offered-service.schema';
       },
     ]),
   ],
-  providers: [OfferedService, ReactionModule, ApiModule],
+  providers: [OfferedService],
   controllers: [OfferedController],
 })
 export class ServiceModule {}

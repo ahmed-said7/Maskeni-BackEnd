@@ -18,7 +18,9 @@ export class QuestionService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private reactionService: ReactionService<QuestionDocument>,
     private apiService: ApiService<QuestionDocument, FindQuery>,
-  ) {}
+  ) {
+    this.reactionService.setModel(questionModel);
+  }
   async createQuestion(body: CreateShareDto, user: string) {
     body.user = user;
     const question = await this.questionModel.create(body);
@@ -50,7 +52,7 @@ export class QuestionService {
     if (!questionExists) {
       throw new HttpException('question not found', 400);
     }
-    if (questionExists.user.toString() != user.toString()) {
+    if (questionExists.user.toString() != user) {
       throw new HttpException('you are not allowed to delete question', 400);
     }
     questionExists.isDeleted = true;
@@ -60,7 +62,17 @@ export class QuestionService {
   async getQuestion(questionId: string) {
     const questionExists = await this.questionModel
       .findById(questionId)
-      .populate('user');
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     if (!questionExists) {
       throw new HttpException('question not found', 400);
     }
@@ -71,20 +83,25 @@ export class QuestionService {
       this.questionModel.find(),
       obj,
     );
-    const questions = await query.populate('user');
+    const questions = await query
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     return { questions, pagination: paginationObj };
   }
   async addLike(questionId: string, user: string) {
-    return this.reactionService
-      .setModel(this.questionModel)
-      .createLike(questionId, user);
-    return { status: 'like added' };
+    return this.reactionService.createLike(questionId, user);
   }
   async removeLike(questionId: string, user: string) {
-    return this.reactionService
-      .setModel(this.questionModel)
-      .deleteLike(questionId, user);
-    return { status: 'like removed' };
+    return this.reactionService.deleteLike(questionId, user);
   }
   async getLikes(questionId: string, query: FindQuery) {
     return this.reactionService.getAllLikes(questionId, query);
@@ -101,9 +118,7 @@ export class QuestionService {
     return this.reactionService.createComment(body);
   }
   async removeComment(commentId: string, user: string) {
-    return this.reactionService
-      .setModel(this.questionModel)
-      .deleteComment(commentId, user);
+    return this.reactionService.deleteComment(commentId, user);
   }
   async getComments(questionId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, questionId);
@@ -115,11 +130,11 @@ export class QuestionService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.questionModel)
-      .createSaved(questionId, user);
+    await this.reactionService.createSaved(questionId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedQuestion: { post: questionId } },
+      $addToSet: {
+        savedQuestion: { question: questionId, createdAt: new Date() },
+      },
     });
     return { status: 'saved added post' };
   }
@@ -130,9 +145,7 @@ export class QuestionService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.questionModel)
-      .deleteSaved(questionId, user);
+    await this.reactionService.deleteSaved(questionId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedQuestion: { question: questionId } },
     });
