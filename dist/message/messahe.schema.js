@@ -12,8 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageSchema = exports.Message = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const chat_schema_1 = require("../chat/chat.schema");
-const user_schema_1 = require("../user/user.schema");
 let Message = class Message {
 };
 exports.Message = Message;
@@ -30,11 +28,11 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Message.prototype, "isDeleted", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: chat_schema_1.Chat.name }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Chat' }),
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Message.prototype, "chat", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: user_schema_1.User.name }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Message.prototype, "user", void 0);
 __decorate([

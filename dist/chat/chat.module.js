@@ -14,12 +14,15 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("../user/user.schema");
 const chat_schema_1 = require("./chat.schema");
 const api_module_1 = require("../common/Api/api.module");
+const admin_schema_1 = require("../admin/admin.schema");
+const message_module_1 = require("../message/message.module");
 let ChatModule = class ChatModule {
 };
 exports.ChatModule = ChatModule;
 exports.ChatModule = ChatModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            message_module_1.MessageModule,
             mongoose_1.MongooseModule.forFeature([
                 {
                     name: chat_schema_1.Chat.name,
@@ -28,6 +31,10 @@ exports.ChatModule = ChatModule = __decorate([
                 {
                     name: user_schema_1.User.name,
                     schema: user_schema_1.UserSchema,
+                },
+                {
+                    name: admin_schema_1.Admin.name,
+                    schema: admin_schema_1.AdminSchema,
                 },
             ]),
             api_module_1.ApiModule,

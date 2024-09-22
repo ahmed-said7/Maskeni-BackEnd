@@ -19,6 +19,10 @@ const message_service_1 = require("./message.service");
 const update_message_dto_1 = require("./dto/update.message.dto");
 const validate_mongo_pipe_1 = require("../common/pipe/validate.mongo.pipe");
 const query_message_dto_1 = require("./dto/query.message.dto");
+const authentication_guard_1 = require("../common/guards/authentication.guard");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
+const roles_1 = require("../common/decorator/roles");
+const enum_1 = require("../common/enum");
 let MessageController = class MessageController {
     constructor(msgService) {
         this.msgService = msgService;
@@ -42,6 +46,8 @@ let MessageController = class MessageController {
 exports.MessageController = MessageController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -50,6 +56,8 @@ __decorate([
 ], MessageController.prototype, "createMessage", null);
 __decorate([
     (0, common_1.Get)('scroll/:chatId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Param)('chatId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Query)()),
@@ -59,6 +67,8 @@ __decorate([
 ], MessageController.prototype, "onScroll", null);
 __decorate([
     (0, common_1.Get)(':chatId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Param)('chatId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -67,6 +77,8 @@ __decorate([
 ], MessageController.prototype, "getChatMessages", null);
 __decorate([
     (0, common_1.Patch)(':messageId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('messageId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(2, (0, common_1.Req)()),
@@ -76,6 +88,8 @@ __decorate([
 ], MessageController.prototype, "updateMessage", null);
 __decorate([
     (0, common_1.Delete)(':messageId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Param)('messageId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),

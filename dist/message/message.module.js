@@ -14,6 +14,7 @@ const message_controller_1 = require("./message.controller");
 const chat_schema_1 = require("../chat/chat.schema");
 const messahe_schema_1 = require("./messahe.schema");
 const user_schema_1 = require("../user/user.schema");
+const admin_schema_1 = require("../admin/admin.schema");
 let MessageModule = class MessageModule {
 };
 exports.MessageModule = MessageModule;
@@ -28,6 +29,10 @@ exports.MessageModule = MessageModule = __decorate([
                 {
                     name: user_schema_1.User.name,
                     schema: user_schema_1.UserSchema,
+                },
+                {
+                    name: admin_schema_1.Admin.name,
+                    schema: admin_schema_1.AdminSchema,
                 },
                 {
                     name: messahe_schema_1.Message.name,

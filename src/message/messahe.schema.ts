@@ -1,7 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { Chat } from 'src/chat/chat.schema';
-import { User } from 'src/user/user.schema';
+// import { Chat } from 'src/chat/chat.schema';
+// import { User } from 'src/user/user.schema';
 
 @Schema({ timestamps: true })
 export class Message {
@@ -14,10 +14,10 @@ export class Message {
   @Prop({ type: Boolean, default: false })
   isDeleted: boolean;
 
-  @Prop({ type: Types.ObjectId, ref: Chat.name })
+  @Prop({ type: Types.ObjectId, ref: 'Chat' })
   chat: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: User.name })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   user: Types.ObjectId;
 
   @Prop({ type: Boolean, default: false })

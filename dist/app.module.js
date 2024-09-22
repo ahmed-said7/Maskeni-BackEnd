@@ -35,6 +35,8 @@ const admin_module_1 = require("./admin/admin.module");
 const country_module_1 = require("./country/country.module");
 const city_module_1 = require("./city/city.module");
 const quarter_module_1 = require("./quarter/quarter.module");
+const message_module_1 = require("./message/message.module");
+const chat_module_1 = require("./chat/chat.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -72,6 +74,8 @@ exports.AppModule = AppModule = __decorate([
             country_module_1.CountryModule,
             city_module_1.CityModule,
             quarter_module_1.QuarterModule,
+            message_module_1.MessageModule,
+            chat_module_1.ChatModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

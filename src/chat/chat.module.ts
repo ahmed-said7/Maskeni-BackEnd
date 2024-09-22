@@ -5,9 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/user/user.schema';
 import { Chat, ChatSchema } from './chat.schema';
 import { ApiModule } from 'src/common/Api/api.module';
+import { Admin, AdminSchema } from 'src/admin/admin.schema';
+import { MessageModule } from 'src/message/message.module';
 
 @Module({
   imports: [
+    MessageModule,
     MongooseModule.forFeature([
       {
         name: Chat.name,
@@ -16,6 +19,10 @@ import { ApiModule } from 'src/common/Api/api.module';
       {
         name: User.name,
         schema: UserSchema,
+      },
+      {
+        name: Admin.name,
+        schema: AdminSchema,
       },
     ]),
     ApiModule,

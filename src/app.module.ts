@@ -27,6 +27,8 @@ import { AdminModule } from './admin/admin.module';
 import { CountryModule } from './country/country.module';
 import { CityModule } from './city/city.module';
 import { QuarterModule } from './quarter/quarter.module';
+import { MessageModule } from './message/message.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -61,6 +63,8 @@ import { QuarterModule } from './quarter/quarter.module';
     CountryModule,
     CityModule,
     QuarterModule,
+    MessageModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [

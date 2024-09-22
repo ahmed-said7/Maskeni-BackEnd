@@ -5,6 +5,7 @@ import { MessageController } from './message.controller';
 import { Chat, ChatSchema } from 'src/chat/chat.schema';
 import { Message, MessageSchema } from './messahe.schema';
 import { User, UserSchema } from 'src/user/user.schema';
+import { Admin, AdminSchema } from 'src/admin/admin.schema';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { User, UserSchema } from 'src/user/user.schema';
       {
         name: User.name,
         schema: UserSchema,
+      },
+      {
+        name: Admin.name,
+        schema: AdminSchema,
       },
       {
         name: Message.name,
