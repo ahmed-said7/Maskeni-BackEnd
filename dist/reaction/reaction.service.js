@@ -38,6 +38,7 @@ let ReactionService = class ReactionService {
     if (this.PostModel) {
       return this;
     }
+    console.log('Setting');
     this.PostModel = PostModel;
     return this;
   }
@@ -172,6 +173,10 @@ let ReactionService = class ReactionService {
     );
   }
   async createRequestedService(postId, userId) {
+    const post = await this.PostModel.findOne({ 'requested.user': userId });
+    if (post) {
+      throw new common_1.HttpException('already requested', 400);
+    }
     await this.PostModel.findByIdAndUpdate(postId, {
       $addToSet: {
         requested: { user: userId, createdAt: new Date() },
@@ -201,6 +206,10 @@ let ReactionService = class ReactionService {
     };
   }
   async deleteRequestedService(postId, userId) {
+    const post = await this.PostModel.findOne({ 'requested.user': userId });
+    if (!post) {
+      throw new common_1.HttpException('not requested', 400);
+    }
     await this.PostModel.findByIdAndUpdate(
       postId,
       {

@@ -26,35 +26,38 @@ var __metadata =
   };
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.CreateVoluntaryDto = void 0;
+const swagger_1 = require('@nestjs/swagger');
+const class_transformer_1 = require('class-transformer');
 const class_validator_1 = require('class-validator');
+const types_1 = require('../../common/types');
 class CreateVoluntaryDto {}
 exports.CreateVoluntaryDto = CreateVoluntaryDto;
 __decorate(
-  [(0, class_validator_1.IsString)(), __metadata('design:type', String)],
+  [
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata('design:type', String),
+  ],
   CreateVoluntaryDto.prototype,
   'name',
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsString)(), __metadata('design:type', String)],
+  [
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata('design:type', String),
+  ],
   CreateVoluntaryDto.prototype,
   'details',
   void 0,
 );
 __decorate(
   [
-    (0, class_validator_1.IsArray)(),
-    (0, class_validator_1.ArrayMinSize)(2),
-    (0, class_validator_1.ArrayMaxSize)(2),
-    (0, class_validator_1.IsNumber)({}, { each: true }),
-    __metadata('design:type', Array),
+    (0, class_validator_1.IsDateString)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata('design:type', String),
   ],
-  CreateVoluntaryDto.prototype,
-  'location',
-  void 0,
-);
-__decorate(
-  [(0, class_validator_1.IsDateString)(), __metadata('design:type', Date)],
   CreateVoluntaryDto.prototype,
   'startedAt',
   void 0,
@@ -63,21 +66,38 @@ __decorate(
   [
     (0, class_validator_1.IsDateString)(),
     (0, class_validator_1.IsOptional)(),
-    __metadata('design:type', Date),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata('design:type', String),
   ],
   CreateVoluntaryDto.prototype,
   'date',
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsDateString)(), __metadata('design:type', Date)],
+  [
+    (0, class_validator_1.IsDateString)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata('design:type', String),
+  ],
   CreateVoluntaryDto.prototype,
   'endedAt',
   void 0,
 );
 __decorate(
   [
+    (0, class_validator_1.ValidateNested)(),
+    (0, swagger_1.ApiProperty)(),
+    (0, class_transformer_1.Type)(() => types_1.ValidateLocation),
+    __metadata('design:type', types_1.ValidateLocation),
+  ],
+  CreateVoluntaryDto.prototype,
+  'location',
+  void 0,
+);
+__decorate(
+  [
     (0, class_validator_1.IsArray)(),
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)({ each: true }),
     __metadata('design:type', String),
   ],
@@ -86,13 +106,21 @@ __decorate(
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsNumber)(), __metadata('design:type', Number)],
+  [
+    (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata('design:type', Number),
+  ],
   CreateVoluntaryDto.prototype,
   'startAge',
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsNumber)(), __metadata('design:type', Number)],
+  [
+    (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiProperty)(),
+    __metadata('design:type', Number),
+  ],
   CreateVoluntaryDto.prototype,
   'endAge',
   void 0,

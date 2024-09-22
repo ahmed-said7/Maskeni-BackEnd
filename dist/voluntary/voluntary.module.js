@@ -28,6 +28,7 @@ const reaction_module_1 = require('../reaction/reaction.module');
 const voluntary_service_1 = require('./voluntary.service');
 const voluntary_controller_1 = require('./voluntary.controller');
 const voluntary_schema_1 = require('./voluntary.schema');
+const admin_schema_1 = require('../admin/admin.schema');
 let VoluntaryModule = class VoluntaryModule {};
 exports.VoluntaryModule = VoluntaryModule;
 exports.VoluntaryModule = VoluntaryModule = __decorate(
@@ -44,6 +45,10 @@ exports.VoluntaryModule = VoluntaryModule = __decorate(
           {
             name: voluntary_schema_1.Voluntary.name,
             schema: voluntary_schema_1.VoluntarySchema,
+          },
+          {
+            name: admin_schema_1.Admin.name,
+            schema: admin_schema_1.AdminSchema,
           },
         ]),
       ],

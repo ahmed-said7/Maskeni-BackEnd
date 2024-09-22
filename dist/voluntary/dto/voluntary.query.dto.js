@@ -26,42 +26,67 @@ var __metadata =
   };
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.QueryVoluntaryDto = void 0;
+const swagger_1 = require('@nestjs/swagger');
 const class_validator_1 = require('class-validator');
 const types_1 = require('../../common/types');
 class QueryVoluntaryDto extends types_1.FindQuery {}
 exports.QueryVoluntaryDto = QueryVoluntaryDto;
 __decorate(
-  [(0, class_validator_1.IsOptional)(), __metadata('design:type', Date)],
+  [
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata('design:type', Date),
+  ],
   QueryVoluntaryDto.prototype,
   'date',
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsOptional)(), __metadata('design:type', Date)],
+  [
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata('design:type', Date),
+  ],
   QueryVoluntaryDto.prototype,
   'startedAt',
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsOptional)(), __metadata('design:type', Date)],
+  [
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata('design:type', Date),
+  ],
   QueryVoluntaryDto.prototype,
   'endedAt',
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsOptional)(), __metadata('design:type', Number)],
+  [
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata('design:type', Number),
+  ],
   QueryVoluntaryDto.prototype,
   'startAge',
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsOptional)(), __metadata('design:type', Number)],
+  [
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata('design:type', Number),
+  ],
   QueryVoluntaryDto.prototype,
   'endAge',
   void 0,
 );
 __decorate(
-  [(0, class_validator_1.IsOptional)(), __metadata('design:type', String)],
+  [
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata('design:type', String),
+  ],
   QueryVoluntaryDto.prototype,
   'type',
   void 0,

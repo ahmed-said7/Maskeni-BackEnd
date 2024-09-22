@@ -6,6 +6,7 @@ import { ReactionModule } from 'src/reaction/reaction.module';
 import { VoluntaryService } from './voluntary.service';
 import { VoluntaryController } from './voluntary.controller';
 import { Voluntary, VoluntarySchema } from './voluntary.schema';
+import { Admin, AdminSchema } from 'src/admin/admin.schema';
 
 @Module({
   imports: [
@@ -19,6 +20,10 @@ import { Voluntary, VoluntarySchema } from './voluntary.schema';
       {
         name: Voluntary.name,
         schema: VoluntarySchema,
+      },
+      {
+        name: Admin.name,
+        schema: AdminSchema,
       },
     ]),
   ],

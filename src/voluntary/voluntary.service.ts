@@ -19,14 +19,17 @@ export class VoluntaryService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private reactionService: ReactionService<VoluntaryDocument>,
     private apiService: ApiService<VoluntaryDocument, QueryVoluntaryDto>,
-  ) {}
+  ) {
+    this.reactionService.setModel(voluntaryModel);
+  }
   async createVoluntary(body: CreateVoluntaryDto, user: string) {
     body.user = user;
     if (!body.date) {
-      const year = body.startedAt.getFullYear();
-      const month = body.startedAt.getMonth();
-      const day = body.startedAt.getDate();
-      body.date = new Date(year, month, day);
+      const date = new Date(body.startedAt);
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      body.date = new Date(year, month, day).toISOString();
     }
     const voluntary = await this.voluntaryModel.create(body);
     return { voluntary };
@@ -57,7 +60,7 @@ export class VoluntaryService {
     if (!voluntaryExists) {
       throw new HttpException('voluntary not found', 400);
     }
-    if (voluntaryExists.user.toString() != user.toString()) {
+    if (voluntaryExists.user.toString() != user) {
       throw new HttpException('you are not allowed to delete voluntary', 400);
     }
     voluntaryExists.isDeleted = true;
@@ -78,8 +81,12 @@ export class VoluntaryService {
       this.voluntaryModel.find(),
       obj,
     );
-    const voluntarys = await query.populate('user');
-    return { voluntarys, pagination: paginationObj };
+    const voluntary = await query.populate({
+      path: 'user',
+      model: 'User',
+      select: 'mobile name icon',
+    });
+    return { voluntary, pagination: paginationObj };
   }
   async addLike(voluntaryId: string, user: string) {
     const post = await this.voluntaryModel.findOne({
@@ -88,10 +95,7 @@ export class VoluntaryService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.voluntaryModel)
-      .createLike(voluntaryId, user);
-    return { status: 'like added' };
+    return this.reactionService.createLike(voluntaryId, user);
   }
   async removeLike(voluntaryId: string, user: string) {
     const post = await this.voluntaryModel.findOne({
@@ -100,10 +104,7 @@ export class VoluntaryService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.voluntaryModel)
-      .deleteLike(voluntaryId, user);
-    return { status: 'like removed' };
+    return this.reactionService.deleteLike(voluntaryId, user);
   }
   async getLikes(voluntaryId: string, query: FindQuery) {
     return this.reactionService.getAllLikes(voluntaryId, query);
@@ -119,10 +120,8 @@ export class VoluntaryService {
     body.post = voluntaryId;
     return this.reactionService.createComment(body);
   }
-  async removeComment(voluntaryId: string, commentId: string, user: string) {
-    return this.reactionService
-      .setModel(this.voluntaryModel)
-      .deleteComment(commentId, user);
+  async removeComment(commentId: string, user: string) {
+    return this.reactionService.deleteComment(commentId, user);
   }
   async getComments(voluntaryId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, voluntaryId);
@@ -134,11 +133,9 @@ export class VoluntaryService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService
-      .setModel(this.voluntaryModel)
-      .createSaved(voluntaryId, user);
+    await this.reactionService.createSaved(voluntaryId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedVoluntary: { post: voluntaryId } },
+      $addToSet: { savedVoluntary: { voluntary: voluntaryId } },
     });
     return { status: 'saved added post' };
   }

@@ -17,6 +17,7 @@ export class ReactionService<T extends IEntityType> {
     if (this.PostModel) {
       return this;
     }
+    console.log('Setting');
     this.PostModel = PostModel;
     return this;
   }
@@ -149,6 +150,10 @@ export class ReactionService<T extends IEntityType> {
     );
   }
   async createRequestedService(postId: string, userId: string) {
+    const post = await this.PostModel.findOne({ 'requested.user': userId });
+    if (post) {
+      throw new HttpException('already requested', 400);
+    }
     await this.PostModel.findByIdAndUpdate(postId, {
       $addToSet: {
         requested: { user: userId, createdAt: new Date() },
@@ -178,6 +183,10 @@ export class ReactionService<T extends IEntityType> {
     };
   }
   async deleteRequestedService(postId: string, userId: string) {
+    const post = await this.PostModel.findOne({ 'requested.user': userId });
+    if (!post) {
+      throw new HttpException('not requested', 400);
+    }
     await this.PostModel.findByIdAndUpdate(
       postId,
       {

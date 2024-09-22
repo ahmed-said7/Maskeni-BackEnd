@@ -81,7 +81,7 @@ export declare class VoluntaryService {
       }>;
   }>;
   getAllVoluntary(obj: QueryVoluntaryDto): Promise<{
-    voluntarys: (import('mongoose').Document<unknown, {}, Voluntary> &
+    voluntary: (import('mongoose').Document<unknown, {}, Voluntary> &
       Voluntary & {
         _id: import('mongoose').Types.ObjectId;
       })[];
@@ -142,7 +142,6 @@ export declare class VoluntaryService {
       }>
   >;
   removeComment(
-    voluntaryId: string,
     commentId: string,
     user: string,
   ): Promise<{
