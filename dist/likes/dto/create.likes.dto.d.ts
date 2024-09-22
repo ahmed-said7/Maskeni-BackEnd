@@ -1,4 +1,4 @@
 export declare class LikeDto {
-  user: string;
-  post: string;
+    user: string;
+    post: string;
 }

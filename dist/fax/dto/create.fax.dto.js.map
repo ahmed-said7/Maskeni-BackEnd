@@ -1,1 +1,1 @@
-{"version":3,"file":"create.fax.dto.js","sourceRoot":"","sources":["../../../src/fax/dto/create.fax.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA2C;AAE3C,MAAa,YAAY;CAKxB;AALD,oCAKC;AAHC;IADC,IAAA,0BAAQ,GAAE;;4CACI;AAEf;IADC,IAAA,0BAAQ,GAAE;;8CACM"}
+{"version":3,"file":"create.fax.dto.js","sourceRoot":"","sources":["../../../src/fax/dto/create.fax.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,6CAA8C;AAC9C,qDAA2C;AAE3C,MAAa,YAAY;CAOxB;AAPD,oCAOC;AAJC;IAFC,IAAA,0BAAQ,GAAE;IACV,IAAA,qBAAW,GAAE;;4CACC;AAGf;IAFC,IAAA,0BAAQ,GAAE;IACV,IAAA,qBAAW,GAAE;;8CACG"}

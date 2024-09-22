@@ -1,1 +1,2 @@
-export declare class FirebaseModule {}
+export declare class FirebaseModule {
+}

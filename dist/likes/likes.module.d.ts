@@ -1,1 +1,2 @@
-export declare class LikesModule {}
+export declare class LikesModule {
+}

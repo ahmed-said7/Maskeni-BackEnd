@@ -1,9 +1,9 @@
 declare class InnerArrayDto {
-  coordinates: [number, number];
+    coordinates: [number, number];
 }
 export declare class CreateCountryDto {
-  name: string;
-  location: object;
-  coordinates: InnerArrayDto[];
+    name: string;
+    location: object;
+    coordinates: InnerArrayDto[];
 }
 export {};

@@ -22,6 +22,7 @@ import { ShareModule } from './share/share.module';
 import { ServiceModule } from './service/offered-service.module';
 import { QuestionModule } from './question/question.module';
 import { PostModule } from './post/post.module';
+import { FaxModule } from './fax/fax.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { PostModule } from './post/post.module';
     ServiceModule,
     QuestionModule,
     PostModule,
+    FaxModule,
   ],
   controllers: [AppController],
   providers: [

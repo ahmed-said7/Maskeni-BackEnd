@@ -1,1 +1,2 @@
-export declare class RefreshModule {}
+export declare class RefreshModule {
+}

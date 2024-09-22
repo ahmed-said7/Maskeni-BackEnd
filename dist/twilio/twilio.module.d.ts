@@ -1,1 +1,2 @@
-export declare class TwilioModule {}
+export declare class TwilioModule {
+}

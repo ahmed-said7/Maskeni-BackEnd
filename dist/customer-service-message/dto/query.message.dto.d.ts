@@ -1,4 +1,4 @@
 export declare class QueryMessageDto {
-  page: number;
-  after: string;
+    page: number;
+    after: string;
 }
