@@ -23,9 +23,6 @@ export class ReactionService<T extends IEntityType> {
   }
   async createComment(body: CreateCommentDto) {
     const comment = await this.commentService.create(body);
-    if (!comment.parentComment) {
-      return comment;
-    }
     await this.PostModel.findByIdAndUpdate(body.post, {
       $addToSet: { comments: comment._id },
       $inc: { commentCount: 1 },

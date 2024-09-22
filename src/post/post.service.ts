@@ -165,17 +165,20 @@ export class PostService {
     }
     body.user = user;
     body.post = postId;
-    return this.reactionService.createComment(body);
+    const comment = await this.reactionService.createComment(body);
+    await this.postModel.findByIdAndUpdate(body.post, {
+      $addToSet: { comments: comment._id },
+      $inc: { commentCount: 1 },
+    });
+    return comment;
   }
   async removeComment(commentId: string, user: string) {
     return this.reactionService.deleteComment(commentId, user);
   }
   async getComments(postId: string, user: string, query: FindQuery) {
-    const post = await this.postModel
-      .findOne({
-        _id: postId,
-      })
-      .populate('comments.user');
+    const post = await this.postModel.findOne({
+      _id: postId,
+    });
     if (!post) {
       throw new HttpException('post not found', 400);
     }
