@@ -21,6 +21,7 @@ import { VoluntaryModule } from './voluntary/voluntary.module';
 import { ShareModule } from './share/share.module';
 import { ServiceModule } from './service/offered-service.module';
 import { QuestionModule } from './question/question.module';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { QuestionModule } from './question/question.module';
     ShareModule,
     ServiceModule,
     QuestionModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [

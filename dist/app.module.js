@@ -29,6 +29,7 @@ const voluntary_module_1 = require("./voluntary/voluntary.module");
 const share_module_1 = require("./share/share.module");
 const offered_service_module_1 = require("./service/offered-service.module");
 const question_module_1 = require("./question/question.module");
+const post_module_1 = require("./post/post.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -59,6 +60,7 @@ exports.AppModule = AppModule = __decorate([
             share_module_1.ShareModule,
             offered_service_module_1.ServiceModule,
             question_module_1.QuestionModule,
+            post_module_1.PostModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

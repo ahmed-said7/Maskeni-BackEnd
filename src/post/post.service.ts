@@ -47,7 +47,7 @@ export class PostService {
       await post.deleteOne();
       return { status: 'deleted' };
     }
-    if (user.toString() != post.user.toString()) {
+    if (user != post.user.toString()) {
       throw new HttpException('you are not post owner', 400);
     }
     post.isDeleted = true;
@@ -111,23 +111,28 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.validateGroup(post.group.toString(), user);
+    // await this.validateGroup(post.group.toString(), user);
     return this.reactionService.createLike(postId, user);
   }
   private async validateGroup(groupId: string, user: string) {
-    const groupExist = await this.groupModel.findOne({
+    let groupExist = await this.groupModel.findOne({
       _id: groupId,
     });
 
     if (!groupExist) {
       throw new HttpException('group not found', 400);
     }
-    const idx = groupExist.users.findIndex((id) => id.toString() == user);
-
-    if (idx == -1 && groupExist.privacy == Group_Privacy.Private) {
-      throw new HttpException('you are not group member', 400);
+    if (groupExist.privacy == Group_Privacy.Public) {
+      return groupExist;
     }
-
+    groupExist = await this.groupModel.findOne({
+      _id: groupId,
+      users: user,
+      privacy: Group_Privacy.Private,
+    });
+    if (!groupExist) {
+      throw new HttpException('you are not a member of this group', 400);
+    }
     return groupExist;
   }
   async removeLike(postId: string, user: string) {
@@ -137,7 +142,7 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.validateGroup(post.group.toString(), user);
+    // await this.validateGroup(post.group.toString(), user);
     return this.reactionService.deleteLike(postId, user);
   }
   async getLikes(postId: string, user: string, query: FindQuery) {
@@ -147,7 +152,7 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.validateGroup(post.group.toString(), user);
+    // await this.validateGroup(post.group.toString(), user);
     return this.likesService.getPostLikes(post.likes, query);
   }
   async addComment(body: CreateCommentDto, postId: string, user: string) {
@@ -173,7 +178,7 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.validateGroup(post.group.toString(), user);
+    // await this.validateGroup(post.group.toString(), user);
     return this.commentService.getPostComments(post.comments, query);
   }
   async addSaved(postId: string, user: string) {
@@ -183,7 +188,7 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.createSaved(postId, user);
+    // await this.reactionService.createSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: { savedGroupPost: { post: postId } },
     });
@@ -196,7 +201,7 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.deleteSaved(postId, user);
+    // await this.reactionService.deleteSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedGroupPost: { post: postId } },
     });
@@ -209,7 +214,7 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.validateGroup(post.group.toString(), user);
+    // await this.validateGroup(post.group.toString(), user);
     return this.reactionService.getAllSaved(query, postId);
   }
 }

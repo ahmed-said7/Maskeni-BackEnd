@@ -1,2 +1,1 @@
-export declare class CityModule {
-}
+export declare class CityModule {}

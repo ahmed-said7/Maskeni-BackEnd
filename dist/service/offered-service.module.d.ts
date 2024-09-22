@@ -1,2 +1,1 @@
-export declare class ServiceModule {
-}
+export declare class ServiceModule {}

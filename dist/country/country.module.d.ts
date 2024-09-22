@@ -1,2 +1,1 @@
-export declare class CountryModule {
-}
+export declare class CountryModule {}

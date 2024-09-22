@@ -1,2 +1,1 @@
-export declare class ApiModule {
-}
+export declare class ApiModule {}

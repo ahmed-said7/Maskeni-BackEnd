@@ -20,6 +20,10 @@ const post_update_dto_1 = require("./dto/post.update.dto");
 const validate_mongo_pipe_1 = require("../common/pipe/validate.mongo.pipe");
 const types_1 = require("../common/types");
 const create_comment_dto_1 = require("../comment/dto/create.comment.dto");
+const authentication_guard_1 = require("../common/guards/authentication.guard");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
+const roles_1 = require("../common/decorator/roles");
+const enum_1 = require("../common/enum");
 let PostController = class PostController {
     constructor(postService) {
         this.postService = postService;
@@ -58,6 +62,8 @@ let PostController = class PostController {
 exports.PostController = PostController;
 __decorate([
     (0, common_1.Get)('comment/:id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('id', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(2, (0, common_1.Query)()),
@@ -67,6 +73,8 @@ __decorate([
 ], PostController.prototype, "getPostComments", null);
 __decorate([
     (0, common_1.Post)('comment/:id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Param)('id', validate_mongo_pipe_1.ValidateObjectIdPipe)),
@@ -76,6 +84,8 @@ __decorate([
 ], PostController.prototype, "addPostComment", null);
 __decorate([
     (0, common_1.Delete)('comment/:commentId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('commentId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -84,6 +94,8 @@ __decorate([
 ], PostController.prototype, "deletePostComment", null);
 __decorate([
     (0, common_1.Post)('likes/:postId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('postId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -92,6 +104,8 @@ __decorate([
 ], PostController.prototype, "addLike", null);
 __decorate([
     (0, common_1.Delete)('likes/:postId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('postId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -100,6 +114,8 @@ __decorate([
 ], PostController.prototype, "removeLike", null);
 __decorate([
     (0, common_1.Get)('likes/:postId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('postId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(2, (0, common_1.Query)()),
@@ -109,6 +125,8 @@ __decorate([
 ], PostController.prototype, "getLike", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -117,6 +135,8 @@ __decorate([
 ], PostController.prototype, "createPost", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('id', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(2, (0, common_1.Query)()),
@@ -126,6 +146,8 @@ __decorate([
 ], PostController.prototype, "getGroupPosts", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('id', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -134,6 +156,8 @@ __decorate([
 ], PostController.prototype, "deletePost", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('id', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(2, (0, common_1.Body)()),

@@ -1,3 +1,3 @@
 export declare class PointDto {
-    coordinates: [number, number];
+  coordinates: [number, number];
 }

@@ -1,3 +1,3 @@
 export declare class LoginUserDto {
-    mobile: string;
+  mobile: string;
 }
