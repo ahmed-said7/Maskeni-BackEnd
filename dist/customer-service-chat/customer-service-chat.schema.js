@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerServiceChatSchema = exports.CustomerServiceChat = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const admin_schema_1 = require("../admin/admin.schema");
 const messahe_schema_1 = require("../message/messahe.schema");
-const user_schema_1 = require("../user/user.schema");
 let CustomerServiceChat = class CustomerServiceChat {
 };
 exports.CustomerServiceChat = CustomerServiceChat;
@@ -26,11 +26,11 @@ __decorate([
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], CustomerServiceChat.prototype, "lastMessage", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: user_schema_1.User.name }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'User' }),
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], CustomerServiceChat.prototype, "user", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: user_schema_1.User.name }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: admin_schema_1.Admin.name }),
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], CustomerServiceChat.prototype, "customer_service", void 0);
 exports.CustomerServiceChat = CustomerServiceChat = __decorate([

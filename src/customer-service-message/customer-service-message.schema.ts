@@ -15,6 +15,9 @@ export class CustomerServiceMessage {
 
   @Prop({ type: String })
   type: string;
+
+  @Prop({ type: Boolean, default: false })
+  seen: boolean;
 }
 
 export type CustomerServiceMessageDocument =

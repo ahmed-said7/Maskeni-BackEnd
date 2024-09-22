@@ -17,6 +17,10 @@ const common_1 = require("@nestjs/common");
 const validate_mongo_pipe_1 = require("../common/pipe/validate.mongo.pipe");
 const customer_service_chat_service_1 = require("./customer-service-chat.service");
 const types_1 = require("../common/types");
+const enum_1 = require("../common/enum");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
+const authentication_guard_1 = require("../common/guards/authentication.guard");
+const roles_1 = require("../common/decorator/roles");
 let CustomerServiceChatController = class CustomerServiceChatController {
     constructor(chatService) {
         this.chatService = chatService;
@@ -34,6 +38,8 @@ let CustomerServiceChatController = class CustomerServiceChatController {
 exports.CustomerServiceChatController = CustomerServiceChatController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -41,6 +47,8 @@ __decorate([
 ], CustomerServiceChatController.prototype, "createChat", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [types_1.FindQuery]),
@@ -48,6 +56,8 @@ __decorate([
 ], CustomerServiceChatController.prototype, "getUserChats", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     __param(0, (0, common_1.Param)('id', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),

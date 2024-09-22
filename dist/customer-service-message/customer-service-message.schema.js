@@ -32,6 +32,10 @@ __decorate([
     (0, mongoose_1.Prop)({ type: String }),
     __metadata("design:type", String)
 ], CustomerServiceMessage.prototype, "type", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], CustomerServiceMessage.prototype, "seen", void 0);
 exports.CustomerServiceMessage = CustomerServiceMessage = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], CustomerServiceMessage);

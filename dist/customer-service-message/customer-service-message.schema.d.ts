@@ -4,6 +4,7 @@ export declare class CustomerServiceMessage {
     chat: Types.ObjectId;
     user: Types.ObjectId;
     type: string;
+    seen: boolean;
 }
 export type CustomerServiceMessageDocument = HydratedDocument<CustomerServiceMessage>;
 export declare const CustomerServiceMessageSchema: import("mongoose").Schema<CustomerServiceMessage, import("mongoose").Model<CustomerServiceMessage, any, any, any, import("mongoose").Document<unknown, any, CustomerServiceMessage> & CustomerServiceMessage & {

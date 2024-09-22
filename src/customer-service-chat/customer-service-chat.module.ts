@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/user/user.schema';
+import { UserSchema } from 'src/user/user.schema';
 import { ApiModule } from 'src/common/Api/api.module';
 import {
   CustomerServiceChat,
@@ -12,13 +12,14 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
 
 @Module({
   imports: [
+    ApiModule,
     MongooseModule.forFeature([
       {
         name: CustomerServiceChat.name,
         schema: CustomerServiceChatSchema,
       },
       {
-        name: User.name,
+        name: 'User',
         schema: UserSchema,
       },
       {
@@ -31,4 +32,4 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
   controllers: [CustomerServiceChatController],
   providers: [CustomerServiceChatService],
 })
-export class ChatModule {}
+export class CustomerServiceChatModule {}

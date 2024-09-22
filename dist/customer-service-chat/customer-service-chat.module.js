@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChatModule = void 0;
+exports.CustomerServiceChatModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("../user/user.schema");
@@ -15,19 +15,20 @@ const customer_service_chat_schema_1 = require("./customer-service-chat.schema")
 const customer_service_chat_controller_1 = require("./customer-service-chat.controller");
 const customer_service_chat_service_1 = require("./customer-service-chat.service");
 const admin_schema_1 = require("../admin/admin.schema");
-let ChatModule = class ChatModule {
+let CustomerServiceChatModule = class CustomerServiceChatModule {
 };
-exports.ChatModule = ChatModule;
-exports.ChatModule = ChatModule = __decorate([
+exports.CustomerServiceChatModule = CustomerServiceChatModule;
+exports.CustomerServiceChatModule = CustomerServiceChatModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            api_module_1.ApiModule,
             mongoose_1.MongooseModule.forFeature([
                 {
                     name: customer_service_chat_schema_1.CustomerServiceChat.name,
                     schema: customer_service_chat_schema_1.CustomerServiceChatSchema,
                 },
                 {
-                    name: user_schema_1.User.name,
+                    name: 'User',
                     schema: user_schema_1.UserSchema,
                 },
                 {
@@ -40,5 +41,5 @@ exports.ChatModule = ChatModule = __decorate([
         controllers: [customer_service_chat_controller_1.CustomerServiceChatController],
         providers: [customer_service_chat_service_1.CustomerServiceChatService],
     })
-], ChatModule);
+], CustomerServiceChatModule);
 //# sourceMappingURL=customer-service-chat.module.js.map

@@ -1,7 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { Admin } from 'src/admin/admin.schema';
 import { Message } from 'src/message/messahe.schema';
-import { User } from 'src/user/user.schema';
 
 @Schema({ timestamps: true })
 export class CustomerServiceChat {
@@ -11,10 +11,10 @@ export class CustomerServiceChat {
   @Prop({ type: Types.ObjectId, ref: Message.name })
   lastMessage: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: User.name })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   user: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: User.name })
+  @Prop({ type: Types.ObjectId, ref: Admin.name })
   customer_service: Types.ObjectId;
 }
 
