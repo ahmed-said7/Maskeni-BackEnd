@@ -17,6 +17,10 @@ const common_1 = require("@nestjs/common");
 const update_password_dto_1 = require("./dto/update.password.dto");
 const admin_service_1 = require("./admin.service");
 const update_user_dto_1 = require("./dto/update.user.dto");
+const enum_1 = require("../common/enum");
+const roles_1 = require("../common/decorator/roles");
+const authentication_guard_1 = require("../common/guards/authentication.guard");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
 let AdminProfileController = class AdminProfileController {
     constructor(adminService) {
         this.adminService = adminService;
@@ -37,6 +41,8 @@ let AdminProfileController = class AdminProfileController {
 exports.AdminProfileController = AdminProfileController;
 __decorate([
     (0, common_1.Patch)('password'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -45,6 +51,8 @@ __decorate([
 ], AdminProfileController.prototype, "updatePassword", null);
 __decorate([
     (0, common_1.Delete)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -52,6 +60,8 @@ __decorate([
 ], AdminProfileController.prototype, "deleteUser", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -59,6 +69,8 @@ __decorate([
 ], AdminProfileController.prototype, "getUser", null);
 __decorate([
     (0, common_1.Patch)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),

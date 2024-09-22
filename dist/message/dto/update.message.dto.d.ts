@@ -1,4 +1,4 @@
 export declare class UpdateMessageDto {
-    content: string;
-    image: string;
+  content: string;
+  image: string;
 }

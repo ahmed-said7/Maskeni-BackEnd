@@ -17,6 +17,10 @@ const common_1 = require("@nestjs/common");
 const login_dto_1 = require("./dto/login.dto");
 const signup_dto_1 = require("./dto/signup.dto");
 const admin_service_1 = require("./admin.service");
+const roles_1 = require("../common/decorator/roles");
+const enum_1 = require("../common/enum");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
+const authentication_guard_1 = require("../common/guards/authentication.guard");
 let AdminAuthController = class AdminAuthController {
     constructor(adminService) {
         this.adminService = adminService;
@@ -38,6 +42,8 @@ __decorate([
 ], AdminAuthController.prototype, "login", null);
 __decorate([
     (0, common_1.Post)('add-admin'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [signup_dto_1.SignupAdminDto]),

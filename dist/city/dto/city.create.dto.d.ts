@@ -1,10 +1,10 @@
 declare class InnerArrayDto {
-    coordinates: [number, number];
+  coordinates: [number, number];
 }
 export declare class CreateCityDto {
-    name: string;
-    location: object;
-    coordinates: InnerArrayDto[];
-    country: string;
+  name: string;
+  location: object;
+  coordinates: InnerArrayDto[];
+  country: string;
 }
 export {};

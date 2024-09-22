@@ -6,6 +6,7 @@ import { Admin, AdminSchema } from './admin.schema';
 import { AdminProfileController } from './profile.controller';
 import { AdminAuthController } from './auth.controller';
 import { RefreshModule } from 'src/refresh/refresh.module';
+import { UserSchema } from 'src/user/user.schema';
 
 @Module({
   controllers: [
@@ -19,7 +20,7 @@ import { RefreshModule } from 'src/refresh/refresh.module';
     RefreshModule,
     MongooseModule.forFeature([
       { name: Admin.name, schema: AdminSchema },
-      //   { name: User.name, schema: UserSchema },
+      { name: 'User', schema: UserSchema },
     ]),
   ],
   exports: [AdminService],

@@ -1,2 +1,1 @@
-export declare class FaxModule {
-}
+export declare class FaxModule {}

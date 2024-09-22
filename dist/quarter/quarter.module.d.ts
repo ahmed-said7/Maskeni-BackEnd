@@ -1,2 +1,1 @@
-export declare class QuarterModule {
-}
+export declare class QuarterModule {}

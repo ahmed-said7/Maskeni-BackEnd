@@ -1,2 +1,1 @@
-export declare class VoluntaryModule {
-}
+export declare class VoluntaryModule {}

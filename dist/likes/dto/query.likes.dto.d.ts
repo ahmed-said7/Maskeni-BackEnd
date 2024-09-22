@@ -1,3 +1,2 @@
 import { FindQuery } from 'src/common/types';
-export declare class LikesQueryDto extends FindQuery {
-}
+export declare class LikesQueryDto extends FindQuery {}

@@ -15,6 +15,7 @@ const admin_schema_1 = require("./admin.schema");
 const profile_controller_1 = require("./profile.controller");
 const auth_controller_1 = require("./auth.controller");
 const refresh_module_1 = require("../refresh/refresh.module");
+const user_schema_1 = require("../user/user.schema");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
@@ -31,6 +32,7 @@ exports.AdminModule = AdminModule = __decorate([
             refresh_module_1.RefreshModule,
             mongoose_1.MongooseModule.forFeature([
                 { name: admin_schema_1.Admin.name, schema: admin_schema_1.AdminSchema },
+                { name: 'User', schema: user_schema_1.UserSchema },
             ]),
         ],
         exports: [admin_service_1.AdminService],

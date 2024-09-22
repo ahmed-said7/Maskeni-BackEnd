@@ -1,2 +1,1 @@
-export declare class ShareModule {
-}
+export declare class ShareModule {}
