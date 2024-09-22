@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PointDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class PointDto {
 }
@@ -17,6 +18,7 @@ exports.PointDto = PointDto;
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.IsNumber)({}, { each: true }),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Array)
 ], PointDto.prototype, "coordinates", void 0);
 //# sourceMappingURL=point.dto.js.map

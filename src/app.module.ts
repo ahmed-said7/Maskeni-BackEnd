@@ -24,6 +24,9 @@ import { QuestionModule } from './question/question.module';
 import { PostModule } from './post/post.module';
 import { FaxModule } from './fax/fax.module';
 import { AdminModule } from './admin/admin.module';
+import { CountryModule } from './country/country.module';
+import { CityModule } from './city/city.module';
+import { QuarterModule } from './quarter/quarter.module';
 
 @Module({
   imports: [
@@ -55,6 +58,9 @@ import { AdminModule } from './admin/admin.module';
     PostModule,
     FaxModule,
     AddressModule,
+    CountryModule,
+    CityModule,
+    QuarterModule,
   ],
   controllers: [AppController],
   providers: [

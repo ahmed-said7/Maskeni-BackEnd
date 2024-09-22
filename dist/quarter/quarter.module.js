@@ -14,6 +14,9 @@ const quarter_controller_1 = require("./quarter.controller");
 const quarter_schema_1 = require("./quarter.schema");
 const country_module_1 = require("../country/country.module");
 const city_module_1 = require("../city/city.module");
+const admin_schema_1 = require("../admin/admin.schema");
+const user_schema_1 = require("../user/user.schema");
+const api_module_1 = require("../common/Api/api.module");
 let QuarterModule = class QuarterModule {
 };
 exports.QuarterModule = QuarterModule;
@@ -22,6 +25,7 @@ exports.QuarterModule = QuarterModule = __decorate([
         imports: [
             country_module_1.CountryModule,
             city_module_1.CityModule,
+            api_module_1.ApiModule,
             mongoose_1.MongooseModule.forFeatureAsync([
                 {
                     name: quarter_schema_1.Quarter.name,
@@ -31,6 +35,10 @@ exports.QuarterModule = QuarterModule = __decorate([
                         return schema;
                     },
                 },
+            ]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: 'User', schema: user_schema_1.UserSchema },
+                { name: 'Admin', schema: admin_schema_1.AdminSchema },
             ]),
         ],
         controllers: [quarter_controller_1.QuarterController],

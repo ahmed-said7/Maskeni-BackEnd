@@ -12,12 +12,16 @@ const mongoose_1 = require("@nestjs/mongoose");
 const country_schema_1 = require("./country.schema");
 const country_controller_1 = require("./country.controller");
 const country_service_1 = require("./country.service");
+const api_module_1 = require("../common/Api/api.module");
+const user_schema_1 = require("../user/user.schema");
+const admin_schema_1 = require("../admin/admin.schema");
 let CountryModule = class CountryModule {
 };
 exports.CountryModule = CountryModule;
 exports.CountryModule = CountryModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            api_module_1.ApiModule,
             mongoose_1.MongooseModule.forFeatureAsync([
                 {
                     name: country_schema_1.Country.name,
@@ -27,6 +31,10 @@ exports.CountryModule = CountryModule = __decorate([
                         return schema;
                     },
                 },
+            ]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: 'User', schema: user_schema_1.UserSchema },
+                { name: 'Admin', schema: admin_schema_1.AdminSchema },
             ]),
         ],
         controllers: [country_controller_1.CountryController],

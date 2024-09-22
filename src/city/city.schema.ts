@@ -1,10 +1,13 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 @Schema()
 export class City {
   @Prop({ type: String })
   name: string;
+
+  @Prop({ type: Types.ObjectId, ref: 'Country' })
+  country: Types.ObjectId;
 
   @Prop({
     type: {

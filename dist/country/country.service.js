@@ -56,9 +56,6 @@ let CountryService = class CountryService {
                 },
             },
         });
-        if (!country) {
-            throw new common_1.NotFoundException('No country contains the provided point');
-        }
         return country;
     }
     async getAllCountries(obj) {

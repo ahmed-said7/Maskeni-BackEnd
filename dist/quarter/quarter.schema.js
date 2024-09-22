@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuarterSchema = exports.Quarter = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
 let Quarter = class Quarter {
 };
 exports.Quarter = Quarter;
@@ -33,6 +34,14 @@ __decorate([
     (0, mongoose_1.Prop)({ type: Boolean }),
     __metadata("design:type", Boolean)
 ], Quarter.prototype, "isDeleted", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Country' }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Quarter.prototype, "country", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'City' }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Quarter.prototype, "city", void 0);
 exports.Quarter = Quarter = __decorate([
     (0, mongoose_1.Schema)()
 ], Quarter);

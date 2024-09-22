@@ -55,9 +55,9 @@ export class QuarterService {
       },
     });
 
-    if (!quarter) {
-      throw new NotFoundException('No quarter contains the provided point');
-    }
+    // if (!quarter) {
+    //   throw new NotFoundException('No quarter contains the provided point');
+    // }
 
     return quarter;
   }

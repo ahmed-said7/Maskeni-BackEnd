@@ -5,11 +5,15 @@ import { QuarterController } from './quarter.controller';
 import { Quarter, QuarterSchema } from './quarter.schema';
 import { CountryModule } from 'src/country/country.module';
 import { CityModule } from 'src/city/city.module';
+import { AdminSchema } from 'src/admin/admin.schema';
+import { UserSchema } from 'src/user/user.schema';
+import { ApiModule } from 'src/common/Api/api.module';
 
 @Module({
   imports: [
     CountryModule,
     CityModule,
+    ApiModule,
     MongooseModule.forFeatureAsync([
       {
         name: Quarter.name,
@@ -19,6 +23,10 @@ import { CityModule } from 'src/city/city.module';
           return schema;
         },
       },
+    ]),
+    MongooseModule.forFeature([
+      { name: 'User', schema: UserSchema },
+      { name: 'Admin', schema: AdminSchema },
     ]),
   ],
   controllers: [QuarterController],

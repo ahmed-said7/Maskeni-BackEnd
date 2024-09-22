@@ -55,9 +55,6 @@ let CityService = class CityService {
                 },
             },
         });
-        if (!city) {
-            throw new common_1.NotFoundException('No city contains the provided point');
-        }
         return city;
     }
     async getAllCities(obj) {

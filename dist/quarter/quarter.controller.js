@@ -18,6 +18,10 @@ const quarter_service_1 = require("./quarter.service");
 const quarter_create_dto_1 = require("./dto/quarter.create.dto");
 const point_dto_1 = require("./dto/point.dto");
 const quarter_query_dto_1 = require("./dto/quarter.query.dto");
+const authentication_guard_1 = require("../common/guards/authentication.guard");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
+const roles_1 = require("../common/decorator/roles");
+const enum_1 = require("../common/enum");
 let QuarterController = class QuarterController {
     constructor(quarterService) {
         this.quarterService = quarterService;
@@ -44,6 +48,8 @@ let QuarterController = class QuarterController {
 exports.QuarterController = QuarterController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [quarter_create_dto_1.CreateQuarterDto]),
@@ -78,6 +84,8 @@ __decorate([
 ], QuarterController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

@@ -31,6 +31,10 @@ const offered_service_module_1 = require("./service/offered-service.module");
 const question_module_1 = require("./question/question.module");
 const post_module_1 = require("./post/post.module");
 const fax_module_1 = require("./fax/fax.module");
+const admin_module_1 = require("./admin/admin.module");
+const country_module_1 = require("./country/country.module");
+const city_module_1 = require("./city/city.module");
+const quarter_module_1 = require("./quarter/quarter.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -49,6 +53,7 @@ exports.AppModule = AppModule = __decorate([
             upload_module_1.UploadModule,
             refresh_module_1.RefreshModule,
             user_module_1.UserModule,
+            admin_module_1.AdminModule,
             review_module_1.ReviewModule,
             event_module_1.EventModule,
             likes_module_1.LikesModule,
@@ -64,6 +69,9 @@ exports.AppModule = AppModule = __decorate([
             post_module_1.PostModule,
             fax_module_1.FaxModule,
             address_module_1.AddressModule,
+            country_module_1.CountryModule,
+            city_module_1.CityModule,
+            quarter_module_1.QuarterModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

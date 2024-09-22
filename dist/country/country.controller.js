@@ -18,6 +18,10 @@ const types_1 = require("../common/types");
 const point_dto_1 = require("./dto/point.dto");
 const country_service_1 = require("./country.service");
 const create_country_dto_1 = require("./dto/create.country.dto");
+const authentication_guard_1 = require("../common/guards/authentication.guard");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
+const roles_1 = require("../common/decorator/roles");
+const enum_1 = require("../common/enum");
 let CountryController = class CountryController {
     constructor(countryService) {
         this.countryService = countryService;
@@ -44,6 +48,8 @@ let CountryController = class CountryController {
 exports.CountryController = CountryController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_country_dto_1.CreateCountryDto]),
@@ -78,6 +84,8 @@ __decorate([
 ], CountryController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

@@ -12,12 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCountryDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+const swagger_1 = require("@nestjs/swagger");
 class InnerArrayDto {
 }
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayNotEmpty)(),
     (0, class_validator_1.IsNumber)({}, { each: true }),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Array)
 ], InnerArrayDto.prototype, "coordinates", void 0);
 class CreateCountryDto {
@@ -25,12 +27,14 @@ class CreateCountryDto {
 exports.CreateCountryDto = CreateCountryDto;
 __decorate([
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateCountryDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
     (0, class_transformer_1.Type)(() => InnerArrayDto),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Array)
 ], CreateCountryDto.prototype, "coordinates", void 0);
 //# sourceMappingURL=create.country.dto.js.map

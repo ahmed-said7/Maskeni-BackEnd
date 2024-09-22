@@ -3,9 +3,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Country, CountrySchema } from './country.schema';
 import { CountryController } from './country.controller';
 import { CountryService } from './country.service';
+import { ApiModule } from 'src/common/Api/api.module';
+import { UserSchema } from 'src/user/user.schema';
+import { AdminSchema } from 'src/admin/admin.schema';
 
 @Module({
   imports: [
+    ApiModule,
     MongooseModule.forFeatureAsync([
       {
         name: Country.name,
@@ -15,6 +19,10 @@ import { CountryService } from './country.service';
           return schema;
         },
       },
+    ]),
+    MongooseModule.forFeature([
+      { name: 'User', schema: UserSchema },
+      { name: 'Admin', schema: AdminSchema },
     ]),
   ],
   controllers: [CountryController],

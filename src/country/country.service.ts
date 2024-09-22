@@ -69,9 +69,9 @@ export class CountryService {
       },
     });
 
-    if (!country) {
-      throw new NotFoundException('No country contains the provided point');
-    }
+    // if (!country) {
+    //   throw new NotFoundException('No country contains the provided point');
+    // }
 
     return country;
   }

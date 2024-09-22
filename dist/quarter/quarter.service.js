@@ -56,9 +56,6 @@ let QuarterService = class QuarterService {
                 },
             },
         });
-        if (!quarter) {
-            throw new common_1.NotFoundException('No quarter contains the provided point');
-        }
         return quarter;
     }
     async getAllQuarters(obj) {

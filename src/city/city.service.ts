@@ -52,9 +52,9 @@ export class CityService {
       },
     });
 
-    if (!city) {
-      throw new NotFoundException('No city contains the provided point');
-    }
+    // if (!city) {
+    //   throw new NotFoundException('No city contains the provided point');
+    // }
 
     return city;
   }
