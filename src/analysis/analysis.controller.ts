@@ -11,7 +11,7 @@ export class AnalysisController {
 
   @Get('count')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User)
+  @Roles(All_Role.Admin, All_Role.SuperAdmin)
   async getAllDocs() {
     return this.analysisService.getAllDocs();
   }
