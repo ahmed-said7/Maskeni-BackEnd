@@ -27,8 +27,8 @@ let CommentService = class CommentService {
         if (newComment.parentComment) {
             await this.commentModel.findByIdAndUpdate(body.parentComment, {
                 $addToSet: { replies: newComment._id },
-                $inc: { replyCount: 1 },
-            });
+                $inc: { repliesCount: 1 },
+            }, { new: true });
         }
         return newComment;
     }
@@ -60,8 +60,8 @@ let CommentService = class CommentService {
         });
         if (comment.parentComment) {
             await this.commentModel.findByIdAndUpdate(comment.parentComment, {
-                $pull: { replies: comment.parentComment },
-                $inc: { replyCount: -1 },
+                $pull: { replies: comment._id },
+                $inc: { repliesCount: -1 },
             });
         }
         return comment;

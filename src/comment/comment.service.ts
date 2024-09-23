@@ -17,10 +17,14 @@ export class CommentService {
   async create(body: CreateCommentDto) {
     const newComment = await this.commentModel.create(body);
     if (newComment.parentComment) {
-      await this.commentModel.findByIdAndUpdate(body.parentComment, {
-        $addToSet: { replies: newComment._id },
-        $inc: { replyCount: 1 },
-      });
+      await this.commentModel.findByIdAndUpdate(
+        body.parentComment,
+        {
+          $addToSet: { replies: newComment._id },
+          $inc: { repliesCount: 1 },
+        },
+        { new: true },
+      );
     }
     return newComment;
   }
@@ -61,8 +65,8 @@ export class CommentService {
     });
     if (comment.parentComment) {
       await this.commentModel.findByIdAndUpdate(comment.parentComment, {
-        $pull: { replies: comment.parentComment },
-        $inc: { replyCount: -1 },
+        $pull: { replies: comment._id },
+        $inc: { repliesCount: -1 },
       });
     }
     return comment;

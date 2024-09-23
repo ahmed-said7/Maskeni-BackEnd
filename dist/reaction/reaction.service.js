@@ -28,6 +28,9 @@ let ReactionService = class ReactionService {
     }
     async createComment(body) {
         const comment = await this.commentService.create(body);
+        if (!comment.parentComment) {
+            return comment;
+        }
         await this.PostModel.findByIdAndUpdate(body.post, {
             $addToSet: { comments: comment._id },
             $inc: { commentCount: 1 },
@@ -77,7 +80,7 @@ let ReactionService = class ReactionService {
         });
         await this.PostModel.findByIdAndUpdate(postId, {
             $addToSet: { likes: like._id },
-            $inc: { likeCount: 1 },
+            $inc: { likesCount: 1 },
         });
         return { status: 'like created' };
     }
@@ -100,7 +103,7 @@ let ReactionService = class ReactionService {
         });
         await this.PostModel.findByIdAndUpdate(postId, {
             $pull: { likes: like._id },
-            $inc: { likeCount: -1 },
+            $inc: { likesCount: -1 },
         });
         return { status: 'like deleted' };
     }
