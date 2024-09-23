@@ -24,16 +24,29 @@ exports.GroupModule = GroupModule = __decorate([
             api_module_1.ApiModule,
             mongoose_1.MongooseModule.forFeature([
                 {
-                    name: group_schema_1.Group.name,
-                    schema: group_schema_1.GroupSchema,
-                },
-                {
                     name: user_schema_1.User.name,
                     schema: user_schema_1.UserSchema,
                 },
                 {
                     name: admin_schema_1.Admin.name,
                     schema: admin_schema_1.AdminSchema,
+                },
+            ]),
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: group_schema_1.Group.name,
+                    useFactory: async () => {
+                        const schema = group_schema_1.GroupSchema;
+                        schema.pre(/^find/, function () {
+                            if (!this.skipFilter) {
+                                this.find({
+                                    isDeleted: false,
+                                    isArchived: false,
+                                });
+                            }
+                        });
+                        return schema;
+                    },
                 },
             ]),
         ],

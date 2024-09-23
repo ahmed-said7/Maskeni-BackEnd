@@ -21,6 +21,15 @@ export class Group {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] }) // Array of user references
   users: Types.ObjectId[];
+
+  @Prop({ type: Boolean, default: false })
+  isDeleted: boolean;
+
+  @Prop({ type: Boolean, default: false })
+  isAccepted: boolean;
+
+  @Prop({ type: Boolean, default: false })
+  isArchived: boolean;
 }
 export type GroupDocument = HydratedDocument<Group>;
 // Generate the schema for Mongoose using the SchemaFactory

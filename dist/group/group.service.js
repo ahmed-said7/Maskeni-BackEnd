@@ -92,7 +92,8 @@ let GroupServices = class GroupServices {
         if (group.admin.toString() != req.userId) {
             throw new common_1.HttpException('you are not group admin', 400);
         }
-        await group.deleteOne();
+        group.isDeleted = true;
+        await group.save();
         return { status: 'deleted' };
     }
     async getGroupMembers(groupId, req) {
@@ -108,6 +109,16 @@ let GroupServices = class GroupServices {
             throw new common_1.HttpException('user is not group member', 400);
         }
         return { users: group.users, admin: group.admin };
+    }
+    async getMyArchivedGroups(obj) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.groupModel.find(), obj, { isArchived: true });
+        const groups = await query.setOptions({ skipFilter: true });
+        return { groups, pagination: paginationObj };
+    }
+    async getMyDeletedGroups(obj) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.groupModel.find(), obj, { isDeleted: true });
+        const groups = await query.setOptions({ skipFilter: true });
+        return { groups, pagination: paginationObj };
     }
 };
 exports.GroupServices = GroupServices;

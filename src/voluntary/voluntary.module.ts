@@ -18,10 +18,6 @@ import { SearchQuery } from 'src/share/share.module';
         name: User.name,
         schema: UserSchema,
       },
-      // {
-      //   name: Voluntary.name,
-      //   schema: VoluntarySchema,
-      // },
       {
         name: Admin.name,
         schema: AdminSchema,
@@ -34,7 +30,11 @@ import { SearchQuery } from 'src/share/share.module';
           const schema = VoluntarySchema;
           schema.pre<SearchQuery>(/^find/, function () {
             if (!this.skipFilter) {
-              this.find({ isDeleted: false });
+              this.find({
+                isDeleted: false,
+                // isAccepted: true,
+                isArchived: false,
+              });
             }
           });
           return schema;

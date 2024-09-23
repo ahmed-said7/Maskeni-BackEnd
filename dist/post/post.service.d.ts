@@ -97,4 +97,16 @@ export declare class PostService {
             createdAt?: Date;
         }[];
     }>;
+    getMyArchivedPosts(obj: any): Promise<{
+        posts: (import("mongoose").Document<unknown, {}, Group> & Group & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
+    }>;
+    getMyDeletedPosts(obj: any): Promise<{
+        posts: (import("mongoose").Document<unknown, {}, Group> & Group & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
+    }>;
 }

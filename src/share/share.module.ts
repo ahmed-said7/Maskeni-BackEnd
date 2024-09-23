@@ -21,10 +21,6 @@ export interface SearchQuery extends Query<any, any[] | any> {
         name: User.name,
         schema: UserSchema,
       },
-      // {
-      //   name: Share.name,
-      //   schema: ShareSchema,
-      // },
       {
         name: Admin.name,
         schema: AdminSchema,
@@ -37,7 +33,11 @@ export interface SearchQuery extends Query<any, any[] | any> {
           const schema = ShareSchema;
           schema.pre<SearchQuery>(/^find/, function () {
             if (!this.skipFilter) {
-              this.find({ isDeleted: false });
+              this.find({
+                isDeleted: false,
+                // isAccepted: true,
+                isArchived: false,
+              });
             }
           });
           return schema;

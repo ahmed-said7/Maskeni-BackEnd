@@ -108,4 +108,16 @@ export declare class OfferedService {
             createdAt?: Date;
         }[];
     }>;
+    getMyArchivedServices(obj: QueryOfferedDto): Promise<{
+        services: (import("mongoose").Document<unknown, {}, Offered> & Offered & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
+    }>;
+    getMyDeletedServices(obj: QueryOfferedDto): Promise<{
+        services: (import("mongoose").Document<unknown, {}, Offered> & Offered & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
+    }>;
 }

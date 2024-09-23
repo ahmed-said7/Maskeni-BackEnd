@@ -41,7 +41,10 @@ exports.ServiceModule = ServiceModule = __decorate([
                         const schema = offered_service_schema_1.OfferedSchema;
                         schema.pre(/^find/, function () {
                             if (!this.skipFilter) {
-                                this.find({ isDeleted: false });
+                                this.find({
+                                    isDeleted: false,
+                                    isArchived: false,
+                                });
                             }
                         });
                         return schema;

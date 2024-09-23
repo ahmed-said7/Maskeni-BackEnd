@@ -17,7 +17,7 @@ export declare class ShareController {
         }>;
     }>;
     getAllShare(query: QueryShareDto): Promise<{
-        events: (import("mongoose").Document<unknown, {}, import("./share.schema").Share> & import("./share.schema").Share & {
+        shares: (import("mongoose").Document<unknown, {}, import("./share.schema").Share> & import("./share.schema").Share & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("../common/Api/api.service").Pagination;

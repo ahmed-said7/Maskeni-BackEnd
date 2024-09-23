@@ -188,4 +188,22 @@ export class OfferedService {
   async getAllRequested(serviceId: string, query: FindQuery) {
     return this.reactionService.getAllRequestedServices(query, serviceId);
   }
+  async getMyArchivedServices(obj: QueryOfferedDto) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.serviceModel.find(),
+      obj,
+      { isArchived: true },
+    );
+    const services = await query.setOptions({ skipFilter: true });
+    return { services, pagination: paginationObj };
+  }
+  async getMyDeletedServices(obj: QueryOfferedDto) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.serviceModel.find(),
+      obj,
+      { isDeleted: true },
+    );
+    const services = await query.setOptions({ skipFilter: true });
+    return { services, pagination: paginationObj };
+  }
 }

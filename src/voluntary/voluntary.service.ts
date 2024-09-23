@@ -184,4 +184,22 @@ export class VoluntaryService {
   async getAllSaved(voluntaryId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, voluntaryId);
   }
+  async getMyDeletedVoluntary(obj: any) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.voluntaryModel.find(),
+      obj,
+      { isDeleted: true },
+    );
+    const voluntary = await query.setOptions({ skipFilter: true });
+    return { voluntary, pagination: paginationObj };
+  }
+  async getMyArchivedVoluntary(obj: any) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.voluntaryModel.find(),
+      obj,
+      { isArchived: true },
+    );
+    const voluntary = await query.setOptions({ skipFilter: true });
+    return { voluntary, pagination: paginationObj };
+  }
 }

@@ -45,7 +45,7 @@ export declare class ShareService {
         }>;
     }>;
     getAllShare(obj: QueryShareDto): Promise<{
-        events: (import("mongoose").Document<unknown, {}, Share> & Share & {
+        shares: (import("mongoose").Document<unknown, {}, Share> & Share & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("src/common/Api/api.service").Pagination;
@@ -92,5 +92,17 @@ export declare class ShareService {
             user: import("mongoose").Types.ObjectId;
             createdAt?: Date;
         }[];
+    }>;
+    getMyArcivedShare(obj: any): Promise<{
+        events: (import("mongoose").Document<unknown, {}, Share> & Share & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
+    }>;
+    getMyDeletdShare(obj: any): Promise<{
+        events: (import("mongoose").Document<unknown, {}, Share> & Share & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
     }>;
 }

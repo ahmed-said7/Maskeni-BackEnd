@@ -41,7 +41,10 @@ exports.ShareModule = ShareModule = __decorate([
                         const schema = share_schema_1.ShareSchema;
                         schema.pre(/^find/, function () {
                             if (!this.skipFilter) {
-                                this.find({ isDeleted: false });
+                                this.find({
+                                    isDeleted: false,
+                                    isArchived: false,
+                                });
                             }
                         });
                         return schema;

@@ -50,7 +50,10 @@ exports.PostModule = PostModule = __decorate([
                         const schema = post_schema_1.PostSchema;
                         schema.pre(/^find/, function () {
                             if (!this.skipFilter) {
-                                this.find({ isDeleted: false });
+                                this.find({
+                                    isDeleted: false,
+                                    isArchived: false,
+                                });
                             }
                         });
                         return schema;

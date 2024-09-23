@@ -39,12 +39,25 @@ exports.EventModule = EventModule = __decorate([
                     schema: admin_schema_1.AdminSchema,
                 },
                 {
-                    name: Event.name,
-                    schema: event_schema_1.EventSchema,
-                },
-                {
                     name: ticket_schema_1.Ticket.name,
                     schema: ticket_schema_1.TicketSchema,
+                },
+            ]),
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: event_schema_1.Event.name,
+                    useFactory: async () => {
+                        const schema = event_schema_1.EventSchema;
+                        schema.pre(/^find/, function () {
+                            if (!this.skipFilter) {
+                                this.find({
+                                    isDeleted: false,
+                                    isArchived: false,
+                                });
+                            }
+                        });
+                        return schema;
+                    },
                 },
             ]),
         ],

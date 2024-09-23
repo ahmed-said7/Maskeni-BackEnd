@@ -7,15 +7,12 @@ import { User, UserSchema } from 'src/user/user.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 // import { ApiAcceptedResponse } from '@nestjs/swagger';
 import { ApiModule } from 'src/common/Api/api.module';
+import { SearchQuery } from 'src/share/share.module';
 
 @Module({
   imports: [
     ApiModule,
     MongooseModule.forFeature([
-      {
-        name: Group.name,
-        schema: GroupSchema,
-      },
       {
         name: User.name,
         schema: UserSchema,
@@ -23,6 +20,24 @@ import { ApiModule } from 'src/common/Api/api.module';
       {
         name: Admin.name,
         schema: AdminSchema,
+      },
+    ]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Group.name,
+        useFactory: async () => {
+          const schema = GroupSchema;
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.skipFilter) {
+              this.find({
+                isDeleted: false,
+                // isAccepted: true,
+                isArchived: false,
+              });
+            }
+          });
+          return schema;
+        },
       },
     ]),
   ],

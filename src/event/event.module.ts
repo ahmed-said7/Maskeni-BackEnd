@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApiModule } from 'src/common/Api/api.module';
 import { User, UserSchema } from 'src/user/user.schema';
-import { EventSchema } from './event.schema';
+import { Event, EventSchema } from './event.schema';
 import { Ticket, TicketSchema } from 'src/ticket/ticket.schema';
 import { EventService } from './event.service';
 import { EventController } from './event.controller';
@@ -10,6 +10,7 @@ import { ReactionModule } from 'src/reaction/reaction.module';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { CommentSchema } from 'src/comment/comment.schema';
 import { LikesSchema } from 'src/likes/likes.schema';
+import { SearchQuery } from 'src/share/share.module';
 
 @Module({
   imports: [
@@ -27,12 +28,26 @@ import { LikesSchema } from 'src/likes/likes.schema';
         schema: AdminSchema,
       },
       {
-        name: Event.name,
-        schema: EventSchema,
-      },
-      {
         name: Ticket.name,
         schema: TicketSchema,
+      },
+    ]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Event.name,
+        useFactory: async () => {
+          const schema = EventSchema;
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.skipFilter) {
+              this.find({
+                isDeleted: false,
+                // isAccepted: true,
+                isArchived: false,
+              });
+            }
+          });
+          return schema;
+        },
       },
     ]),
   ],

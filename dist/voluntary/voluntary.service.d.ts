@@ -93,4 +93,16 @@ export declare class VoluntaryService {
             createdAt?: Date;
         }[];
     }>;
+    getMyDeletedVoluntary(obj: any): Promise<{
+        voluntary: (import("mongoose").Document<unknown, {}, Voluntary> & Voluntary & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
+    }>;
+    getMyArchivedVoluntary(obj: any): Promise<{
+        voluntary: (import("mongoose").Document<unknown, {}, Voluntary> & Voluntary & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
+    }>;
 }

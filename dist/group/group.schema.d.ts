@@ -5,6 +5,9 @@ export declare class Group {
     privacy: string;
     admin: Types.ObjectId;
     users: Types.ObjectId[];
+    isDeleted: boolean;
+    isAccepted: boolean;
+    isArchived: boolean;
 }
 export type GroupDocument = HydratedDocument<Group>;
 export declare const GroupSchema: import("mongoose").Schema<Group, import("mongoose").Model<Group, any, any, any, import("mongoose").Document<unknown, any, Group> & Group & {

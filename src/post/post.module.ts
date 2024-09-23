@@ -19,10 +19,6 @@ import { SearchQuery } from 'src/share/share.module';
     LikesModule,
     CommentModule,
     MongooseModule.forFeature([
-      // {
-      //   name: Post.name,
-      //   schema: PostSchema,
-      // },
       {
         name: User.name,
         schema: UserSchema,
@@ -43,7 +39,11 @@ import { SearchQuery } from 'src/share/share.module';
           const schema = PostSchema;
           schema.pre<SearchQuery>(/^find/, function () {
             if (!this.skipFilter) {
-              this.find({ isDeleted: false });
+              this.find({
+                isDeleted: false,
+                // isAccepted: true,
+                isArchived: false,
+              });
             }
           });
           return schema;

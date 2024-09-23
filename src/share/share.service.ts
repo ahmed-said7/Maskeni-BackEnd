@@ -80,7 +80,7 @@ export class ShareService {
       this.shareModel.find(),
       obj,
     );
-    const events = await query
+    const shares = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -97,7 +97,7 @@ export class ShareService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       });
-    return { events, pagination: paginationObj };
+    return { shares, pagination: paginationObj };
   }
   async addLike(shareId: string, user: string) {
     return this.reactionService.createLike(shareId, user);
@@ -153,5 +153,23 @@ export class ShareService {
   }
   async getAllSaved(shareId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, shareId);
+  }
+  async getMyArcivedShare(obj: any) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.shareModel.find(),
+      obj,
+      { isArchived: true },
+    );
+    const events = await query.setOptions({ skipFilter: true });
+    return { events, pagination: paginationObj };
+  }
+  async getMyDeletdShare(obj: any) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.shareModel.find(),
+      obj,
+      { isDeleted: true },
+    );
+    const events = await query.setOptions({ skipFilter: true });
+    return { events, pagination: paginationObj };
   }
 }

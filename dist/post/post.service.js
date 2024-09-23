@@ -51,7 +51,7 @@ let PostService = class PostService {
         const groupExist = await this.groupModel.findOne({
             _id: post.group,
         });
-        if (groupExist.admin.toString() == user.toString()) {
+        if (groupExist.admin.toString() == user) {
             post.isDeleted = true;
             await post.save();
             return { status: 'deleted' };
@@ -104,11 +104,7 @@ let PostService = class PostService {
         const groups = await this.groupModel.find({
             $or: [{ users: user }, { privacy: enum_1.Group_Privacy.Public }],
         });
-        const page = parseInt(obj.page) || 1;
-        const limit = parseInt(obj.limit) || 10;
-        const skip = (page - 1) * limit;
-        const end = skip + limit;
-        const ids = groups.slice(skip, end).map(({ _id }) => _id.toString());
+        const ids = groups.map(({ _id }) => _id.toString());
         const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, {
             group: { $in: ids },
         });
@@ -239,6 +235,16 @@ let PostService = class PostService {
             throw new common_1.HttpException('post not found', 400);
         }
         return this.reactionService.getAllSaved(query, postId);
+    }
+    async getMyArchivedPosts(obj) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, { isArchived: true });
+        const posts = await query.setOptions({ skipFilter: true });
+        return { posts, pagination: paginationObj };
+    }
+    async getMyDeletedPosts(obj) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, { isDeleted: true });
+        const posts = await query.setOptions({ skipFilter: true });
+        return { posts, pagination: paginationObj };
     }
 };
 exports.PostService = PostService;

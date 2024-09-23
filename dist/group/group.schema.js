@@ -39,6 +39,18 @@ __decorate([
     (0, mongoose_1.Prop)({ type: [{ type: mongoose_2.Types.ObjectId, ref: 'User' }] }),
     __metadata("design:type", Array)
 ], Group.prototype, "users", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Group.prototype, "isDeleted", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Group.prototype, "isAccepted", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Group.prototype, "isArchived", void 0);
 exports.Group = Group = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], Group);

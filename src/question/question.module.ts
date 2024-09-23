@@ -34,7 +34,11 @@ import { SearchQuery } from 'src/share/share.module';
           const schema = QuestionSchema;
           schema.pre<SearchQuery>(/^find/, function () {
             if (!this.skipFilter) {
-              this.find({ isDeleted: false });
+              this.find({
+                isDeleted: false,
+                // isAccepted: true,
+                isArchived: false,
+              });
             }
           });
           return schema;

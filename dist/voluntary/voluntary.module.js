@@ -41,7 +41,10 @@ exports.VoluntaryModule = VoluntaryModule = __decorate([
                         const schema = voluntary_schema_1.VoluntarySchema;
                         schema.pre(/^find/, function () {
                             if (!this.skipFilter) {
-                                this.find({ isDeleted: false });
+                                this.find({
+                                    isDeleted: false,
+                                    isArchived: false,
+                                });
                             }
                         });
                         return schema;
