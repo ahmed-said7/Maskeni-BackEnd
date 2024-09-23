@@ -264,6 +264,139 @@ let UserService = class UserService {
             followers: user.following,
         };
     }
+    async getUserSavedShare(userId, query) {
+        const page = parseInt(query.page) || 1;
+        const limit = parseInt(query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const user = await this.Usermodel.findById(userId)
+            .select({
+            savedShare: {
+                $slice: [skip, limit],
+            },
+        })
+            .populate({
+            path: 'savedShare.share',
+        });
+        return {
+            page,
+            limit,
+            savedShare: user.savedShare,
+        };
+    }
+    async getUserSavedQuestion(userId, query) {
+        const page = parseInt(query.page) || 1;
+        const limit = parseInt(query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const user = await this.Usermodel.findById(userId)
+            .select({
+            savedQuestion: {
+                $slice: [skip, limit],
+            },
+        })
+            .populate({
+            path: 'savedQuestion.question',
+        });
+        return {
+            page,
+            limit,
+            savedQuestion: user.savedQuestion,
+        };
+    }
+    async getUserSavedVoluntary(userId, query) {
+        const page = parseInt(query.page) || 1;
+        const limit = parseInt(query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const user = await this.Usermodel.findById(userId)
+            .select({
+            savedVoluntary: {
+                $slice: [skip, limit],
+            },
+        })
+            .populate({
+            path: 'savedVoluntary.voluntary',
+        });
+        return {
+            page,
+            limit,
+            savedVoluntary: user.savedVoluntary,
+        };
+    }
+    async getUserSavedGroupPosts(userId, query) {
+        const page = parseInt(query.page) || 1;
+        const limit = parseInt(query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const user = await this.Usermodel.findById(userId)
+            .select({
+            savedGroupPost: {
+                $slice: [skip, limit],
+            },
+        })
+            .populate({
+            path: 'savedGroupPost.post',
+        });
+        return {
+            page,
+            limit,
+            savedVoluntary: user.savedVoluntary,
+        };
+    }
+    async getUserSavedEvent(userId, query) {
+        const page = parseInt(query.page) || 1;
+        const limit = parseInt(query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const user = await this.Usermodel.findById(userId)
+            .select({
+            savedEvent: {
+                $slice: [skip, limit],
+            },
+        })
+            .populate({
+            path: 'savedEvent.event',
+        });
+        return {
+            page,
+            limit,
+            savedEvent: user.savedEvent,
+        };
+    }
+    async getUserSavedService(userId, query) {
+        const page = parseInt(query.page) || 1;
+        const limit = parseInt(query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const user = await this.Usermodel.findById(userId)
+            .select({
+            savedService: {
+                $slice: [skip, limit],
+            },
+        })
+            .populate({
+            path: 'savedService.service',
+        });
+        return {
+            page,
+            limit,
+            savedService: user.savedService,
+        };
+    }
+    async getUserRequestedService(userId, query) {
+        const page = parseInt(query.page) || 1;
+        const limit = parseInt(query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const user = await this.Usermodel.findById(userId)
+            .select({
+            requestedService: {
+                $slice: [skip, limit],
+            },
+        })
+            .populate({
+            path: 'requestedService.service',
+        });
+        return {
+            page,
+            limit,
+            requestedService: user.requestedService,
+        };
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

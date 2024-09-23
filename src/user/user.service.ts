@@ -221,7 +221,6 @@ export class UserService {
       followers: user.followers,
     };
   }
-  // ['savedGroupPost','savedEvent','savedShare','savedQuestion','savedVoluntary']
   async getUserFollwing(userId: string, query: FindQuery) {
     const page = parseInt(query.page) || 1;
     const limit = parseInt(query.limit) || 10;
@@ -247,34 +246,137 @@ export class UserService {
       followers: user.following,
     };
   }
-  // async getUserSavedShare(userId: string, query: FindQuery) {
-  //   const user = await this.Usermodel.findById(userId).populate({
-  //     path: 'savedShare.share',
-  //   });
-  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  // }
-  // async getUserSavedQuestion(userId: string, query: FindQuery) {
-  //   const user = await this.Usermodel.findById(userId).populate({
-  //     path: 'savedQuestion.question',
-  //   });
-  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  // }
-  // async getUserSavedVoluntary(userId: string, query: FindQuery) {
-  //   const user = await this.Usermodel.findById(userId).populate({
-  //     path: 'savedVoluntary.voluntary',
-  //   });
-  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  // }
-  // async getUserSavedGroupPosts(userId: string, query: FindQuery) {
-  //   const user = await this.Usermodel.findById(userId).populate({
-  //     path: 'savedGroupPost.post',
-  //   });
-  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  // }
-  // async getUserSavedEvent(userId: string, query: FindQuery) {
-  //   const user = await this.Usermodel.findById(userId).populate({
-  //     path: 'savedEvent.event',
-  //   });
-  //   return this.arrayPagination.apiPagination(query, user.savedGroupPost);
-  // }
+  async getUserSavedShare(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        savedShare: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'savedShare.share',
+      });
+    return {
+      page,
+      limit,
+      savedShare: user.savedShare,
+    };
+  }
+  async getUserSavedQuestion(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        savedQuestion: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'savedQuestion.question',
+      });
+    return {
+      page,
+      limit,
+      savedQuestion: user.savedQuestion,
+    };
+  }
+  async getUserSavedVoluntary(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        savedVoluntary: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'savedVoluntary.voluntary',
+      });
+    return {
+      page,
+      limit,
+      savedVoluntary: user.savedVoluntary,
+    };
+  }
+  async getUserSavedGroupPosts(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        savedGroupPost: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'savedGroupPost.post',
+      });
+    return {
+      page,
+      limit,
+      savedVoluntary: user.savedVoluntary,
+    };
+  }
+  async getUserSavedEvent(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        savedEvent: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'savedEvent.event',
+      });
+    return {
+      page,
+      limit,
+      savedEvent: user.savedEvent,
+    };
+  }
+  async getUserSavedService(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        savedService: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'savedService.service',
+      });
+    return {
+      page,
+      limit,
+      savedService: user.savedService,
+    };
+  }
+  async getUserRequestedService(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        requestedService: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'requestedService.service',
+      });
+    return {
+      page,
+      limit,
+      requestedService: user.requestedService,
+    };
+  }
 }

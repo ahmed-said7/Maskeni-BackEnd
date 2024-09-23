@@ -101,4 +101,67 @@ export declare class UserService {
             _id: import("mongoose").Types.ObjectId;
         }[];
     }>;
+    getUserSavedShare(userId: string, query: FindQuery): Promise<{
+        page: number;
+        limit: number;
+        savedShare: {
+            share: import("mongoose").Types.ObjectId;
+            createdAt?: Date;
+            _id: import("mongoose").Types.ObjectId;
+        }[];
+    }>;
+    getUserSavedQuestion(userId: string, query: FindQuery): Promise<{
+        page: number;
+        limit: number;
+        savedQuestion: {
+            question: import("mongoose").Types.ObjectId;
+            createdAt?: Date;
+            _id: import("mongoose").Types.ObjectId;
+        }[];
+    }>;
+    getUserSavedVoluntary(userId: string, query: FindQuery): Promise<{
+        page: number;
+        limit: number;
+        savedVoluntary: {
+            voluntary: import("mongoose").Types.ObjectId;
+            createdAt?: Date;
+            _id: import("mongoose").Types.ObjectId;
+        }[];
+    }>;
+    getUserSavedGroupPosts(userId: string, query: FindQuery): Promise<{
+        page: number;
+        limit: number;
+        savedVoluntary: {
+            voluntary: import("mongoose").Types.ObjectId;
+            createdAt?: Date;
+            _id: import("mongoose").Types.ObjectId;
+        }[];
+    }>;
+    getUserSavedEvent(userId: string, query: FindQuery): Promise<{
+        page: number;
+        limit: number;
+        savedEvent: {
+            event: import("mongoose").Types.ObjectId;
+            createdAt?: Date;
+            _id: import("mongoose").Types.ObjectId;
+        }[];
+    }>;
+    getUserSavedService(userId: string, query: FindQuery): Promise<{
+        page: number;
+        limit: number;
+        savedService: {
+            service: import("mongoose").Types.ObjectId;
+            createdAt?: Date;
+            _id: import("mongoose").Types.ObjectId;
+        }[];
+    }>;
+    getUserRequestedService(userId: string, query: FindQuery): Promise<{
+        page: number;
+        limit: number;
+        requestedService: {
+            service: import("mongoose").Types.ObjectId;
+            createdAt?: Date;
+            _id: import("mongoose").Types.ObjectId;
+        }[];
+    }>;
 }
