@@ -71,6 +71,11 @@ let QuestionService = class QuestionService {
             select: '-likes -comments -replies',
             populate: { path: 'user', select: 'name mobile icon', model: 'User' },
             options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
         });
         if (!questionExists) {
             throw new common_1.HttpException('question not found', 400);
@@ -88,6 +93,11 @@ let QuestionService = class QuestionService {
             .populate({
             path: 'comments',
             select: '-likes -comments -replies',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
             populate: { path: 'user', select: 'name mobile icon', model: 'User' },
             options: { limit: 1 },
         });

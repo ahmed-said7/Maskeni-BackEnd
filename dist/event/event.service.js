@@ -79,6 +79,11 @@ let EventService = class EventService {
             select: '-likes -comments -replies',
             populate: { path: 'user', select: 'name mobile icon', model: 'User' },
             options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
         });
         if (!eventExists) {
             throw new common_1.HttpException('event not found', 400);
@@ -96,6 +101,11 @@ let EventService = class EventService {
             .populate({
             path: 'comments',
             select: '-likes -comments -replies',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
             populate: { path: 'user', select: 'name mobile icon', model: 'User' },
             options: { limit: 1 },
         });

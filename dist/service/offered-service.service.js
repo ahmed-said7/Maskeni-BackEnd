@@ -71,6 +71,11 @@ let OfferedService = class OfferedService {
             select: '-likes -comments -replies',
             populate: { path: 'user', select: 'name mobile icon', model: 'User' },
             options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
         });
         if (!serviceExists) {
             throw new common_1.HttpException('service not found', 400);
@@ -88,6 +93,11 @@ let OfferedService = class OfferedService {
             .populate({
             path: 'comments',
             select: '-likes -comments -replies',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
             populate: { path: 'user', select: 'name mobile icon', model: 'User' },
             options: { limit: 1 },
         });

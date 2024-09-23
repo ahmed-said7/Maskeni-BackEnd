@@ -78,6 +78,11 @@ let VoluntaryService = class VoluntaryService {
             select: '-likes -comments -replies',
             populate: { path: 'user', select: 'name mobile icon', model: 'User' },
             options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
         });
         if (!voluntaryExists) {
             throw new common_1.HttpException('voluntary not found', 400);
@@ -95,6 +100,11 @@ let VoluntaryService = class VoluntaryService {
             .populate({
             path: 'comments',
             select: '-likes -comments -replies',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
             populate: { path: 'user', select: 'name mobile icon', model: 'User' },
             options: { limit: 1 },
         });

@@ -81,18 +81,34 @@ let PostService = class PostService {
         const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, {
             group: groupId,
         });
-        const posts = await query.populate({
+        const posts = await query
+            .populate({
             path: 'user',
             model: 'User',
             select: 'name mobile icon',
+        })
+            .populate({
+            path: 'comments',
+            select: '-likes -comments -replies',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
         });
         return { posts, pagination: paginationObj };
     }
     async getUserGroupsPosts(user, obj) {
         const groups = await this.groupModel.find({
-            users: user,
+            $or: [{ users: user }, { privacy: enum_1.Group_Privacy.Public }],
         });
-        const ids = groups.map(({ _id }) => _id.toString());
+        const page = parseInt(obj.page) || 1;
+        const limit = parseInt(obj.limit) || 10;
+        const skip = (page - 1) * limit;
+        const end = skip + limit;
+        const ids = groups.slice(skip, end).map(({ _id }) => _id.toString());
         const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, {
             group: { $in: ids },
         });
@@ -102,7 +118,18 @@ let PostService = class PostService {
             model: 'User',
             select: 'name mobile icon',
         })
-            .populate({ path: 'group', model: 'Group', select: 'name image' });
+            .populate({ path: 'group', model: 'Group', select: 'name image' })
+            .populate({
+            path: 'comments',
+            select: '-likes -comments -replies',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
+        })
+            .populate({
+            path: 'likes',
+            populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+            options: { limit: 1 },
+        });
         return { posts, pagination: paginationObj };
     }
     async addLike(postId, user) {
