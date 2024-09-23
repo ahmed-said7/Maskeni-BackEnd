@@ -13,6 +13,7 @@ exports.UserSchema = exports.User = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const enum_1 = require("../common/enum");
+const types_1 = require("../common/types");
 const post_schema_1 = require("../post/post.schema");
 const question_schema_1 = require("../question/question.schema");
 const offered_service_schema_1 = require("../service/offered-service.schema");
@@ -161,6 +162,22 @@ __decorate([
     (0, mongoose_1.Prop)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)
 ], User.prototype, "isBlocked", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Quarter' }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], User.prototype, "quarter", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        type: String,
+        enum: [types_1.Gender_Type.male, types_1.Gender_Type.female],
+        default: types_1.Gender_Type.male,
+    }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], User.prototype, "gender", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Date }),
+    __metadata("design:type", Date)
+], User.prototype, "birthday", void 0);
 exports.User = User = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], User);

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { User_Role } from 'src/common/enum';
+import { Gender_Type } from 'src/common/types';
 import { Post } from 'src/post/post.schema';
 import { Question } from 'src/question/question.schema';
 import { Offered } from 'src/service/offered-service.schema';
@@ -157,6 +158,19 @@ export class User {
 
   @Prop({ type: Boolean, default: false })
   isBlocked: boolean;
+
+  @Prop({ type: Types.ObjectId, ref: 'Quarter' })
+  quarter: Types.ObjectId;
+
+  @Prop({
+    type: String,
+    enum: [Gender_Type.male, Gender_Type.female],
+    default: Gender_Type.male,
+  })
+  gender: Types.ObjectId;
+
+  @Prop({ type: Date })
+  birthday: Date;
 }
 export type UserDocument = HydratedDocument<User>;
 export const UserSchema = SchemaFactory.createForClass(User);

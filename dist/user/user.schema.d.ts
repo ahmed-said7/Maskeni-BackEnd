@@ -61,6 +61,9 @@ export declare class User {
     icon: string;
     fcm: string;
     isBlocked: boolean;
+    quarter: Types.ObjectId;
+    gender: Types.ObjectId;
+    birthday: Date;
 }
 export type UserDocument = HydratedDocument<User>;
 export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, import("mongoose").Document<unknown, any, User> & User & {

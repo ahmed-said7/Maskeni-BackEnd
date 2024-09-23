@@ -1,18 +1,30 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { AnalysisService } from './analysis.service';
-import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
-import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
-import { Roles } from 'src/common/decorator/roles';
-import { All_Role } from 'src/common/enum';
 
 @Controller('analysis')
 export class AnalysisController {
   constructor(private readonly analysisService: AnalysisService) {}
 
-  @Get('count')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.Admin, All_Role.SuperAdmin)
+  @Get('all-docs')
   async getAllDocs() {
     return this.analysisService.getAllDocs();
+  }
+
+  @Get('users-gender')
+  async analysisUsers() {
+    return this.analysisService.analysisUsers();
+  }
+
+  @Get('users-by-quarter')
+  async getUsersByQuarter(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.analysisService.getUsersByQuarter(page, limit);
+  }
+
+  @Get('age-statistics')
+  async getAgeStatistics() {
+    return this.analysisService.getAgeStatistics();
   }
 }
