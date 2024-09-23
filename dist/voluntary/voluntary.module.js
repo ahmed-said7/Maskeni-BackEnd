@@ -30,12 +30,22 @@ exports.VoluntaryModule = VoluntaryModule = __decorate([
                     schema: user_schema_1.UserSchema,
                 },
                 {
-                    name: voluntary_schema_1.Voluntary.name,
-                    schema: voluntary_schema_1.VoluntarySchema,
-                },
-                {
                     name: admin_schema_1.Admin.name,
                     schema: admin_schema_1.AdminSchema,
+                },
+            ]),
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: voluntary_schema_1.Voluntary.name,
+                    useFactory: async () => {
+                        const schema = voluntary_schema_1.VoluntarySchema;
+                        schema.pre(/^find/, function () {
+                            if (!this.skipFilter) {
+                                this.find({ isDeleted: false });
+                            }
+                        });
+                        return schema;
+                    },
                 },
             ]),
         ],

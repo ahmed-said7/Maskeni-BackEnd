@@ -10,6 +10,7 @@ import { Group, GroupSchema } from 'src/group/group.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { LikesModule } from 'src/likes/likes.module';
 import { CommentModule } from 'src/comment/comment.module';
+import { SearchQuery } from 'src/share/share.module';
 
 @Module({
   imports: [
@@ -18,10 +19,10 @@ import { CommentModule } from 'src/comment/comment.module';
     LikesModule,
     CommentModule,
     MongooseModule.forFeature([
-      {
-        name: Post.name,
-        schema: PostSchema,
-      },
+      // {
+      //   name: Post.name,
+      //   schema: PostSchema,
+      // },
       {
         name: User.name,
         schema: UserSchema,
@@ -33,6 +34,20 @@ import { CommentModule } from 'src/comment/comment.module';
       {
         name: Admin.name,
         schema: AdminSchema,
+      },
+    ]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Post.name,
+        useFactory: async () => {
+          const schema = PostSchema;
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.skipFilter) {
+              this.find({ isDeleted: false });
+            }
+          });
+          return schema;
+        },
       },
     ]),
   ],

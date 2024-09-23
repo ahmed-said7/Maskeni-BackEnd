@@ -26,16 +26,26 @@ exports.ServiceModule = ServiceModule = __decorate([
             api_module_1.ApiModule,
             mongoose_1.MongooseModule.forFeature([
                 {
-                    name: offered_service_schema_1.Offered.name,
-                    schema: offered_service_schema_1.OfferedSchema,
-                },
-                {
                     name: user_schema_1.User.name,
                     schema: user_schema_1.UserSchema,
                 },
                 {
                     name: admin_schema_1.Admin.name,
                     schema: admin_schema_1.AdminSchema,
+                },
+            ]),
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: offered_service_schema_1.Offered.name,
+                    useFactory: async () => {
+                        const schema = offered_service_schema_1.OfferedSchema;
+                        schema.pre(/^find/, function () {
+                            if (!this.skipFilter) {
+                                this.find({ isDeleted: false });
+                            }
+                        });
+                        return schema;
+                    },
                 },
             ]),
         ],

@@ -30,12 +30,22 @@ exports.ShareModule = ShareModule = __decorate([
                     schema: user_schema_1.UserSchema,
                 },
                 {
-                    name: share_schema_1.Share.name,
-                    schema: share_schema_1.ShareSchema,
-                },
-                {
                     name: admin_schema_1.Admin.name,
                     schema: admin_schema_1.AdminSchema,
+                },
+            ]),
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: share_schema_1.Share.name,
+                    useFactory: async () => {
+                        const schema = share_schema_1.ShareSchema;
+                        schema.pre(/^find/, function () {
+                            if (!this.skipFilter) {
+                                this.find({ isDeleted: false });
+                            }
+                        });
+                        return schema;
+                    },
                 },
             ]),
         ],

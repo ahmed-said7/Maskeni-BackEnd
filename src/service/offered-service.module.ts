@@ -7,16 +7,17 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { OfferedService } from './offered-service.service';
 import { OfferedController } from './offered-service.controller';
 import { Offered, OfferedSchema } from './offered-service.schema';
+import { SearchQuery } from 'src/share/share.module';
 
 @Module({
   imports: [
     ReactionModule,
     ApiModule,
     MongooseModule.forFeature([
-      {
-        name: Offered.name,
-        schema: OfferedSchema,
-      },
+      // {
+      //   name: Offered.name,
+      //   schema: OfferedSchema,
+      // },
       {
         name: User.name,
         schema: UserSchema,
@@ -24,6 +25,20 @@ import { Offered, OfferedSchema } from './offered-service.schema';
       {
         name: Admin.name,
         schema: AdminSchema,
+      },
+    ]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Offered.name,
+        useFactory: async () => {
+          const schema = OfferedSchema;
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.skipFilter) {
+              this.find({ isDeleted: false });
+            }
+          });
+          return schema;
+        },
       },
     ]),
   ],

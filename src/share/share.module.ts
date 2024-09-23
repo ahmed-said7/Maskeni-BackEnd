@@ -7,6 +7,10 @@ import { Share, ShareSchema } from './share.schema';
 import { ShareService } from './share.service';
 import { ShareController } from './share.controller';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
+import { Query } from 'mongoose';
+export interface SearchQuery extends Query<any, any[] | any> {
+  skipFilter?: boolean;
+}
 
 @Module({
   imports: [
@@ -17,13 +21,27 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
         name: User.name,
         schema: UserSchema,
       },
-      {
-        name: Share.name,
-        schema: ShareSchema,
-      },
+      // {
+      //   name: Share.name,
+      //   schema: ShareSchema,
+      // },
       {
         name: Admin.name,
         schema: AdminSchema,
+      },
+    ]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Share.name,
+        useFactory: async () => {
+          const schema = ShareSchema;
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.skipFilter) {
+              this.find({ isDeleted: false });
+            }
+          });
+          return schema;
+        },
       },
     ]),
   ],

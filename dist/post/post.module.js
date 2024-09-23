@@ -31,10 +31,6 @@ exports.PostModule = PostModule = __decorate([
             comment_module_1.CommentModule,
             mongoose_1.MongooseModule.forFeature([
                 {
-                    name: post_schema_1.Post.name,
-                    schema: post_schema_1.PostSchema,
-                },
-                {
                     name: user_schema_1.User.name,
                     schema: user_schema_1.UserSchema,
                 },
@@ -45,6 +41,20 @@ exports.PostModule = PostModule = __decorate([
                 {
                     name: admin_schema_1.Admin.name,
                     schema: admin_schema_1.AdminSchema,
+                },
+            ]),
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: post_schema_1.Post.name,
+                    useFactory: async () => {
+                        const schema = post_schema_1.PostSchema;
+                        schema.pre(/^find/, function () {
+                            if (!this.skipFilter) {
+                                this.find({ isDeleted: false });
+                            }
+                        });
+                        return schema;
+                    },
                 },
             ]),
         ],

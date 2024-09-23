@@ -38,6 +38,20 @@ exports.QuestionModule = QuestionModule = __decorate([
                     schema: question_schema_1.QuestionSchema,
                 },
             ]),
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: question_schema_1.Question.name,
+                    useFactory: async () => {
+                        const schema = question_schema_1.QuestionSchema;
+                        schema.pre(/^find/, function () {
+                            if (!this.skipFilter) {
+                                this.find({ isDeleted: false });
+                            }
+                        });
+                        return schema;
+                    },
+                },
+            ]),
         ],
         providers: [question_service_1.QuestionService],
         controllers: [question_controller_1.QuestionController],

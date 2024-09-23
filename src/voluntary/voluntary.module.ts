@@ -7,6 +7,7 @@ import { VoluntaryService } from './voluntary.service';
 import { VoluntaryController } from './voluntary.controller';
 import { Voluntary, VoluntarySchema } from './voluntary.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
+import { SearchQuery } from 'src/share/share.module';
 
 @Module({
   imports: [
@@ -17,13 +18,27 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
         name: User.name,
         schema: UserSchema,
       },
-      {
-        name: Voluntary.name,
-        schema: VoluntarySchema,
-      },
+      // {
+      //   name: Voluntary.name,
+      //   schema: VoluntarySchema,
+      // },
       {
         name: Admin.name,
         schema: AdminSchema,
+      },
+    ]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Voluntary.name,
+        useFactory: async () => {
+          const schema = VoluntarySchema;
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.skipFilter) {
+              this.find({ isDeleted: false });
+            }
+          });
+          return schema;
+        },
       },
     ]),
   ],

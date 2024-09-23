@@ -7,6 +7,7 @@ import { QuestionController } from './question.controller';
 import { QuestionService } from './question.service';
 import { Question, QuestionSchema } from './question.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
+import { SearchQuery } from 'src/share/share.module';
 
 @Module({
   imports: [
@@ -24,6 +25,20 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
       {
         name: Question.name,
         schema: QuestionSchema,
+      },
+    ]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Question.name,
+        useFactory: async () => {
+          const schema = QuestionSchema;
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.skipFilter) {
+              this.find({ isDeleted: false });
+            }
+          });
+          return schema;
+        },
       },
     ]),
   ],

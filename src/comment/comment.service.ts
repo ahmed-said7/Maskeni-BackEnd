@@ -15,6 +15,17 @@ export class CommentService {
   ) {}
   // Create a new comment
   async create(body: CreateCommentDto) {
+    if (body.parentComment) {
+      const comment = await this.commentModel.findOne({
+        post: body.post,
+        _id: body.parentComment,
+      });
+      if (!comment) {
+        throw new NotFoundException(
+          `Parent comment with ID "${body.parentComment}" not found`,
+        );
+      }
+    }
     const newComment = await this.commentModel.create(body);
     if (newComment.parentComment) {
       await this.commentModel.findByIdAndUpdate(
