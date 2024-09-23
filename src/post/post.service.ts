@@ -77,18 +77,34 @@ export class PostService {
         group: groupId,
       },
     );
-    const posts = await query.populate({
-      path: 'user',
-      model: 'User',
-      select: 'name mobile icon',
-    });
+    const posts = await query
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'name mobile icon',
+      })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'likes',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     return { posts, pagination: paginationObj };
   }
   async getUserGroupsPosts(user: string, obj: FindQuery) {
     const groups = await this.groupModel.find({
-      users: user,
+      $or: [{ users: user }, { privacy: Group_Privacy.Public }],
     });
-    const ids = groups.map(({ _id }) => _id.toString());
+    const page = parseInt(obj.page) || 1;
+    const limit = parseInt(obj.limit) || 10;
+    const skip = (page - 1) * limit;
+    const end = skip + limit;
+    const ids = groups.slice(skip, end).map(({ _id }) => _id.toString());
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.postModel.find(),
       obj,
@@ -102,7 +118,18 @@ export class PostService {
         model: 'User',
         select: 'name mobile icon',
       })
-      .populate({ path: 'group', model: 'Group', select: 'name image' });
+      .populate({ path: 'group', model: 'Group', select: 'name image' })
+      .populate({
+        path: 'comments',
+        select: '-likes -comments -replies',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'likes',
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      });
     return { posts, pagination: paginationObj };
   }
   async addLike(postId: string, user: string) {
