@@ -28,14 +28,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FirebaseModule = void 0;
 const common_1 = require("@nestjs/common");
 const admin = __importStar(require("firebase-admin"));
-const config_json_1 = __importDefault(require("./config.json"));
 const config_1 = require("@nestjs/config");
 const firebase_service_1 = require("./firebase.service");
 let FirebaseModule = class FirebaseModule {
@@ -49,7 +45,7 @@ exports.FirebaseModule = FirebaseModule = __decorate([
                 provide: 'FIREBASE_ADMIN',
                 useFactory: function (config) {
                     return admin.initializeApp({
-                        credential: admin.credential.cert(config_json_1.default),
+                        credential: admin.credential.cert(JSON.parse(config.get('FIREBASE_CONFIG_JSON'))),
                         databaseURL: config.get('Firebase_Url'),
                     });
                 },

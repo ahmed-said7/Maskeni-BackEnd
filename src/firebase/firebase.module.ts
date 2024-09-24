@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import serviceAccount from './config.json';
 import { ConfigService } from '@nestjs/config';
 import { FirebaseService } from './firebase.service';
 
@@ -12,7 +11,7 @@ import { FirebaseService } from './firebase.service';
       useFactory: function (config: ConfigService) {
         return admin.initializeApp({
           credential: admin.credential.cert(
-            serviceAccount as admin.ServiceAccount,
+            JSON.parse(config.get('FIREBASE_CONFIG_JSON')),
           ),
           databaseURL: config.get('Firebase_Url'),
         });
