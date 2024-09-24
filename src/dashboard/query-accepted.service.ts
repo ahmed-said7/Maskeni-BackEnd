@@ -11,7 +11,7 @@ import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardAcceptedDto } from './dto/dashboard.query.dto';
 
 @Injectable()
-export class DashboardArchivedService {
+export class DashboardAcceptedService {
   constructor(
     @InjectModel(Offered.name) private serviceModel: Model<OfferedDocument>,
     @InjectModel(Voluntary.name)
