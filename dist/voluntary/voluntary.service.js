@@ -179,13 +179,13 @@ let VoluntaryService = class VoluntaryService {
     async getAllSaved(voluntaryId, query) {
         return this.reactionService.getAllSaved(query, voluntaryId);
     }
-    async getMyDeletedVoluntary(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.voluntaryModel.find(), obj, { isDeleted: true });
+    async getMyDeletedVoluntary(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.voluntaryModel.find(), obj, { isDeleted: true, user });
         const voluntary = await query.setOptions({ skipFilter: true });
         return { voluntary, pagination: paginationObj };
     }
-    async getMyArchivedVoluntary(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.voluntaryModel.find(), obj, { isArchived: true });
+    async getMyArchivedVoluntary(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.voluntaryModel.find(), obj, { isArchived: true, user });
         const voluntary = await query.setOptions({ skipFilter: true });
         return { voluntary, pagination: paginationObj };
     }

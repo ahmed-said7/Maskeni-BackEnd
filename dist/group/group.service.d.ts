@@ -53,13 +53,13 @@ export declare class GroupServices {
         users: import("mongoose").Types.ObjectId[];
         admin: import("mongoose").Types.ObjectId;
     }>;
-    getMyArchivedGroups(obj: any): Promise<{
+    getMyArchivedGroups(obj: FindQuery, user: string): Promise<{
         groups: (import("mongoose").Document<unknown, {}, Group> & Group & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("src/common/Api/api.service").Pagination;
     }>;
-    getMyDeletedGroups(obj: any): Promise<{
+    getMyDeletedGroups(obj: FindQuery, user: string): Promise<{
         groups: (import("mongoose").Document<unknown, {}, Group> & Group & {
             _id: import("mongoose").Types.ObjectId;
         })[];

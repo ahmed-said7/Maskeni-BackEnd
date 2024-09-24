@@ -25,7 +25,21 @@ import { All_Role } from 'src/common/enum';
 @Controller('question')
 export class QuestionController {
   constructor(private questionService: QuestionService) {}
+  @Get('deleted')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyDeletedQuestion(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.questionService.getMyDeletedQuestion(query, userId);
+  }
 
+  @Get('archived')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyArchivedQuestion(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.questionService.getMyArchivedQuestion(query, userId);
+  }
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)

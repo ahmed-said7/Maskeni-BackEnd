@@ -18,7 +18,10 @@ export class VoluntaryService {
     private voluntaryModel: Model<VoluntaryDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private reactionService: ReactionService<VoluntaryDocument>,
-    private apiService: ApiService<VoluntaryDocument, QueryVoluntaryDto>,
+    private apiService: ApiService<
+      VoluntaryDocument,
+      QueryVoluntaryDto | FindQuery
+    >,
   ) {
     this.reactionService.setModel(voluntaryModel);
   }
@@ -184,20 +187,20 @@ export class VoluntaryService {
   async getAllSaved(voluntaryId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, voluntaryId);
   }
-  async getMyDeletedVoluntary(obj: any) {
+  async getMyDeletedVoluntary(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.voluntaryModel.find(),
       obj,
-      { isDeleted: true },
+      { isDeleted: true, user },
     );
     const voluntary = await query.setOptions({ skipFilter: true });
     return { voluntary, pagination: paginationObj };
   }
-  async getMyArchivedVoluntary(obj: any) {
+  async getMyArchivedVoluntary(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.voluntaryModel.find(),
       obj,
-      { isArchived: true },
+      { isArchived: true, user },
     );
     const voluntary = await query.setOptions({ skipFilter: true });
     return { voluntary, pagination: paginationObj };

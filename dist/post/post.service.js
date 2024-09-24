@@ -236,13 +236,13 @@ let PostService = class PostService {
         }
         return this.reactionService.getAllSaved(query, postId);
     }
-    async getMyArchivedPosts(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, { isArchived: true });
+    async getMyArchivedPosts(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, { isArchived: true, user });
         const posts = await query.setOptions({ skipFilter: true });
         return { posts, pagination: paginationObj };
     }
-    async getMyDeletedPosts(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, { isDeleted: true });
+    async getMyDeletedPosts(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.postModel.find(), obj, { isDeleted: true, user });
         const posts = await query.setOptions({ skipFilter: true });
         return { posts, pagination: paginationObj };
     }

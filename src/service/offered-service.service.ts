@@ -18,7 +18,10 @@ export class OfferedService {
     private serviceModel: Model<OfferedDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private reactionService: ReactionService<OfferedDocument>,
-    private apiService: ApiService<OfferedDocument, QueryOfferedDto>,
+    private apiService: ApiService<
+      OfferedDocument,
+      QueryOfferedDto | FindQuery
+    >,
   ) {
     this.reactionService.setModel(this.serviceModel);
   }
@@ -188,20 +191,20 @@ export class OfferedService {
   async getAllRequested(serviceId: string, query: FindQuery) {
     return this.reactionService.getAllRequestedServices(query, serviceId);
   }
-  async getMyArchivedServices(obj: QueryOfferedDto) {
+  async getMyArchivedServices(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.serviceModel.find(),
       obj,
-      { isArchived: true },
+      { isArchived: true, user },
     );
     const services = await query.setOptions({ skipFilter: true });
     return { services, pagination: paginationObj };
   }
-  async getMyDeletedServices(obj: QueryOfferedDto) {
+  async getMyDeletedServices(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.serviceModel.find(),
       obj,
-      { isDeleted: true },
+      { isDeleted: true, user },
     );
     const services = await query.setOptions({ skipFilter: true });
     return { services, pagination: paginationObj };

@@ -6,6 +6,18 @@ import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 export declare class PostController {
     private postService;
     constructor(postService: PostService);
+    getMyDeletedPosts(query: FindQuery, req: any): Promise<{
+        posts: (import("mongoose").Document<unknown, {}, import("../group/group.schema").Group> & import("../group/group.schema").Group & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
+    getMyArchivedPosts(query: FindQuery, req: any): Promise<{
+        posts: (import("mongoose").Document<unknown, {}, import("../group/group.schema").Group> & import("../group/group.schema").Group & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
     getPostComments(req: any, postId: string, query: FindQuery): Promise<{
         comments: (import("mongoose").Document<unknown, {}, import("../comment/comment.schema").Comment> & import("../comment/comment.schema").Comment & {
             _id: import("mongoose").Types.ObjectId;

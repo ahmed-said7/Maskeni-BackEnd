@@ -26,6 +26,21 @@ import { All_Role } from 'src/common/enum';
 export class OfferedController {
   constructor(private offeredService: OfferedService) {}
 
+  @Get('deleted')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyDeletedServices(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.offeredService.getMyDeletedServices(query, userId);
+  }
+
+  @Get('archived')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyArchivedServices(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.offeredService.getMyArchivedServices(query, userId);
+  }
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)

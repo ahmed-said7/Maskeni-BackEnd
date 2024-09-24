@@ -7,6 +7,18 @@ import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 export declare class EventController {
     private eventService;
     constructor(eventService: EventService);
+    getMyDeletedEvents(query: FindQuery, req: any): Promise<{
+        groups: (import("mongoose").Document<unknown, {}, import("./event.schema").Event> & import("./event.schema").Event & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
+    getMyArchivedEvents(query: FindQuery, req: any): Promise<{
+        groups: (import("mongoose").Document<unknown, {}, import("./event.schema").Event> & import("./event.schema").Event & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
     createEvent(body: CreateEventDto, req: any): Promise<{
         event: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./event.schema").Event> & import("./event.schema").Event & {
             _id: import("mongoose").Types.ObjectId;

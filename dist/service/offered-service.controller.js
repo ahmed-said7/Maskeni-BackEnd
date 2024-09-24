@@ -29,6 +29,14 @@ let OfferedController = class OfferedController {
     constructor(offeredService) {
         this.offeredService = offeredService;
     }
+    async getMyDeletedServices(query, req) {
+        const userId = req.userId;
+        return this.offeredService.getMyDeletedServices(query, userId);
+    }
+    async getMyArchivedServices(query, req) {
+        const userId = req.userId;
+        return this.offeredService.getMyArchivedServices(query, userId);
+    }
     createEvent(body, req) {
         return this.offeredService.createService(body, req.userId);
     }
@@ -82,6 +90,26 @@ let OfferedController = class OfferedController {
     }
 };
 exports.OfferedController = OfferedController;
+__decorate([
+    (0, common_1.Get)('deleted'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], OfferedController.prototype, "getMyDeletedServices", null);
+__decorate([
+    (0, common_1.Get)('archived'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], OfferedController.prototype, "getMyArchivedServices", null);
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),

@@ -19,7 +19,7 @@ export class EventService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(Ticket.name) private ticketModel: Model<TicketDocument>,
     private reactionService: ReactionService<EventDocument>,
-    private apiService: ApiService<EventDocument, QueryEventDto>,
+    private apiService: ApiService<EventDocument, QueryEventDto | FindQuery>,
   ) {
     this.reactionService.setModel(eventModel);
   }
@@ -188,5 +188,23 @@ export class EventService {
   }
   async getAllSaved(eventId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, eventId);
+  }
+  async getMyArchivedEvents(obj: FindQuery, user: string) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.eventModel.find(),
+      obj,
+      { isArchived: true, user },
+    );
+    const groups = await query.setOptions({ skipFilter: true });
+    return { groups, pagination: paginationObj };
+  }
+  async getMyDeletedEvents(obj: FindQuery, user: string) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.eventModel.find(),
+      obj,
+      { isDeleted: true, user },
+    );
+    const groups = await query.setOptions({ skipFilter: true });
+    return { groups, pagination: paginationObj };
   }
 }

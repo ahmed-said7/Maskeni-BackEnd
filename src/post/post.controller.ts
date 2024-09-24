@@ -24,6 +24,21 @@ import { All_Role } from 'src/common/enum';
 @Controller('post')
 export class PostController {
   constructor(private postService: PostService) {}
+  @Get('deleted')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyDeletedPosts(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.postService.getMyDeletedPosts(query, userId);
+  }
+
+  @Get('archived')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyArchivedPosts(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.postService.getMyArchivedPosts(query, userId);
+  }
   @Get('comment/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)

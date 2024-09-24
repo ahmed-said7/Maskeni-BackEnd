@@ -7,6 +7,18 @@ import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 export declare class QuestionController {
     private questionService;
     constructor(questionService: QuestionService);
+    getMyDeletedQuestion(query: FindQuery, req: any): Promise<{
+        questions: (import("mongoose").Document<unknown, {}, import("./question.schema").Question> & import("./question.schema").Question & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
+    getMyArchivedQuestion(query: FindQuery, req: any): Promise<{
+        questions: (import("mongoose").Document<unknown, {}, import("./question.schema").Question> & import("./question.schema").Question & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
     createQuestion(body: CreateQuestionDto, req: any): Promise<{
         question: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./question.schema").Question> & import("./question.schema").Question & {
             _id: import("mongoose").Types.ObjectId;

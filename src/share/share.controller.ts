@@ -20,10 +20,26 @@ import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { Roles } from 'src/common/decorator/roles';
 import { All_Role } from 'src/common/enum';
+import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 
 @Controller('share')
 export class ShareController {
   constructor(private shareService: ShareService) {}
+  @Get('deleted')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyDeletedShare(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.shareService.getMyDeletdShare(query, userId);
+  }
+
+  @Get('archived')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyArchivedShare(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.shareService.getMyArcivedShare(query, userId);
+  }
 
   @Post()
   @UseGuards(AuthenticationGuard, AuthenticationGuard)

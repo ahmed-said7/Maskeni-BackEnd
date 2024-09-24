@@ -191,13 +191,13 @@ let OfferedService = class OfferedService {
     async getAllRequested(serviceId, query) {
         return this.reactionService.getAllRequestedServices(query, serviceId);
     }
-    async getMyArchivedServices(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.serviceModel.find(), obj, { isArchived: true });
+    async getMyArchivedServices(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.serviceModel.find(), obj, { isArchived: true, user });
         const services = await query.setOptions({ skipFilter: true });
         return { services, pagination: paginationObj };
     }
-    async getMyDeletedServices(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.serviceModel.find(), obj, { isDeleted: true });
+    async getMyDeletedServices(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.serviceModel.find(), obj, { isDeleted: true, user });
         const services = await query.setOptions({ skipFilter: true });
         return { services, pagination: paginationObj };
     }

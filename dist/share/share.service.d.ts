@@ -93,13 +93,13 @@ export declare class ShareService {
             createdAt?: Date;
         }[];
     }>;
-    getMyArcivedShare(obj: any): Promise<{
+    getMyArcivedShare(obj: FindQuery, user: string): Promise<{
         events: (import("mongoose").Document<unknown, {}, Share> & Share & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("src/common/Api/api.service").Pagination;
     }>;
-    getMyDeletdShare(obj: any): Promise<{
+    getMyDeletdShare(obj: FindQuery, user: string): Promise<{
         events: (import("mongoose").Document<unknown, {}, Share> & Share & {
             _id: import("mongoose").Types.ObjectId;
         })[];

@@ -158,13 +158,13 @@ let ShareService = class ShareService {
     async getAllSaved(shareId, query) {
         return this.reactionService.getAllSaved(query, shareId);
     }
-    async getMyArcivedShare(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.shareModel.find(), obj, { isArchived: true });
+    async getMyArcivedShare(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.shareModel.find(), obj, { isArchived: true, user });
         const events = await query.setOptions({ skipFilter: true });
         return { events, pagination: paginationObj };
     }
-    async getMyDeletdShare(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.shareModel.find(), obj, { isDeleted: true });
+    async getMyDeletdShare(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.shareModel.find(), obj, { isDeleted: true, user });
         const events = await query.setOptions({ skipFilter: true });
         return { events, pagination: paginationObj };
     }

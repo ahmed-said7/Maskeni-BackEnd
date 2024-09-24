@@ -13,7 +13,7 @@ export declare class VoluntaryService {
     private userModel;
     private reactionService;
     private apiService;
-    constructor(voluntaryModel: Model<VoluntaryDocument>, userModel: Model<UserDocument>, reactionService: ReactionService<VoluntaryDocument>, apiService: ApiService<VoluntaryDocument, QueryVoluntaryDto>);
+    constructor(voluntaryModel: Model<VoluntaryDocument>, userModel: Model<UserDocument>, reactionService: ReactionService<VoluntaryDocument>, apiService: ApiService<VoluntaryDocument, QueryVoluntaryDto | FindQuery>);
     createVoluntary(body: CreateVoluntaryDto, user: string): Promise<{
         voluntary: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Voluntary> & Voluntary & {
             _id: import("mongoose").Types.ObjectId;
@@ -93,13 +93,13 @@ export declare class VoluntaryService {
             createdAt?: Date;
         }[];
     }>;
-    getMyDeletedVoluntary(obj: any): Promise<{
+    getMyDeletedVoluntary(obj: FindQuery, user: string): Promise<{
         voluntary: (import("mongoose").Document<unknown, {}, Voluntary> & Voluntary & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("src/common/Api/api.service").Pagination;
     }>;
-    getMyArchivedVoluntary(obj: any): Promise<{
+    getMyArchivedVoluntary(obj: FindQuery, user: string): Promise<{
         voluntary: (import("mongoose").Document<unknown, {}, Voluntary> & Voluntary & {
             _id: import("mongoose").Types.ObjectId;
         })[];

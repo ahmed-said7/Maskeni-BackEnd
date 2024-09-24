@@ -25,6 +25,21 @@ import { All_Role } from 'src/common/enum';
 @Controller('voluntary')
 export class VoluntaryController {
   constructor(private voluntaryService: VoluntaryService) {}
+  @Get('deleted')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyDeletedVoluntary(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.voluntaryService.getMyDeletedVoluntary(query, userId);
+  }
+
+  @Get('archived')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyArchivedVoluntary(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.voluntaryService.getMyArchivedVoluntary(query, userId);
+  }
 
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizationGuard)

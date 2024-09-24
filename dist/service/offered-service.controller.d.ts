@@ -7,6 +7,18 @@ import { OfferedService } from './offered-service.service';
 export declare class OfferedController {
     private offeredService;
     constructor(offeredService: OfferedService);
+    getMyDeletedServices(query: FindQuery, req: any): Promise<{
+        services: (import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
+    getMyArchivedServices(query: FindQuery, req: any): Promise<{
+        services: (import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
     createEvent(body: CreateOfferedDto, req: any): Promise<{
         service: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
             _id: import("mongoose").Types.ObjectId;

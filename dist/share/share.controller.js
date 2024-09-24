@@ -24,9 +24,18 @@ const create_comment_dto_1 = require("../comment/dto/create.comment.dto");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const authorization_guard_1 = require("../common/guards/authorization.guard");
 let ShareController = class ShareController {
     constructor(shareService) {
         this.shareService = shareService;
+    }
+    async getMyDeletedShare(query, req) {
+        const userId = req.userId;
+        return this.shareService.getMyDeletdShare(query, userId);
+    }
+    async getMyArchivedShare(query, req) {
+        const userId = req.userId;
+        return this.shareService.getMyArcivedShare(query, userId);
     }
     createShare(body, req) {
         return this.shareService.createShare(body, req.userId);
@@ -72,6 +81,26 @@ let ShareController = class ShareController {
     }
 };
 exports.ShareController = ShareController;
+__decorate([
+    (0, common_1.Get)('deleted'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], ShareController.prototype, "getMyDeletedShare", null);
+__decorate([
+    (0, common_1.Get)('archived'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], ShareController.prototype, "getMyArchivedShare", null);
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authentication_guard_1.AuthenticationGuard),

@@ -184,6 +184,16 @@ let EventService = class EventService {
     async getAllSaved(eventId, query) {
         return this.reactionService.getAllSaved(query, eventId);
     }
+    async getMyArchivedEvents(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.eventModel.find(), obj, { isArchived: true, user });
+        const groups = await query.setOptions({ skipFilter: true });
+        return { groups, pagination: paginationObj };
+    }
+    async getMyDeletedEvents(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.eventModel.find(), obj, { isDeleted: true, user });
+        const groups = await query.setOptions({ skipFilter: true });
+        return { groups, pagination: paginationObj };
+    }
 };
 exports.EventService = EventService;
 exports.EventService = EventService = __decorate([

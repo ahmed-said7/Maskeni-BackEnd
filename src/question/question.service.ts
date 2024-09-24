@@ -164,20 +164,20 @@ export class QuestionService {
   async getAllSaved(questionId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, questionId);
   }
-  async getMyArchivedQuestion(obj: any) {
+  async getMyArchivedQuestion(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.questionModel.find(),
       obj,
-      { isArchived: true },
+      { isArchived: true, user },
     );
     const questions = await query.setOptions({ skipFilter: true });
     return { questions, pagination: paginationObj };
   }
-  async getMyDeletedQuestion(obj: any) {
+  async getMyDeletedQuestion(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.questionModel.find(),
       obj,
-      { isDeleted: true },
+      { isDeleted: true, user },
     );
     const questions = await query.setOptions({ skipFilter: true });
     return { questions, pagination: paginationObj };

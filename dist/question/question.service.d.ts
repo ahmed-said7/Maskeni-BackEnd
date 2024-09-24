@@ -93,13 +93,13 @@ export declare class QuestionService {
             createdAt?: Date;
         }[];
     }>;
-    getMyArchivedQuestion(obj: any): Promise<{
+    getMyArchivedQuestion(obj: FindQuery, user: string): Promise<{
         questions: (import("mongoose").Document<unknown, {}, Question> & Question & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("src/common/Api/api.service").Pagination;
     }>;
-    getMyDeletedQuestion(obj: any): Promise<{
+    getMyDeletedQuestion(obj: FindQuery, user: string): Promise<{
         questions: (import("mongoose").Document<unknown, {}, Question> & Question & {
             _id: import("mongoose").Types.ObjectId;
         })[];

@@ -13,7 +13,7 @@ export declare class OfferedService {
     private userModel;
     private reactionService;
     private apiService;
-    constructor(serviceModel: Model<OfferedDocument>, userModel: Model<UserDocument>, reactionService: ReactionService<OfferedDocument>, apiService: ApiService<OfferedDocument, QueryOfferedDto>);
+    constructor(serviceModel: Model<OfferedDocument>, userModel: Model<UserDocument>, reactionService: ReactionService<OfferedDocument>, apiService: ApiService<OfferedDocument, QueryOfferedDto | FindQuery>);
     createService(body: CreateOfferedDto, user: string): Promise<{
         service: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Offered> & Offered & {
             _id: import("mongoose").Types.ObjectId;
@@ -108,13 +108,13 @@ export declare class OfferedService {
             createdAt?: Date;
         }[];
     }>;
-    getMyArchivedServices(obj: QueryOfferedDto): Promise<{
+    getMyArchivedServices(obj: FindQuery, user: string): Promise<{
         services: (import("mongoose").Document<unknown, {}, Offered> & Offered & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("src/common/Api/api.service").Pagination;
     }>;
-    getMyDeletedServices(obj: QueryOfferedDto): Promise<{
+    getMyDeletedServices(obj: FindQuery, user: string): Promise<{
         services: (import("mongoose").Document<unknown, {}, Offered> & Offered & {
             _id: import("mongoose").Types.ObjectId;
         })[];

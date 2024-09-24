@@ -110,13 +110,13 @@ let GroupServices = class GroupServices {
         }
         return { users: group.users, admin: group.admin };
     }
-    async getMyArchivedGroups(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.groupModel.find(), obj, { isArchived: true });
+    async getMyArchivedGroups(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.groupModel.find(), obj, { isArchived: true, admin: user });
         const groups = await query.setOptions({ skipFilter: true });
         return { groups, pagination: paginationObj };
     }
-    async getMyDeletedGroups(obj) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.groupModel.find(), obj, { isDeleted: true });
+    async getMyDeletedGroups(obj, user) {
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.groupModel.find(), obj, { isDeleted: true, admin: user });
         const groups = await query.setOptions({ skipFilter: true });
         return { groups, pagination: paginationObj };
     }

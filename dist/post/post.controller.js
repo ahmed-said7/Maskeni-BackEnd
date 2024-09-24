@@ -28,6 +28,14 @@ let PostController = class PostController {
     constructor(postService) {
         this.postService = postService;
     }
+    async getMyDeletedPosts(query, req) {
+        const userId = req.userId;
+        return this.postService.getMyDeletedPosts(query, userId);
+    }
+    async getMyArchivedPosts(query, req) {
+        const userId = req.userId;
+        return this.postService.getMyArchivedPosts(query, userId);
+    }
     getPostComments(req, postId, query) {
         return this.postService.getComments(postId, req.userId, query);
     }
@@ -63,6 +71,26 @@ let PostController = class PostController {
     }
 };
 exports.PostController = PostController;
+__decorate([
+    (0, common_1.Get)('deleted'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "getMyDeletedPosts", null);
+__decorate([
+    (0, common_1.Get)('archived'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "getMyArchivedPosts", null);
 __decorate([
     (0, common_1.Get)('comment/:id'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),

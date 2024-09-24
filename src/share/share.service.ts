@@ -154,20 +154,20 @@ export class ShareService {
   async getAllSaved(shareId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, shareId);
   }
-  async getMyArcivedShare(obj: any) {
+  async getMyArcivedShare(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.shareModel.find(),
       obj,
-      { isArchived: true },
+      { isArchived: true, user },
     );
     const events = await query.setOptions({ skipFilter: true });
     return { events, pagination: paginationObj };
   }
-  async getMyDeletdShare(obj: any) {
+  async getMyDeletdShare(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.shareModel.find(),
       obj,
-      { isDeleted: true },
+      { isDeleted: true, user },
     );
     const events = await query.setOptions({ skipFilter: true });
     return { events, pagination: paginationObj };

@@ -5,6 +5,18 @@ import { FindQuery } from 'src/common/types';
 export declare class GroupController {
     private groupService;
     constructor(groupService: GroupServices);
+    getMyDeletedGroups(query: FindQuery, req: any): Promise<{
+        groups: (import("mongoose").Document<unknown, {}, import("./group.schema").Group> & import("./group.schema").Group & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
+    getMyArchivedGroups(query: FindQuery, req: any): Promise<{
+        groups: (import("mongoose").Document<unknown, {}, import("./group.schema").Group> & import("./group.schema").Group & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
     createGroup(body: CreateGroupDto, req: any): Promise<{
         group: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./group.schema").Group> & import("./group.schema").Group & {
             _id: import("mongoose").Types.ObjectId;

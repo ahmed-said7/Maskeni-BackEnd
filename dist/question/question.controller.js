@@ -29,6 +29,14 @@ let QuestionController = class QuestionController {
     constructor(questionService) {
         this.questionService = questionService;
     }
+    async getMyDeletedQuestion(query, req) {
+        const userId = req.userId;
+        return this.questionService.getMyDeletedQuestion(query, userId);
+    }
+    async getMyArchivedQuestion(query, req) {
+        const userId = req.userId;
+        return this.questionService.getMyArchivedQuestion(query, userId);
+    }
     createQuestion(body, req) {
         return this.questionService.createQuestion(body, req.userId);
     }
@@ -73,6 +81,26 @@ let QuestionController = class QuestionController {
     }
 };
 exports.QuestionController = QuestionController;
+__decorate([
+    (0, common_1.Get)('deleted'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], QuestionController.prototype, "getMyDeletedQuestion", null);
+__decorate([
+    (0, common_1.Get)('archived'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], QuestionController.prototype, "getMyArchivedQuestion", null);
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),

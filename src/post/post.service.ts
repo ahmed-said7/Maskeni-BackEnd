@@ -244,20 +244,20 @@ export class PostService {
     // await this.validateGroup(post.group.toString(), user);
     return this.reactionService.getAllSaved(query, postId);
   }
-  async getMyArchivedPosts(obj: any) {
+  async getMyArchivedPosts(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.postModel.find(),
       obj,
-      { isArchived: true },
+      { isArchived: true, user },
     );
     const posts = await query.setOptions({ skipFilter: true });
     return { posts, pagination: paginationObj };
   }
-  async getMyDeletedPosts(obj: any) {
+  async getMyDeletedPosts(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.postModel.find(),
       obj,
-      { isDeleted: true },
+      { isDeleted: true, user },
     );
     const posts = await query.setOptions({ skipFilter: true });
     return { posts, pagination: paginationObj };

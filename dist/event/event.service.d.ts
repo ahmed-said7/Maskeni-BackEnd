@@ -15,7 +15,7 @@ export declare class EventService {
     private ticketModel;
     private reactionService;
     private apiService;
-    constructor(eventModel: Model<EventDocument>, userModel: Model<UserDocument>, ticketModel: Model<TicketDocument>, reactionService: ReactionService<EventDocument>, apiService: ApiService<EventDocument, QueryEventDto>);
+    constructor(eventModel: Model<EventDocument>, userModel: Model<UserDocument>, ticketModel: Model<TicketDocument>, reactionService: ReactionService<EventDocument>, apiService: ApiService<EventDocument, QueryEventDto | FindQuery>);
     createEvent(body: CreateEventDto, user: string): Promise<{
         event: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./event.schema").Event> & import("./event.schema").Event & {
             _id: import("mongoose").Types.ObjectId;
@@ -106,5 +106,17 @@ export declare class EventService {
             user: import("mongoose").Types.ObjectId;
             createdAt?: Date;
         }[];
+    }>;
+    getMyArchivedEvents(obj: FindQuery, user: string): Promise<{
+        groups: (import("mongoose").Document<unknown, {}, import("./event.schema").Event> & import("./event.schema").Event & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
+    }>;
+    getMyDeletedEvents(obj: FindQuery, user: string): Promise<{
+        groups: (import("mongoose").Document<unknown, {}, import("./event.schema").Event> & import("./event.schema").Event & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("src/common/Api/api.service").Pagination;
     }>;
 }

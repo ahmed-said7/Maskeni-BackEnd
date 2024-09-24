@@ -29,6 +29,14 @@ let VoluntaryController = class VoluntaryController {
     constructor(voluntaryService) {
         this.voluntaryService = voluntaryService;
     }
+    async getMyDeletedVoluntary(query, req) {
+        const userId = req.userId;
+        return this.voluntaryService.getMyDeletedVoluntary(query, userId);
+    }
+    async getMyArchivedVoluntary(query, req) {
+        const userId = req.userId;
+        return this.voluntaryService.getMyArchivedVoluntary(query, userId);
+    }
     createVoluntary(body, req) {
         return this.voluntaryService.createVoluntary(body, req.userId);
     }
@@ -73,6 +81,26 @@ let VoluntaryController = class VoluntaryController {
     }
 };
 exports.VoluntaryController = VoluntaryController;
+__decorate([
+    (0, common_1.Get)('deleted'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], VoluntaryController.prototype, "getMyDeletedVoluntary", null);
+__decorate([
+    (0, common_1.Get)('archived'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], VoluntaryController.prototype, "getMyArchivedVoluntary", null);
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),

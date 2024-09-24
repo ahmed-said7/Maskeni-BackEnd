@@ -29,6 +29,14 @@ let EventController = class EventController {
     constructor(eventService) {
         this.eventService = eventService;
     }
+    async getMyDeletedEvents(query, req) {
+        const userId = req.userId;
+        return this.eventService.getMyDeletedEvents(query, userId);
+    }
+    async getMyArchivedEvents(query, req) {
+        const userId = req.userId;
+        return this.eventService.getMyArchivedEvents(query, userId);
+    }
     createEvent(body, req) {
         return this.eventService.createEvent(body, req.userId);
     }
@@ -79,6 +87,26 @@ let EventController = class EventController {
     }
 };
 exports.EventController = EventController;
+__decorate([
+    (0, common_1.Get)('deleted'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], EventController.prototype, "getMyDeletedEvents", null);
+__decorate([
+    (0, common_1.Get)('archived'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.FindQuery, Object]),
+    __metadata("design:returntype", Promise)
+], EventController.prototype, "getMyArchivedEvents", null);
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),

@@ -25,6 +25,21 @@ import { All_Role } from 'src/common/enum';
 @Controller('event')
 export class EventController {
   constructor(private eventService: EventService) {}
+  @Get('deleted')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyDeletedEvents(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.eventService.getMyDeletedEvents(query, userId);
+  }
+
+  @Get('archived')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getMyArchivedEvents(@Query() query: FindQuery, @Req() req: any) {
+    const userId = req.userId; // assuming user ID is stored in the request object
+    return this.eventService.getMyArchivedEvents(query, userId);
+  }
 
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizationGuard)

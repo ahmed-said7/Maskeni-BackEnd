@@ -7,6 +7,18 @@ import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 export declare class VoluntaryController {
     private voluntaryService;
     constructor(voluntaryService: VoluntaryService);
+    getMyDeletedVoluntary(query: FindQuery, req: any): Promise<{
+        voluntary: (import("mongoose").Document<unknown, {}, import("./voluntary.schema").Voluntary> & import("./voluntary.schema").Voluntary & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
+    getMyArchivedVoluntary(query: FindQuery, req: any): Promise<{
+        voluntary: (import("mongoose").Document<unknown, {}, import("./voluntary.schema").Voluntary> & import("./voluntary.schema").Voluntary & {
+            _id: import("mongoose").Types.ObjectId;
+        })[];
+        pagination: import("../common/Api/api.service").Pagination;
+    }>;
     createVoluntary(body: CreateVoluntaryDto, req: any): Promise<{
         voluntary: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./voluntary.schema").Voluntary> & import("./voluntary.schema").Voluntary & {
             _id: import("mongoose").Types.ObjectId;
