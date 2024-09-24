@@ -55,7 +55,7 @@ export class AdminService {
     if (!valid) {
       throw new HttpException('password or email is not correct', 400);
     }
-    const token = this.refreshService.createAdminTokens(
+    const token = await this.refreshService.createAdminTokens(
       user._id.toString(),
       user.role,
     );
