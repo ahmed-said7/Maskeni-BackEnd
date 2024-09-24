@@ -31,5 +31,6 @@ import { ApiModule } from 'src/common/Api/api.module';
   ],
   controllers: [QuarterController],
   providers: [QuarterService],
+  exports: [QuarterService],
 })
 export class QuarterModule {}

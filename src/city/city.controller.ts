@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CityService } from './city.service';
 // import { FindQuery } from 'src/common/types';
-import { PointDto } from './dto/point.dto';
+// import { PointDto } from './dto/point.dto';
 import { CreateCityDto } from './dto/city.create.dto';
 import { CityQueryDto } from './dto/city.query.dto';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
@@ -44,10 +44,10 @@ export class CityController {
     return this.cityService.getAllCities(query);
   }
 
-  @Get('point')
-  async findQuarterByLocation(@Body() body: PointDto) {
-    return this.cityService.findCityContainingPoint(body);
-  }
+  // @Get('point')
+  // async findQuarterByLocation(@Body() body: PointDto) {
+  //   return this.cityService.findCityContainingPoint(body);
+  // }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {

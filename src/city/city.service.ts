@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { City, CityDocument } from './city.schema';
-import { PointDto } from './dto/point.dto';
+// import { PointDto } from './dto/point.dto';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { CreateCityDto } from './dto/city.create.dto';
@@ -40,13 +40,13 @@ export class CityService {
       coordinates: [locs],
     };
   }
-  async findCityContainingPoint(pointDto: PointDto) {
+  async findCityContainingPoint(pointDto: [number, number]) {
     const city = await this.cityModel.findOne({
       location: {
         $geoIntersects: {
           $geometry: {
             type: 'Point',
-            coordinates: pointDto.coordinates, // [lng, lat]
+            coordinates: pointDto, // [lng, lat]
           },
         },
       },

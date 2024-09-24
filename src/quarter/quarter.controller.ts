@@ -12,7 +12,7 @@ import {
 import { QuarterService } from './quarter.service';
 import { CreateQuarterDto } from './dto/quarter.create.dto';
 // import { UpdateQuarterDto } from './dto/quarter.update.dto';
-import { PointDto } from './dto/point.dto';
+// import { PointDto } from './dto/point.dto';
 import { QuarterQueryDto } from './dto/quarter.query.dto';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
@@ -39,11 +39,6 @@ export class QuarterController {
     return this.quarterService.getAllQuarters(query);
   }
 
-  @Get('point')
-  async findQuarterByLocation(@Body() body: PointDto) {
-    return this.quarterService.findQuarterContainingPoint(body);
-  }
-
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.quarterService.findOne(id);
@@ -54,5 +49,16 @@ export class QuarterController {
   @Roles(All_Role.Admin, All_Role.SuperAdmin)
   async remove(@Param('id') id: string) {
     return this.quarterService.remove(id);
+  }
+
+  @Get('point/:location')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  getLocation(@Param('location') location: string) {
+    const [lat, lng] = location.split(':');
+    return this.quarterService.findQuarterContainingPoint([
+      parseInt(lng),
+      parseInt(lat),
+    ]);
   }
 }

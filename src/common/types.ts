@@ -11,6 +11,9 @@ export interface Payload {
   userId?: string;
   role?: string;
   iat?: number;
+  country?: string;
+  city?: string;
+  quarter?: string;
 }
 export class FindQuery {
   @ApiPropertyOptional({

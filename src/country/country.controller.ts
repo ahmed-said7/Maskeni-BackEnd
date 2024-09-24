@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { FindQuery } from 'src/common/types';
-import { PointDto } from './dto/point.dto';
+// import { PointDto } from './dto/point.dto';
 import { CountryService } from './country.service';
 import { CreateCountryDto } from './dto/create.country.dto';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
@@ -39,10 +39,10 @@ export class CountryController {
     return this.countryService.getAllCountries(query);
   }
 
-  @Get('point')
-  async findQuarterByLocation(@Body() body: PointDto) {
-    return this.countryService.findCountryContainingPoint(body);
-  }
+  // @Get('point')
+  // async findQuarterByLocation(@Body() body: PointDto) {
+  //   return this.countryService.findCountryContainingPoint(body);
+  // }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {

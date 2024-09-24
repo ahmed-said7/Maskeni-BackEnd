@@ -27,12 +27,15 @@ export class AuthenticationGuard implements CanActivate {
       throw new UnauthorizedException('Authorization header is missing');
     }
     token = token.split(' ')[1];
-    const { userId, role } = await this.decode(
+    const { userId, role, country, city, quarter } = await this.decode(
       token,
       this.config.get('access_secret'),
     );
     request.userId = userId;
     request.role = role;
+    request.country = country;
+    request.city = city;
+    request.quarter = quarter;
     return true;
   }
   async decode(token: string, secret: string) {
@@ -42,6 +45,12 @@ export class AuthenticationGuard implements CanActivate {
     } catch (e) {
       throw new UnauthorizedException('invalid token');
     }
-    return { userId: payload.userId, role: payload.role };
+    return {
+      userId: payload.userId,
+      role: payload.role,
+      country: payload.country,
+      city: payload.city,
+      quarter: payload.quarter,
+    };
   }
 }

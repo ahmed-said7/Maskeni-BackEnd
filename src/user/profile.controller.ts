@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Req,
   UseGuards,
@@ -13,7 +14,7 @@ import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { All_Role } from 'src/common/enum';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 import { Roles } from 'src/common/decorator/roles';
-import { UpdateAddressDto } from 'src/address/dto/update.address.dto';
+// import { UpdateAddressDto } from 'src/address/dto/update.address.dto';
 
 @Controller('user/profile')
 export class UserProfileController {
@@ -39,10 +40,14 @@ export class UserProfileController {
   updateUser(@Req() req: any, @Body() body: UpdateUserDto) {
     return this.userService.updateUser(body, req.userId);
   }
-  @Patch('address')
+  @Get('point/:location')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  updateAddress(@Req() req: any, @Body() body: UpdateAddressDto) {
-    return this.userService.updateQuarter(req.userId, body);
+  updateAddress(@Req() req: any, @Param('location') location: string) {
+    const [lat, lng] = location.split(':');
+    return this.userService.updateQuarter(req.userId, [
+      parseInt(lng),
+      parseInt(lat),
+    ]);
   }
 }

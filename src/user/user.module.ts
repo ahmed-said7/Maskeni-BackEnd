@@ -12,6 +12,7 @@ import { TwilioModule } from 'src/twilio/twilio.module';
 import { FirebaseModule } from 'src/firebase/firebase.module';
 import { UserFollowController } from './follow.controller';
 import { UserSavedController } from './saved.controller';
+import { QuarterModule } from 'src/quarter/quarter.module';
 
 @Module({
   controllers: [
@@ -23,6 +24,7 @@ import { UserSavedController } from './saved.controller';
   ],
   providers: [UserService],
   imports: [
+    QuarterModule,
     ApiModule,
     TwilioModule,
     RefreshModule,

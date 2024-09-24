@@ -159,8 +159,8 @@ export class User {
   @Prop({ type: Boolean, default: false })
   isBlocked: boolean;
 
-  @Prop({ type: Types.ObjectId, ref: 'Quarter' })
-  quarter: Types.ObjectId;
+  // @Prop({ type: Types.ObjectId, ref: 'Quarter' })
+  // quarter: Types.ObjectId;
 
   @Prop({
     type: String,

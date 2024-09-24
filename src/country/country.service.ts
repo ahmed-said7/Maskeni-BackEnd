@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { PointDto } from './dto/point.dto';
+// import { PointDto } from './dto/point.dto';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { Country, CountryDocument } from './country.schema';
@@ -57,13 +57,13 @@ export class CountryService {
   //   }
   //   return country;
   // }
-  async findCountryContainingPoint(body: PointDto) {
+  async findCountryContainingPoint(body: [number, number]) {
     const country = await this.countryModel.findOne({
       location: {
         $geoIntersects: {
           $geometry: {
             type: 'Point',
-            coordinates: body.coordinates, // [lng, lat]
+            coordinates: body, // [lng, lat]
           },
         },
       },

@@ -5,9 +5,15 @@ import * as jwt from 'jsonwebtoken';
 @Injectable()
 export class RefreshService {
   constructor(private configService: ConfigService) {}
-  private createtoken(userId: string, role: string, quarter?: string) {
+  private createtoken(
+    userId: string,
+    role: string,
+    quarter?: string,
+    city?: string,
+    country?: string,
+  ) {
     const accessToken = jwt.sign(
-      { userId, role, quarter },
+      { userId, role, quarter, city, country },
       this.configService.get<string>('access_secret'),
       {
         expiresIn: '1d',
@@ -22,10 +28,22 @@ export class RefreshService {
     );
     return { accessToken, refreshToken };
   }
-  async createAdminTokens(id: string, role: string) {
-    return this.createtoken(id, role);
+  async createAdminTokens(
+    id: string,
+    role: string,
+    quarter?: string,
+    city?: string,
+    country?: string,
+  ) {
+    return this.createtoken(id, role, quarter, city, country);
   }
-  async createUserTokens(id: string, role: string, quarter?: string) {
-    return this.createtoken(id, role, quarter);
+  async createUserTokens(
+    id: string,
+    role: string,
+    quarter?: string,
+    city?: string,
+    country?: string,
+  ) {
+    return this.createtoken(id, role, quarter, city, country);
   }
 }

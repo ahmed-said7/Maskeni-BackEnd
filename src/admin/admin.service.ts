@@ -12,6 +12,7 @@ import { UpdateAdminDto } from './dto/update.user.dto';
 import { ConfigService } from '@nestjs/config';
 import { Admin_Role } from 'src/common/enum';
 import { RefreshService } from 'src/refresh/refresh.service';
+import { QuarterService } from 'src/quarter/quarter.service';
 
 @Injectable()
 export class AdminService {
@@ -20,6 +21,7 @@ export class AdminService {
     private refreshService: RefreshService,
     private apiService: ApiService<AdminDocument, FindQuery>,
     config: ConfigService,
+    private quarterService: QuarterService,
   ) {
     this.AdminModel.findOne({
       mobile: config.get('mobile'),
@@ -45,6 +47,18 @@ export class AdminService {
     );
     const admins = await query;
     return { admins, pagination: paginationObj };
+  }
+  async updateQuarter(userId: string, role: string, body: [number, number]) {
+    const { country, city, quarter } =
+      await this.quarterService.findQuarterContainingPoint(body);
+    const tokens = await this.refreshService.createUserTokens(
+      userId,
+      role,
+      quarter._id.toString(),
+      city._id.toString(),
+      country._id.toString(),
+    );
+    return { status: 'quarter updated', ...tokens, city, country, quarter };
   }
   async login(body: LoginAdminDto) {
     const user = await this.AdminModel.findOne({ mobile: body.mobile });

@@ -3,7 +3,6 @@ import {
   IsBoolean,
   IsDateString,
   IsMobilePhone,
-  IsMongoId,
   IsOptional,
   IsString,
   MinLength,
@@ -50,11 +49,4 @@ export class UpdateUserByAdminDto {
   @IsOptional()
   @IsBoolean()
   isBlocked: boolean;
-}
-
-export class UpdateLatestAddressDto {
-  @ApiPropertyOptional()
-  // @IsOptional()
-  @IsMongoId()
-  quarter: string;
 }

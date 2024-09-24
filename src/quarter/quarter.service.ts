@@ -3,16 +3,19 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Quarter, QuarterDocument } from './quarter.schema';
 import { CreateQuarterDto } from './dto/quarter.create.dto';
-import { PointDto } from './dto/point.dto';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { QuarterQueryDto } from './dto/quarter.query.dto';
+import { CountryService } from 'src/country/country.service';
+import { CityService } from 'src/city/city.service';
 
 @Injectable()
 export class QuarterService {
   constructor(
     @InjectModel(Quarter.name) private quarterModel: Model<QuarterDocument>,
     private apiService: ApiService<QuarterDocument, FindQuery>,
+    private countryService: CountryService,
+    private cityService: CityService,
   ) {}
 
   async create(body: CreateQuarterDto): Promise<Quarter> {
@@ -43,23 +46,20 @@ export class QuarterService {
       coordinates: [locs],
     };
   }
-  async findQuarterContainingPoint(body: PointDto) {
+  async findQuarterContainingPoint(body: [number, number]) {
+    const country = await this.countryService.findCountryContainingPoint(body);
+    const city = await this.cityService.findCityContainingPoint(body);
     const quarter = await this.quarterModel.findOne({
       location: {
         $geoIntersects: {
           $geometry: {
             type: 'Point',
-            coordinates: body.coordinates, // [lng, lat]
+            coordinates: body, // [lng, lat]
           },
         },
       },
     });
-
-    // if (!quarter) {
-    //   throw new NotFoundException('No quarter contains the provided point');
-    // }
-
-    return quarter;
+    return { quarter, city, country };
   }
   async getAllQuarters(obj: QuarterQueryDto) {
     const { query, paginationObj } = await this.apiService.getAllDocs(

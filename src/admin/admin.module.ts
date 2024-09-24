@@ -7,6 +7,7 @@ import { AdminProfileController } from './profile.controller';
 import { AdminAuthController } from './auth.controller';
 import { RefreshModule } from 'src/refresh/refresh.module';
 import { UserSchema } from 'src/user/user.schema';
+import { QuarterModule } from 'src/quarter/quarter.module';
 
 @Module({
   controllers: [
@@ -16,6 +17,7 @@ import { UserSchema } from 'src/user/user.schema';
   ],
   providers: [AdminService],
   imports: [
+    QuarterModule,
     ApiModule,
     RefreshModule,
     MongooseModule.forFeature([

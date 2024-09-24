@@ -11,7 +11,8 @@ import { ApiService } from 'src/common/Api/api.service';
 import { TwilioService } from 'src/twilio/twilio.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { v4 } from 'uuid';
-import { UpdateAddressDto } from 'src/address/dto/update.address.dto';
+import { QuarterService } from 'src/quarter/quarter.service';
+import { All_Role } from 'src/common/enum';
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,7 @@ export class UserService {
     private refreshService: RefreshService,
     private apiService: ApiService<UserDocument, FindQuery>,
     private firebaseService: FirebaseService,
+    private quarterService: QuarterService,
   ) {}
   async getAllUsers(obj: FindQuery) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
@@ -78,20 +80,20 @@ export class UserService {
     const tokens = await this.refreshService.createUserTokens(
       user._id.toString(),
       user.role,
-      user.quarter.toString(),
     );
     return { status: 'verified', ...tokens };
   }
-  async updateQuarter(id: string, body: UpdateAddressDto) {
-    const user = await this.Usermodel.findOneAndUpdate({ _id: id }, body, {
-      new: true,
-    });
+  async updateQuarter(userId: string, body: [number, number]) {
+    const { country, city, quarter } =
+      await this.quarterService.findQuarterContainingPoint(body);
     const tokens = await this.refreshService.createUserTokens(
-      user._id.toString(),
-      user.role,
-      user.quarter.toString(),
+      userId,
+      All_Role.User,
+      quarter._id.toString(),
+      city._id.toString(),
+      country._id.toString(),
     );
-    return { status: 'quarter updated', ...tokens };
+    return { status: 'quarter updated', ...tokens, city, country, quarter };
   }
   async register(request: any) {
     const firebaseUser = await this.firebaseService.checkFirebaseToken(request);
@@ -112,7 +114,6 @@ export class UserService {
     const tokens = await this.refreshService.createUserTokens(
       user._id.toString(),
       user.role,
-      user.quarter.toString(),
     );
     return { status: 'verified', ...tokens };
   }

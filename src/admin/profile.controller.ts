@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Req,
   UseGuards,
@@ -44,5 +45,15 @@ export class AdminProfileController {
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
   updateUser(@Req() req: any, @Body() body: UpdateAdminDto) {
     return this.adminService.updateUser(body, req.userId);
+  }
+  @Get('point/:location')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  updateAddress(@Req() req: any, @Param('location') location: string) {
+    const [lat, lng] = location.split(':');
+    return this.adminService.updateQuarter(req.userId, req.role, [
+      parseInt(lng),
+      parseInt(lat),
+    ]);
   }
 }
