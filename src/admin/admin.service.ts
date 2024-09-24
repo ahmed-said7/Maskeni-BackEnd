@@ -47,7 +47,7 @@ export class AdminService {
     return { admins, pagination: paginationObj };
   }
   async login(body: LoginAdminDto) {
-    const user = await this.AdminModel.findOne({ email: body.mobile });
+    const user = await this.AdminModel.findOne({ mobile: body.mobile });
     if (!user) {
       throw new HttpException('user not found', 400);
     }
