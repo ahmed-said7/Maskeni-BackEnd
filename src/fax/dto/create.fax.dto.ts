@@ -3,9 +3,16 @@ import { IsString } from 'class-validator';
 
 export class CreateFaxDto {
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The answer to the fax question.',
+    example: 'Please provide the latest status of the shipment.',
+  })
   answer: string;
+
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The question being asked in the fax.',
+    example: 'What is the expected delivery date?',
+  })
   question: string;
 }

@@ -89,7 +89,7 @@ export declare class VoluntaryController {
             createdAt?: Date;
         }[];
     }>;
-    getVoluntary(voluntaryId: string): Promise<{
+    getVoluntaryById(voluntaryId: string): Promise<{
         voluntary: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./voluntary.schema").Voluntary> & import("./voluntary.schema").Voluntary & {
             _id: import("mongoose").Types.ObjectId;
         }> & import("mongoose").Document<unknown, {}, import("./voluntary.schema").Voluntary> & import("./voluntary.schema").Voluntary & {

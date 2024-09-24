@@ -21,6 +21,7 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const swagger_1 = require("@nestjs/swagger");
 let TicketController = class TicketController {
     constructor(ticketService) {
         this.ticketService = ticketService;
@@ -31,8 +32,8 @@ let TicketController = class TicketController {
     getAllTickets(query, req) {
         return this.ticketService.getTickets(query, req.userId);
     }
-    create(ticketId, req, quantity) {
-        return this.ticketService.createTicket(ticketId, quantity, req.userId);
+    create(eventId, req, quantity) {
+        return this.ticketService.createTicket(eventId, quantity, req.userId);
     }
 };
 exports.TicketController = TicketController;
@@ -59,7 +60,7 @@ __decorate([
     (0, common_1.Post)(':eventId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
-    __param(0, (0, common_1.Param)('eventtId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
+    __param(0, (0, common_1.Param)('eventId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Body)('quantity')),
     __metadata("design:type", Function),
@@ -67,6 +68,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TicketController.prototype, "create", null);
 exports.TicketController = TicketController = __decorate([
+    (0, swagger_1.ApiTags)('Tickets'),
     (0, common_1.Controller)('ticket'),
     __metadata("design:paramtypes", [ticket_service_1.TicketService])
 ], TicketController);

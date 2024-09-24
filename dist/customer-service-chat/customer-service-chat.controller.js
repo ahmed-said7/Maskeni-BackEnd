@@ -21,6 +21,7 @@ const enum_1 = require("../common/enum");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
 const roles_1 = require("../common/decorator/roles");
+const swagger_1 = require("@nestjs/swagger");
 let CustomerServiceChatController = class CustomerServiceChatController {
     constructor(chatService) {
         this.chatService = chatService;
@@ -40,6 +41,9 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new chat' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Chat created successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -49,6 +53,9 @@ __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiOperation)({ summary: 'Get user chats' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of user chats' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [types_1.FindQuery]),
@@ -58,6 +65,10 @@ __decorate([
     (0, common_1.Get)(':id'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiOperation)({ summary: 'Get members of a specific chat' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of chat members' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Chat not found' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Param)('id', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),

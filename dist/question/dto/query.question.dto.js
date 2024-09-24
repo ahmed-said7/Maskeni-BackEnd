@@ -18,26 +18,38 @@ class QueryQuestionDto extends types_1.FindQuery {
 exports.QueryQuestionDto = QueryQuestionDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'The optional ID of the user who created the questions.',
+        type: String,
+    }),
     __metadata("design:type", String)
 ], QueryQuestionDto.prototype, "user", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'The optional ID of the country to filter questions by.',
+        type: String,
+    }),
     __metadata("design:type", String)
 ], QueryQuestionDto.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'The optional ID of the city to filter questions by.',
+        type: String,
+    }),
     __metadata("design:type", String)
 ], QueryQuestionDto.prototype, "city", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'The optional ID of the quarter to filter questions by.',
+        type: String,
+    }),
     __metadata("design:type", String)
 ], QueryQuestionDto.prototype, "quarter", void 0);
 //# sourceMappingURL=query.question.dto.js.map

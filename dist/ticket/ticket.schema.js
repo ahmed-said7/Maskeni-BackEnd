@@ -39,7 +39,7 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: user_schema_1.User.name }),
     __metadata("design:type", mongoose_2.Types.ObjectId)
-], Ticket.prototype, "owner", void 0);
+], Ticket.prototype, "eventOwner", void 0);
 exports.Ticket = Ticket = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], Ticket);

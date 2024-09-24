@@ -17,59 +17,65 @@ class CreateVoluntaryDto {
 exports.CreateVoluntaryDto = CreateVoluntaryDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Name of the voluntary activity' }),
     __metadata("design:type", String)
 ], CreateVoluntaryDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Details about the voluntary activity' }),
     __metadata("design:type", String)
 ], CreateVoluntaryDto.prototype, "details", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Start date of the voluntary activity' }),
     __metadata("design:type", String)
 ], CreateVoluntaryDto.prototype, "startedAt", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Optional field for additional date' }),
     __metadata("design:type", String)
 ], CreateVoluntaryDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'End date of the voluntary activity' }),
     __metadata("design:type", String)
 ], CreateVoluntaryDto.prototype, "endedAt", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'MongoDB ID of the country where the activity takes place',
+    }),
     __metadata("design:type", String)
 ], CreateVoluntaryDto.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'MongoDB ID of the city where the activity takes place',
+    }),
     __metadata("design:type", String)
 ], CreateVoluntaryDto.prototype, "city", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'MongoDB ID of the quarter where the activity takes place',
+    }),
     __metadata("design:type", String)
 ], CreateVoluntaryDto.prototype, "quarter", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ type: [String], description: 'List of image URLs' }),
     (0, class_validator_1.IsString)({ each: true }),
-    __metadata("design:type", String)
+    __metadata("design:type", Array)
 ], CreateVoluntaryDto.prototype, "images", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Minimum age required to participate' }),
     __metadata("design:type", Number)
 ], CreateVoluntaryDto.prototype, "startAge", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Maximum age limit for participation' }),
     __metadata("design:type", Number)
 ], CreateVoluntaryDto.prototype, "endAge", void 0);
 //# sourceMappingURL=voluntary.create.dto.js.map

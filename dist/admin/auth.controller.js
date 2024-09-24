@@ -21,6 +21,7 @@ const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
+const swagger_1 = require("@nestjs/swagger");
 let AdminAuthController = class AdminAuthController {
     constructor(adminService) {
         this.adminService = adminService;
@@ -35,6 +36,11 @@ let AdminAuthController = class AdminAuthController {
 exports.AdminAuthController = AdminAuthController;
 __decorate([
     (0, common_1.Post)('login'),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Admin logged in successfully.' }),
+    (0, swagger_1.ApiResponse)({
+        status: 401,
+        description: 'Unauthorized. Invalid credentials.',
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [login_dto_1.LoginAdminDto]),
@@ -44,12 +50,18 @@ __decorate([
     (0, common_1.Post)('add-admin'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Admin created successfully.' }),
+    (0, swagger_1.ApiResponse)({
+        status: 403,
+        description: 'Forbidden. Only SuperAdmin can add admins.',
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [signup_dto_1.SignupAdminDto]),
     __metadata("design:returntype", void 0)
 ], AdminAuthController.prototype, "signup", null);
 exports.AdminAuthController = AdminAuthController = __decorate([
+    (0, swagger_1.ApiTags)('Admin Authentication'),
     (0, common_1.Controller)('admin/auth'),
     __metadata("design:paramtypes", [admin_service_1.AdminService])
 ], AdminAuthController);

@@ -19,7 +19,10 @@ __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayNotEmpty)(),
     (0, class_validator_1.IsNumber)({}, { each: true }),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        type: [Number],
+        description: 'Array of coordinates, where each coordinate is a number.',
+    }),
     __metadata("design:type", Array)
 ], InnerArrayDto.prototype, "coordinates", void 0);
 class CreateCountryDto {
@@ -27,14 +30,21 @@ class CreateCountryDto {
 exports.CreateCountryDto = CreateCountryDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Name of the country.' }),
     __metadata("design:type", String)
 ], CreateCountryDto.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Location object for the country.' }),
+    __metadata("design:type", Object)
+], CreateCountryDto.prototype, "location", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
     (0, class_transformer_1.Type)(() => InnerArrayDto),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        type: [InnerArrayDto],
+        description: 'Array of coordinates for the country.',
+    }),
     __metadata("design:type", Array)
 ], CreateCountryDto.prototype, "coordinates", void 0);
 //# sourceMappingURL=create.country.dto.js.map

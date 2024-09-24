@@ -17,14 +17,20 @@ class UpdateFaxDto {
 exports.UpdateFaxDto = UpdateFaxDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'The updated answer to the fax question.',
+        example: 'Updated answer text.',
+    }),
     __metadata("design:type", String)
 ], UpdateFaxDto.prototype, "answer", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'The updated question for the fax.',
+        example: 'What is the new status of the shipment?',
+    }),
     __metadata("design:type", String)
 ], UpdateFaxDto.prototype, "question", void 0);
 //# sourceMappingURL=update.fax.dto.js.map

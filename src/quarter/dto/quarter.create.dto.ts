@@ -7,27 +7,42 @@ import {
   IsMongoId,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 class InnerArrayDto {
-  @IsArray() // Ensure that each inner element is an array
-  @ArrayNotEmpty() // Ensure the array is not empty
-  @IsNumber({}, { each: true }) // Validate that each element in the inner array is a number
-  coordinates: [number, number];
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsNumber({}, { each: true })
+  @ApiProperty({
+    description:
+      'Coordinates array must contain two numbers [longitude, latitude]',
+    type: [Number],
+  })
+  coordinates: [number, number]; // Array of two numbers
 }
 
 export class CreateQuarterDto {
   @IsString()
+  @ApiProperty({ description: 'Name of the quarter' })
   name: string;
+
   location: object;
 
   @IsMongoId()
+  @ApiProperty({ description: 'MongoDB ID of the associated city' })
   city: string;
 
   @IsMongoId()
+  @ApiProperty({ description: 'MongoDB ID of the associated country' })
   country: string;
 
   @IsArray()
+  @ArrayNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => InnerArrayDto)
+  @ApiProperty({
+    description: 'Array of coordinates for the quarter',
+    type: [InnerArrayDto],
+  })
   coordinates: InnerArrayDto[];
 }

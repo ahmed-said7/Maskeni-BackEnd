@@ -16,13 +16,19 @@ class UpdatePasswordDto {
 }
 exports.UpdatePasswordDto = UpdatePasswordDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'The new password for the user. Minimum length is 6 characters.',
+        example: 'NewPass123',
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(6),
-    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], UpdatePasswordDto.prototype, "password", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The current password of the user for verification.',
+        example: 'OldPass123',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdatePasswordDto.prototype, "currentPassword", void 0);

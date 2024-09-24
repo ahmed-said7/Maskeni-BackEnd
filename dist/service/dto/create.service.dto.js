@@ -28,35 +28,35 @@ __decorate([
 ], CreateOfferedDto.prototype, "details", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsEnum)(types_1.Jop_Type),
+    (0, swagger_1.ApiProperty)({ enum: types_1.Jop_Type }),
     __metadata("design:type", String)
 ], CreateOfferedDto.prototype, "type", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateOfferedDto.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateOfferedDto.prototype, "city", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateOfferedDto.prototype, "quarter", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)({ each: true }),
-    __metadata("design:type", String)
+    (0, swagger_1.ApiProperty)({ type: [String] }),
+    __metadata("design:type", Array)
 ], CreateOfferedDto.prototype, "images", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Number)
 ], CreateOfferedDto.prototype, "price", void 0);
 //# sourceMappingURL=create.service.dto.js.map

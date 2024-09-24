@@ -4,5 +4,5 @@ export declare class CreateShareDto {
     country: string;
     city: string;
     quarter: string;
-    images: string;
+    images: string[];
 }

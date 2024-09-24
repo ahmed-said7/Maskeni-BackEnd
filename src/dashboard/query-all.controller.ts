@@ -5,7 +5,9 @@ import { All_Role } from 'src/common/enum';
 import { Roles } from 'src/common/decorator/roles';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
+import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
 
+@ApiTags('Dashboard All') // Tag for grouping in Swagger UI
 @Controller('all')
 export class QueryAllController {
   constructor(private readonly dashboardAllService: QueryAllService) {}
@@ -13,6 +15,8 @@ export class QueryAllController {
   @Get('questions')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardSearchDto, required: false }) // Document query parameters
+  @ApiResponse({ status: 200, description: 'Retrieve all questions.' }) // Document response
   async getAllQuestions(@Query() query: DashboardSearchDto) {
     return this.dashboardAllService.getAllQuestions(query);
   }
@@ -20,6 +24,8 @@ export class QueryAllController {
   @Get('events')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardSearchDto, required: false })
+  @ApiResponse({ status: 200, description: 'Retrieve all events.' })
   async getAllEvents(@Query() query: DashboardSearchDto) {
     return this.dashboardAllService.getAllEvents(query);
   }
@@ -27,6 +33,8 @@ export class QueryAllController {
   @Get('shares')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardSearchDto, required: false })
+  @ApiResponse({ status: 200, description: 'Retrieve all shares.' })
   async getAllShares(@Query() query: DashboardSearchDto) {
     return this.dashboardAllService.getAllShares(query);
   }
@@ -34,6 +42,8 @@ export class QueryAllController {
   @Get('voluntary')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardSearchDto, required: false })
+  @ApiResponse({ description: 'Retrieve all voluntary opportunities.' })
   async getAllVoluntary(@Query() query: DashboardSearchDto) {
     return this.dashboardAllService.getAllVoluntary(query);
   }
@@ -41,6 +51,8 @@ export class QueryAllController {
   @Get('services')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardSearchDto, required: false })
+  @ApiResponse({ status: 200, description: 'Retrieve all services.' })
   async getAllService(@Query() query: DashboardSearchDto) {
     return this.dashboardAllService.getAllService(query);
   }
@@ -48,6 +60,8 @@ export class QueryAllController {
   @Get('posts')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardSearchDto, required: false })
+  @ApiResponse({ status: 200, description: 'Retrieve all posts.' })
   async getAllPosts(@Query() query: DashboardSearchDto) {
     return this.dashboardAllService.getAllPosts(query);
   }

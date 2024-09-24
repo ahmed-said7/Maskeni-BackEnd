@@ -52,7 +52,11 @@ let TicketService = class TicketService {
         const ticketExists = await this.ticketModel
             .findById(ticketId)
             .populate({ path: 'user', select: 'name mobile icon', model: 'User' })
-            .populate({ path: 'owner', select: 'name mobile icon', model: 'User' })
+            .populate({
+            path: 'eventOwner',
+            select: 'name mobile icon',
+            model: 'User',
+        })
             .populate({
             path: 'event',
             select: 'name details images type',
@@ -64,11 +68,15 @@ let TicketService = class TicketService {
         return { ticket: ticketExists };
     }
     async getTickets(obj, user) {
-        const filter = { $or: [{ owner: user }, { user }] };
+        const filter = { $or: [{ eventOwner: user }, { user }] };
         const { query, paginationObj } = await this.apiService.getAllDocs(this.ticketModel.find(), obj, filter);
         const posts = await query
             .populate({ path: 'user', select: 'name mobile icon', model: 'User' })
-            .populate({ path: 'owner', select: 'name mobile icon', model: 'User' })
+            .populate({
+            path: 'eventOwner',
+            select: 'name mobile icon',
+            model: 'User',
+        })
             .populate({
             path: 'event',
             select: 'name details images type',
@@ -84,7 +92,7 @@ let TicketService = class TicketService {
         const ticket = await this.ticketModel.create({
             price: event.price,
             user: user,
-            owner: event.user.toString(),
+            eventOwner: event.user.toString(),
             event: event._id.toString(),
             isPaid: false,
             quantity,

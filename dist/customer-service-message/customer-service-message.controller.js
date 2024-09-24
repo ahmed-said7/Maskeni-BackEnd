@@ -22,6 +22,7 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const swagger_1 = require("@nestjs/swagger");
 let CustomerServiceMessageController = class CustomerServiceMessageController {
     constructor(msgService) {
         this.msgService = msgService;
@@ -47,6 +48,8 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Message created successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -57,6 +60,9 @@ __decorate([
     (0, common_1.Get)('admin-msg/:user'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiParam)({ name: 'user', description: 'ID of the user to send message' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Message sent by admin.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Param)('user', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Body)()),
@@ -68,6 +74,17 @@ __decorate([
     (0, common_1.Get)('scroll/:chatId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiParam)({
+        name: 'chatId',
+        description: 'ID of the chat for scrolling messages',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'offset',
+        required: false,
+        description: 'Offset for pagination',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Messages scrolled successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Param)('chatId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Query)()),
@@ -79,6 +96,9 @@ __decorate([
     (0, common_1.Get)('user-join/:chatId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiParam)({ name: 'chatId', description: 'ID of the chat to join as user' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'User joined chat successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Param)('chatId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -89,6 +109,9 @@ __decorate([
     (0, common_1.Get)('admin-join/:chatId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiParam)({ name: 'chatId', description: 'ID of the chat to join as admin' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Admin joined chat successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Param)('chatId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -96,6 +119,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomerServiceMessageController.prototype, "joinAdmin", null);
 exports.CustomerServiceMessageController = CustomerServiceMessageController = __decorate([
+    (0, swagger_1.ApiTags)('Customer Service Message'),
     (0, common_1.Controller)('customer-service-message'),
     __metadata("design:paramtypes", [customer_service_message_service_1.CustomerServiceMessageService])
 ], CustomerServiceMessageController);

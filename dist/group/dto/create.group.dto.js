@@ -17,33 +17,43 @@ class CreateGroupDto {
 exports.CreateGroupDto = CreateGroupDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'The name of the group' }),
     __metadata("design:type", String)
 ], CreateGroupDto.prototype, "name", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'Array of MongoDB IDs representing the users in the group',
+        type: [String],
+        minItems: 2,
+    }),
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayMinSize)(2),
     (0, class_validator_1.IsMongoId)({ each: true }),
     __metadata("design:type", Array)
 ], CreateGroupDto.prototype, "users", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'MongoDB ID of the country where the group is located',
+    }),
     (0, class_validator_1.IsMongoId)(),
     __metadata("design:type", String)
 ], CreateGroupDto.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'MongoDB ID of the city where the group is located',
+    }),
     (0, class_validator_1.IsMongoId)(),
     __metadata("design:type", String)
 ], CreateGroupDto.prototype, "city", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'MongoDB ID of the quarter where the group is located',
+    }),
     (0, class_validator_1.IsMongoId)(),
     __metadata("design:type", String)
 ], CreateGroupDto.prototype, "quarter", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'URL of the image representing the group' }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateGroupDto.prototype, "image", void 0);

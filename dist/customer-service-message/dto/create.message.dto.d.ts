@@ -1,6 +1,6 @@
 export declare class CreateMessageDto {
-    content: string;
-    image: string;
+    content?: string;
+    image?: string;
     chat: string;
     type: string;
     user: string;

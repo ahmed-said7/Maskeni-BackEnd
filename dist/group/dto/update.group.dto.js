@@ -18,13 +18,17 @@ exports.UpdateGroupDto = UpdateGroupDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'The new name for the group, if updating.',
+    }),
     __metadata("design:type", String)
 ], UpdateGroupDto.prototype, "name", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'The URL of the new image for the group, if updating.',
+    }),
     __metadata("design:type", String)
 ], UpdateGroupDto.prototype, "image", void 0);
 //# sourceMappingURL=update.group.dto.js.map

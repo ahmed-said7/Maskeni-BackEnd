@@ -5,7 +5,7 @@ import { QueryOfferedDto } from './dto/query.service.dto';
 import { UpdateOfferedDto } from './dto/update.service.dto';
 import { OfferedService } from './offered-service.service';
 export declare class OfferedController {
-    private offeredService;
+    private readonly offeredService;
     constructor(offeredService: OfferedService);
     getMyDeletedServices(query: FindQuery, req: any): Promise<{
         services: (import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
@@ -19,7 +19,7 @@ export declare class OfferedController {
         })[];
         pagination: import("../common/Api/api.service").Pagination;
     }>;
-    createEvent(body: CreateOfferedDto, req: any): Promise<{
+    createService(body: CreateOfferedDto, req: any): Promise<{
         service: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
             _id: import("mongoose").Types.ObjectId;
         }> & import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
@@ -28,13 +28,13 @@ export declare class OfferedController {
             _id: import("mongoose").Types.ObjectId;
         }>;
     }>;
-    getAllservices(query: QueryOfferedDto): Promise<{
+    getAllServices(query: QueryOfferedDto): Promise<{
         services: (import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("../common/Api/api.service").Pagination;
     }>;
-    updateservice(serviceId: string, body: UpdateOfferedDto, req: any): Promise<{
+    updateService(serviceId: string, body: UpdateOfferedDto, req: any): Promise<{
         service: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
             _id: import("mongoose").Types.ObjectId;
         }> & import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
@@ -43,17 +43,17 @@ export declare class OfferedController {
             _id: import("mongoose").Types.ObjectId;
         }>;
     }>;
-    deleteservice(serviceId: string, req: any): Promise<{
+    deleteService(serviceId: string, req: any): Promise<{
         status: string;
     }>;
-    createserviceComment(serviceId: string, body: CreateCommentDto, req: any): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../comment/comment.schema").Comment> & import("../comment/comment.schema").Comment & {
+    createServiceComment(serviceId: string, body: CreateCommentDto, req: any): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../comment/comment.schema").Comment> & import("../comment/comment.schema").Comment & {
         _id: import("mongoose").Types.ObjectId;
     }> & import("mongoose").Document<unknown, {}, import("../comment/comment.schema").Comment> & import("../comment/comment.schema").Comment & {
         _id: import("mongoose").Types.ObjectId;
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>>;
-    getserviceComment(serviceId: string, query: FindQuery): Promise<{
+    getServiceComments(serviceId: string, query: FindQuery): Promise<{
         comments: (import("mongoose").Document<unknown, {}, import("../comment/comment.schema").Comment> & import("../comment/comment.schema").Comment & {
             _id: import("mongoose").Types.ObjectId;
         })[];
@@ -62,25 +62,25 @@ export declare class OfferedController {
     deleteserviceComment(commentId: string, req: any): Promise<{
         status: string;
     }>;
-    addserviceLike(serviceId: string, req: any): Promise<{
+    addServiceLike(serviceId: string, req: any): Promise<{
         status: string;
     }>;
-    removeserviceLike(serviceId: string, req: any): Promise<{
+    removeServiceLike(serviceId: string, req: any): Promise<{
         status: string;
     }>;
-    getserviceLikes(serviceId: string, query: FindQuery): Promise<{
+    getServiceLikes(serviceId: string, query: FindQuery): Promise<{
         likes: (import("mongoose").Document<unknown, {}, import("../likes/likes.schema").Likes> & import("../likes/likes.schema").Likes & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("../common/Api/api.service").Pagination;
     }>;
-    addSavedservice(serviceId: string, req: any): Promise<{
+    addSavedService(serviceId: string, req: any): Promise<{
         status: string;
     }>;
-    removeSavedservice(serviceId: string, req: any): Promise<{
+    removeSavedService(serviceId: string, req: any): Promise<{
         status: string;
     }>;
-    getSavedservices(serviceId: string, query: FindQuery): Promise<{
+    getSavedServices(serviceId: string, query: FindQuery): Promise<{
         totalPages: number;
         page: number;
         limit: number;
@@ -89,7 +89,7 @@ export declare class OfferedController {
             createdAt?: Date;
         }[];
     }>;
-    getservice(serviceId: string): Promise<{
+    getServiceById(serviceId: string): Promise<{
         service: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
             _id: import("mongoose").Types.ObjectId;
         }> & import("mongoose").Document<unknown, {}, import("./offered-service.schema").Offered> & import("./offered-service.schema").Offered & {
@@ -104,7 +104,7 @@ export declare class OfferedController {
     removeRequestService(serviceId: string, req: any): Promise<{
         status: string;
     }>;
-    getSavedRequested(serviceId: string, query: FindQuery): Promise<{
+    getRequestedServices(serviceId: string, query: FindQuery): Promise<{
         totalPages: number;
         page: number;
         limit: number;

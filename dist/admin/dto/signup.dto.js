@@ -16,24 +16,36 @@ class SignupAdminDto {
 }
 exports.SignupAdminDto = SignupAdminDto;
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The name of the admin user.',
+        example: 'John Doe',
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(4),
     __metadata("design:type", String)
 ], SignupAdminDto.prototype, "name", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The mobile number of the admin user for registration.',
+        example: '+1234567890',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SignupAdminDto.prototype, "mobile", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The password for the admin account.',
+        example: 'securepassword123',
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(6),
     __metadata("design:type", String)
 ], SignupAdminDto.prototype, "password", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: "An optional URL to the admin user's profile icon.",
+        example: 'https://example.com/icon.png',
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

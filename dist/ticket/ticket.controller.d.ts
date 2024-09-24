@@ -18,7 +18,7 @@ export declare class TicketController {
         })[];
         pagination: import("../common/Api/api.service").Pagination;
     }>;
-    create(ticketId: string, req: any, quantity: number): Promise<{
+    create(eventId: string, req: any, quantity: number): Promise<{
         ticket: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./ticket.schema").Ticket> & import("./ticket.schema").Ticket & {
             _id: import("mongoose").Types.ObjectId;
         }> & import("mongoose").Document<unknown, {}, import("./ticket.schema").Ticket> & import("./ticket.schema").Ticket & {

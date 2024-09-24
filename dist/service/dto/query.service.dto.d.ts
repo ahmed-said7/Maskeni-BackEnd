@@ -1,8 +1,8 @@
 import { FindQuery } from 'src/common/types';
 export declare class QueryOfferedDto extends FindQuery {
-    type: string;
-    price: number | object;
-    country: string;
-    city: string;
-    quarter: string;
+    type?: string;
+    price?: number;
+    country?: string;
+    city?: string;
+    quarter?: string;
 }

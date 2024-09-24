@@ -18,18 +18,27 @@ exports.CreateMessageDto = CreateMessageDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The content of the message',
+        example: 'Hello, how can I help you?',
+    }),
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "content", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'URL of the image associated with the message',
+        example: 'http://example.com/image.png',
+    }),
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "image", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the chat this message belongs to',
+        example: '60c72b2f9b1e8e3b4c123456',
+    }),
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "chat", void 0);
 class CreateAdminMessageDto {
@@ -37,6 +46,10 @@ class CreateAdminMessageDto {
 exports.CreateAdminMessageDto = CreateAdminMessageDto;
 __decorate([
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The content of the admin message',
+        example: 'Please check your email for the latest update.',
+    }),
     __metadata("design:type", String)
 ], CreateAdminMessageDto.prototype, "content", void 0);
 //# sourceMappingURL=create.message.dto.js.map

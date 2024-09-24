@@ -11,23 +11,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QueryTicketDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 const types_1 = require("../../common/types");
 class QueryTicketDto extends types_1.FindQuery {
 }
 exports.QueryTicketDto = QueryTicketDto;
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'ID of the event owner' }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], QueryTicketDto.prototype, "owner", void 0);
+], QueryTicketDto.prototype, "eventOwner", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'ID of the user associated with the ticket',
+    }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], QueryTicketDto.prototype, "user", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'ID of the event associated with the ticket',
+    }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], QueryTicketDto.prototype, "event", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Indicates if the ticket is paid or not',
+    }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], QueryTicketDto.prototype, "isPaid", void 0);

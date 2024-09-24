@@ -21,6 +21,7 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const enum_1 = require("../common/enum");
 const roles_1 = require("../common/decorator/roles");
+const swagger_1 = require("@nestjs/swagger");
 let ReviewController = class ReviewController {
     constructor(reviewService) {
         this.reviewService = reviewService;
@@ -40,6 +41,9 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new review' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Review successfully created.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -50,6 +54,10 @@ __decorate([
     (0, common_1.Patch)(':reviewId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update an existing review' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Review successfully updated.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Review not found.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('reviewId')),
     __param(2, (0, common_1.Req)()),
@@ -61,6 +69,10 @@ __decorate([
     (0, common_1.Delete)(':reviewId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a review' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Review successfully deleted.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Review not found.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Param)('reviewId')),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -68,6 +80,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ReviewController.prototype, "deleteReview", null);
 exports.ReviewController = ReviewController = __decorate([
+    (0, swagger_1.ApiTags)('reviews'),
     (0, common_1.Controller)('review'),
     __metadata("design:paramtypes", [review_service_1.ReviewService])
 ], ReviewController);

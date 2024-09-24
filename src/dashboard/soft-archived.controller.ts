@@ -5,7 +5,9 @@ import { All_Role } from 'src/common/enum';
 import { Roles } from 'src/common/decorator/roles';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
+import { ApiTags, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 
+@ApiTags('Soft Archive') // Tag for grouping in Swagger UI
 @Controller('soft-archive')
 export class SoftArchiveController {
   constructor(private readonly softArchiveService: SoftArchiveService) {}
@@ -13,6 +15,12 @@ export class SoftArchiveController {
   @Patch('questions/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the question to soft archive' }) // Document path parameter
+  @ApiBody({ type: DashboardUpdateArchivedDto }) // Document body parameter
+  @ApiResponse({
+    status: 200,
+    description: 'Soft archive the question successfully.',
+  }) // Document response
   async softArchiveQuestion(
     @Param('id') id: string,
     @Body() updateArchivedDto: DashboardUpdateArchivedDto,
@@ -23,6 +31,12 @@ export class SoftArchiveController {
   @Patch('events/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the event to soft archive' })
+  @ApiBody({ type: DashboardUpdateArchivedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft archive the event successfully.',
+  })
   async softArchiveEvent(
     @Param('id') id: string,
     @Body() updateArchivedDto: DashboardUpdateArchivedDto,
@@ -33,6 +47,12 @@ export class SoftArchiveController {
   @Patch('shares/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the share to soft archive' })
+  @ApiBody({ type: DashboardUpdateArchivedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft archive the share successfully.',
+  })
   async softArchiveShare(
     @Param('id') id: string,
     @Body() updateArchivedDto: DashboardUpdateArchivedDto,
@@ -43,6 +63,15 @@ export class SoftArchiveController {
   @Patch('voluntary/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({
+    name: 'id',
+    description: 'ID of the voluntary opportunity to soft archive',
+  })
+  @ApiBody({ type: DashboardUpdateArchivedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft archive the voluntary opportunity successfully.',
+  })
   async softArchiveVoluntary(
     @Param('id') id: string,
     @Body() updateArchivedDto: DashboardUpdateArchivedDto,
@@ -53,6 +82,12 @@ export class SoftArchiveController {
   @Patch('services/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the service to soft archive' })
+  @ApiBody({ type: DashboardUpdateArchivedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft archive the offered service successfully.',
+  })
   async softArchiveOfferedService(
     @Param('id') id: string,
     @Body() updateArchivedDto: DashboardUpdateArchivedDto,
@@ -63,6 +98,12 @@ export class SoftArchiveController {
   @Patch('posts/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the post to soft archive' })
+  @ApiBody({ type: DashboardUpdateArchivedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft archive the post successfully.',
+  })
   async softArchivePost(
     @Param('id') id: string,
     @Body() updateArchivedDto: DashboardUpdateArchivedDto,

@@ -11,16 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuarterQueryDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 const types_1 = require("../../common/types");
 class QuarterQueryDto extends types_1.FindQuery {
 }
 exports.QuarterQueryDto = QuarterQueryDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'The ID of the country' }),
     __metadata("design:type", String)
 ], QuarterQueryDto.prototype, "country", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'The ID of the city' }),
     __metadata("design:type", String)
 ], QuarterQueryDto.prototype, "city", void 0);
 //# sourceMappingURL=quarter.query.dto.js.map

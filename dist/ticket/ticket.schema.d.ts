@@ -5,7 +5,7 @@ export declare class Ticket {
     qrCode?: string;
     user: Types.ObjectId;
     event: Types.ObjectId;
-    owner: Types.ObjectId;
+    eventOwner: Types.ObjectId;
 }
 export type TicketDocument = HydratedDocument<Ticket>;
 export declare const TicketSchema: import("mongoose").Schema<Ticket, import("mongoose").Model<Ticket, any, any, any, import("mongoose").Document<unknown, any, Ticket> & Ticket & {

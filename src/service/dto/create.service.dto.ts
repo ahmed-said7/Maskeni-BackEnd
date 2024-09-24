@@ -1,5 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
-// import { Type } from 'class-transformer';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
   IsEnum,
@@ -7,7 +6,6 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  // ValidateNested,
 } from 'class-validator';
 import { Jop_Type } from 'src/common/types';
 
@@ -21,29 +19,31 @@ export class CreateOfferedDto {
   details: string;
 
   @IsString()
-  @ApiProperty()
   @IsEnum(Jop_Type)
-  type: string;
+  @ApiProperty({ enum: Jop_Type }) // Specify the enum for Swagger documentation
+  type: Jop_Type; // Use Jop_Type directly
 
-  @ApiProperty()
   @IsMongoId()
+  @ApiProperty()
   country: string;
-  @ApiProperty()
+
   @IsMongoId()
+  @ApiProperty()
   city: string;
-  @ApiProperty()
+
   @IsMongoId()
+  @ApiProperty()
   quarter: string;
 
   @IsArray()
-  @ApiProperty()
   @IsString({ each: true })
-  images: string;
+  @ApiProperty({ type: [String] }) // Specify that images is an array of strings
+  images: string[];
 
-  user: string;
+  user?: string; // Mark as optional with a '?'
 
   @IsOptional()
-  @ApiProperty()
   @IsNumber()
-  price: number;
+  @ApiPropertyOptional() // Optional property for price
+  price?: number; // Mark as optional with a '?'
 }

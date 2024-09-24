@@ -18,18 +18,20 @@ exports.CreateMessageDto = CreateMessageDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'The content of the message' }),
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "content", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'URL of the image associated with the message',
+    }),
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "image", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'ID of the chat to which the message belongs' }),
     __metadata("design:type", String)
 ], CreateMessageDto.prototype, "chat", void 0);
 //# sourceMappingURL=create.message.dto.js.map

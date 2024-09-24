@@ -18,13 +18,19 @@ exports.UpdatePostDto = UpdatePostDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Optional content of the post to be updated',
+        example: 'This is the updated post content.',
+    }),
     __metadata("design:type", String)
 ], UpdatePostDto.prototype, "content", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Optional image URL associated with the post',
+        example: 'https://example.com/new-image.jpg',
+    }),
     __metadata("design:type", String)
 ], UpdatePostDto.prototype, "image", void 0);
 //# sourceMappingURL=post.update.dto.js.map

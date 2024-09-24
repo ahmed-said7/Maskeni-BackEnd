@@ -12,11 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CityQueryDto = void 0;
 const class_validator_1 = require("class-validator");
 const types_1 = require("../../common/types");
+const swagger_1 = require("@nestjs/swagger");
 class CityQueryDto extends types_1.FindQuery {
 }
 exports.CityQueryDto = CityQueryDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Filter cities by country ID' }),
     __metadata("design:type", String)
 ], CityQueryDto.prototype, "country", void 0);
 //# sourceMappingURL=city.query.dto.js.map

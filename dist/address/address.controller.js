@@ -22,6 +22,7 @@ const enum_1 = require("../common/enum");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
+const swagger_1 = require("@nestjs/swagger");
 let AddressController = class AddressController {
     constructor(addressService) {
         this.addressService = addressService;
@@ -45,6 +46,12 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new address' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        description: 'The address has been successfully created.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -55,6 +62,12 @@ __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve all addresses' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Successful retrieval of addresses.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -65,6 +78,13 @@ __decorate([
     (0, common_1.Patch)(':id'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update an existing address' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'The address has been successfully updated.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Address not found' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -75,12 +95,20 @@ __decorate([
     (0, common_1.Delete)(':id'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete an address' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'The address has been successfully removed.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Address not found' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AddressController.prototype, "remove", null);
 exports.AddressController = AddressController = __decorate([
+    (0, swagger_1.ApiTags)('Address'),
     (0, common_1.Controller)('address'),
     __metadata("design:paramtypes", [address_service_1.AddressService])
 ], AddressController);

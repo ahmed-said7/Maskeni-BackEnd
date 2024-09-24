@@ -4,5 +4,5 @@ export declare class CreateQuestionDto {
     city: string;
     quarter: string;
     user: string;
-    images: string;
+    images: string[];
 }

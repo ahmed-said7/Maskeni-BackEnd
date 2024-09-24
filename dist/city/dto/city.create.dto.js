@@ -12,12 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCityDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+const swagger_1 = require("@nestjs/swagger");
 class InnerArrayDto {
 }
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayNotEmpty)(),
     (0, class_validator_1.IsNumber)({}, { each: true }),
+    (0, swagger_1.ApiProperty)({
+        type: [Number],
+        description: 'Coordinates represented as an array of numbers [longitude, latitude]',
+    }),
     __metadata("design:type", Array)
 ], InnerArrayDto.prototype, "coordinates", void 0);
 class CreateCityDto {
@@ -25,16 +30,26 @@ class CreateCityDto {
 exports.CreateCityDto = CreateCityDto;
 __decorate([
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: 'Name of the city' }),
     __metadata("design:type", String)
 ], CreateCityDto.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Location details of the city', type: Object }),
+    __metadata("design:type", Object)
+], CreateCityDto.prototype, "location", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
     (0, class_transformer_1.Type)(() => InnerArrayDto),
+    (0, swagger_1.ApiProperty)({
+        type: [InnerArrayDto],
+        description: 'Array of coordinates for the city',
+    }),
     __metadata("design:type", Array)
 ], CreateCityDto.prototype, "coordinates", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({ description: 'MongoDB ID of the associated country' }),
     __metadata("design:type", String)
 ], CreateCityDto.prototype, "country", void 0);
 //# sourceMappingURL=city.create.dto.js.map

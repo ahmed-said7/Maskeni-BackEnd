@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminProfileController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const update_password_dto_1 = require("./dto/update.password.dto");
 const admin_service_1 = require("./admin.service");
 const update_user_dto_1 = require("./dto/update.user.dto");
@@ -25,23 +26,26 @@ let AdminProfileController = class AdminProfileController {
     constructor(adminService) {
         this.adminService = adminService;
     }
-    updatePassword(body, req) {
-        return this.adminService.updatepassword(body, req.userId);
+    async updatePassword(body, req) {
+        return await this.adminService.updatepassword(body, req.userId);
     }
-    deleteUser(req) {
-        return this.adminService.deleteUser(req.userId);
+    async deleteUser(req) {
+        return await this.adminService.deleteUser(req.userId);
     }
-    getUser(req) {
-        return this.adminService.getUser(req.userId);
+    async getUser(req) {
+        return await this.adminService.getUser(req.userId);
     }
-    updateUser(req, body) {
-        return this.adminService.updateUser(body, req.userId);
+    async updateUser(req, body) {
+        return await this.adminService.updateUser(body, req.userId);
     }
-    updateAddress(req, location) {
-        const [lat, lng] = location.split(':');
-        return this.adminService.updateQuarter(req.userId, req.role, [
-            parseInt(lng),
-            parseInt(lat),
+    async updateAddress(req, location) {
+        const [lat, lng] = location.split(':').map(Number);
+        if (isNaN(lat) || isNaN(lng)) {
+            throw new common_1.BadRequestException('Invalid location format');
+        }
+        return await this.adminService.updateQuarter(req.userId, req.role, [
+            lng,
+            lat,
         ]);
     }
 };
@@ -50,51 +54,81 @@ __decorate([
     (0, common_1.Patch)('password'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
+    (0, swagger_1.ApiOperation)({ summary: 'Update admin password' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Password updated successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad Request' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [update_password_dto_1.UpdatePasswordDto, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AdminProfileController.prototype, "updatePassword", null);
 __decorate([
     (0, common_1.Delete)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete admin profile' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Admin profile deleted successfully',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AdminProfileController.prototype, "deleteUser", null);
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
+    (0, swagger_1.ApiOperation)({ summary: 'Get admin profile' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Admin profile retrieved successfully',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Admin not found' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AdminProfileController.prototype, "getUser", null);
 __decorate([
     (0, common_1.Patch)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
+    (0, swagger_1.ApiOperation)({ summary: 'Update admin profile' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Admin profile updated successfully',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad Request' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, update_user_dto_1.UpdateAdminDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AdminProfileController.prototype, "updateUser", null);
 __decorate([
-    (0, common_1.Get)('point/:location'),
+    (0, common_1.Patch)('point/:location'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update admin address by location' }),
+    (0, swagger_1.ApiParam)({
+        name: 'location',
+        required: true,
+        description: 'Location coordinates in the format lat:lng',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Quarter updated successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid location format' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('location')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AdminProfileController.prototype, "updateAddress", null);
 exports.AdminProfileController = AdminProfileController = __decorate([
+    (0, swagger_1.ApiTags)('Admin Profile'),
     (0, common_1.Controller)('admin/profile'),
     __metadata("design:paramtypes", [admin_service_1.AdminService])
 ], AdminProfileController);

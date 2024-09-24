@@ -23,20 +23,21 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const swagger_1 = require("@nestjs/swagger");
 let FaxController = class FaxController {
     constructor(faxService) {
         this.faxService = faxService;
     }
-    createContact(body) {
+    async createContact(body) {
         return this.faxService.createFax(body);
     }
-    getAllContact(query) {
+    async getAllContact(query) {
         return this.faxService.getAllFaxs(query);
     }
-    deleteQuestion(faxId) {
+    async deleteQuestion(faxId) {
         return this.faxService.deleteFax(faxId);
     }
-    updateQuestion(faxId, body) {
+    async updateQuestion(faxId, body) {
         return this.faxService.updateFax(body, faxId);
     }
 };
@@ -45,39 +46,54 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new fax' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Fax created successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_fax_dto_1.CreateFaxDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], FaxController.prototype, "createContact", null);
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all faxes' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of all faxes.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [types_1.FindQuery]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], FaxController.prototype, "getAllContact", null);
 __decorate([
     (0, common_1.Delete)(':faxId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a fax by ID' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Fax deleted successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Fax not found.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Param)('faxId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], FaxController.prototype, "deleteQuestion", null);
 __decorate([
     (0, common_1.Patch)(':faxId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.SuperAdmin, enum_1.All_Role.Admin),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a fax by ID' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Fax updated successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Fax not found.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Param)('faxId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_fax_dto_1.UpdateFaxDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], FaxController.prototype, "updateQuestion", null);
 exports.FaxController = FaxController = __decorate([
+    (0, swagger_1.ApiTags)('Fax'),
     (0, common_1.Controller)('fax'),
     __metadata("design:paramtypes", [fax_service_1.FaxService])
 ], FaxController);

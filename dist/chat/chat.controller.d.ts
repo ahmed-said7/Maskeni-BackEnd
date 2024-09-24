@@ -2,7 +2,7 @@ import { ChatService } from './chat.service';
 import { CreateChatDto } from './dto/create.chat';
 import { FindQuery } from 'src/common/types';
 export declare class ChatController {
-    private chatService;
+    private readonly chatService;
     constructor(chatService: ChatService);
     createChat(body: CreateChatDto, req: any): Promise<{
         messages: (import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../message/messahe.schema").Message> & import("../message/messahe.schema").Message & {

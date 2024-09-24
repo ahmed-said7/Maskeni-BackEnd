@@ -18,7 +18,7 @@ export class Ticket {
   event: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: User.name })
-  owner: Types.ObjectId;
+  eventOwner: Types.ObjectId;
 }
 
 export type TicketDocument = HydratedDocument<Ticket>;

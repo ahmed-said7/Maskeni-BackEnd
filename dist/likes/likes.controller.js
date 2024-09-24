@@ -20,6 +20,7 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
 const types_1 = require("../common/types");
+const swagger_1 = require("@nestjs/swagger");
 let LikesController = class LikesController {
     constructor(likesService) {
         this.likesService = likesService;
@@ -37,8 +38,12 @@ let LikesController = class LikesController {
 exports.LikesController = LikesController;
 __decorate([
     (0, common_1.Post)(':commentId'),
-    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authentication_guard_1.AuthenticationGuard),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Add a like to a comment' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Like added successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Comment not found' }),
     __param(0, (0, common_1.Param)('commentId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -47,8 +52,12 @@ __decorate([
 ], LikesController.prototype, "addLike", null);
 __decorate([
     (0, common_1.Delete)(':commentId'),
-    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authentication_guard_1.AuthenticationGuard),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a like from a comment' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Like removed successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Comment not found' }),
     __param(0, (0, common_1.Param)('commentId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -57,6 +66,9 @@ __decorate([
 ], LikesController.prototype, "deleteLike", null);
 __decorate([
     (0, common_1.Get)(':commentId'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get likes for a specific comment' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Likes retrieved successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Comment not found' }),
     __param(0, (0, common_1.Param)('commentId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
@@ -64,6 +76,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], LikesController.prototype, "getCommentLikes", null);
 exports.LikesController = LikesController = __decorate([
+    (0, swagger_1.ApiTags)('likes'),
     (0, common_1.Controller)('likes'),
     __metadata("design:paramtypes", [likes_service_1.LikesService])
 ], LikesController);

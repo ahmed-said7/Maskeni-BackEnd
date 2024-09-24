@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VoluntaryController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const validate_mongo_pipe_1 = require("../common/pipe/validate.mongo.pipe");
 const types_1 = require("../common/types");
 const voluntary_service_1 = require("./voluntary.service");
@@ -76,7 +77,7 @@ let VoluntaryController = class VoluntaryController {
     getSavedVoluntarys(voluntaryId, query) {
         return this.voluntaryService.getAllSaved(voluntaryId, query);
     }
-    getVoluntary(voluntaryId) {
+    getVoluntaryById(voluntaryId) {
         return this.voluntaryService.getVoluntary(voluntaryId);
     }
 };
@@ -85,6 +86,7 @@ __decorate([
     (0, common_1.Get)('deleted'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get my deleted voluntary activities' }),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -95,6 +97,7 @@ __decorate([
     (0, common_1.Get)('archived'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get my archived voluntary activities' }),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -105,6 +108,7 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new voluntary activity' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -115,6 +119,7 @@ __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all voluntary activities with filters' }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [voluntary_query_dto_1.QueryVoluntaryDto]),
@@ -124,6 +129,11 @@ __decorate([
     (0, common_1.Patch)(':voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a specific voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to update',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
@@ -135,6 +145,11 @@ __decorate([
     (0, common_1.Delete)(':voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to delete',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -145,6 +160,11 @@ __decorate([
     (0, common_1.Post)('comment/:voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Add a comment to a voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to comment on',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
@@ -156,6 +176,11 @@ __decorate([
     (0, common_1.Get)('comment/:voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get comments for a voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to retrieve comments for',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
@@ -166,6 +191,11 @@ __decorate([
     (0, common_1.Delete)('comment/:commentId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a comment from a voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'commentId',
+        description: 'The ID of the comment to delete',
+    }),
     __param(0, (0, common_1.Param)('commentId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -176,6 +206,11 @@ __decorate([
     (0, common_1.Post)('likes/:voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Add a like to a voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to like',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -186,6 +221,11 @@ __decorate([
     (0, common_1.Delete)('likes/:voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a like from a voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to unlike',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -196,6 +236,11 @@ __decorate([
     (0, common_1.Get)('likes/:voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get likes for a voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to retrieve likes for',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
@@ -206,6 +251,11 @@ __decorate([
     (0, common_1.Post)('saved/:voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Save a voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to save',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -216,6 +266,11 @@ __decorate([
     (0, common_1.Delete)('saved/:voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a saved voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to remove from saved',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -226,6 +281,11 @@ __decorate([
     (0, common_1.Get)('saved/:voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all saved voluntary activities' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to retrieve saved activities for',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
@@ -236,12 +296,18 @@ __decorate([
     (0, common_1.Get)(':voluntaryId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get details of a specific voluntary activity' }),
+    (0, swagger_1.ApiParam)({
+        name: 'voluntaryId',
+        description: 'The ID of the voluntary activity to retrieve',
+    }),
     __param(0, (0, common_1.Param)('voluntaryId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], VoluntaryController.prototype, "getVoluntary", null);
+], VoluntaryController.prototype, "getVoluntaryById", null);
 exports.VoluntaryController = VoluntaryController = __decorate([
+    (0, swagger_1.ApiTags)('Voluntary'),
     (0, common_1.Controller)('voluntary'),
     __metadata("design:paramtypes", [voluntary_service_1.VoluntaryService])
 ], VoluntaryController);

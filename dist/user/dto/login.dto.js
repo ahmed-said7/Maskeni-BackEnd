@@ -16,8 +16,12 @@ class LoginUserDto {
 }
 exports.LoginUserDto = LoginUserDto;
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The mobile number of the user for login',
+        example: '+1234567890',
+    }),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsMobilePhone)(),
     __metadata("design:type", String)
 ], LoginUserDto.prototype, "mobile", void 0);
 //# sourceMappingURL=login.dto.js.map

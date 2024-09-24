@@ -1,39 +1,59 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsMongoId, IsOptional } from 'class-validator';
+import { IsMongoId, IsNumber, IsOptional, IsString } from 'class-validator';
 import { FindQuery } from 'src/common/types';
 
 export class QueryEventDto extends FindQuery {
   @IsOptional()
-  @ApiPropertyOptional()
-  date: string;
+  @IsString()
+  @ApiPropertyOptional({ description: 'Date of the event in ISO format' })
+  date?: string;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  startedAt: string;
+  @IsString()
+  @ApiPropertyOptional({ description: 'Start date of the event in ISO format' })
+  startedAt?: string;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  endedAt: string;
+  @IsString()
+  @ApiPropertyOptional({ description: 'End date of the event in ISO format' })
+  endedAt?: string;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  startAge: number;
+  @IsNumber()
+  @ApiPropertyOptional({ description: 'Minimum age for attending the event' })
+  startAge?: number;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  endAge: number;
+  @IsNumber()
+  @ApiPropertyOptional({ description: 'Maximum age for attending the event' })
+  endAge?: number;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  type: string;
+  @IsString()
+  @ApiPropertyOptional({ description: 'Type of the event' })
+  type?: string;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  price: number | object;
-  @ApiPropertyOptional()
+  @IsNumber()
+  @ApiPropertyOptional({ description: 'Price for attending the event' })
+  price?: number | object;
+
   @IsOptional()
   @IsMongoId()
-  country: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description: 'ID of the country related to the event',
+  })
+  country?: string;
+
   @IsOptional()
   @IsMongoId()
-  city: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: 'ID of the city related to the event' })
+  city?: string;
+
   @IsOptional()
   @IsMongoId()
-  quarter: string;
+  @ApiPropertyOptional({
+    description: 'ID of the quarter related to the event',
+  })
+  quarter?: string;
 }

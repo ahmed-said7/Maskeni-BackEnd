@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserProfileController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const user_service_1 = require("./user.service");
 const update_user_dto_1 = require("./dto/update.user.dto");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
@@ -46,6 +47,7 @@ __decorate([
     (0, common_1.Delete)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete user profile' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -55,6 +57,7 @@ __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get user profile' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -64,6 +67,7 @@ __decorate([
     (0, common_1.Patch)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update user profile' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -74,6 +78,7 @@ __decorate([
     (0, common_1.Get)('point/:location'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update user quarter based on location' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('location')),
     __metadata("design:type", Function),
@@ -81,6 +86,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserProfileController.prototype, "updateAddress", null);
 exports.UserProfileController = UserProfileController = __decorate([
+    (0, swagger_1.ApiTags)('User Profile'),
     (0, common_1.Controller)('user/profile'),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserProfileController);

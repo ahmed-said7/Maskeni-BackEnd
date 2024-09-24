@@ -17,12 +17,18 @@ class CreateFaxDto {
 exports.CreateFaxDto = CreateFaxDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The answer to the fax question.',
+        example: 'Please provide the latest status of the shipment.',
+    }),
     __metadata("design:type", String)
 ], CreateFaxDto.prototype, "answer", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The question being asked in the fax.',
+        example: 'What is the expected delivery date?',
+    }),
     __metadata("design:type", String)
 ], CreateFaxDto.prototype, "question", void 0);
 //# sourceMappingURL=create.fax.dto.js.map

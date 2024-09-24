@@ -16,13 +16,19 @@ class LoginAdminDto {
 }
 exports.LoginAdminDto = LoginAdminDto;
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The mobile number of the admin for login.',
+        example: '+1234567890',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], LoginAdminDto.prototype, "mobile", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The password of the admin account.',
+        example: 'securepassword123',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

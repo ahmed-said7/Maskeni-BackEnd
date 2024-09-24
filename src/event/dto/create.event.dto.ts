@@ -1,67 +1,66 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-// import { Type } from 'class-transformer';
 import {
-  // ArrayMaxSize,
-  // ArrayMinSize,
   IsArray,
   IsDateString,
   IsMongoId,
   IsNumber,
   IsOptional,
   IsString,
-  // ValidateNested,
 } from 'class-validator';
-// import { ValidateLocation } from 'src/common/types';
 
 export class CreateEventDto {
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ description: 'Name of the event' })
   name: string;
 
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ description: 'Details about the event' })
   details: string;
 
-  @ApiProperty()
   @IsMongoId()
+  @ApiProperty({ description: 'ID of the country where the event is held' })
   country: string;
-  @ApiProperty()
+
   @IsMongoId()
+  @ApiProperty({ description: 'ID of the city where the event is held' })
   city: string;
-  @ApiProperty()
+
   @IsMongoId()
+  @ApiProperty({ description: 'ID of the quarter where the event is held' })
   quarter: string;
 
   @IsDateString()
-  @ApiProperty()
+  @ApiProperty({ description: 'Start date and time of the event' })
   startedAt: string;
 
-  @IsDateString()
-  @ApiPropertyOptional()
   @IsOptional()
-  date: string;
+  @IsDateString()
+  @ApiPropertyOptional({ description: 'Optional date for the event' })
+  date?: string;
 
   @IsDateString()
-  @ApiProperty()
+  @ApiProperty({ description: 'End date and time of the event' })
   endedAt: string;
 
   @IsArray()
-  @ApiProperty()
   @IsString({ each: true })
-  images: string;
+  @ApiProperty({ description: 'Array of image URLs for the event' })
+  images: string[];
 
   @IsNumber()
-  @ApiProperty()
+  @ApiProperty({ description: 'Minimum age to attend the event' })
   startAge: number;
 
   @IsNumber()
-  @ApiProperty()
+  @ApiProperty({ description: 'Maximum age to attend the event' })
   endAge: number;
 
   user: string;
 
   @IsOptional()
-  @ApiPropertyOptional()
   @IsNumber()
-  price: number;
+  @ApiPropertyOptional({
+    description: 'Price for attending the event, if applicable',
+  })
+  price?: number;
 }

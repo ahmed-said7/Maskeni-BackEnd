@@ -1,4 +1,4 @@
 export declare class UpdateGroupDto {
-    name: string;
-    image: string;
+    name?: string;
+    image?: string;
 }

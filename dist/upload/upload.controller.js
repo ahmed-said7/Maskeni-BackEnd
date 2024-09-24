@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UploadController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const upload_service_1 = require("./upload.service");
 let UploadController = class UploadController {
     constructor(uploadService) {
@@ -32,6 +33,7 @@ let UploadController = class UploadController {
 exports.UploadController = UploadController;
 __decorate([
     (0, common_1.Post)('image'),
+    (0, swagger_1.ApiOperation)({ summary: 'Upload an image' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -39,6 +41,7 @@ __decorate([
 ], UploadController.prototype, "uploadImage", null);
 __decorate([
     (0, common_1.Post)('video'),
+    (0, swagger_1.ApiOperation)({ summary: 'Upload a video' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -46,12 +49,14 @@ __decorate([
 ], UploadController.prototype, "uploadVideo", null);
 __decorate([
     (0, common_1.Post)('audio'),
+    (0, swagger_1.ApiOperation)({ summary: 'Upload an audio file' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UploadController.prototype, "uploadPdf", null);
 exports.UploadController = UploadController = __decorate([
+    (0, swagger_1.ApiTags)('Upload'),
     (0, common_1.Controller)('upload'),
     __metadata("design:paramtypes", [upload_service_1.UploadService])
 ], UploadController);

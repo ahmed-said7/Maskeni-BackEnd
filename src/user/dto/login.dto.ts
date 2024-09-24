@@ -1,8 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsString, IsMobilePhone } from 'class-validator';
 
 export class LoginUserDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'The mobile number of the user for login',
+    example: '+1234567890', // Example mobile number format
+  })
   @IsString()
+  @IsMobilePhone() // Optional: Validate mobile phone format
   mobile: string;
 }

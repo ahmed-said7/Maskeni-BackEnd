@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QueryMessageDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class QueryMessageDto {
 }
@@ -17,10 +18,18 @@ exports.QueryMessageDto = QueryMessageDto;
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(2),
+    (0, swagger_1.ApiProperty)({
+        description: 'The page number for pagination, must be at least 2',
+        example: 2,
+    }),
     __metadata("design:type", Number)
 ], QueryMessageDto.prototype, "page", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'Date in ISO format, messages after this date will be retrieved',
+        example: '2024-09-01T00:00:00Z',
+    }),
     __metadata("design:type", String)
 ], QueryMessageDto.prototype, "after", void 0);
 //# sourceMappingURL=query.message.dto.js.map

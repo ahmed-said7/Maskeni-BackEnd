@@ -18,23 +18,27 @@ exports.CreatePostDto = CreatePostDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'Content of the post',
+        example: 'This is an example post content.',
+    }),
     __metadata("design:type", String)
 ], CreatePostDto.prototype, "content", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Optional image URL associated with the post',
+        example: 'https://example.com/image.jpg',
+    }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreatePostDto.prototype, "image", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsMongoId)(),
-    __metadata("design:type", String)
-], CreatePostDto.prototype, "user", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'Group ID to which the post belongs',
+        example: '60d1b4d11d0c25445c648f51',
+    }),
     (0, class_validator_1.IsMongoId)(),
     __metadata("design:type", String)
 ], CreatePostDto.prototype, "group", void 0);

@@ -8,11 +8,11 @@ import { UpdatePasswordDto } from './dto/update.password.dto';
 import { ApiService } from 'src/common/Api/api.service';
 import { FindQuery } from 'src/common/types';
 import { SignupAdminDto } from './dto/signup.dto';
-import { UpdateAdminDto } from './dto/update.user.dto';
 import { ConfigService } from '@nestjs/config';
 import { Admin_Role } from 'src/common/enum';
 import { RefreshService } from 'src/refresh/refresh.service';
 import { QuarterService } from 'src/quarter/quarter.service';
+import { UpdateAdminDto } from './dto/update.user.dto';
 
 @Injectable()
 export class AdminService {

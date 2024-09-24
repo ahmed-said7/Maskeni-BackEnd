@@ -1,5 +1,4 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-// import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDateString,
@@ -7,59 +6,59 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  // ValidateNested,
 } from 'class-validator';
-// import { ValidateLocation } from 'src/common/types';
 
 export class CreateVoluntaryDto {
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ description: 'Name of the voluntary activity' })
   name: string;
 
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ description: 'Details about the voluntary activity' })
   details: string;
 
   @IsDateString()
-  @ApiProperty()
+  @ApiProperty({ description: 'Start date of the voluntary activity' })
   startedAt: string;
 
   @IsDateString()
   @IsOptional()
-  @ApiPropertyOptional()
-  date: string;
+  @ApiPropertyOptional({ description: 'Optional field for additional date' })
+  date?: string;
 
   @IsDateString()
-  @ApiProperty()
+  @ApiProperty({ description: 'End date of the voluntary activity' })
   endedAt: string;
 
-  // @ValidateNested()
-  // @ApiProperty()
-  // @Type(() => ValidateLocation)
-  // location: ValidateLocation;
-
-  @ApiProperty()
   @IsMongoId()
+  @ApiProperty({
+    description: 'MongoDB ID of the country where the activity takes place',
+  })
   country: string;
-  @ApiProperty()
+
   @IsMongoId()
+  @ApiProperty({
+    description: 'MongoDB ID of the city where the activity takes place',
+  })
   city: string;
-  @ApiProperty()
+
   @IsMongoId()
+  @ApiProperty({
+    description: 'MongoDB ID of the quarter where the activity takes place',
+  })
   quarter: string;
 
   @IsArray()
-  @ApiProperty()
+  @ApiProperty({ type: [String], description: 'List of image URLs' })
   @IsString({ each: true })
-  images: string;
+  images: string[];
 
   @IsNumber()
-  @ApiProperty()
+  @ApiProperty({ description: 'Minimum age required to participate' })
   startAge: number;
 
   @IsNumber()
-  @ApiProperty()
+  @ApiProperty({ description: 'Maximum age limit for participation' })
   endAge: number;
-
   user: string;
 }

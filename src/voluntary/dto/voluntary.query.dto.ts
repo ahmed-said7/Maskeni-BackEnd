@@ -4,37 +4,67 @@ import { FindQuery } from 'src/common/types';
 
 export class QueryVoluntaryDto extends FindQuery {
   @IsOptional()
-  @ApiPropertyOptional()
-  date: string;
+  @ApiPropertyOptional({
+    description: 'Filter by specific date of the voluntary event',
+  })
+  date?: string;
+
   @IsOptional()
   @IsMongoId()
-  @ApiPropertyOptional()
-  user: string;
+  @ApiPropertyOptional({ description: 'Filter by the MongoDB ID of the user' })
+  user?: string;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  startedAt: string;
+  @ApiPropertyOptional({
+    description: 'Filter by start date of the voluntary activity',
+  })
+  startedAt?: string;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  endedAt: string;
+  @ApiPropertyOptional({
+    description: 'Filter by end date of the voluntary activity',
+  })
+  endedAt?: string;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  startAge: number;
+  @ApiPropertyOptional({
+    description: 'Filter by the minimum age for participation',
+  })
+  startAge?: number;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  endAge: number;
+  @ApiPropertyOptional({
+    description: 'Filter by the maximum age for participation',
+  })
+  endAge?: number;
+
   @IsOptional()
-  @ApiPropertyOptional()
-  type: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description: 'Filter by type of the voluntary activity',
+  })
+  type?: string;
+
   @IsOptional()
   @IsMongoId()
-  country: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description:
+      'Filter by MongoDB ID of the country where the activity takes place',
+  })
+  country?: string;
+
   @IsOptional()
   @IsMongoId()
-  city: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description:
+      'Filter by MongoDB ID of the city where the activity takes place',
+  })
+  city?: string;
+
   @IsOptional()
   @IsMongoId()
-  quarter: string;
+  @ApiPropertyOptional({
+    description:
+      'Filter by MongoDB ID of the quarter where the activity takes place',
+  })
+  quarter?: string;
 }

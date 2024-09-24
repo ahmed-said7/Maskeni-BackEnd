@@ -25,6 +25,7 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const swagger_1 = require("@nestjs/swagger");
 let OfferedController = class OfferedController {
     constructor(offeredService) {
         this.offeredService = offeredService;
@@ -37,46 +38,46 @@ let OfferedController = class OfferedController {
         const userId = req.userId;
         return this.offeredService.getMyArchivedServices(query, userId);
     }
-    createEvent(body, req) {
+    createService(body, req) {
         return this.offeredService.createService(body, req.userId);
     }
-    getAllservices(query) {
+    getAllServices(query) {
         return this.offeredService.getAllservices(query);
     }
-    updateservice(serviceId, body, req) {
+    updateService(serviceId, body, req) {
         return this.offeredService.updateService(serviceId, body, req.userId);
     }
-    deleteservice(serviceId, req) {
+    deleteService(serviceId, req) {
         return this.offeredService.deleteService(serviceId, req.userId);
     }
-    createserviceComment(serviceId, body, req) {
+    createServiceComment(serviceId, body, req) {
         return this.offeredService.addComment(body, serviceId, req.userId);
     }
-    getserviceComment(serviceId, query) {
+    getServiceComments(serviceId, query) {
         return this.offeredService.getComments(serviceId, query);
     }
     deleteserviceComment(commentId, req) {
         return this.offeredService.removeComment(commentId, req.userId);
     }
-    addserviceLike(serviceId, req) {
+    addServiceLike(serviceId, req) {
         return this.offeredService.addLike(serviceId, req.userId);
     }
-    removeserviceLike(serviceId, req) {
+    removeServiceLike(serviceId, req) {
         return this.offeredService.removeLike(serviceId, req.userId);
     }
-    getserviceLikes(serviceId, query) {
+    getServiceLikes(serviceId, query) {
         return this.offeredService.getLikes(serviceId, query);
     }
-    addSavedservice(serviceId, req) {
+    addSavedService(serviceId, req) {
         return this.offeredService.addSaved(serviceId, req.userId);
     }
-    removeSavedservice(serviceId, req) {
+    removeSavedService(serviceId, req) {
         return this.offeredService.deleteSaved(serviceId, req.userId);
     }
-    getSavedservices(serviceId, query) {
+    getSavedServices(serviceId, query) {
         return this.offeredService.getAllSaved(serviceId, query);
     }
-    getservice(serviceId) {
+    getServiceById(serviceId) {
         return this.offeredService.getService(serviceId);
     }
     requestService(serviceId, req) {
@@ -85,7 +86,7 @@ let OfferedController = class OfferedController {
     removeRequestService(serviceId, req) {
         return this.offeredService.deleteRequested(serviceId, req.userId);
     }
-    getSavedRequested(serviceId, query) {
+    getRequestedServices(serviceId, query) {
         return this.offeredService.getAllRequested(serviceId, query);
     }
 };
@@ -94,6 +95,9 @@ __decorate([
     (0, common_1.Get)('deleted'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve deleted services' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully retrieved deleted services.' }),
+    (0, swagger_1.ApiQuery)({ type: types_1.FindQuery, required: false }),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -104,6 +108,9 @@ __decorate([
     (0, common_1.Get)('archived'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve archived services' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully retrieved archived services.' }),
+    (0, swagger_1.ApiQuery)({ type: types_1.FindQuery, required: false }),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -114,67 +121,93 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new service' }),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'Successfully created a service.' }),
+    (0, swagger_1.ApiBody)({ type: create_service_dto_1.CreateOfferedDto }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_service_dto_1.CreateOfferedDto, Object]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "createEvent", null);
+], OfferedController.prototype, "createService", null);
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve all services' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully retrieved all services.' }),
+    (0, swagger_1.ApiQuery)({ type: query_service_dto_1.QueryOfferedDto, required: false }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [query_service_dto_1.QueryOfferedDto]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "getAllservices", null);
+], OfferedController.prototype, "getAllServices", null);
 __decorate([
     (0, common_1.Patch)(':serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a service by ID' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully updated the service.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
+    (0, swagger_1.ApiBody)({ type: update_service_dto_1.UpdateOfferedDto }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_service_dto_1.UpdateOfferedDto, Object]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "updateservice", null);
+], OfferedController.prototype, "updateService", null);
 __decorate([
     (0, common_1.Delete)(':serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a service by ID' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully deleted the service.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "deleteservice", null);
+], OfferedController.prototype, "deleteService", null);
 __decorate([
     (0, common_1.Post)('comment/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Add a comment to a service' }),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'Successfully added a comment.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
+    (0, swagger_1.ApiBody)({ type: create_comment_dto_1.CreateCommentDto }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, create_comment_dto_1.CreateCommentDto, Object]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "createserviceComment", null);
+], OfferedController.prototype, "createServiceComment", null);
 __decorate([
     (0, common_1.Get)('comment/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve comments for a service' }),
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Successfully retrieved comments for the service.',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
+    (0, swagger_1.ApiQuery)({ type: types_1.FindQuery, required: false }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, types_1.FindQuery]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "getserviceComment", null);
+], OfferedController.prototype, "getServiceComments", null);
 __decorate([
     (0, common_1.Delete)('comment/:commentId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a comment by ID' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully deleted the comment.' }),
+    (0, swagger_1.ApiParam)({ name: 'commentId', required: true }),
     __param(0, (0, common_1.Param)('commentId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -185,75 +218,107 @@ __decorate([
     (0, common_1.Post)('likes/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Add a like to a service' }),
+    (0, swagger_1.ApiCreatedResponse)({
+        description: 'Successfully added a like to the service.',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "addserviceLike", null);
+], OfferedController.prototype, "addServiceLike", null);
 __decorate([
     (0, common_1.Delete)('likes/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a like from a service' }),
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Successfully removed a like from the service.',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "removeserviceLike", null);
+], OfferedController.prototype, "removeServiceLike", null);
 __decorate([
     (0, common_1.Get)('likes/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve likes for a service' }),
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Successfully retrieved likes for the service.',
+    }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
+    (0, swagger_1.ApiQuery)({ type: types_1.FindQuery, required: false }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, types_1.FindQuery]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "getserviceLikes", null);
+], OfferedController.prototype, "getServiceLikes", null);
 __decorate([
     (0, common_1.Post)('saved/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Save a service' }),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'Successfully saved the service.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "addSavedservice", null);
+], OfferedController.prototype, "addSavedService", null);
 __decorate([
     (0, common_1.Delete)('saved/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a saved service' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully removed the saved service.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "removeSavedservice", null);
+], OfferedController.prototype, "removeSavedService", null);
 __decorate([
     (0, common_1.Get)('saved/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve saved services' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully retrieved saved services.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
+    (0, swagger_1.ApiQuery)({ type: types_1.FindQuery, required: false }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, types_1.FindQuery]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "getSavedservices", null);
+], OfferedController.prototype, "getSavedServices", null);
 __decorate([
     (0, common_1.Get)(':serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve a service by ID' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully retrieved the service.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "getservice", null);
+], OfferedController.prototype, "getServiceById", null);
 __decorate([
     (0, common_1.Post)('request/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Request a service' }),
+    (0, swagger_1.ApiCreatedResponse)({ description: 'Successfully requested the service.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -264,6 +329,9 @@ __decorate([
     (0, common_1.Delete)('request/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a service request' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully removed the service request.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -274,13 +342,19 @@ __decorate([
     (0, common_1.Get)('request/:serviceId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve requested services' }),
+    (0, swagger_1.ApiOkResponse)({ description: 'Successfully retrieved requested services.' }),
+    (0, swagger_1.ApiParam)({ name: 'serviceId', required: true }),
+    (0, swagger_1.ApiQuery)({ type: types_1.FindQuery, required: false }),
     __param(0, (0, common_1.Param)('serviceId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, types_1.FindQuery]),
     __metadata("design:returntype", void 0)
-], OfferedController.prototype, "getSavedRequested", null);
+], OfferedController.prototype, "getRequestedServices", null);
 exports.OfferedController = OfferedController = __decorate([
+    (0, swagger_1.ApiTags)('Service'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('service'),
     __metadata("design:paramtypes", [offered_service_service_1.OfferedService])
 ], OfferedController);

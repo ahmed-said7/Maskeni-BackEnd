@@ -23,23 +23,24 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const swagger_1 = require("@nestjs/swagger");
 let MessageController = class MessageController {
     constructor(msgService) {
         this.msgService = msgService;
     }
-    createMessage(body, req) {
+    async createMessage(body, req) {
         return this.msgService.createMessage(body, req.userId);
     }
-    onScroll(chatId, req, query) {
+    async onScroll(chatId, req, query) {
         return this.msgService.onScroll(chatId, req.userId, query);
     }
-    getChatMessages(chatId, req) {
+    async getChatMessages(chatId, req) {
         return this.msgService.getChatMessages(chatId, req.userId);
     }
-    updateMessage(body, messageId, req) {
+    async updateMessage(body, messageId, req) {
         return this.msgService.updateMessage(messageId, body, req.userId);
     }
-    deleteMessages(messageId, req) {
+    async deleteMessages(messageId, req) {
         return this.msgService.deleteMessage(messageId, req.userId);
     }
 };
@@ -48,55 +49,74 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new message' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Message created successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_message_dto_1.CreateMessageDto, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "createMessage", null);
 __decorate([
     (0, common_1.Get)('scroll/:chatId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Load more messages for a chat' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Messages loaded successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Chat not found' }),
     __param(0, (0, common_1.Param)('chatId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object, query_message_dto_1.QueryMessageDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "onScroll", null);
 __decorate([
     (0, common_1.Get)(':chatId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all messages for a chat' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Chat messages retrieved successfully',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Chat not found' }),
     __param(0, (0, common_1.Param)('chatId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "getChatMessages", null);
 __decorate([
     (0, common_1.Patch)(':messageId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a message' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Message updated successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Message not found' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('messageId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [update_message_dto_1.UpdateMessageDto, String, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "updateMessage", null);
 __decorate([
     (0, common_1.Delete)(':messageId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a message' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Message deleted successfully' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Message not found' }),
     __param(0, (0, common_1.Param)('messageId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MessageController.prototype, "deleteMessages", null);
 exports.MessageController = MessageController = __decorate([
+    (0, swagger_1.ApiTags)('messages'),
     (0, common_1.Controller)('message'),
     __metadata("design:paramtypes", [message_service_1.MessageService])
 ], MessageController);

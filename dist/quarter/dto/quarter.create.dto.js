@@ -12,12 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateQuarterDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+const swagger_1 = require("@nestjs/swagger");
 class InnerArrayDto {
 }
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayNotEmpty)(),
     (0, class_validator_1.IsNumber)({}, { each: true }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Coordinates array must contain two numbers [longitude, latitude]',
+        type: [Number],
+    }),
     __metadata("design:type", Array)
 ], InnerArrayDto.prototype, "coordinates", void 0);
 class CreateQuarterDto {
@@ -25,20 +30,28 @@ class CreateQuarterDto {
 exports.CreateQuarterDto = CreateQuarterDto;
 __decorate([
     (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: 'Name of the quarter' }),
     __metadata("design:type", String)
 ], CreateQuarterDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({ description: 'MongoDB ID of the associated city' }),
     __metadata("design:type", String)
 ], CreateQuarterDto.prototype, "city", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({ description: 'MongoDB ID of the associated country' }),
     __metadata("design:type", String)
 ], CreateQuarterDto.prototype, "country", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ArrayNotEmpty)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
     (0, class_transformer_1.Type)(() => InnerArrayDto),
+    (0, swagger_1.ApiProperty)({
+        description: 'Array of coordinates for the quarter',
+        type: [InnerArrayDto],
+    }),
     __metadata("design:type", Array)
 ], CreateQuarterDto.prototype, "coordinates", void 0);
 //# sourceMappingURL=quarter.create.dto.js.map

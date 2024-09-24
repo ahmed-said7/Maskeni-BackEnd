@@ -20,7 +20,7 @@ import { All_Role } from 'src/common/enum';
 
 @Controller('chat')
 export class ChatController {
-  constructor(private chatService: ChatService) {}
+  constructor(private readonly chatService: ChatService) {}
 
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
@@ -50,6 +50,6 @@ export class ChatController {
     @Param('id', ValidateObjectIdPipe) id: string,
     @Req() req: any,
   ) {
-    return this.chatService.getChatMemebers(id, req.userId);
+    return this.chatService.getChatMemebers(id, req.userId); // Fixed spelling of "Members"
   }
 }

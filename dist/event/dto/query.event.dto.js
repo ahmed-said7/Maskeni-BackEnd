@@ -18,55 +18,66 @@ class QueryEventDto extends types_1.FindQuery {
 exports.QueryEventDto = QueryEventDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Date of the event in ISO format' }),
     __metadata("design:type", String)
 ], QueryEventDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Start date of the event in ISO format' }),
     __metadata("design:type", String)
 ], QueryEventDto.prototype, "startedAt", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'End date of the event in ISO format' }),
     __metadata("design:type", String)
 ], QueryEventDto.prototype, "endedAt", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Minimum age for attending the event' }),
     __metadata("design:type", Number)
 ], QueryEventDto.prototype, "startAge", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Maximum age for attending the event' }),
     __metadata("design:type", Number)
 ], QueryEventDto.prototype, "endAge", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Type of the event' }),
     __metadata("design:type", String)
 ], QueryEventDto.prototype, "type", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Price for attending the event' }),
     __metadata("design:type", Object)
 ], QueryEventDto.prototype, "price", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'ID of the country related to the event',
+    }),
     __metadata("design:type", String)
 ], QueryEventDto.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'ID of the city related to the event' }),
     __metadata("design:type", String)
 ], QueryEventDto.prototype, "city", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'ID of the quarter related to the event',
+    }),
     __metadata("design:type", String)
 ], QueryEventDto.prototype, "quarter", void 0);
 //# sourceMappingURL=query.event.dto.js.map

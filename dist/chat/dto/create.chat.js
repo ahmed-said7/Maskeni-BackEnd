@@ -18,7 +18,7 @@ exports.CreateChatDto = CreateChatDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'The ID of the user participating in the chat.' }),
     __metadata("design:type", String)
 ], CreateChatDto.prototype, "user", void 0);
 //# sourceMappingURL=create.chat.js.map

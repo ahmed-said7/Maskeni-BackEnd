@@ -5,11 +5,11 @@ export declare class CreateEventDto {
     city: string;
     quarter: string;
     startedAt: string;
-    date: string;
+    date?: string;
     endedAt: string;
-    images: string;
+    images: string[];
     startAge: number;
     endAge: number;
     user: string;
-    price: number;
+    price?: number;
 }

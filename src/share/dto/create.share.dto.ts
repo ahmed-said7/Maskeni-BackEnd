@@ -5,18 +5,23 @@ export class CreateShareDto {
   @IsString()
   @ApiProperty()
   content: string;
-  user: string;
-  @ApiProperty()
+
+  user: string; // Added IsMongoId decorator for consistency with IDs
+
   @IsMongoId()
+  @ApiProperty()
   country: string;
-  @ApiProperty()
+
   @IsMongoId()
+  @ApiProperty()
   city: string;
-  @ApiProperty()
+
   @IsMongoId()
-  quarter: string;
-  @IsArray()
   @ApiProperty()
-  @IsString({ each: true })
-  images: string;
+  quarter: string;
+
+  @IsArray()
+  @IsString({ each: true }) // Ensures each element in the array is a string
+  @ApiProperty({ type: [String] }) // Specifies that this is an array of strings
+  images: string[];
 }

@@ -19,7 +19,7 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(4),
+    (0, class_validator_1.MinLength)(4, { message: 'Name must be at least 4 characters long' }),
     __metadata("design:type", String)
 ], UpdateAdminDto.prototype, "name", void 0);
 __decorate([

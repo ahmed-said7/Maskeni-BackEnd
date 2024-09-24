@@ -5,18 +5,21 @@ import { FindQuery } from 'src/common/types';
 export class QueryShareDto extends FindQuery {
   @IsOptional()
   @IsMongoId()
-  @ApiPropertyOptional()
-  user: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: 'ID of the user' })
+  user?: string; // Made optional
+
   @IsOptional()
   @IsMongoId()
-  country: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: 'ID of the country' })
+  country?: string; // Made optional
+
   @IsOptional()
   @IsMongoId()
-  city: string;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: 'ID of the city' })
+  city?: string; // Made optional
+
   @IsOptional()
   @IsMongoId()
-  quarter: string;
+  @ApiPropertyOptional({ description: 'ID of the quarter' })
+  quarter?: string; // Made optional
 }

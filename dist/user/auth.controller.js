@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserAuthController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const user_service_1 = require("./user.service");
 const login_dto_1 = require("./dto/login.dto");
 let UserAuthController = class UserAuthController {
@@ -36,6 +37,7 @@ let UserAuthController = class UserAuthController {
 exports.UserAuthController = UserAuthController;
 __decorate([
     (0, common_1.Post)('login'),
+    (0, swagger_1.ApiOperation)({ summary: 'Login using mobile number' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [login_dto_1.LoginUserDto]),
@@ -43,6 +45,7 @@ __decorate([
 ], UserAuthController.prototype, "loginUsingMobile", null);
 __decorate([
     (0, common_1.Post)('firebase'),
+    (0, swagger_1.ApiOperation)({ summary: 'Login using Firebase authentication' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -50,6 +53,7 @@ __decorate([
 ], UserAuthController.prototype, "loginFirebase", null);
 __decorate([
     (0, common_1.Get)('code/:code'),
+    (0, swagger_1.ApiOperation)({ summary: 'Verify phone code for authentication' }),
     __param(0, (0, common_1.Param)('code')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -57,11 +61,13 @@ __decorate([
 ], UserAuthController.prototype, "verifyCode", null);
 __decorate([
     (0, common_1.Post)('guest'),
+    (0, swagger_1.ApiOperation)({ summary: 'Login as a guest user' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UserAuthController.prototype, "loginAsGuest", null);
 exports.UserAuthController = UserAuthController = __decorate([
+    (0, swagger_1.ApiTags)('User Authentication'),
     (0, common_1.Controller)('user/auth/'),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserAuthController);

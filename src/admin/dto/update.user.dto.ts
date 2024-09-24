@@ -10,18 +10,21 @@ export class UpdateAdminDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  @MinLength(4)
-  name: string;
+  @MinLength(4, { message: 'Name must be at least 4 characters long' })
+  name?: string; // Adding `?` for clarity that this is optional
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsMobilePhone()
-  mobile: string;
+  mobile?: string; // Adding `?`
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  fcm: string;
+  fcm?: string; // Adding `?`
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  icon: string;
+  icon?: string; // Adding `?`
 }

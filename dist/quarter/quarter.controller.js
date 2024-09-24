@@ -21,6 +21,7 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const swagger_1 = require("@nestjs/swagger");
 let QuarterController = class QuarterController {
     constructor(quarterService) {
         this.quarterService = quarterService;
@@ -40,7 +41,7 @@ let QuarterController = class QuarterController {
     async remove(id) {
         return this.quarterService.remove(id);
     }
-    getLocation(location) {
+    async getLocation(location) {
         const [lat, lng] = location.split(':');
         return this.quarterService.findQuarterContainingPoint([
             parseInt(lng),
@@ -53,6 +54,9 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new quarter' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Quarter created successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [quarter_create_dto_1.CreateQuarterDto]),
@@ -60,12 +64,16 @@ __decorate([
 ], QuarterController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('all'),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve all quarters' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of all quarters.' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], QuarterController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Find quarters with optional query parameters' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of quarters matching query.' }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [quarter_query_dto_1.QuarterQueryDto]),
@@ -73,6 +81,9 @@ __decorate([
 ], QuarterController.prototype, "find", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve a specific quarter by ID' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Quarter details.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Quarter not found.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -82,6 +93,10 @@ __decorate([
     (0, common_1.Delete)(':id'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a specific quarter by ID' }),
+    (0, swagger_1.ApiResponse)({ status: 204, description: 'Quarter deleted successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Quarter not found.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -91,12 +106,18 @@ __decorate([
     (0, common_1.Get)('point/:location'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({
+        summary: 'Find quarters containing a specific geographical point',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Quarter(s) containing the point.' }),
+    (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid location format.' }),
     __param(0, (0, common_1.Param)('location')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], QuarterController.prototype, "getLocation", null);
 exports.QuarterController = QuarterController = __decorate([
+    (0, swagger_1.ApiTags)('quarters'),
     (0, common_1.Controller)('quarter'),
     __metadata("design:paramtypes", [quarter_service_1.QuarterService])
 ], QuarterController);

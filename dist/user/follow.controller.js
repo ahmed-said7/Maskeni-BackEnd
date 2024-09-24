@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserFollowController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const user_service_1 = require("./user.service");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
 const enum_1 = require("../common/enum");
@@ -43,6 +44,7 @@ __decorate([
     (0, common_1.Post)(':user'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Follow a user' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('user', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -53,6 +55,7 @@ __decorate([
     (0, common_1.Delete)(':user'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Unfollow a user' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('user', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -63,6 +66,7 @@ __decorate([
     (0, common_1.Get)('follower/:user'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get followers of a user' }),
     __param(0, (0, common_1.Param)('user', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
@@ -73,6 +77,7 @@ __decorate([
     (0, common_1.Get)('following/:user'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get users followed by a user' }),
     __param(0, (0, common_1.Param)('user', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
@@ -80,6 +85,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserFollowController.prototype, "getFollowing", null);
 exports.UserFollowController = UserFollowController = __decorate([
+    (0, swagger_1.ApiTags)('User Follow'),
     (0, common_1.Controller)('user/follow'),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserFollowController);

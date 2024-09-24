@@ -21,6 +21,7 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const swagger_1 = require("@nestjs/swagger");
 let CountryController = class CountryController {
     constructor(countryService) {
         this.countryService = countryService;
@@ -46,6 +47,9 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new country' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Country created successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_country_dto_1.CreateCountryDto]),
@@ -53,12 +57,19 @@ __decorate([
 ], CountryController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('all'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all countries' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of all countries.' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CountryController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Get countries with pagination and filters' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'List of countries with pagination.',
+    }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [types_1.FindQuery]),
@@ -66,6 +77,9 @@ __decorate([
 ], CountryController.prototype, "find", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get a country by ID' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Country found.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Country not found.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -75,12 +89,17 @@ __decorate([
     (0, common_1.Delete)(':id'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a country by ID' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Country deleted successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Country not found.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], CountryController.prototype, "remove", null);
 exports.CountryController = CountryController = __decorate([
+    (0, swagger_1.ApiTags)('Country'),
     (0, common_1.Controller)('country'),
     __metadata("design:paramtypes", [country_service_1.CountryService])
 ], CountryController);

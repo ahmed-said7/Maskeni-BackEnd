@@ -18,12 +18,14 @@ exports.QueryMessageDto = QueryMessageDto;
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(2),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The page number for pagination, minimum value is 2',
+    }),
     __metadata("design:type", Number)
 ], QueryMessageDto.prototype, "page", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Fetch messages after this date' }),
     __metadata("design:type", String)
 ], QueryMessageDto.prototype, "after", void 0);
 //# sourceMappingURL=query.message.dto.js.map

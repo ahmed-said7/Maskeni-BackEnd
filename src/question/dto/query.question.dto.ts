@@ -4,19 +4,34 @@ import { FindQuery } from 'src/common/types';
 
 export class QueryQuestionDto extends FindQuery {
   @IsOptional()
-  @ApiPropertyOptional()
   @IsMongoId()
+  @ApiPropertyOptional({
+    description: 'The optional ID of the user who created the questions.',
+    type: String,
+  })
   user: string;
-  @ApiPropertyOptional()
+
   @IsOptional()
   @IsMongoId()
+  @ApiPropertyOptional({
+    description: 'The optional ID of the country to filter questions by.',
+    type: String,
+  })
   country: string;
-  @ApiPropertyOptional()
+
   @IsOptional()
   @IsMongoId()
+  @ApiPropertyOptional({
+    description: 'The optional ID of the city to filter questions by.',
+    type: String,
+  })
   city: string;
-  @ApiPropertyOptional()
+
   @IsOptional()
   @IsMongoId()
+  @ApiPropertyOptional({
+    description: 'The optional ID of the quarter to filter questions by.',
+    type: String,
+  })
   quarter: string;
 }

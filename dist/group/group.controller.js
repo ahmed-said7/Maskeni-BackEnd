@@ -24,6 +24,7 @@ const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
 const query_group_dto_1 = require("./dto/query.group.dto");
+const swagger_1 = require("@nestjs/swagger");
 let GroupController = class GroupController {
     constructor(groupService) {
         this.groupService = groupService;
@@ -66,6 +67,12 @@ __decorate([
     (0, common_1.Get)('deleted'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get deleted groups for the user' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Successfully retrieved deleted groups.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -76,6 +83,12 @@ __decorate([
     (0, common_1.Get)('archived'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get archived groups for the user' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Successfully retrieved archived groups.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Query)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -86,6 +99,9 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new group' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Group created successfully.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -96,6 +112,13 @@ __decorate([
     (0, common_1.Get)('member/:groupId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get members of a specific group' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Successfully retrieved group members.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Group not found' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('groupId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -106,6 +129,12 @@ __decorate([
     (0, common_1.Get)('all'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all groups' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Successfully retrieved all groups.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [query_group_dto_1.QueryGroupDto]),
@@ -115,6 +144,12 @@ __decorate([
     (0, common_1.Get)('my'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get groups belonging to the user' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Successfully retrieved user groups.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
@@ -125,6 +160,10 @@ __decorate([
     (0, common_1.Patch)('leave/:groupId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Leave a group' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Successfully left the group.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Group not found' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('groupId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -135,6 +174,10 @@ __decorate([
     (0, common_1.Patch)('join/:groupId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Join a group' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Successfully joined the group.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Group not found' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('groupId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -145,6 +188,10 @@ __decorate([
     (0, common_1.Delete)(':groupId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a group' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Successfully deleted the group.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Group not found' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('groupId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
     __metadata("design:type", Function),
@@ -155,6 +202,10 @@ __decorate([
     (0, common_1.Patch)(':groupId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Update group information' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Successfully updated the group.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Group not found' }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Param)('groupId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
@@ -163,6 +214,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], GroupController.prototype, "updateGroup", null);
 exports.GroupController = GroupController = __decorate([
+    (0, swagger_1.ApiTags)('groups'),
     (0, common_1.Controller)('group'),
     __metadata("design:paramtypes", [group_service_1.GroupServices])
 ], GroupController);

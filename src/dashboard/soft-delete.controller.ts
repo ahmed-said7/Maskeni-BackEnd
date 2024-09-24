@@ -5,7 +5,9 @@ import { Roles } from 'src/common/decorator/roles';
 import { All_Role } from 'src/common/enum';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
+import { ApiTags, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 
+@ApiTags('Soft Delete') // Tag for grouping in Swagger UI
 @Controller('soft-delete')
 export class SoftDeleteController {
   constructor(private readonly softDeleteService: SoftDeleteService) {}
@@ -13,6 +15,12 @@ export class SoftDeleteController {
   @Patch('questions/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the question to soft delete' }) // Document path parameter
+  @ApiBody({ type: DashboardUpdateDeletedDto }) // Document body parameter
+  @ApiResponse({
+    status: 200,
+    description: 'Soft delete the question successfully.',
+  }) // Document response
   async softDeleteQuestion(
     @Param('id') id: string,
     @Body() updateDeletedDto: DashboardUpdateDeletedDto,
@@ -23,6 +31,12 @@ export class SoftDeleteController {
   @Patch('events/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the event to soft delete' })
+  @ApiBody({ type: DashboardUpdateDeletedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft delete the event successfully.',
+  })
   async softDeleteEvent(
     @Param('id') id: string,
     @Body() updateDeletedDto: DashboardUpdateDeletedDto,
@@ -33,6 +47,12 @@ export class SoftDeleteController {
   @Patch('shares/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the share to soft delete' })
+  @ApiBody({ type: DashboardUpdateDeletedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft delete the share successfully.',
+  })
   async softDeleteShare(
     @Param('id') id: string,
     @Body() updateDeletedDto: DashboardUpdateDeletedDto,
@@ -43,6 +63,15 @@ export class SoftDeleteController {
   @Patch('voluntary/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({
+    name: 'id',
+    description: 'ID of the voluntary opportunity to soft delete',
+  })
+  @ApiBody({ type: DashboardUpdateDeletedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft delete the voluntary opportunity successfully.',
+  })
   async softDeleteVoluntary(
     @Param('id') id: string,
     @Body() updateDeletedDto: DashboardUpdateDeletedDto,
@@ -53,6 +82,12 @@ export class SoftDeleteController {
   @Patch('services/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the service to soft delete' })
+  @ApiBody({ type: DashboardUpdateDeletedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft delete the offered service successfully.',
+  })
   async softDeleteOfferedService(
     @Param('id') id: string,
     @Body() updateDeletedDto: DashboardUpdateDeletedDto,
@@ -63,6 +98,12 @@ export class SoftDeleteController {
   @Patch('posts/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the post to soft delete' })
+  @ApiBody({ type: DashboardUpdateDeletedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft delete the post successfully.',
+  })
   async softDeletePost(
     @Param('id') id: string,
     @Body() updateDeletedDto: DashboardUpdateDeletedDto,

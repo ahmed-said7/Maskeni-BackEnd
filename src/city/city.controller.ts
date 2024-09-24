@@ -4,22 +4,20 @@ import {
   Post,
   Body,
   Param,
-  // Patch,
   Delete,
   Query,
   UseGuards,
 } from '@nestjs/common';
 import { CityService } from './city.service';
-// import { FindQuery } from 'src/common/types';
-// import { PointDto } from './dto/point.dto';
 import { CreateCityDto } from './dto/city.create.dto';
 import { CityQueryDto } from './dto/city.query.dto';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 import { Roles } from 'src/common/decorator/roles';
 import { All_Role } from 'src/common/enum';
-// import { UpdateCityDto } from './dto/city.update.dto';
+import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 
+@ApiTags('City') // Tag for grouping city-related endpoints in Swagger
 @Controller('city')
 export class CityController {
   constructor(private readonly cityService: CityService) {}
@@ -27,41 +25,41 @@ export class CityController {
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.Admin, All_Role.SuperAdmin)
+  @ApiOperation({ summary: 'Create a new city' }) // Operation summary for Swagger
+  @ApiResponse({ status: 201, description: 'City created successfully.' }) // Successful response
+  @ApiResponse({ status: 403, description: 'Forbidden.' }) // Forbidden response
   async create(@Body() createCityDto: CreateCityDto) {
     return this.cityService.create(createCityDto);
   }
 
   @Get('all')
-  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  // @Roles(All_Role.Admin, All_Role.SuperAdmin)
+  @ApiOperation({ summary: 'Get all cities' }) // Operation summary for Swagger
+  @ApiResponse({ status: 200, description: 'List of cities.' }) // Successful response
   async findAll() {
     return this.cityService.findAll();
   }
+
   @Get()
-  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  // @Roles(All_Role.Admin, All_Role.SuperAdmin)
+  @ApiOperation({ summary: 'Get cities with query filters' }) // Operation summary for Swagger
+  @ApiResponse({ status: 200, description: 'List of filtered cities.' }) // Successful response
   async find(@Query() query: CityQueryDto) {
     return this.cityService.getAllCities(query);
   }
 
-  // @Get('point')
-  // async findQuarterByLocation(@Body() body: PointDto) {
-  //   return this.cityService.findCityContainingPoint(body);
-  // }
-
   @Get(':id')
+  @ApiOperation({ summary: 'Get a city by ID' }) // Operation summary for Swagger
+  @ApiResponse({ status: 200, description: 'City found.' }) // Successful response
+  @ApiResponse({ status: 404, description: 'City not found.' }) // Not found response
   async findOne(@Param('id') id: string) {
     return this.cityService.findOne(id);
   }
 
-  // @Patch(':id')
-  // async update(@Param('id') id: string, @Body() body: UpdateCityDto) {
-  //   return this.cityService.update(id, body);
-  // }
-
   @Delete(':id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.Admin, All_Role.SuperAdmin)
+  @ApiOperation({ summary: 'Delete a city by ID' }) // Operation summary for Swagger
+  @ApiResponse({ status: 200, description: 'City deleted successfully.' }) // Successful response
+  @ApiResponse({ status: 404, description: 'City not found.' }) // Not found response
   async remove(@Param('id') id: string) {
     return this.cityService.remove(id);
   }

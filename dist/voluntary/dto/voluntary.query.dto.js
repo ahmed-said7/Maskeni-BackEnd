@@ -18,56 +18,74 @@ class QueryVoluntaryDto extends types_1.FindQuery {
 exports.QueryVoluntaryDto = QueryVoluntaryDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by specific date of the voluntary event',
+    }),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Filter by the MongoDB ID of the user' }),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "user", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by start date of the voluntary activity',
+    }),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "startedAt", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by end date of the voluntary activity',
+    }),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "endedAt", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by the minimum age for participation',
+    }),
     __metadata("design:type", Number)
 ], QueryVoluntaryDto.prototype, "startAge", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by the maximum age for participation',
+    }),
     __metadata("design:type", Number)
 ], QueryVoluntaryDto.prototype, "endAge", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by type of the voluntary activity',
+    }),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "type", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by MongoDB ID of the country where the activity takes place',
+    }),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by MongoDB ID of the city where the activity takes place',
+    }),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "city", void 0);
 __decorate([
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Filter by MongoDB ID of the quarter where the activity takes place',
+    }),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "quarter", void 0);
 //# sourceMappingURL=voluntary.query.dto.js.map

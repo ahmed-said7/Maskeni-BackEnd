@@ -17,28 +17,37 @@ class CreateQuestionDto {
 exports.CreateQuestionDto = CreateQuestionDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'The content of the question.' }),
     __metadata("design:type", String)
 ], CreateQuestionDto.prototype, "content", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the country associated with the question.',
+    }),
     __metadata("design:type", String)
 ], CreateQuestionDto.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the city associated with the question.',
+    }),
     __metadata("design:type", String)
 ], CreateQuestionDto.prototype, "city", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the quarter associated with the question.',
+    }),
     __metadata("design:type", String)
 ], CreateQuestionDto.prototype, "quarter", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)({ each: true }),
-    __metadata("design:type", String)
+    (0, swagger_1.ApiProperty)({
+        description: 'An array of image URLs associated with the question.',
+        type: [String],
+    }),
+    __metadata("design:type", Array)
 ], CreateQuestionDto.prototype, "images", void 0);
 //# sourceMappingURL=create.question.dto.js.map

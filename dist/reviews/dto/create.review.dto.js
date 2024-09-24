@@ -17,11 +17,20 @@ class CreateReviewDto {
 exports.CreateReviewDto = CreateReviewDto;
 __decorate([
     (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the review being created',
+        type: String,
+    }),
     __metadata("design:type", String)
 ], CreateReviewDto.prototype, "review", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The rating given by the user, must be between 1 and 5',
+        type: Number,
+        minimum: 1,
+        maximum: 5,
+        example: 4,
+    }),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(1),
     (0, class_validator_1.Max)(5),

@@ -16,18 +16,32 @@ class CreateAddressDto {
 }
 exports.CreateAddressDto = CreateAddressDto;
 __decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the user associated with the address',
+    }),
+    __metadata("design:type", String)
+], CreateAddressDto.prototype, "user", void 0);
+__decorate([
     (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the city',
+    }),
     __metadata("design:type", String)
 ], CreateAddressDto.prototype, "city", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the country',
+    }),
     __metadata("design:type", String)
 ], CreateAddressDto.prototype, "country", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The ID of the quarter',
+    }),
     __metadata("design:type", String)
 ], CreateAddressDto.prototype, "quarter", void 0);
 //# sourceMappingURL=create.address.dto.js.map

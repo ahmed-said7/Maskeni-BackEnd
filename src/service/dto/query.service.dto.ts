@@ -1,24 +1,30 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsMongoId, IsOptional } from 'class-validator';
+import { IsMongoId, IsOptional, IsNumber, IsString } from 'class-validator';
 import { FindQuery } from 'src/common/types';
 
 export class QueryOfferedDto extends FindQuery {
   @IsOptional()
+  @IsString() // Ensure type is a string
   @ApiPropertyOptional()
-  type: string;
+  type?: string; // Mark as optional with a '?'
+
   @IsOptional()
+  @IsNumber() // Validate that price is a number
   @ApiPropertyOptional()
-  price: number | object;
-  @ApiPropertyOptional()
+  price?: number; // Mark as optional with a '?'
+
   @IsOptional()
-  @IsMongoId()
-  country: string;
+  @IsMongoId() // Validate that country is a valid MongoDB ObjectId
   @ApiPropertyOptional()
+  country?: string; // Mark as optional with a '?'
+
   @IsOptional()
-  @IsMongoId()
-  city: string;
+  @IsMongoId() // Validate that city is a valid MongoDB ObjectId
   @ApiPropertyOptional()
+  city?: string; // Mark as optional with a '?'
+
   @IsOptional()
-  @IsMongoId()
-  quarter: string;
+  @IsMongoId() // Validate that quarter is a valid MongoDB ObjectId
+  @ApiPropertyOptional()
+  quarter?: string; // Mark as optional with a '?'
 }

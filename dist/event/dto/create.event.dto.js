@@ -17,65 +17,67 @@ class CreateEventDto {
 exports.CreateEventDto = CreateEventDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Name of the event' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Details about the event' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "details", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({ description: 'ID of the country where the event is held' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "country", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({ description: 'ID of the city where the event is held' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "city", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiProperty)({ description: 'ID of the quarter where the event is held' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "quarter", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Start date and time of the event' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "startedAt", void 0);
 __decorate([
-    (0, class_validator_1.IsDateString)(),
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Optional date for the event' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'End date and time of the event' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "endedAt", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)({ each: true }),
-    __metadata("design:type", String)
+    (0, swagger_1.ApiProperty)({ description: 'Array of image URLs for the event' }),
+    __metadata("design:type", Array)
 ], CreateEventDto.prototype, "images", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Minimum age to attend the event' }),
     __metadata("design:type", Number)
 ], CreateEventDto.prototype, "startAge", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
-    (0, swagger_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)({ description: 'Maximum age to attend the event' }),
     __metadata("design:type", Number)
 ], CreateEventDto.prototype, "endAge", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Price for attending the event, if applicable',
+    }),
     __metadata("design:type", Number)
 ], CreateEventDto.prototype, "price", void 0);
 //# sourceMappingURL=create.event.dto.js.map
