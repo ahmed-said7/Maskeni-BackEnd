@@ -29,7 +29,7 @@ export class FaxService {
       this.faxModel.find(),
       obj,
     );
-    const events = await query.populate('user');
+    const events = await query;
     return { events, pagination: paginationObj };
   }
   async updateFax(body: UpdateFaxDto, faxId: string) {
