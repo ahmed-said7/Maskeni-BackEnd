@@ -8,13 +8,10 @@ import { AdminAuthController } from './auth.controller';
 import { RefreshModule } from 'src/refresh/refresh.module';
 import { UserSchema } from 'src/user/user.schema';
 import { QuarterModule } from 'src/quarter/quarter.module';
+import { AdminController } from './admin.controller';
 
 @Module({
-  controllers: [
-    AdminAuthController,
-    AdminAuthController,
-    AdminProfileController,
-  ],
+  controllers: [AdminController, AdminAuthController, AdminProfileController],
   providers: [AdminService],
   imports: [
     QuarterModule,

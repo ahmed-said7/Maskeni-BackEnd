@@ -17,16 +17,13 @@ const auth_controller_1 = require("./auth.controller");
 const refresh_module_1 = require("../refresh/refresh.module");
 const user_schema_1 = require("../user/user.schema");
 const quarter_module_1 = require("../quarter/quarter.module");
+const admin_controller_1 = require("./admin.controller");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
-        controllers: [
-            auth_controller_1.AdminAuthController,
-            auth_controller_1.AdminAuthController,
-            profile_controller_1.AdminProfileController,
-        ],
+        controllers: [admin_controller_1.AdminController, auth_controller_1.AdminAuthController, profile_controller_1.AdminProfileController],
         providers: [admin_service_1.AdminService],
         imports: [
             quarter_module_1.QuarterModule,
