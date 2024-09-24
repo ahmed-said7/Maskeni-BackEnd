@@ -20,6 +20,7 @@ const refresh_module_1 = require("../refresh/refresh.module");
 const twilio_module_1 = require("../twilio/twilio.module");
 const firebase_module_1 = require("../firebase/firebase.module");
 const follow_controller_1 = require("./follow.controller");
+const saved_controller_1 = require("./saved.controller");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
@@ -30,6 +31,7 @@ exports.UserModule = UserModule = __decorate([
             auth_controller_1.UserAuthController,
             profile_controller_1.UserProfileController,
             follow_controller_1.UserFollowController,
+            saved_controller_1.UserSavedController,
         ],
         providers: [user_service_1.UserService],
         imports: [

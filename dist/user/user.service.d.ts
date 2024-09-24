@@ -7,15 +7,13 @@ import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { TwilioService } from 'src/twilio/twilio.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
-import { ArrayPagination } from 'src/common/Api/array.pagination';
 export declare class UserService {
     private Usermodel;
     private twilioService;
     private refreshService;
     private apiService;
     private firebaseService;
-    private arrayPagination;
-    constructor(Usermodel: Model<UserDocument>, twilioService: TwilioService, refreshService: RefreshService, apiService: ApiService<UserDocument, FindQuery>, firebaseService: FirebaseService, arrayPagination: ArrayPagination);
+    constructor(Usermodel: Model<UserDocument>, twilioService: TwilioService, refreshService: RefreshService, apiService: ApiService<UserDocument, FindQuery>, firebaseService: FirebaseService);
     getAllUsers(obj: FindQuery): Promise<{
         users: (import("mongoose").Document<unknown, {}, User> & User & {
             _id: import("mongoose").Types.ObjectId;

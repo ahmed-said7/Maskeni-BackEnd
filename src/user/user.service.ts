@@ -11,7 +11,6 @@ import { ApiService } from 'src/common/Api/api.service';
 import { TwilioService } from 'src/twilio/twilio.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { v4 } from 'uuid';
-import { ArrayPagination } from 'src/common/Api/array.pagination';
 
 @Injectable()
 export class UserService {
@@ -21,7 +20,6 @@ export class UserService {
     private refreshService: RefreshService,
     private apiService: ApiService<UserDocument, FindQuery>,
     private firebaseService: FirebaseService,
-    private arrayPagination: ArrayPagination,
   ) {}
   async getAllUsers(obj: FindQuery) {
     const { query, paginationObj } = await this.apiService.getAllDocs(

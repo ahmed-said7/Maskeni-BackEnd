@@ -11,6 +11,7 @@ import { RefreshModule } from 'src/refresh/refresh.module';
 import { TwilioModule } from 'src/twilio/twilio.module';
 import { FirebaseModule } from 'src/firebase/firebase.module';
 import { UserFollowController } from './follow.controller';
+import { UserSavedController } from './saved.controller';
 
 @Module({
   controllers: [
@@ -18,6 +19,7 @@ import { UserFollowController } from './follow.controller';
     UserAuthController,
     UserProfileController,
     UserFollowController,
+    UserSavedController,
   ],
   providers: [UserService],
   imports: [

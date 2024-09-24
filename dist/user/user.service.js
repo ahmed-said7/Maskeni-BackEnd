@@ -46,15 +46,13 @@ const api_service_1 = require("../common/Api/api.service");
 const twilio_service_1 = require("../twilio/twilio.service");
 const firebase_service_1 = require("../firebase/firebase.service");
 const uuid_1 = require("uuid");
-const array_pagination_1 = require("../common/Api/array.pagination");
 let UserService = class UserService {
-    constructor(Usermodel, twilioService, refreshService, apiService, firebaseService, arrayPagination) {
+    constructor(Usermodel, twilioService, refreshService, apiService, firebaseService) {
         this.Usermodel = Usermodel;
         this.twilioService = twilioService;
         this.refreshService = refreshService;
         this.apiService = apiService;
         this.firebaseService = firebaseService;
-        this.arrayPagination = arrayPagination;
     }
     async getAllUsers(obj) {
         const { query, paginationObj } = await this.apiService.getAllDocs(this.Usermodel.find(), obj, {}, ['name']);
@@ -406,7 +404,6 @@ exports.UserService = UserService = __decorate([
         twilio_service_1.TwilioService,
         refresh_service_1.RefreshService,
         api_service_1.ApiService,
-        firebase_service_1.FirebaseService,
-        array_pagination_1.ArrayPagination])
+        firebase_service_1.FirebaseService])
 ], UserService);
 //# sourceMappingURL=user.service.js.map

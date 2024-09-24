@@ -23,6 +23,8 @@ import { SoftArchiveService } from './soft-archived.service';
 import { SoftArchiveController } from './soft-archived.controller';
 import { SoftRemoveController } from './soft-remove.controller';
 import { SoftDeleteController } from './soft-delete.controller';
+import { QueryAllController } from './query-all.controller';
+import { QueryAllService } from './query-all.service';
 
 @Module({
   imports: [
@@ -46,6 +48,7 @@ import { SoftDeleteController } from './soft-delete.controller';
     SoftRemoveController,
     SoftDeleteController,
     SoftAcceptController,
+    QueryAllController,
   ],
   providers: [
     DashboardAcceptedService,
@@ -55,6 +58,7 @@ import { SoftDeleteController } from './soft-delete.controller';
     SoftDeleteService,
     SoftRemoveService,
     SoftArchiveService,
+    QueryAllService,
   ],
 })
 export class DashboardModule {}
