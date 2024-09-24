@@ -36,7 +36,7 @@ let FaxService = class FaxService {
     }
     async getAllFaxs(obj) {
         const { query, paginationObj } = await this.apiService.getAllDocs(this.faxModel.find(), obj);
-        const events = await query.populate('user');
+        const events = await query;
         return { events, pagination: paginationObj };
     }
     async updateFax(body, faxId) {

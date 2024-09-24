@@ -33,6 +33,7 @@ import { CustomerServiceMessageModule } from './customer-service-message/custome
 import { CustomerServiceChatModule } from './customer-service-chat/customer-service-chat.module';
 import { GatewayModule } from './websocket/gateway.module';
 import { AnalysisModule } from './analysis/analysis.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { AnalysisModule } from './analysis/analysis.module';
     CustomerServiceChatModule,
     GatewayModule,
     AnalysisModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [
