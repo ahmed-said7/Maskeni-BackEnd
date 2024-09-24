@@ -8,6 +8,7 @@ export declare class Share {
     isDeleted: boolean;
     isAccepted: boolean;
     isArchived: boolean;
+    postType?: string;
     comments: Types.ObjectId[];
     likes: Types.ObjectId[];
     saved: {

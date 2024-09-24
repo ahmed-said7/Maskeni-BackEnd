@@ -34,6 +34,7 @@ import { CustomerServiceChatModule } from './customer-service-chat/customer-serv
 import { GatewayModule } from './websocket/gateway.module';
 import { AnalysisModule } from './analysis/analysis.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { FeedModule } from './feed/feed.module';
 
 @Module({
   imports: [
@@ -75,6 +76,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     GatewayModule,
     AnalysisModule,
     DashboardModule,
+    FeedModule,
   ],
   controllers: [AppController],
   providers: [

@@ -42,6 +42,7 @@ const customer_service_chat_module_1 = require("./customer-service-chat/customer
 const gateway_module_1 = require("./websocket/gateway.module");
 const analysis_module_1 = require("./analysis/analysis.module");
 const dashboard_module_1 = require("./dashboard/dashboard.module");
+const feed_module_1 = require("./feed/feed.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -86,6 +87,7 @@ exports.AppModule = AppModule = __decorate([
             gateway_module_1.GatewayModule,
             analysis_module_1.AnalysisModule,
             dashboard_module_1.DashboardModule,
+            feed_module_1.FeedModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

@@ -47,6 +47,10 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Share.prototype, "isArchived", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ type: String, default: 'share' }),
+    __metadata("design:type", String)
+], Share.prototype, "postType", void 0);
+__decorate([
     (0, mongoose_1.Prop)({ type: [mongoose_2.Types.ObjectId], ref: 'Comment', default: [] }),
     __metadata("design:type", Array)
 ], Share.prototype, "comments", void 0);

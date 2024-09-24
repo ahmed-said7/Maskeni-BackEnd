@@ -31,6 +31,8 @@ export class Share {
 
   @Prop({ type: Boolean, default: false })
   isArchived: boolean;
+  @Prop({ type: String, default: 'share' })
+  postType?: string;
 
   @Prop({ type: [Types.ObjectId], ref: 'Comment', default: [] })
   comments: Types.ObjectId[]; // References to Comment
