@@ -52,11 +52,16 @@ export class MessagingGateway
       if (msgs.length == 0) return;
       client.emit('customer:msgs', { msgs });
     } else {
+      const room = 'admin:room';
+      client.join(room);
       this.gatewayMap.setAdminSocket(client.userId, client);
     }
   }
   async handleDisconnect(socket: IAuthSocket) {
     if (socket.type == All_Role.User) {
+      this.server
+        .to('admin:room')
+        .emit('user:disconnect', { id: socket.userId });
       this.gatewayMap.removeUserSocket(socket.userId);
     } else {
       await this.CustomerChatModel.updateMany(

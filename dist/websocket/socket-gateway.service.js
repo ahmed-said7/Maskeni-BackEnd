@@ -45,11 +45,16 @@ let MessagingGateway = class MessagingGateway {
             client.emit('customer:msgs', { msgs });
         }
         else {
+            const room = 'admin:room';
+            client.join(room);
             this.gatewayMap.setAdminSocket(client.userId, client);
         }
     }
     async handleDisconnect(socket) {
         if (socket.type == enum_1.All_Role.User) {
+            this.server
+                .to('admin:room')
+                .emit('user:disconnect', { id: socket.userId });
             this.gatewayMap.removeUserSocket(socket.userId);
         }
         else {
