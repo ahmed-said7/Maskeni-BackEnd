@@ -13,6 +13,7 @@ import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { All_Role } from 'src/common/enum';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 import { Roles } from 'src/common/decorator/roles';
+import { UpdateAddressDto } from 'src/address/dto/update.address.dto';
 
 @Controller('user/profile')
 export class UserProfileController {
@@ -37,5 +38,11 @@ export class UserProfileController {
   @Roles(All_Role.User)
   updateUser(@Req() req: any, @Body() body: UpdateUserDto) {
     return this.userService.updateUser(body, req.userId);
+  }
+  @Patch('address')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  updateAddress(@Req() req: any, @Body() body: UpdateAddressDto) {
+    return this.userService.updateQuarter(req.userId, body);
   }
 }

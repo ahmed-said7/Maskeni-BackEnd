@@ -167,7 +167,7 @@ export class User {
     enum: [Gender_Type.male, Gender_Type.female],
     default: Gender_Type.male,
   })
-  gender: Types.ObjectId;
+  gender: string;
 
   @Prop({ type: Date })
   birthday: Date;

@@ -11,6 +11,7 @@ import { ApiService } from 'src/common/Api/api.service';
 import { TwilioService } from 'src/twilio/twilio.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { v4 } from 'uuid';
+import { UpdateAddressDto } from 'src/address/dto/update.address.dto';
 
 @Injectable()
 export class UserService {
@@ -77,8 +78,20 @@ export class UserService {
     const tokens = await this.refreshService.createUserTokens(
       user._id.toString(),
       user.role,
+      user.quarter.toString(),
     );
     return { status: 'verified', ...tokens };
+  }
+  async updateQuarter(id: string, body: UpdateAddressDto) {
+    const user = await this.Usermodel.findOneAndUpdate({ _id: id }, body, {
+      new: true,
+    });
+    const tokens = await this.refreshService.createUserTokens(
+      user._id.toString(),
+      user.role,
+      user.quarter.toString(),
+    );
+    return { status: 'quarter updated', ...tokens };
   }
   async register(request: any) {
     const firebaseUser = await this.firebaseService.checkFirebaseToken(request);
@@ -99,6 +112,7 @@ export class UserService {
     const tokens = await this.refreshService.createUserTokens(
       user._id.toString(),
       user.role,
+      user.quarter.toString(),
     );
     return { status: 'verified', ...tokens };
   }

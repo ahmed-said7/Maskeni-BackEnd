@@ -1,7 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsBoolean,
+  IsDateString,
   IsMobilePhone,
+  IsMongoId,
   IsOptional,
   IsString,
   MinLength,
@@ -33,6 +35,14 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   email: string;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  gender: string;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsDateString()
+  birthday: string;
 }
 
 export class UpdateUserByAdminDto {
@@ -40,4 +50,11 @@ export class UpdateUserByAdminDto {
   @IsOptional()
   @IsBoolean()
   isBlocked: boolean;
+}
+
+export class UpdateLatestAddressDto {
+  @ApiPropertyOptional()
+  // @IsOptional()
+  @IsMongoId()
+  quarter: string;
 }
