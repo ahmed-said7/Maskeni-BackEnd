@@ -1,5 +1,4 @@
 import { Model } from 'mongoose';
-import { PointDto } from './dto/point.dto';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { Country, CountryDocument } from './country.schema';
@@ -33,7 +32,7 @@ export declare class CountryService {
         type: string;
         coordinates: [number, number][][];
     };
-    findCountryContainingPoint(body: PointDto): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Country> & Country & {
+    findCountryContainingPoint(body: [number, number]): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, Country> & Country & {
         _id: import("mongoose").Types.ObjectId;
     }> & import("mongoose").Document<unknown, {}, Country> & Country & {
         _id: import("mongoose").Types.ObjectId;

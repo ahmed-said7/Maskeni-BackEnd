@@ -1,17 +1,17 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { IsMongoId, IsOptional } from 'class-validator';
 import { FindQuery } from 'src/common/types';
 
 export class QueryEventDto extends FindQuery {
   @IsOptional()
   @ApiPropertyOptional()
-  date: Date;
+  date: string;
   @IsOptional()
   @ApiPropertyOptional()
-  startedAt: Date;
+  startedAt: string;
   @IsOptional()
   @ApiPropertyOptional()
-  endedAt: Date;
+  endedAt: string;
   @IsOptional()
   @ApiPropertyOptional()
   startAge: number;
@@ -24,4 +24,16 @@ export class QueryEventDto extends FindQuery {
   @IsOptional()
   @ApiPropertyOptional()
   price: number | object;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsMongoId()
+  country: string;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsMongoId()
+  city: string;
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsMongoId()
+  quarter: string;
 }

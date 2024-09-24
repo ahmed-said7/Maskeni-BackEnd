@@ -12,8 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OfferedSchema = exports.Offered = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const city_schema_1 = require("../city/city.schema");
 const types_1 = require("../common/types");
+const country_schema_1 = require("../country/country.schema");
 const likes_schema_1 = require("../likes/likes.schema");
+const quarter_schema_1 = require("../quarter/quarter.schema");
 let Offered = class Offered {
 };
 exports.Offered = Offered;
@@ -42,19 +45,17 @@ __decorate([
     __metadata("design:type", String)
 ], Offered.prototype, "type", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({
-        type: {
-            type: String,
-            enum: ['Point'],
-            default: 'Point',
-        },
-        coordinates: {
-            type: [Number],
-            default: [50, 50],
-        },
-    }),
-    __metadata("design:type", Object)
-], Offered.prototype, "location", void 0);
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: city_schema_1.City.name }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Offered.prototype, "city", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: country_schema_1.Country.name }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Offered.prototype, "country", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: quarter_schema_1.Quarter.name }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Offered.prototype, "quarter", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: Boolean, default: false }),
     __metadata("design:type", Boolean)

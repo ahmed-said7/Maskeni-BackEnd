@@ -1,6 +1,5 @@
 import { Model } from 'mongoose';
 import { City, CityDocument } from './city.schema';
-import { PointDto } from './dto/point.dto';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { CreateCityDto } from './dto/city.create.dto';
@@ -34,7 +33,7 @@ export declare class CityService {
         type: string;
         coordinates: [number, number][][];
     };
-    findCityContainingPoint(pointDto: PointDto): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, City> & City & {
+    findCityContainingPoint(pointDto: [number, number]): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, City> & City & {
         _id: import("mongoose").Types.ObjectId;
     }> & import("mongoose").Document<unknown, {}, City> & City & {
         _id: import("mongoose").Types.ObjectId;

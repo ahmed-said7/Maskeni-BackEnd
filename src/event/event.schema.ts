@@ -1,7 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { City } from 'src/city/city.schema';
 import { Event_Type, Gender_Type } from 'src/common/types';
+import { Country } from 'src/country/country.schema';
 import { Likes } from 'src/likes/likes.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
 import { User } from 'src/user/user.schema';
 
 @Schema({ timestamps: true })
@@ -24,21 +27,27 @@ export class Event {
   @Prop({ type: String, enum: Event_Type, default: Event_Type.community })
   type?: string;
 
-  @Prop({
-    type: {
-      type: String, // 'type' must be 'Point'
-      enum: ['Point'], // Only 'Point' is allowed
-      default: 'Point',
-    },
-    coordinates: {
-      type: [Number],
-      default: [50, 50],
-    },
-  })
-  location: {
-    type: 'Point';
-    coordinates: [number, number];
-  };
+  // @Prop({
+  //   type: {
+  //     type: String, // 'type' must be 'Point'
+  //     enum: ['Point'], // Only 'Point' is allowed
+  //     default: 'Point',
+  //   },
+  //   coordinates: {
+  //     type: [Number],
+  //     default: [50, 50],
+  //   },
+  // })
+  // location: {
+  //   type: 'Point';
+  //   coordinates: [number, number];
+  // };
+  @Prop({ type: Types.ObjectId, ref: City.name })
+  city: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: Country.name })
+  country: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: Quarter.name })
+  quarter: Types.ObjectId;
 
   @Prop({ type: String, default: Gender_Type.all })
   gender?: string;

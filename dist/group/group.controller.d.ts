@@ -2,6 +2,7 @@ import { GroupServices } from './group.service';
 import { CreateGroupDto } from './dto/create.group.dto';
 import { UpdateGroupDto } from './dto/update.group.dto';
 import { FindQuery } from 'src/common/types';
+import { QueryGroupDto } from './dto/query.group.dto';
 export declare class GroupController {
     private groupService;
     constructor(groupService: GroupServices);
@@ -30,13 +31,13 @@ export declare class GroupController {
         users: import("mongoose").Types.ObjectId[];
         admin: import("mongoose").Types.ObjectId;
     }>;
-    getGroups(query: FindQuery): Promise<{
+    getGroups(query: QueryGroupDto): Promise<{
         groups: (import("mongoose").Document<unknown, {}, import("./group.schema").Group> & import("./group.schema").Group & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         pagination: import("../common/Api/api.service").Pagination;
     }>;
-    getUserGroups(req: any, query: FindQuery): Promise<{
+    getUserGroups(req: any, query: QueryGroupDto): Promise<{
         groups: (import("mongoose").Document<unknown, {}, import("./group.schema").Group> & import("./group.schema").Group & {
             _id: import("mongoose").Types.ObjectId;
         })[];

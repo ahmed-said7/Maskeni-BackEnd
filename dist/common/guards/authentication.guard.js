@@ -57,9 +57,12 @@ let AuthenticationGuard = class AuthenticationGuard {
             throw new common_1.UnauthorizedException('Authorization header is missing');
         }
         token = token.split(' ')[1];
-        const { userId, role } = await this.decode(token, this.config.get('access_secret'));
+        const { userId, role, country, city, quarter } = await this.decode(token, this.config.get('access_secret'));
         request.userId = userId;
         request.role = role;
+        request.country = country;
+        request.city = city;
+        request.quarter = quarter;
         return true;
     }
     async decode(token, secret) {
@@ -70,7 +73,13 @@ let AuthenticationGuard = class AuthenticationGuard {
         catch (e) {
             throw new common_1.UnauthorizedException('invalid token');
         }
-        return { userId: payload.userId, role: payload.role };
+        return {
+            userId: payload.userId,
+            role: payload.role,
+            country: payload.country,
+            city: payload.city,
+            quarter: payload.quarter,
+        };
     }
 };
 exports.AuthenticationGuard = AuthenticationGuard;

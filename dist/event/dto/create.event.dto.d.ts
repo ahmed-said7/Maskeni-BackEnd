@@ -1,8 +1,9 @@
-import { ValidateLocation } from 'src/common/types';
 export declare class CreateEventDto {
     name: string;
     details: string;
-    location: ValidateLocation;
+    country: string;
+    city: string;
+    quarter: string;
     startedAt: string;
     date: string;
     endedAt: string;

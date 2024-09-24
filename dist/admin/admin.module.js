@@ -16,6 +16,7 @@ const profile_controller_1 = require("./profile.controller");
 const auth_controller_1 = require("./auth.controller");
 const refresh_module_1 = require("../refresh/refresh.module");
 const user_schema_1 = require("../user/user.schema");
+const quarter_module_1 = require("../quarter/quarter.module");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
@@ -28,6 +29,7 @@ exports.AdminModule = AdminModule = __decorate([
         ],
         providers: [admin_service_1.AdminService],
         imports: [
+            quarter_module_1.QuarterModule,
             api_module_1.ApiModule,
             refresh_module_1.RefreshModule,
             mongoose_1.MongooseModule.forFeature([

@@ -11,5 +11,8 @@ export declare class AuthenticationGuard implements CanActivate {
     decode(token: string, secret: string): Promise<{
         userId: string;
         role: string;
+        country: string;
+        city: string;
+        quarter: string;
     }>;
 }

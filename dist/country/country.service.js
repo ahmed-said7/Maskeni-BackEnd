@@ -51,7 +51,7 @@ let CountryService = class CountryService {
                 $geoIntersects: {
                     $geometry: {
                         type: 'Point',
-                        coordinates: body.coordinates,
+                        coordinates: body,
                     },
                 },
             },

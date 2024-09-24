@@ -2,13 +2,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsMongoId, IsOptional } from 'class-validator';
 import { FindQuery } from 'src/common/types';
 
-export class QueryOfferedDto extends FindQuery {
-  @IsOptional()
-  @ApiPropertyOptional()
-  type: string;
-  @IsOptional()
-  @ApiPropertyOptional()
-  price: number | object;
+export class QueryGroupDto extends FindQuery {
   @ApiPropertyOptional()
   @IsOptional()
   @IsMongoId()

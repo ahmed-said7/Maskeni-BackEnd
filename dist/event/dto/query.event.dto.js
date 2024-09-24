@@ -19,17 +19,17 @@ exports.QueryEventDto = QueryEventDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], QueryEventDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], QueryEventDto.prototype, "startedAt", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], QueryEventDto.prototype, "endedAt", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
@@ -51,4 +51,22 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", Object)
 ], QueryEventDto.prototype, "price", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], QueryEventDto.prototype, "country", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], QueryEventDto.prototype, "city", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], QueryEventDto.prototype, "quarter", void 0);
 //# sourceMappingURL=query.event.dto.js.map

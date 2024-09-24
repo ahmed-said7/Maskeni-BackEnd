@@ -5,12 +5,13 @@ import { CreateGroupDto } from './dto/create.group.dto';
 import { UpdateGroupDto } from './dto/update.group.dto';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
+import { QueryGroupDto } from './dto/query.group.dto';
 export declare class GroupServices {
     private groupModel;
     private userModel;
     private apiService;
-    constructor(groupModel: Model<GroupDocument>, userModel: Model<UserDocument>, apiService: ApiService<GroupDocument, FindQuery>);
-    getAllGroups(obj: FindQuery, filter?: object): Promise<{
+    constructor(groupModel: Model<GroupDocument>, userModel: Model<UserDocument>, apiService: ApiService<GroupDocument, QueryGroupDto | FindQuery>);
+    getAllGroups(obj: QueryGroupDto, filter?: object): Promise<{
         groups: (import("mongoose").Document<unknown, {}, Group> & Group & {
             _id: import("mongoose").Types.ObjectId;
         })[];
@@ -25,7 +26,7 @@ export declare class GroupServices {
             _id: import("mongoose").Types.ObjectId;
         }>;
     }>;
-    getUserGroups(obj: FindQuery, req: any): Promise<{
+    getUserGroups(obj: QueryGroupDto, req: any): Promise<{
         groups: (import("mongoose").Document<unknown, {}, Group> & Group & {
             _id: import("mongoose").Types.ObjectId;
         })[];

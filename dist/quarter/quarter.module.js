@@ -43,6 +43,7 @@ exports.QuarterModule = QuarterModule = __decorate([
         ],
         controllers: [quarter_controller_1.QuarterController],
         providers: [quarter_service_1.QuarterService],
+        exports: [quarter_service_1.QuarterService],
     })
 ], QuarterModule);
 //# sourceMappingURL=quarter.module.js.map

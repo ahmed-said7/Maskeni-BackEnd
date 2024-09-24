@@ -1,6 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { City } from 'src/city/city.schema';
 import { Group_Privacy } from 'src/common/enum';
+import { Country } from 'src/country/country.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
 
 @Schema({ timestamps: true }) // Automatically adds createdAt and updatedAt fields
 export class Group {
@@ -18,6 +21,12 @@ export class Group {
     ref: 'User',
   })
   admin: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: City.name })
+  city: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: Country.name })
+  country: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: Quarter.name })
+  quarter: Types.ObjectId;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] }) // Array of user references
   users: Types.ObjectId[];

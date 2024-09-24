@@ -19,6 +19,7 @@ import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 import { Roles } from 'src/common/decorator/roles';
 import { All_Role } from 'src/common/enum';
+import { QueryGroupDto } from './dto/query.group.dto';
 
 @Controller('group')
 export class GroupController {
@@ -59,14 +60,14 @@ export class GroupController {
   @Get('all')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  getGroups(@Query() query: FindQuery) {
+  getGroups(@Query() query: QueryGroupDto) {
     return this.groupService.getAllGroups(query);
   }
 
   @Get('my')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  getUserGroups(@Req() req: any, @Query() query: FindQuery) {
+  getUserGroups(@Req() req: any, @Query() query: QueryGroupDto) {
     return this.groupService.getUserGroups(query, req);
   }
 

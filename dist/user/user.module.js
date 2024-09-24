@@ -21,6 +21,7 @@ const twilio_module_1 = require("../twilio/twilio.module");
 const firebase_module_1 = require("../firebase/firebase.module");
 const follow_controller_1 = require("./follow.controller");
 const saved_controller_1 = require("./saved.controller");
+const quarter_module_1 = require("../quarter/quarter.module");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
@@ -35,6 +36,7 @@ exports.UserModule = UserModule = __decorate([
         ],
         providers: [user_service_1.UserService],
         imports: [
+            quarter_module_1.QuarterModule,
             api_module_1.ApiModule,
             twilio_module_1.TwilioModule,
             refresh_module_1.RefreshModule,

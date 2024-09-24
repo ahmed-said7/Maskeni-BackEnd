@@ -4,6 +4,9 @@ export declare class Group {
     image: string;
     privacy: string;
     admin: Types.ObjectId;
+    city: Types.ObjectId;
+    country: Types.ObjectId;
+    quarter: Types.ObjectId;
     users: Types.ObjectId[];
     isDeleted: boolean;
     isAccepted: boolean;

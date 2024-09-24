@@ -16,7 +16,6 @@ exports.QuarterController = void 0;
 const common_1 = require("@nestjs/common");
 const quarter_service_1 = require("./quarter.service");
 const quarter_create_dto_1 = require("./dto/quarter.create.dto");
-const point_dto_1 = require("./dto/point.dto");
 const quarter_query_dto_1 = require("./dto/quarter.query.dto");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
@@ -35,14 +34,18 @@ let QuarterController = class QuarterController {
     async find(query) {
         return this.quarterService.getAllQuarters(query);
     }
-    async findQuarterByLocation(body) {
-        return this.quarterService.findQuarterContainingPoint(body);
-    }
     async findOne(id) {
         return this.quarterService.findOne(id);
     }
     async remove(id) {
         return this.quarterService.remove(id);
+    }
+    getLocation(location) {
+        const [lat, lng] = location.split(':');
+        return this.quarterService.findQuarterContainingPoint([
+            parseInt(lng),
+            parseInt(lat),
+        ]);
     }
 };
 exports.QuarterController = QuarterController;
@@ -69,13 +72,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], QuarterController.prototype, "find", null);
 __decorate([
-    (0, common_1.Get)('point'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [point_dto_1.PointDto]),
-    __metadata("design:returntype", Promise)
-], QuarterController.prototype, "findQuarterByLocation", null);
-__decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -91,6 +87,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], QuarterController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('point/:location'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Param)('location')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], QuarterController.prototype, "getLocation", null);
 exports.QuarterController = QuarterController = __decorate([
     (0, common_1.Controller)('quarter'),
     __metadata("design:paramtypes", [quarter_service_1.QuarterService])

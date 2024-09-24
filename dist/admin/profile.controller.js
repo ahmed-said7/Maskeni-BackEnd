@@ -37,6 +37,13 @@ let AdminProfileController = class AdminProfileController {
     updateUser(req, body) {
         return this.adminService.updateUser(body, req.userId);
     }
+    updateAddress(req, location) {
+        const [lat, lng] = location.split(':');
+        return this.adminService.updateQuarter(req.userId, req.role, [
+            parseInt(lng),
+            parseInt(lat),
+        ]);
+    }
 };
 exports.AdminProfileController = AdminProfileController;
 __decorate([
@@ -77,6 +84,16 @@ __decorate([
     __metadata("design:paramtypes", [Object, update_user_dto_1.UpdateAdminDto]),
     __metadata("design:returntype", void 0)
 ], AdminProfileController.prototype, "updateUser", null);
+__decorate([
+    (0, common_1.Get)('point/:location'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('location')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], AdminProfileController.prototype, "updateAddress", null);
 exports.AdminProfileController = AdminProfileController = __decorate([
     (0, common_1.Controller)('admin/profile'),
     __metadata("design:paramtypes", [admin_service_1.AdminService])

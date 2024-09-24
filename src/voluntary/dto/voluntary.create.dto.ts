@@ -1,14 +1,15 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+// import { Type } from 'class-transformer';
 import {
   IsArray,
   IsDateString,
+  IsMongoId,
   IsNumber,
   IsOptional,
   IsString,
-  ValidateNested,
+  // ValidateNested,
 } from 'class-validator';
-import { ValidateLocation } from 'src/common/types';
+// import { ValidateLocation } from 'src/common/types';
 
 export class CreateVoluntaryDto {
   @IsString()
@@ -32,10 +33,20 @@ export class CreateVoluntaryDto {
   @ApiProperty()
   endedAt: string;
 
-  @ValidateNested()
+  // @ValidateNested()
+  // @ApiProperty()
+  // @Type(() => ValidateLocation)
+  // location: ValidateLocation;
+
   @ApiProperty()
-  @Type(() => ValidateLocation)
-  location: ValidateLocation;
+  @IsMongoId()
+  country: string;
+  @ApiProperty()
+  @IsMongoId()
+  city: string;
+  @ApiProperty()
+  @IsMongoId()
+  quarter: string;
 
   @IsArray()
   @ApiProperty()

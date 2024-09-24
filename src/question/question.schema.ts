@@ -1,6 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { City } from 'src/city/city.schema';
+import { Country } from 'src/country/country.schema';
 import { Likes } from 'src/likes/likes.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
 
 @Schema({ timestamps: true })
 export class Question {
@@ -10,21 +13,27 @@ export class Question {
   @Prop({ type: String, default: 'question' })
   postType?: string;
 
-  @Prop({
-    type: {
-      type: String, // 'type' must be 'Point'
-      enum: ['Point'], // Only 'Point' is allowed
-      default: 'Point',
-    },
-    coordinates: {
-      type: [Number],
-      default: [50, 50],
-    },
-  })
-  location: {
-    type: 'Point';
-    coordinates: [number, number];
-  };
+  // @Prop({
+  //   type: {
+  //     type: String, // 'type' must be 'Point'
+  //     enum: ['Point'], // Only 'Point' is allowed
+  //     default: 'Point',
+  //   },
+  //   coordinates: {
+  //     type: [Number],
+  //     default: [50, 50],
+  //   },
+  // })
+  // location: {
+  //   type: 'Point';
+  //   coordinates: [number, number];
+  // };
+  @Prop({ type: Types.ObjectId, ref: City.name })
+  city: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: Country.name })
+  country: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: Quarter.name })
+  quarter: Types.ObjectId;
 
   @Prop({ type: Boolean, default: false })
   isDeleted: boolean;

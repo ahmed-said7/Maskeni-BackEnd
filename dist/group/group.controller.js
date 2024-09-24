@@ -23,6 +23,7 @@ const authentication_guard_1 = require("../common/guards/authentication.guard");
 const authorization_guard_1 = require("../common/guards/authorization.guard");
 const roles_1 = require("../common/decorator/roles");
 const enum_1 = require("../common/enum");
+const query_group_dto_1 = require("./dto/query.group.dto");
 let GroupController = class GroupController {
     constructor(groupService) {
         this.groupService = groupService;
@@ -107,7 +108,7 @@ __decorate([
     (0, roles_1.Roles)(enum_1.All_Role.User),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [types_1.FindQuery]),
+    __metadata("design:paramtypes", [query_group_dto_1.QueryGroupDto]),
     __metadata("design:returntype", void 0)
 ], GroupController.prototype, "getGroups", null);
 __decorate([
@@ -117,7 +118,7 @@ __decorate([
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, types_1.FindQuery]),
+    __metadata("design:paramtypes", [Object, query_group_dto_1.QueryGroupDto]),
     __metadata("design:returntype", void 0)
 ], GroupController.prototype, "getUserGroups", null);
 __decorate([

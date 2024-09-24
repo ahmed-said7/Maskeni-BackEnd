@@ -19,17 +19,23 @@ exports.QueryVoluntaryDto = QueryVoluntaryDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
+], QueryVoluntaryDto.prototype, "user", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, swagger_1.ApiPropertyOptional)(),
+    __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "startedAt", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiPropertyOptional)(),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "endedAt", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
@@ -46,4 +52,22 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     __metadata("design:type", String)
 ], QueryVoluntaryDto.prototype, "type", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], QueryVoluntaryDto.prototype, "country", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], QueryVoluntaryDto.prototype, "city", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], QueryVoluntaryDto.prototype, "quarter", void 0);
 //# sourceMappingURL=voluntary.query.dto.js.map

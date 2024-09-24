@@ -10,10 +10,9 @@ export declare class Voluntary {
     endedAt?: Date;
     startAge: number;
     endAge: number;
-    location: {
-        type: 'Point';
-        coordinates: [number, number];
-    };
+    city: Types.ObjectId;
+    country: Types.ObjectId;
+    quarter: Types.ObjectId;
     isDeleted: boolean;
     isAccepted: boolean;
     isArchived: boolean;

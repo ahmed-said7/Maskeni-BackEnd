@@ -5,6 +5,8 @@ export declare class UpdateUserDto {
     fcm: string;
     icon: string;
     email: string;
+    gender: string;
+    birthday: string;
 }
 export declare class UpdateUserByAdminDto {
     isBlocked: boolean;

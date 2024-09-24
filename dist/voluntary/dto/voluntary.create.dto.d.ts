@@ -1,11 +1,12 @@
-import { ValidateLocation } from 'src/common/types';
 export declare class CreateVoluntaryDto {
     name: string;
     details: string;
     startedAt: string;
     date: string;
     endedAt: string;
-    location: ValidateLocation;
+    country: string;
+    city: string;
+    quarter: string;
     images: string;
     startAge: number;
     endAge: number;

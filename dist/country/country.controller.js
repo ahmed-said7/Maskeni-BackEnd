@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CountryController = void 0;
 const common_1 = require("@nestjs/common");
 const types_1 = require("../common/types");
-const point_dto_1 = require("./dto/point.dto");
 const country_service_1 = require("./country.service");
 const create_country_dto_1 = require("./dto/create.country.dto");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
@@ -34,9 +33,6 @@ let CountryController = class CountryController {
     }
     async find(query) {
         return this.countryService.getAllCountries(query);
-    }
-    async findQuarterByLocation(body) {
-        return this.countryService.findCountryContainingPoint(body);
     }
     async findOne(id) {
         return this.countryService.findOne(id);
@@ -68,13 +64,6 @@ __decorate([
     __metadata("design:paramtypes", [types_1.FindQuery]),
     __metadata("design:returntype", Promise)
 ], CountryController.prototype, "find", null);
-__decorate([
-    (0, common_1.Get)('point'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [point_dto_1.PointDto]),
-    __metadata("design:returntype", Promise)
-], CountryController.prototype, "findQuarterByLocation", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateOfferedDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 const types_1 = require("../../common/types");
 class CreateOfferedDto {
@@ -34,11 +33,20 @@ __decorate([
     __metadata("design:type", String)
 ], CreateOfferedDto.prototype, "type", void 0);
 __decorate([
-    (0, class_validator_1.ValidateNested)(),
     (0, swagger_1.ApiProperty)(),
-    (0, class_transformer_1.Type)(() => types_1.ValidateLocation),
-    __metadata("design:type", types_1.ValidateLocation)
-], CreateOfferedDto.prototype, "location", void 0);
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], CreateOfferedDto.prototype, "country", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], CreateOfferedDto.prototype, "city", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], CreateOfferedDto.prototype, "quarter", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, swagger_1.ApiProperty)(),

@@ -7,13 +7,15 @@ import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { TwilioService } from 'src/twilio/twilio.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
+import { QuarterService } from 'src/quarter/quarter.service';
 export declare class UserService {
     private Usermodel;
     private twilioService;
     private refreshService;
     private apiService;
     private firebaseService;
-    constructor(Usermodel: Model<UserDocument>, twilioService: TwilioService, refreshService: RefreshService, apiService: ApiService<UserDocument, FindQuery>, firebaseService: FirebaseService);
+    private quarterService;
+    constructor(Usermodel: Model<UserDocument>, twilioService: TwilioService, refreshService: RefreshService, apiService: ApiService<UserDocument, FindQuery>, firebaseService: FirebaseService, quarterService: QuarterService);
     getAllUsers(obj: FindQuery): Promise<{
         users: (import("mongoose").Document<unknown, {}, User> & User & {
             _id: import("mongoose").Types.ObjectId;
@@ -37,6 +39,32 @@ export declare class UserService {
     }>;
     private createHash;
     verifyPhone(code: string): Promise<{
+        accessToken: string;
+        refreshToken: string;
+        status: string;
+    }>;
+    updateQuarter(userId: string, body: [number, number]): Promise<{
+        city: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../city/city.schema").City> & import("../city/city.schema").City & {
+            _id: import("mongoose").Types.ObjectId;
+        }> & import("mongoose").Document<unknown, {}, import("../city/city.schema").City> & import("../city/city.schema").City & {
+            _id: import("mongoose").Types.ObjectId;
+        } & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }>;
+        country: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../country/country.schema").Country> & import("../country/country.schema").Country & {
+            _id: import("mongoose").Types.ObjectId;
+        }> & import("mongoose").Document<unknown, {}, import("../country/country.schema").Country> & import("../country/country.schema").Country & {
+            _id: import("mongoose").Types.ObjectId;
+        } & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }>;
+        quarter: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../quarter/quarter.schema").Quarter> & import("../quarter/quarter.schema").Quarter & {
+            _id: import("mongoose").Types.ObjectId;
+        }> & import("mongoose").Document<unknown, {}, import("../quarter/quarter.schema").Quarter> & import("../quarter/quarter.schema").Quarter & {
+            _id: import("mongoose").Types.ObjectId;
+        } & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }>;
         accessToken: string;
         refreshToken: string;
         status: string;

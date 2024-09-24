@@ -5,6 +5,13 @@ export declare class AdminAuthController {
     private adminService;
     constructor(adminService: AdminService);
     login(body: LoginAdminDto): Promise<{
+        user: import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./admin.schema").Admin> & import("./admin.schema").Admin & {
+            _id: import("mongoose").Types.ObjectId;
+        }> & import("mongoose").Document<unknown, {}, import("./admin.schema").Admin> & import("./admin.schema").Admin & {
+            _id: import("mongoose").Types.ObjectId;
+        } & Required<{
+            _id: import("mongoose").Types.ObjectId;
+        }>;
         accessToken: string;
         refreshToken: string;
     }>;

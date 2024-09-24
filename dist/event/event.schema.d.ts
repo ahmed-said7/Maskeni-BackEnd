@@ -6,10 +6,9 @@ export declare class Event {
     postType?: string;
     details?: string;
     type?: string;
-    location: {
-        type: 'Point';
-        coordinates: [number, number];
-    };
+    city: Types.ObjectId;
+    country: Types.ObjectId;
+    quarter: Types.ObjectId;
     gender?: string;
     date?: Date;
     startedAt?: Date;

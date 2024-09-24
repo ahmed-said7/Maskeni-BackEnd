@@ -21,6 +21,21 @@ __decorate([
     __metadata("design:type", String)
 ], CreateQuestionDto.prototype, "content", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], CreateQuestionDto.prototype, "country", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], CreateQuestionDto.prototype, "city", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", String)
+], CreateQuestionDto.prototype, "quarter", void 0);
+__decorate([
     (0, class_validator_1.IsArray)(),
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)({ each: true }),

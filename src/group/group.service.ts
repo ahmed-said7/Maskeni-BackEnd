@@ -8,15 +8,16 @@ import { UpdateGroupDto } from './dto/update.group.dto';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { Group_Privacy } from 'src/common/enum';
+import { QueryGroupDto } from './dto/query.group.dto';
 
 @Injectable()
 export class GroupServices {
   constructor(
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private apiService: ApiService<GroupDocument, FindQuery>,
+    private apiService: ApiService<GroupDocument, QueryGroupDto | FindQuery>,
   ) {}
-  async getAllGroups(obj: FindQuery, filter?: object) {
+  async getAllGroups(obj: QueryGroupDto, filter?: object) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.groupModel.find(),
       obj,
@@ -42,7 +43,7 @@ export class GroupServices {
     });
     return { group };
   }
-  async getUserGroups(obj: FindQuery, req: any) {
+  async getUserGroups(obj: QueryGroupDto, req: any) {
     return this.getAllGroups(obj, { users: req.userId });
   }
   async updateGroup(body: UpdateGroupDto, groupId: string, req: any) {

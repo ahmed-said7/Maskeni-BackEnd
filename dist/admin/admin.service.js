@@ -45,11 +45,13 @@ const api_service_1 = require("../common/Api/api.service");
 const config_1 = require("@nestjs/config");
 const enum_1 = require("../common/enum");
 const refresh_service_1 = require("../refresh/refresh.service");
+const quarter_service_1 = require("../quarter/quarter.service");
 let AdminService = class AdminService {
-    constructor(AdminModel, refreshService, apiService, config) {
+    constructor(AdminModel, refreshService, apiService, config, quarterService) {
         this.AdminModel = AdminModel;
         this.refreshService = refreshService;
         this.apiService = apiService;
+        this.quarterService = quarterService;
         this.AdminModel.findOne({
             mobile: config.get('mobile'),
         }).then((admin) => {
@@ -70,8 +72,13 @@ let AdminService = class AdminService {
         const admins = await query;
         return { admins, pagination: paginationObj };
     }
+    async updateQuarter(userId, role, body) {
+        const { country, city, quarter } = await this.quarterService.findQuarterContainingPoint(body);
+        const tokens = await this.refreshService.createUserTokens(userId, role, quarter._id.toString(), city._id.toString(), country._id.toString());
+        return { status: 'quarter updated', ...tokens, city, country, quarter };
+    }
     async login(body) {
-        const user = await this.AdminModel.findOne({ email: body.mobile });
+        const user = await this.AdminModel.findOne({ mobile: body.mobile });
         if (!user) {
             throw new common_1.HttpException('user not found', 400);
         }
@@ -79,7 +86,7 @@ let AdminService = class AdminService {
         if (!valid) {
             throw new common_1.HttpException('password or email is not correct', 400);
         }
-        const token = this.refreshService.createAdminTokens(user._id.toString(), user.role);
+        const token = await this.refreshService.createAdminTokens(user._id.toString(), user.role);
         return { ...token, user };
     }
     async updatepassword(body, userId) {
@@ -136,6 +143,7 @@ exports.AdminService = AdminService = __decorate([
     __metadata("design:paramtypes", [mongoose_2.Model,
         refresh_service_1.RefreshService,
         api_service_1.ApiService,
-        config_1.ConfigService])
+        config_1.ConfigService,
+        quarter_service_1.QuarterService])
 ], AdminService);
 //# sourceMappingURL=admin.service.js.map

@@ -50,7 +50,7 @@ let CityService = class CityService {
                 $geoIntersects: {
                     $geometry: {
                         type: 'Point',
-                        coordinates: pointDto.coordinates,
+                        coordinates: pointDto,
                     },
                 },
             },

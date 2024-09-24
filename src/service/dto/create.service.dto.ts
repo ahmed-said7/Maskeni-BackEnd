@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+// import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
+  IsMongoId,
   IsNumber,
   IsOptional,
   IsString,
-  ValidateNested,
+  // ValidateNested,
 } from 'class-validator';
-import { Jop_Type, ValidateLocation } from 'src/common/types';
+import { Jop_Type } from 'src/common/types';
 
 export class CreateOfferedDto {
   @IsString()
@@ -24,10 +25,15 @@ export class CreateOfferedDto {
   @IsEnum(Jop_Type)
   type: string;
 
-  @ValidateNested()
   @ApiProperty()
-  @Type(() => ValidateLocation)
-  location: ValidateLocation;
+  @IsMongoId()
+  country: string;
+  @ApiProperty()
+  @IsMongoId()
+  city: string;
+  @ApiProperty()
+  @IsMongoId()
+  quarter: string;
 
   @IsArray()
   @ApiProperty()

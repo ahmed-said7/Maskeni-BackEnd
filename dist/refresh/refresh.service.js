@@ -40,20 +40,20 @@ let RefreshService = class RefreshService {
     constructor(configService) {
         this.configService = configService;
     }
-    createtoken(userId, role) {
-        const accessToken = jwt.sign({ userId, role }, this.configService.get('access_secret'), {
+    createtoken(userId, role, quarter, city, country) {
+        const accessToken = jwt.sign({ userId, role, quarter, city, country }, this.configService.get('access_secret'), {
             expiresIn: '1d',
         });
-        const refreshToken = jwt.sign({ userId, role }, this.configService.get('refresh_secret'), {
+        const refreshToken = jwt.sign({ userId, role, quarter }, this.configService.get('refresh_secret'), {
             expiresIn: '12d',
         });
         return { accessToken, refreshToken };
     }
-    async createAdminTokens(id, role) {
-        return this.createtoken(id, role);
+    async createAdminTokens(id, role, quarter, city, country) {
+        return this.createtoken(id, role, quarter, city, country);
     }
-    async createUserTokens(id, role) {
-        return this.createtoken(id, role);
+    async createUserTokens(id, role, quarter, city, country) {
+        return this.createtoken(id, role, quarter, city, country);
     }
 };
 exports.RefreshService = RefreshService;

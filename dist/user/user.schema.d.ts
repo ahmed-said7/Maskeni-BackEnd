@@ -61,8 +61,7 @@ export declare class User {
     icon: string;
     fcm: string;
     isBlocked: boolean;
-    quarter: Types.ObjectId;
-    gender: Types.ObjectId;
+    gender: string;
     birthday: Date;
 }
 export type UserDocument = HydratedDocument<User>;

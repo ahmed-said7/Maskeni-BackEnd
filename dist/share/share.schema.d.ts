@@ -1,10 +1,9 @@
 import { HydratedDocument, Types } from 'mongoose';
 export declare class Share {
     content: string;
-    location: {
-        type: 'Point';
-        coordinates: [number, number];
-    };
+    city: Types.ObjectId;
+    country: Types.ObjectId;
+    quarter: Types.ObjectId;
     isDeleted: boolean;
     isAccepted: boolean;
     isArchived: boolean;

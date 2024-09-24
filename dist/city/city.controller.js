@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CityController = void 0;
 const common_1 = require("@nestjs/common");
 const city_service_1 = require("./city.service");
-const point_dto_1 = require("./dto/point.dto");
 const city_create_dto_1 = require("./dto/city.create.dto");
 const city_query_dto_1 = require("./dto/city.query.dto");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
@@ -34,9 +33,6 @@ let CityController = class CityController {
     }
     async find(query) {
         return this.cityService.getAllCities(query);
-    }
-    async findQuarterByLocation(body) {
-        return this.cityService.findCityContainingPoint(body);
     }
     async findOne(id) {
         return this.cityService.findOne(id);
@@ -68,13 +64,6 @@ __decorate([
     __metadata("design:paramtypes", [city_query_dto_1.CityQueryDto]),
     __metadata("design:returntype", Promise)
 ], CityController.prototype, "find", null);
-__decorate([
-    (0, common_1.Get)('point'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [point_dto_1.PointDto]),
-    __metadata("design:returntype", Promise)
-], CityController.prototype, "findQuarterByLocation", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

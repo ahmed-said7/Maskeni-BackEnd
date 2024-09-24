@@ -46,13 +46,16 @@ const api_service_1 = require("../common/Api/api.service");
 const twilio_service_1 = require("../twilio/twilio.service");
 const firebase_service_1 = require("../firebase/firebase.service");
 const uuid_1 = require("uuid");
+const quarter_service_1 = require("../quarter/quarter.service");
+const enum_1 = require("../common/enum");
 let UserService = class UserService {
-    constructor(Usermodel, twilioService, refreshService, apiService, firebaseService) {
+    constructor(Usermodel, twilioService, refreshService, apiService, firebaseService, quarterService) {
         this.Usermodel = Usermodel;
         this.twilioService = twilioService;
         this.refreshService = refreshService;
         this.apiService = apiService;
         this.firebaseService = firebaseService;
+        this.quarterService = quarterService;
     }
     async getAllUsers(obj) {
         const { query, paginationObj } = await this.apiService.getAllDocs(this.Usermodel.find(), obj, {}, ['name']);
@@ -100,6 +103,11 @@ let UserService = class UserService {
         await user.save();
         const tokens = await this.refreshService.createUserTokens(user._id.toString(), user.role);
         return { status: 'verified', ...tokens };
+    }
+    async updateQuarter(userId, body) {
+        const { country, city, quarter } = await this.quarterService.findQuarterContainingPoint(body);
+        const tokens = await this.refreshService.createUserTokens(userId, enum_1.All_Role.User, quarter._id.toString(), city._id.toString(), country._id.toString());
+        return { status: 'quarter updated', ...tokens, city, country, quarter };
     }
     async register(request) {
         const firebaseUser = await this.firebaseService.checkFirebaseToken(request);
@@ -404,6 +412,7 @@ exports.UserService = UserService = __decorate([
         twilio_service_1.TwilioService,
         refresh_service_1.RefreshService,
         api_service_1.ApiService,
-        firebase_service_1.FirebaseService])
+        firebase_service_1.FirebaseService,
+        quarter_service_1.QuarterService])
 ], UserService);
 //# sourceMappingURL=user.service.js.map

@@ -11,6 +11,15 @@ export class CreateGroupDto {
   @IsMongoId({ each: true })
   users: string[];
   @ApiProperty()
+  @IsMongoId()
+  country: string;
+  @ApiProperty()
+  @IsMongoId()
+  city: string;
+  @ApiProperty()
+  @IsMongoId()
+  quarter: string;
+  @ApiProperty()
   @IsString()
   image: string;
 }

@@ -18,10 +18,14 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const quarter_schema_1 = require("./quarter.schema");
 const api_service_1 = require("../common/Api/api.service");
+const country_service_1 = require("../country/country.service");
+const city_service_1 = require("../city/city.service");
 let QuarterService = class QuarterService {
-    constructor(quarterModel, apiService) {
+    constructor(quarterModel, apiService, countryService, cityService) {
         this.quarterModel = quarterModel;
         this.apiService = apiService;
+        this.countryService = countryService;
+        this.cityService = cityService;
     }
     async create(body) {
         body.location = this.getLocations(body.coordinates.map((coord) => coord.coordinates));
@@ -46,17 +50,19 @@ let QuarterService = class QuarterService {
         };
     }
     async findQuarterContainingPoint(body) {
+        const country = await this.countryService.findCountryContainingPoint(body);
+        const city = await this.cityService.findCityContainingPoint(body);
         const quarter = await this.quarterModel.findOne({
             location: {
                 $geoIntersects: {
                     $geometry: {
                         type: 'Point',
-                        coordinates: body.coordinates,
+                        coordinates: body,
                     },
                 },
             },
         });
-        return quarter;
+        return { quarter, city, country };
     }
     async getAllQuarters(obj) {
         const { query, paginationObj } = await this.apiService.getAllDocs(this.quarterModel.find(), obj);
@@ -78,6 +84,8 @@ exports.QuarterService = QuarterService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(quarter_schema_1.Quarter.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
-        api_service_1.ApiService])
+        api_service_1.ApiService,
+        country_service_1.CountryService,
+        city_service_1.CityService])
 ], QuarterService);
 //# sourceMappingURL=quarter.service.js.map

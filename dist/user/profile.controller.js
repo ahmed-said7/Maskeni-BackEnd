@@ -33,6 +33,13 @@ let UserProfileController = class UserProfileController {
     updateUser(req, body) {
         return this.userService.updateUser(body, req.userId);
     }
+    updateAddress(req, location) {
+        const [lat, lng] = location.split(':');
+        return this.userService.updateQuarter(req.userId, [
+            parseInt(lng),
+            parseInt(lat),
+        ]);
+    }
 };
 exports.UserProfileController = UserProfileController;
 __decorate([
@@ -63,6 +70,16 @@ __decorate([
     __metadata("design:paramtypes", [Object, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UserProfileController.prototype, "updateUser", null);
+__decorate([
+    (0, common_1.Get)('point/:location'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('location')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], UserProfileController.prototype, "updateAddress", null);
 exports.UserProfileController = UserProfileController = __decorate([
     (0, common_1.Controller)('user/profile'),
     __metadata("design:paramtypes", [user_service_1.UserService])

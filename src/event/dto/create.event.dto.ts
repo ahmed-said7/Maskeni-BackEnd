@@ -1,16 +1,17 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+// import { Type } from 'class-transformer';
 import {
   // ArrayMaxSize,
   // ArrayMinSize,
   IsArray,
   IsDateString,
+  IsMongoId,
   IsNumber,
   IsOptional,
   IsString,
-  ValidateNested,
+  // ValidateNested,
 } from 'class-validator';
-import { ValidateLocation } from 'src/common/types';
+// import { ValidateLocation } from 'src/common/types';
 
 export class CreateEventDto {
   @IsString()
@@ -21,10 +22,15 @@ export class CreateEventDto {
   @ApiProperty()
   details: string;
 
-  @ValidateNested()
   @ApiProperty()
-  @Type(() => ValidateLocation)
-  location: ValidateLocation;
+  @IsMongoId()
+  country: string;
+  @ApiProperty()
+  @IsMongoId()
+  city: string;
+  @ApiProperty()
+  @IsMongoId()
+  quarter: string;
 
   @IsDateString()
   @ApiProperty()
