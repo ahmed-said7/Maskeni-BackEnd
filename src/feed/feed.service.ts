@@ -42,6 +42,7 @@ export class FeedService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       })
+      .populate('country')
       .skip(skip)
       .limit(limit);
     const voluntary = await this.voluntaryModel
@@ -62,6 +63,7 @@ export class FeedService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       })
+      .populate('country')
       .skip(skip)
       .limit(limit);
     const offered = await this.serviceModel
@@ -82,6 +84,7 @@ export class FeedService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       })
+      .populate('country')
       .skip(skip)
       .limit(limit);
     const questions = await this.questionModel
@@ -102,6 +105,7 @@ export class FeedService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       })
+      .populate('country')
       .skip(skip)
       .limit(limit);
 
@@ -123,6 +127,7 @@ export class FeedService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       })
+      .populate('country')
       .skip(skip)
       .limit(limit);
 
