@@ -47,6 +47,7 @@ async function bootstrap() {
         description: 'Enter JWT Token',
         in: 'header',
     }, 'JWT')
+        .addSecurityRequirements('JWT')
         .build();
     if (process.env.NODE_ENV !== 'production') {
         const document = swagger_1.SwaggerModule.createDocument(app, config);

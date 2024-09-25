@@ -24,6 +24,7 @@ import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 import { ApiResponse, ApiTags, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('Share') // Tag for grouping related operations
+// @ApiBearerAuth() // Adds Bearer Auth requirement
 @Controller('share')
 export class ShareController {
   constructor(private shareService: ShareService) {}
