@@ -58,6 +58,7 @@ async function bootstrap() {
       in: 'header',
     },
     'JWT',)
+    .addSecurityRequirements('JWT')
     .build();
   if (process.env.NODE_ENV !== 'production') {
     const document = SwaggerModule.createDocument(app, config);
