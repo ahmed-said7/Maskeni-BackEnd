@@ -49,15 +49,17 @@ async function bootstrap() {
   // await app.register(helmet);
   const config = new DocumentBuilder()
     .setTitle('Maskeni')
-    .addBearerAuth({
-      type: 'http',
-      scheme: 'bearer',
-      bearerFormat: 'JWT',
-      name: 'authorization',
-      description: 'Enter JWT Token',
-      in: 'header',
-    },
-    'JWT',)
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'authorization',
+        description: 'Enter JWT Token',
+        in: 'header',
+      },
+      'JWT',
+    )
     .addSecurityRequirements('JWT')
     .build();
   if (process.env.NODE_ENV !== 'production') {

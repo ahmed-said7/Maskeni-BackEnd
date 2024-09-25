@@ -18,6 +18,13 @@ export class QueryGroupDto extends FindQuery {
   city: string;
 
   @ApiPropertyOptional({
+    description: 'Keyword for searching results',
+    example: 'example',
+  })
+  @IsOptional()
+  keyword?: string;
+
+  @ApiPropertyOptional({
     description: 'Optional MongoDB ID for filtering by quarter',
   })
   @IsOptional()

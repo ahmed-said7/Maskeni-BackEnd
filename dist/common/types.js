@@ -25,36 +25,12 @@ __decorate([
 ], FindQuery.prototype, "page", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
-        description: 'The sort order for the results',
-        example: '-age,price',
-    }),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], FindQuery.prototype, "sort", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({
-        description: 'Comma-separated list of fields to select',
-        example: 'name,icon',
-    }),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], FindQuery.prototype, "select", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({
         description: 'The number of items to return per page',
         example: '10',
     }),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], FindQuery.prototype, "limit", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({
-        description: 'Keyword for searching results',
-        example: 'example',
-    }),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], FindQuery.prototype, "keyword", void 0);
 var Event_Type;
 (function (Event_Type) {
     Event_Type["community"] = "\u0645\u062C\u062A\u0645\u0639\u064A";

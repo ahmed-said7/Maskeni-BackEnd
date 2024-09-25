@@ -8,10 +8,7 @@ export interface Payload {
 }
 export declare class FindQuery {
     page?: string;
-    sort?: string;
-    select?: string;
     limit?: string;
-    keyword?: string;
 }
 export declare enum Event_Type {
     community = "\u0645\u062C\u062A\u0645\u0639\u064A",

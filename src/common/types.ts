@@ -23,19 +23,19 @@ export class FindQuery {
   @IsOptional()
   page?: string;
 
-  @ApiPropertyOptional({
-    description: 'The sort order for the results',
-    example: '-age,price',
-  })
-  @IsOptional()
-  sort?: string;
+  // @ApiPropertyOptional({
+  //   description: 'The sort order for the results',
+  //   example: '-age,price',
+  // })
+  // @IsOptional()
+  // sort?: string;
 
-  @ApiPropertyOptional({
-    description: 'Comma-separated list of fields to select',
-    example: 'name,icon',
-  })
-  @IsOptional()
-  select?: string;
+  // @ApiPropertyOptional({
+  //   description: 'Comma-separated list of fields to select',
+  //   example: 'name,icon',
+  // })
+  // @IsOptional()
+  // select?: string;
 
   @ApiPropertyOptional({
     description: 'The number of items to return per page',
@@ -44,12 +44,12 @@ export class FindQuery {
   @IsOptional()
   limit?: string;
 
-  @ApiPropertyOptional({
-    description: 'Keyword for searching results',
-    example: 'example',
-  })
-  @IsOptional()
-  keyword?: string;
+  // @ApiPropertyOptional({
+  //   description: 'Keyword for searching results',
+  //   example: 'example',
+  // })
+  // @IsOptional()
+  // keyword?: string;
 }
 export enum Event_Type {
   community = 'مجتمعي',
