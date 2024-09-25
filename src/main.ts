@@ -51,9 +51,13 @@ async function bootstrap() {
     .setTitle('Maskeni')
     .addBearerAuth({
       type: 'http',
-      scheme: 'Bearer',
+      scheme: 'bearer',
       bearerFormat: 'JWT',
-    })
+      name: 'authorization',
+      description: 'Enter JWT Token',
+      in: 'header',
+    },
+    'JWT',)
     .build();
   if (process.env.NODE_ENV !== 'production') {
     const document = SwaggerModule.createDocument(app, config);
