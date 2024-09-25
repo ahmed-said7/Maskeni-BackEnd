@@ -1,5 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class DashboardSearchDto {
   @IsOptional()
@@ -25,7 +26,10 @@ export class DashboardArchivedDto {
   limit?: number;
 
   @IsString()
-  @ApiPropertyOptional({ description: 'Indicates if the item is archived' })
+  @ApiPropertyOptional({
+    description: 'Indicates if the item ',
+  })
+  @Transform(({ value }) => value === 'true' || value === true)
   isArchived: boolean;
 }
 
@@ -40,8 +44,11 @@ export class DashboardDeletedDto {
   @ApiPropertyOptional({ description: 'Number of items per page' })
   limit?: number;
 
-  @IsBoolean()
-  @ApiPropertyOptional({ description: 'Indicates if the item is deleted' })
+  @IsString()
+  @ApiPropertyOptional({
+    description: 'Indicates if the item ',
+  })
+  @Transform(({ value }) => value === 'true' || value === true)
   isDeleted: boolean;
 }
 
@@ -56,31 +63,37 @@ export class DashboardAcceptedDto {
   @ApiPropertyOptional({ description: 'Number of items per page' })
   limit?: number;
 
-  @IsBoolean()
-  @ApiPropertyOptional({ description: 'Indicates if the item is accepted' })
+  @IsString()
+  @ApiPropertyOptional({
+    description: 'Indicates if the item ',
+  })
+  @Transform(({ value }) => value === 'true' || value === true)
   isAccepted: boolean;
 }
 
 export class DashboardUpdateArchivedDto {
-  @IsBoolean()
+  @IsString()
   @ApiPropertyOptional({
-    description: 'Indicates if the item should be archived',
+    description: 'Indicates if the item ',
   })
+  @Transform(({ value }) => value === 'true' || value === true)
   isArchived: boolean;
 }
 
 export class DashboardUpdateDeletedDto {
-  @IsBoolean()
+  @IsString()
   @ApiPropertyOptional({
-    description: 'Indicates if the item should be deleted',
+    description: 'Indicates if the item ',
   })
+  @Transform(({ value }) => value === 'true' || value === true)
   isDeleted: boolean;
 }
 
 export class DashboardUpdateAcceptedDto {
-  @IsBoolean()
+  @IsString()
   @ApiPropertyOptional({
-    description: 'Indicates if the item should be accepted',
+    description: 'Indicates if the item ',
   })
+  @Transform(({ value }) => value === 'true' || value === true)
   isAccepted: boolean;
 }
