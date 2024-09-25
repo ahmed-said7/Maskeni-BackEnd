@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AnalysisService } from './analysis.service';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
@@ -33,22 +33,6 @@ export class AnalysisController {
   })
   async analysisUsers() {
     return this.analysisService.analysisUsers();
-  }
-
-  @Get('users-by-quarter')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiOperation({ summary: 'Get users by quarter' })
-  @ApiResponse({
-    status: 200,
-    description: 'User data retrieved successfully based on quarter.',
-  })
-  @ApiResponse({ status: 400, description: 'Invalid request parameters.' })
-  async getUsersByQuarter(
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
-  ) {
-    return this.analysisService.getUsersByQuarter(page, limit);
   }
 
   @Get('age-statistics')

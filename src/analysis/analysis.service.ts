@@ -56,54 +56,6 @@ export class AnalysisService {
     });
     return { totalFemales, totalMales };
   }
-  async getUsersByQuarter(page: number = 1, limit: number = 10) {
-    const skip = (page - 1) * limit; // Calculate the number of documents to skip
-    const result = await this.userModel.aggregate([
-      // Group by quarter and count the number of users in each quarter
-      {
-        $group: {
-          _id: '$quarter', // Group by quarter ObjectId
-          userCount: { $sum: 1 }, // Count the number of users
-        },
-      },
-      // Lookup to populate the quarter details
-      {
-        $lookup: {
-          from: 'quarters', // Name of the Quarter collection
-          localField: '_id', // _id here is the quarter ObjectId
-          foreignField: '_id', // Quarter collection's ObjectId
-          as: 'quarter', // Name of the field where the populated quarter will be stored
-        },
-      },
-      // Unwind the quarter array (since $lookup returns an array)
-      {
-        $unwind: '$quarter',
-      },
-      // Sort results if needed (e.g., by user count in descending order)
-      {
-        $sort: { userCount: -1 }, // Optional: Sort by userCount in descending order
-      },
-      // Pagination: Skip and Limit
-      {
-        $skip: skip, // Skip the first N results (for pagination)
-      },
-      {
-        $limit: limit, // Limit the number of results returned
-      },
-      // Optional: Project to format the output if needed
-      {
-        $project: {
-          _id: 0, // Hide the default _id field
-          quarter: 1, // Show populated quarter
-          userCount: 1, // Show user count
-        },
-      },
-    ]);
-    return {
-      items: result, // The paginated data
-      currentPage: page,
-    };
-  }
   async getAgeStatistics() {
     const currentDate = new Date();
 

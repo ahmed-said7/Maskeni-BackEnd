@@ -23,8 +23,16 @@ class InnerArrayDto {
 
 export class CreateQuarterDto {
   @IsString()
-  @ApiProperty({ description: 'Name of the quarter' })
-  name: string;
+  @ApiProperty({ description: 'arabic Name of the quarter.' })
+  nameAr: string;
+
+  @IsString()
+  @ApiProperty({ description: 'english Name of the quarter.' })
+  nameEn: string;
+
+  @IsString()
+  @ApiProperty({ description: 'image of the quarter.' })
+  image: string;
 
   location: object;
 

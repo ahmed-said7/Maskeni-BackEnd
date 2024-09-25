@@ -35,8 +35,8 @@ export class QuarterController {
   @Get('all')
   @ApiOperation({ summary: 'Retrieve all quarters' })
   @ApiResponse({ status: 200, description: 'List of all quarters.' })
-  async findAll() {
-    return this.quarterService.findAll();
+  async findAll(@Query('city') city: string) {
+    return this.quarterService.findAll({ city });
   }
 
   @Get()
@@ -76,8 +76,8 @@ export class QuarterController {
   async getLocation(@Param('location') location: string) {
     const [lat, lng] = location.split(':');
     return this.quarterService.findQuarterContainingPoint([
-      parseInt(lng),
-      parseInt(lat),
+      parseFloat(lng),
+      parseFloat(lat),
     ]);
   }
 }

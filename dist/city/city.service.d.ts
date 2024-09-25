@@ -15,7 +15,9 @@ export declare class CityService {
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>>;
-    findAll(): Promise<(import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, City> & City & {
+    findAll(body: {
+        country: string;
+    }): Promise<(import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, City> & City & {
         _id: import("mongoose").Types.ObjectId;
     }> & import("mongoose").Document<unknown, {}, City> & City & {
         _id: import("mongoose").Types.ObjectId;

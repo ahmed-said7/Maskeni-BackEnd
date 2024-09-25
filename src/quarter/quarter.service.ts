@@ -29,8 +29,8 @@ export class QuarterService {
     return createdQuarter;
   }
 
-  async findAll(): Promise<Quarter[]> {
-    return this.quarterModel.find({});
+  async findAll(body: { city?: string }): Promise<Quarter[]> {
+    return this.quarterModel.find(body);
   }
 
   async findOne(id: string): Promise<Quarter> {
@@ -49,6 +49,7 @@ export class QuarterService {
   async findQuarterContainingPoint(body: [number, number]) {
     const country = await this.countryService.findCountryContainingPoint(body);
     const city = await this.cityService.findCityContainingPoint(body);
+    console.log(body);
     const quarter = await this.quarterModel.findOne({
       location: {
         $geoIntersects: {
@@ -71,9 +72,7 @@ export class QuarterService {
   }
 
   async remove(id: string) {
-    const result = await this.quarterModel.findByIdAndUpdate(id, {
-      isDeleted: true,
-    });
+    const result = await this.quarterModel.findByIdAndDelete(id);
     if (!result) {
       throw new NotFoundException(`Quarter with ID ${id} not found`);
     }

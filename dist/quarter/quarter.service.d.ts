@@ -13,7 +13,9 @@ export declare class QuarterService {
     private cityService;
     constructor(quarterModel: Model<QuarterDocument>, apiService: ApiService<QuarterDocument, FindQuery>, countryService: CountryService, cityService: CityService);
     create(body: CreateQuarterDto): Promise<Quarter>;
-    findAll(): Promise<Quarter[]>;
+    findAll(body: {
+        city?: string;
+    }): Promise<Quarter[]>;
     findOne(id: string): Promise<Quarter>;
     getLocations(locs: [number, number][]): {
         type: string;

@@ -11,7 +11,7 @@ export declare class CityController {
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>>;
-    findAll(): Promise<(import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./city.schema").City> & import("./city.schema").City & {
+    findAll(country: string): Promise<(import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./city.schema").City> & import("./city.schema").City & {
         _id: import("mongoose").Types.ObjectId;
     }> & import("mongoose").Document<unknown, {}, import("./city.schema").City> & import("./city.schema").City & {
         _id: import("mongoose").Types.ObjectId;

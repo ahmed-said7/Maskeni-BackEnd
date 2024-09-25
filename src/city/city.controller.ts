@@ -35,8 +35,8 @@ export class CityController {
   @Get('all')
   @ApiOperation({ summary: 'Get all cities' }) // Operation summary for Swagger
   @ApiResponse({ status: 200, description: 'List of cities.' }) // Successful response
-  async findAll() {
-    return this.cityService.findAll();
+  async findAll(@Query('country') country: string) {
+    return this.cityService.findAll({ country });
   }
 
   @Get()

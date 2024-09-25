@@ -23,8 +23,8 @@ export class CityService {
     return city;
   }
 
-  async findAll() {
-    return this.cityModel.find({});
+  async findAll(body: { country: string }) {
+    return this.cityModel.find(body).populate('country');
   }
 
   async findOne(id: string) {
@@ -68,9 +68,7 @@ export class CityService {
   }
 
   async remove(id: string) {
-    const city = await this.cityModel.findByIdAndUpdate(id, {
-      isDeleted: true,
-    });
+    const city = await this.cityModel.findByIdAndDelete(id);
     if (!city) {
       throw new NotFoundException(`City with ID ${id} not found`);
     }

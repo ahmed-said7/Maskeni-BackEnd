@@ -37,8 +37,8 @@ let UserProfileController = class UserProfileController {
     updateAddress(req, location) {
         const [lat, lng] = location.split(':');
         return this.userService.updateQuarter(req.userId, [
-            parseInt(lng),
-            parseInt(lat),
+            parseFloat(lng),
+            parseFloat(lat),
         ]);
     }
 };

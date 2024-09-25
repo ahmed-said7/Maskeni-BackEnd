@@ -30,9 +30,19 @@ class CreateQuarterDto {
 exports.CreateQuarterDto = CreateQuarterDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)({ description: 'Name of the quarter' }),
+    (0, swagger_1.ApiProperty)({ description: 'arabic Name of the quarter.' }),
     __metadata("design:type", String)
-], CreateQuarterDto.prototype, "name", void 0);
+], CreateQuarterDto.prototype, "nameAr", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: 'english Name of the quarter.' }),
+    __metadata("design:type", String)
+], CreateQuarterDto.prototype, "nameEn", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: 'image of the quarter.' }),
+    __metadata("design:type", String)
+], CreateQuarterDto.prototype, "image", void 0);
 __decorate([
     (0, class_validator_1.IsMongoId)(),
     (0, swagger_1.ApiProperty)({ description: 'MongoDB ID of the associated city' }),

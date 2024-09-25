@@ -1,6 +1,8 @@
 import { HydratedDocument } from 'mongoose';
 export declare class Country {
-    name: string;
+    nameAr: string;
+    nameEn: string;
+    image: string;
     location: {
         type: string;
         coordinates: [number, number][][];

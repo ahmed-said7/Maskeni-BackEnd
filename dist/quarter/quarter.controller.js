@@ -29,8 +29,8 @@ let QuarterController = class QuarterController {
     async create(body) {
         return this.quarterService.create(body);
     }
-    async findAll() {
-        return this.quarterService.findAll();
+    async findAll(city) {
+        return this.quarterService.findAll({ city });
     }
     async find(query) {
         return this.quarterService.getAllQuarters(query);
@@ -44,8 +44,8 @@ let QuarterController = class QuarterController {
     async getLocation(location) {
         const [lat, lng] = location.split(':');
         return this.quarterService.findQuarterContainingPoint([
-            parseInt(lng),
-            parseInt(lat),
+            parseFloat(lng),
+            parseFloat(lat),
         ]);
     }
 };
@@ -66,8 +66,9 @@ __decorate([
     (0, common_1.Get)('all'),
     (0, swagger_1.ApiOperation)({ summary: 'Retrieve all quarters' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'List of all quarters.' }),
+    __param(0, (0, common_1.Query)('city')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], QuarterController.prototype, "findAll", null);
 __decorate([

@@ -18,7 +18,15 @@ exports.Quarter = Quarter;
 __decorate([
     (0, mongoose_1.Prop)({ type: String }),
     __metadata("design:type", String)
-], Quarter.prototype, "name", void 0);
+], Quarter.prototype, "nameAr", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String }),
+    __metadata("design:type", String)
+], Quarter.prototype, "nameEn", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String }),
+    __metadata("design:type", String)
+], Quarter.prototype, "image", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
         type: {
@@ -30,10 +38,6 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], Quarter.prototype, "location", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ type: Boolean }),
-    __metadata("design:type", Boolean)
-], Quarter.prototype, "isDeleted", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: 'Country' }),
     __metadata("design:type", mongoose_2.Types.ObjectId)

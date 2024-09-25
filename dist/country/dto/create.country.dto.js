@@ -30,9 +30,19 @@ class CreateCountryDto {
 exports.CreateCountryDto = CreateCountryDto;
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)({ description: 'Name of the country.' }),
+    (0, swagger_1.ApiProperty)({ description: 'arabic Name of the country.' }),
     __metadata("design:type", String)
-], CreateCountryDto.prototype, "name", void 0);
+], CreateCountryDto.prototype, "nameAr", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: 'english Name of the country.' }),
+    __metadata("design:type", String)
+], CreateCountryDto.prototype, "nameEn", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: 'image of the country.' }),
+    __metadata("design:type", String)
+], CreateCountryDto.prototype, "image", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Location object for the country.' }),
     __metadata("design:type", Object)

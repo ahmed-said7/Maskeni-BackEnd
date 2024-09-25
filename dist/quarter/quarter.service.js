@@ -33,8 +33,8 @@ let QuarterService = class QuarterService {
         const createdQuarter = await this.quarterModel.create(body);
         return createdQuarter;
     }
-    async findAll() {
-        return this.quarterModel.find({});
+    async findAll(body) {
+        return this.quarterModel.find(body);
     }
     async findOne(id) {
         const quarter = await this.quarterModel.findById(id);
@@ -52,6 +52,7 @@ let QuarterService = class QuarterService {
     async findQuarterContainingPoint(body) {
         const country = await this.countryService.findCountryContainingPoint(body);
         const city = await this.cityService.findCityContainingPoint(body);
+        console.log(body);
         const quarter = await this.quarterModel.findOne({
             location: {
                 $geoIntersects: {
@@ -70,9 +71,7 @@ let QuarterService = class QuarterService {
         return { quarters, pagination: paginationObj };
     }
     async remove(id) {
-        const result = await this.quarterModel.findByIdAndUpdate(id, {
-            isDeleted: true,
-        });
+        const result = await this.quarterModel.findByIdAndDelete(id);
         if (!result) {
             throw new common_1.NotFoundException(`Quarter with ID ${id} not found`);
         }

@@ -52,8 +52,8 @@ export class UserProfileController {
   updateAddress(@Req() req: any, @Param('location') location: string) {
     const [lat, lng] = location.split(':');
     return this.userService.updateQuarter(req.userId, [
-      parseInt(lng),
-      parseInt(lat),
+      parseFloat(lng),
+      parseFloat(lat),
     ]);
   }
 }

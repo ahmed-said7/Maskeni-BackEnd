@@ -17,7 +17,15 @@ exports.Country = Country;
 __decorate([
     (0, mongoose_1.Prop)({ type: String }),
     __metadata("design:type", String)
-], Country.prototype, "name", void 0);
+], Country.prototype, "nameAr", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String }),
+    __metadata("design:type", String)
+], Country.prototype, "nameEn", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: String }),
+    __metadata("design:type", String)
+], Country.prototype, "image", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
         type: {

@@ -5,7 +5,7 @@ export declare class QuarterController {
     private readonly quarterService;
     constructor(quarterService: QuarterService);
     create(body: CreateQuarterDto): Promise<import("./quarter.schema").Quarter>;
-    findAll(): Promise<import("./quarter.schema").Quarter[]>;
+    findAll(city: string): Promise<import("./quarter.schema").Quarter[]>;
     find(query: QuarterQueryDto): Promise<{
         quarters: (import("mongoose").Document<unknown, {}, import("./quarter.schema").Quarter> & import("./quarter.schema").Quarter & {
             _id: import("mongoose").Types.ObjectId;

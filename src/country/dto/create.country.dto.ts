@@ -21,8 +21,16 @@ class InnerArrayDto {
 
 export class CreateCountryDto {
   @IsString()
-  @ApiProperty({ description: 'Name of the country.' })
-  name: string;
+  @ApiProperty({ description: 'arabic Name of the country.' })
+  nameAr: string;
+
+  @IsString()
+  @ApiProperty({ description: 'english Name of the country.' })
+  nameEn: string;
+
+  @IsString()
+  @ApiProperty({ description: 'image of the country.' })
+  image: string;
 
   @ApiProperty({ description: 'Location object for the country.' })
   location: object; // Consider specifying a more detailed type if possible

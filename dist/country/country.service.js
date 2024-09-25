@@ -64,9 +64,7 @@ let CountryService = class CountryService {
         return { countries, pagination: paginationObj };
     }
     async remove(id) {
-        const result = await this.countryModel.findByIdAndUpdate(id, {
-            isDeleted: true,
-        });
+        const result = await this.countryModel.findByIdAndDelete(id);
         if (!result) {
             throw new common_1.NotFoundException(`Quarter with ID ${id} not found`);
         }

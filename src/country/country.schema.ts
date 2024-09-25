@@ -4,7 +4,11 @@ import { HydratedDocument } from 'mongoose';
 @Schema()
 export class Country {
   @Prop({ type: String })
-  name: string;
+  nameAr: string;
+  @Prop({ type: String })
+  nameEn: string;
+  @Prop({ type: String })
+  image: string;
 
   @Prop({
     type: {

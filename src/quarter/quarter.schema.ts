@@ -4,7 +4,11 @@ import { HydratedDocument, Types } from 'mongoose';
 @Schema()
 export class Quarter {
   @Prop({ type: String })
-  name: string;
+  nameAr: string;
+  @Prop({ type: String })
+  nameEn: string;
+  @Prop({ type: String })
+  image: string;
 
   @Prop({
     type: {
@@ -18,8 +22,6 @@ export class Quarter {
     type: string;
     coordinates: [number, number][][];
   };
-  @Prop({ type: Boolean })
-  isDeleted: boolean;
 
   @Prop({ type: Types.ObjectId, ref: 'Country' })
   country: Types.ObjectId;

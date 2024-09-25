@@ -28,8 +28,8 @@ let CityService = class CityService {
         const city = await this.cityModel.create(body);
         return city;
     }
-    async findAll() {
-        return this.cityModel.find({});
+    async findAll(body) {
+        return this.cityModel.find(body).populate('country');
     }
     async findOne(id) {
         const quarter = await this.cityModel.findById(id);
@@ -63,9 +63,7 @@ let CityService = class CityService {
         return { quarters, pagination: paginationObj };
     }
     async remove(id) {
-        const city = await this.cityModel.findByIdAndUpdate(id, {
-            isDeleted: true,
-        });
+        const city = await this.cityModel.findByIdAndDelete(id);
         if (!city) {
             throw new common_1.NotFoundException(`City with ID ${id} not found`);
         }

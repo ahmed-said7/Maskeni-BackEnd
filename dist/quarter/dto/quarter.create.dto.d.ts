@@ -2,7 +2,9 @@ declare class InnerArrayDto {
     coordinates: [number, number];
 }
 export declare class CreateQuarterDto {
-    name: string;
+    nameAr: string;
+    nameEn: string;
+    image: string;
     location: object;
     city: string;
     country: string;

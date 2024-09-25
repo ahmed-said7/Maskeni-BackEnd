@@ -1,11 +1,12 @@
 import { HydratedDocument, Types } from 'mongoose';
 export declare class Quarter {
-    name: string;
+    nameAr: string;
+    nameEn: string;
+    image: string;
     location: {
         type: string;
         coordinates: [number, number][][];
     };
-    isDeleted: boolean;
     country: Types.ObjectId;
     city: Types.ObjectId;
 }

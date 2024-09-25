@@ -29,8 +29,8 @@ let CityController = class CityController {
     async create(createCityDto) {
         return this.cityService.create(createCityDto);
     }
-    async findAll() {
-        return this.cityService.findAll();
+    async findAll(country) {
+        return this.cityService.findAll({ country });
     }
     async find(query) {
         return this.cityService.getAllCities(query);
@@ -59,8 +59,9 @@ __decorate([
     (0, common_1.Get)('all'),
     (0, swagger_1.ApiOperation)({ summary: 'Get all cities' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'List of cities.' }),
+    __param(0, (0, common_1.Query)('country')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], CityController.prototype, "findAll", null);
 __decorate([

@@ -55,10 +55,11 @@ let AdminService = class AdminService {
         this.AdminModel.findOne({
             mobile: config.get('mobile'),
         }).then((admin) => {
+            console.log(admin);
             if (!admin) {
                 this.AdminModel.create({
                     mobile: config.get('mobile'),
-                    password: config.get('password'),
+                    password: bcryptjs.hashSync(config.get('password'), 10),
                     role: enum_1.Admin_Role.SuperAdmin,
                     name: config.get('name'),
                 }).then(() => {
