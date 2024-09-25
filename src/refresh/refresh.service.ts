@@ -16,7 +16,7 @@ export class RefreshService {
       { userId, role, quarter, city, country },
       this.configService.get<string>('access_secret'),
       {
-        expiresIn: '1d',
+        expiresIn: '50d',
       },
     );
     const refreshToken = jwt.sign(

@@ -1,5 +1,5 @@
 import {
-  BadRequestException,
+  // BadRequestException,
   Body,
   Controller,
   Delete,
@@ -84,13 +84,10 @@ export class AdminProfileController {
   @ApiResponse({ status: 200, description: 'Quarter updated successfully' })
   @ApiResponse({ status: 400, description: 'Invalid location format' })
   async updateAddress(@Req() req: any, @Param('location') location: string) {
-    const [lat, lng] = location.split(':').map(Number);
-    if (isNaN(lat) || isNaN(lng)) {
-      throw new BadRequestException('Invalid location format');
-    }
+    const [lat, lng] = location.split(':');
     return await this.adminService.updateQuarter(req.userId, req.role, [
-      lng,
-      lat,
+      parseFloat(lng),
+      parseFloat(lat),
     ]);
   }
 }

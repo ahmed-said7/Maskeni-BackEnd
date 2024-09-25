@@ -39,13 +39,10 @@ let AdminProfileController = class AdminProfileController {
         return await this.adminService.updateUser(body, req.userId);
     }
     async updateAddress(req, location) {
-        const [lat, lng] = location.split(':').map(Number);
-        if (isNaN(lat) || isNaN(lng)) {
-            throw new common_1.BadRequestException('Invalid location format');
-        }
+        const [lat, lng] = location.split(':');
         return await this.adminService.updateQuarter(req.userId, req.role, [
-            lng,
-            lat,
+            parseFloat(lng),
+            parseFloat(lat),
         ]);
     }
 };

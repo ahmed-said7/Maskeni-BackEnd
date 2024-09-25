@@ -42,7 +42,7 @@ let RefreshService = class RefreshService {
     }
     createtoken(userId, role, quarter, city, country) {
         const accessToken = jwt.sign({ userId, role, quarter, city, country }, this.configService.get('access_secret'), {
-            expiresIn: '1d',
+            expiresIn: '50d',
         });
         const refreshToken = jwt.sign({ userId, role, quarter }, this.configService.get('refresh_secret'), {
             expiresIn: '12d',
