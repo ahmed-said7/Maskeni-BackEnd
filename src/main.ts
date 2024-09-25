@@ -51,7 +51,7 @@ async function bootstrap() {
     .setTitle('Maskeni')
     .addBearerAuth({
       type: 'http',
-      scheme: 'bearer',
+      scheme: 'Bearer',
       bearerFormat: 'JWT',
     })
     .build();
