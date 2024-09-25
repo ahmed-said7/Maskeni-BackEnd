@@ -32,7 +32,7 @@ export interface SearchQuery extends Query<any, any[] | any> {
         useFactory: async () => {
           const schema = ShareSchema;
           schema.pre<SearchQuery>(/^find/, function () {
-            if (!this.skipFilter) {
+            if (!this.getOptions().skipFilter) {
               this.find({
                 isDeleted: false,
                 // isAccepted: true,

@@ -40,7 +40,7 @@ exports.VoluntaryModule = VoluntaryModule = __decorate([
                     useFactory: async () => {
                         const schema = voluntary_schema_1.VoluntarySchema;
                         schema.pre(/^find/, function () {
-                            if (!this.skipFilter) {
+                            if (!this.getOptions().skipFilter) {
                                 this.find({
                                     isDeleted: false,
                                     isArchived: false,

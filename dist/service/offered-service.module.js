@@ -40,7 +40,7 @@ exports.ServiceModule = ServiceModule = __decorate([
                     useFactory: async () => {
                         const schema = offered_service_schema_1.OfferedSchema;
                         schema.pre(/^find/, function () {
-                            if (!this.skipFilter) {
+                            if (!this.getOptions().skipFilter) {
                                 this.find({
                                     isDeleted: false,
                                     isArchived: false,

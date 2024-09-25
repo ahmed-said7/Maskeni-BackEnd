@@ -114,7 +114,7 @@ export class GroupServices {
   }
   async getMyArchivedGroups(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
-      this.groupModel.find(),
+      this.groupModel.find().setOptions({ skipFilter: true }),
       obj,
       { isArchived: true, admin: user },
     );

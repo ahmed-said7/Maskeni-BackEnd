@@ -29,7 +29,7 @@ import { SearchQuery } from 'src/share/share.module';
         useFactory: async () => {
           const schema = OfferedSchema;
           schema.pre<SearchQuery>(/^find/, function () {
-            if (!this.skipFilter) {
+            if (!this.getOptions().skipFilter) {
               this.find({
                 isDeleted: false,
                 // isAccepted: true,

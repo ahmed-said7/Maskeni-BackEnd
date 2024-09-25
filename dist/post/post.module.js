@@ -49,7 +49,7 @@ exports.PostModule = PostModule = __decorate([
                     useFactory: async () => {
                         const schema = post_schema_1.PostSchema;
                         schema.pre(/^find/, function () {
-                            if (!this.skipFilter) {
+                            if (!this.getOptions().skipFilter) {
                                 this.find({
                                     isDeleted: false,
                                     isArchived: false,

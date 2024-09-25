@@ -111,7 +111,7 @@ let GroupServices = class GroupServices {
         return { users: group.users, admin: group.admin };
     }
     async getMyArchivedGroups(obj, user) {
-        const { query, paginationObj } = await this.apiService.getAllDocs(this.groupModel.find(), obj, { isArchived: true, admin: user });
+        const { query, paginationObj } = await this.apiService.getAllDocs(this.groupModel.find().setOptions({ skipFilter: true }), obj, { isArchived: true, admin: user });
         const groups = await query.setOptions({ skipFilter: true });
         return { groups, pagination: paginationObj };
     }
