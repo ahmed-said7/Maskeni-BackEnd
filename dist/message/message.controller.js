@@ -16,7 +16,6 @@ exports.MessageController = void 0;
 const common_1 = require("@nestjs/common");
 const create_message_dto_1 = require("./dto/create.message.dto");
 const message_service_1 = require("./message.service");
-const update_message_dto_1 = require("./dto/update.message.dto");
 const validate_mongo_pipe_1 = require("../common/pipe/validate.mongo.pipe");
 const query_message_dto_1 = require("./dto/query.message.dto");
 const authentication_guard_1 = require("../common/guards/authentication.guard");
@@ -36,12 +35,6 @@ let MessageController = class MessageController {
     }
     async getChatMessages(chatId, req) {
         return this.msgService.getChatMessages(chatId, req.userId);
-    }
-    async updateMessage(body, messageId, req) {
-        return this.msgService.updateMessage(messageId, body, req.userId);
-    }
-    async deleteMessages(messageId, req) {
-        return this.msgService.deleteMessage(messageId, req.userId);
     }
 };
 exports.MessageController = MessageController;
@@ -88,33 +81,6 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], MessageController.prototype, "getChatMessages", null);
-__decorate([
-    (0, common_1.Patch)(':messageId'),
-    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
-    (0, roles_1.Roles)(enum_1.All_Role.User),
-    (0, swagger_1.ApiOperation)({ summary: 'Update a message' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Message updated successfully' }),
-    (0, swagger_1.ApiResponse)({ status: 404, description: 'Message not found' }),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('messageId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
-    __param(2, (0, common_1.Req)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [update_message_dto_1.UpdateMessageDto, String, Object]),
-    __metadata("design:returntype", Promise)
-], MessageController.prototype, "updateMessage", null);
-__decorate([
-    (0, common_1.Delete)(':messageId'),
-    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
-    (0, roles_1.Roles)(enum_1.All_Role.User),
-    (0, swagger_1.ApiOperation)({ summary: 'Delete a message' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Message deleted successfully' }),
-    (0, swagger_1.ApiResponse)({ status: 404, description: 'Message not found' }),
-    __param(0, (0, common_1.Param)('messageId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
-    __param(1, (0, common_1.Req)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
-], MessageController.prototype, "deleteMessages", null);
 exports.MessageController = MessageController = __decorate([
     (0, swagger_1.ApiTags)('messages'),
     (0, common_1.Controller)('message'),

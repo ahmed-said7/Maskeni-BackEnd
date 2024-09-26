@@ -41,6 +41,7 @@ export class MessagingGateway
     private CustomerMessageModel: Model<CustomerServiceMessageDocument>,
   ) {}
   async handleConnection(client: IAuthSocket) {
+    console.log(client.type);
     if (client.type == All_Role.User) {
       this.gatewayMap.setUserSocket(client.userId, client);
       const chat = await this.CustomerChatModel.findById(client.userId);
@@ -119,6 +120,7 @@ export class MessagingGateway
     const room = `chat:room:${chat}`;
     const senderSocket = this.gatewayMap.getUserSocket(sender);
     const recipientSocket = this.gatewayMap.getUserSocket(recipient);
+    console.log(senderSocket.userId, recipientSocket.userId);
     if (this.server.sockets.adapter.rooms.has(room)) {
       this.server.to(room).emit('on:chat:message', { message, chat });
     }

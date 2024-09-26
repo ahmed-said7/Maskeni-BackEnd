@@ -1,10 +1,10 @@
 import {
   Body,
   Controller,
-  Delete,
+  // Delete,
   Get,
   Param,
-  Patch,
+  // Patch,
   Post,
   Query,
   Req,
@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create.message.dto';
 import { MessageService } from './message.service';
-import { UpdateMessageDto } from './dto/update.message.dto';
+// import { UpdateMessageDto } from './dto/update.message.dto';
 import { ValidateObjectIdPipe } from 'src/common/pipe/validate.mongo.pipe';
 import { QueryMessageDto } from './dto/query.message.dto';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
@@ -66,30 +66,30 @@ export class MessageController {
     return this.msgService.getChatMessages(chatId, req.userId);
   }
 
-  @Patch(':messageId')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Update a message' })
-  @ApiResponse({ status: 200, description: 'Message updated successfully' })
-  @ApiResponse({ status: 404, description: 'Message not found' })
-  async updateMessage(
-    @Body() body: UpdateMessageDto,
-    @Param('messageId', ValidateObjectIdPipe) messageId: string,
-    @Req() req: any,
-  ) {
-    return this.msgService.updateMessage(messageId, body, req.userId);
-  }
+  // @Patch(':messageId')
+  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  // @Roles(All_Role.User)
+  // @ApiOperation({ summary: 'Update a message' })
+  // @ApiResponse({ status: 200, description: 'Message updated successfully' })
+  // @ApiResponse({ status: 404, description: 'Message not found' })
+  // async updateMessage(
+  //   @Body() body: UpdateMessageDto,
+  //   @Param('messageId', ValidateObjectIdPipe) messageId: string,
+  //   @Req() req: any,
+  // ) {
+  //   return this.msgService.updateMessage(messageId, body, req.userId);
+  // }
 
-  @Delete(':messageId')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Delete a message' })
-  @ApiResponse({ status: 200, description: 'Message deleted successfully' })
-  @ApiResponse({ status: 404, description: 'Message not found' })
-  async deleteMessages(
-    @Param('messageId', ValidateObjectIdPipe) messageId: string,
-    @Req() req: any,
-  ) {
-    return this.msgService.deleteMessage(messageId, req.userId);
-  }
+  // @Delete(':messageId')
+  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  // @Roles(All_Role.User)
+  // @ApiOperation({ summary: 'Delete a message' })
+  // @ApiResponse({ status: 200, description: 'Message deleted successfully' })
+  // @ApiResponse({ status: 404, description: 'Message not found' })
+  // async deleteMessages(
+  //   @Param('messageId', ValidateObjectIdPipe) messageId: string,
+  //   @Req() req: any,
+  // ) {
+  //   return this.msgService.deleteMessage(messageId, req.userId);
+  // }
 }

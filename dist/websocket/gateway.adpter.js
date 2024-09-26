@@ -20,8 +20,9 @@ class WebsocketAdapter extends platform_socket_io_1.IoAdapter {
             catch (e) {
                 return next(new Error('Invalid token'));
             }
+            console.log(decoded);
             socket.userId = decoded.userId;
-            socket.type = decoded.type;
+            socket.type = decoded.role;
             return next();
         });
         return server;

@@ -31,6 +31,7 @@ let MessagingGateway = class MessagingGateway {
         this.CustomerMessageModel = CustomerMessageModel;
     }
     async handleConnection(client) {
+        console.log(client.type);
         if (client.type == enum_1.All_Role.User) {
             this.gatewayMap.setUserSocket(client.userId, client);
             const chat = await this.CustomerChatModel.findById(client.userId);
@@ -91,6 +92,7 @@ let MessagingGateway = class MessagingGateway {
         const room = `chat:room:${chat}`;
         const senderSocket = this.gatewayMap.getUserSocket(sender);
         const recipientSocket = this.gatewayMap.getUserSocket(recipient);
+        console.log(senderSocket.userId, recipientSocket.userId);
         if (this.server.sockets.adapter.rooms.has(room)) {
             this.server.to(room).emit('on:chat:message', { message, chat });
         }

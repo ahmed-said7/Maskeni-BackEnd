@@ -50,6 +50,5 @@ export declare class MessageService {
         } & Required<{
             _id: import("mongoose").Types.ObjectId;
         }>)[];
-        page: number;
     }>;
 }
