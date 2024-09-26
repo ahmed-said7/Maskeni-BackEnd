@@ -23,10 +23,11 @@ export class DashboardDeletedService {
     private apiService: ApiService<any, any>,
   ) {}
   async getAllDeletedQuestions(obj: DashboardDeletedDto) {
-    obj.isDeleted = true;
+    // obj.isDeleted = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.questionModel.find(),
       obj,
+      { isDeleted: true },
     );
     const questions = await query
       .populate({
@@ -38,10 +39,11 @@ export class DashboardDeletedService {
     return { questions, pagination: paginationObj };
   }
   async getAllDeletedEvents(obj: DashboardDeletedDto) {
-    obj.isDeleted = true;
+    // obj.isDeleted = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.eventModel.find(),
       obj,
+      { isDeleted: true },
     );
     const events = await query
       .populate({
@@ -53,10 +55,11 @@ export class DashboardDeletedService {
     return { events, pagination: paginationObj };
   }
   async getAllDeletedShares(obj: DashboardDeletedDto) {
-    obj.isDeleted = true;
+    // obj.isDeleted = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.shareModel.find(),
       obj,
+      { isDeleted: true },
     );
     const shares = await query
       .populate({
@@ -68,10 +71,11 @@ export class DashboardDeletedService {
     return { shares, pagination: paginationObj };
   }
   async getAllDeletedVoluntary(obj: DashboardDeletedDto) {
-    obj.isDeleted = true;
+    // obj.isDeleted = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.voluntaryModel.find(),
       obj,
+      { isDeleted: true },
     );
     const voluntary = await query
       .populate({
@@ -83,10 +87,11 @@ export class DashboardDeletedService {
     return { voluntary, pagination: paginationObj };
   }
   async getAllDeletedService(obj: DashboardDeletedDto) {
-    obj.isDeleted = true;
+    // obj.isDeleted = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.serviceModel.find(),
       obj,
+      { isDeleted: true },
     );
     const events = await query
       .populate({
@@ -98,10 +103,11 @@ export class DashboardDeletedService {
     return { events, pagination: paginationObj };
   }
   async getAllDeletedPosts(obj: DashboardDeletedDto) {
-    obj.isDeleted = true;
+    // obj.isDeleted = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.postModel.find(),
       obj,
+      { isDeleted: true },
     );
     const posts = await query
       .populate({

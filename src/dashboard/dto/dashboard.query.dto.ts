@@ -32,12 +32,12 @@ export class DashboardArchivedDto {
   @ApiPropertyOptional({ description: 'Number of items per page' })
   limit?: number;
 
-  @IsBoolean()
-  @ApiPropertyOptional({
-    description: 'Indicates if the item ',
-  })
-  @Transform(({ value }) => value === 'true' || value === true)
-  isArchived: string;
+  // @IsBoolean()
+  // @ApiPropertyOptional({
+  //   description: 'Indicates if the item ',
+  // })
+  // @Transform(({ value }) => value === 'true' || value === true)
+  // isArchived: string;
 }
 
 export class DashboardDeletedDto {
@@ -51,12 +51,12 @@ export class DashboardDeletedDto {
   @ApiPropertyOptional({ description: 'Number of items per page' })
   limit?: number;
 
-  @IsBoolean()
-  @ApiPropertyOptional({
-    description: 'Indicates if the item ',
-  })
-  @Transform(({ value }) => value === 'true' || value === true)
-  isDeleted: string;
+  // @IsBoolean()
+  // @ApiPropertyOptional({
+  //   description: 'Indicates if the item ',
+  // })
+  // @Transform(({ value }) => value === 'true' || value === true)
+  // isDeleted: string;
 }
 
 export class DashboardAcceptedDto {

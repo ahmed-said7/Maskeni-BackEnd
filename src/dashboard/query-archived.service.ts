@@ -23,10 +23,11 @@ export class DashboardArchivedService {
     private apiService: ApiService<any, any>,
   ) {}
   async getAllArchivedQuestions(obj: DashboardArchivedDto) {
-    obj.isArchived = true;
+    // obj.isArchived = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.questionModel.find(),
       obj,
+      { isArchived: true },
     );
     const questions = await query
       .populate({
@@ -38,10 +39,11 @@ export class DashboardArchivedService {
     return { questions, pagination: paginationObj };
   }
   async getAllArchivedEvents(obj: DashboardArchivedDto) {
-    obj.isArchived = true;
+    // obj.isArchived = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.eventModel.find(),
       obj,
+      { isArchived: true },
     );
     const events = await query
       .populate({
@@ -53,10 +55,11 @@ export class DashboardArchivedService {
     return { events, pagination: paginationObj };
   }
   async getAllArchivedShares(obj: DashboardArchivedDto) {
-    obj.isArchived = true;
+    // obj.isArchived = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.shareModel.find(),
       obj,
+      { isArchived: true },
     );
     const shares = await query
       .populate({
@@ -68,10 +71,11 @@ export class DashboardArchivedService {
     return { shares, pagination: paginationObj };
   }
   async getAllArchivedVoluntary(obj: DashboardArchivedDto) {
-    obj.isArchived = true;
+    // obj.isArchived = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.voluntaryModel.find(),
       obj,
+      { isArchived: true },
     );
     const voluntary = await query
       .populate({
@@ -83,10 +87,11 @@ export class DashboardArchivedService {
     return { voluntary, pagination: paginationObj };
   }
   async getAllArchivedService(obj: DashboardArchivedDto) {
-    obj.isArchived = true;
+    // obj.isArchived = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.serviceModel.find(),
       obj,
+      { isArchived: true },
     );
     const events = await query
       .populate({
@@ -98,10 +103,11 @@ export class DashboardArchivedService {
     return { events, pagination: paginationObj };
   }
   async getAllArchivedPosts(obj: DashboardArchivedDto) {
-    obj.isArchived = true;
+    // obj.isArchived = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.postModel.find(),
       obj,
+      { isArchived: true },
     );
     const posts = await query
       .populate({
