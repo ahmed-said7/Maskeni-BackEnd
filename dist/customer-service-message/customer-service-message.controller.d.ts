@@ -24,7 +24,6 @@ export declare class CustomerServiceMessageController {
         } & Required<{
             _id: import("mongoose").Types.ObjectId;
         }>)[];
-        page: number;
     }>;
     joinUser(chatId: string, req: any): Promise<{
         messages: (import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./customer-service-message.schema").CustomerServiceMessage> & import("./customer-service-message.schema").CustomerServiceMessage & {

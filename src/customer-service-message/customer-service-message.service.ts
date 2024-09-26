@@ -38,9 +38,14 @@ export class CustomerServiceMessageService {
     const message = await this.msgModel.create(body);
     const userId = chat.user.toString();
     const admin = chat.customer_service?.toString();
-    await this.chatModel.findByIdAndUpdate(chat.id, {
-      lastMessage: message._id,
-    });
+    const chatExist = await this.chatModel.findByIdAndUpdate(
+      chat.id,
+      {
+        lastMessage: message._id,
+      },
+      { new: true },
+    );
+    console.log(chatExist);
     this.eventEmitter.emit(emittedEvents.AdminMessageCreated, {
       chat: chat._id.toString(),
       user: userId,
@@ -131,21 +136,18 @@ export class CustomerServiceMessageService {
   }
   async onScroll(chatId: string, user: string, query: QueryMessageDto) {
     await this.validateChat(chatId, user);
-    const page = query.page || 2;
     const limit = 20;
-    const skip = (page - 1) * limit;
     const messages = await this.msgModel
       .find({
         chat: chatId,
-        createdAt: { $gt: query.after },
+        createdAt: { $lt: query.after },
       })
       .sort('-createdAt')
       .populate([
         { path: 'user', model: Admin.name, options: { strictPopulate: false } },
         { path: 'user', model: User.name, options: { strictPopulate: false } },
       ])
-      .skip(skip)
       .limit(limit);
-    return { messages, page };
+    return { messages };
   }
 }

@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNumber, Min } from 'class-validator';
+import { IsDateString } from 'class-validator';
 
 export class QueryMessageDto {
-  @IsNumber()
-  @Min(2)
-  @ApiProperty({
-    description: 'The page number for pagination, must be at least 2',
-    example: 2,
-  })
-  page: number;
+  // @IsNumber()
+  // @Min(2)
+  // @ApiProperty({
+  //   description: 'The page number for pagination, must be at least 2',
+  //   example: 2,
+  // })
+  // page: number;
 
   @IsDateString()
   @ApiProperty({

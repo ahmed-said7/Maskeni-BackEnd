@@ -49,6 +49,5 @@ export declare class CustomerServiceMessageService {
         } & Required<{
             _id: import("mongoose").Types.ObjectId;
         }>)[];
-        page: number;
     }>;
 }

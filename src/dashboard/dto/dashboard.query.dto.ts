@@ -1,6 +1,12 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  // IsBooleanString,
+  IsNumber,
+  IsOptional,
+  // IsString,
+} from 'class-validator';
 
 export class DashboardSearchDto {
   @IsOptional()
@@ -25,7 +31,7 @@ export class DashboardArchivedDto {
   @ApiPropertyOptional({ description: 'Number of items per page' })
   limit?: number;
 
-  @IsString()
+  @IsBoolean()
   @ApiPropertyOptional({
     description: 'Indicates if the item ',
   })
@@ -44,7 +50,7 @@ export class DashboardDeletedDto {
   @ApiPropertyOptional({ description: 'Number of items per page' })
   limit?: number;
 
-  @IsString()
+  @IsBoolean()
   @ApiPropertyOptional({
     description: 'Indicates if the item ',
   })
@@ -63,7 +69,7 @@ export class DashboardAcceptedDto {
   @ApiPropertyOptional({ description: 'Number of items per page' })
   limit?: number;
 
-  @IsString()
+  @IsBoolean()
   @ApiPropertyOptional({
     description: 'Indicates if the item ',
   })
@@ -72,7 +78,7 @@ export class DashboardAcceptedDto {
 }
 
 export class DashboardUpdateArchivedDto {
-  @IsString()
+  @IsBoolean()
   @ApiPropertyOptional({
     description: 'Indicates if the item ',
   })
@@ -81,7 +87,7 @@ export class DashboardUpdateArchivedDto {
 }
 
 export class DashboardUpdateDeletedDto {
-  @IsString()
+  @IsBoolean()
   @ApiPropertyOptional({
     description: 'Indicates if the item ',
   })
@@ -90,7 +96,7 @@ export class DashboardUpdateDeletedDto {
 }
 
 export class DashboardUpdateAcceptedDto {
-  @IsString()
+  @IsBoolean()
   @ApiPropertyOptional({
     description: 'Indicates if the item ',
   })
