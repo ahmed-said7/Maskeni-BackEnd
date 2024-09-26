@@ -38,10 +38,10 @@ export class AnalysisController {
   @Get('quarters')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiOperation({ summary: 'Analyze user gender distribution' })
+  @ApiOperation({ summary: 'number of users at each quarter' })
   @ApiResponse({
     status: 200,
-    description: 'User gender analysis data retrieved successfully.',
+    description: 'User quarters analysis data retrieved successfully.',
   })
   async quartersStatics(@Query() query: FindQuery) {
     return this.analysisService.getPeopleByQuarterNotInArray(
