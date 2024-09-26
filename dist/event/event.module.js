@@ -49,7 +49,7 @@ exports.EventModule = EventModule = __decorate([
                     useFactory: async () => {
                         const schema = event_schema_1.EventSchema;
                         schema.pre(/^find/, function () {
-                            if (!!this.getOptions().skipFilter) {
+                            if (!this.getOptions().skipFilter) {
                                 this.find({
                                     isDeleted: false,
                                     isArchived: false,

@@ -44,7 +44,7 @@ exports.QuestionModule = QuestionModule = __decorate([
                     useFactory: async () => {
                         const schema = question_schema_1.QuestionSchema;
                         schema.pre(/^find/, function () {
-                            if (!this.skipFilter) {
+                            if (!this.getOptions().skipFilter) {
                                 this.find({
                                     isDeleted: false,
                                     isArchived: false,
