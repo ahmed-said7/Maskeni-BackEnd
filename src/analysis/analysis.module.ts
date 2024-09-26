@@ -10,6 +10,7 @@ import { Post, PostSchema } from 'src/post/post.schema';
 import { Question, QuestionSchema } from 'src/question/question.schema';
 import { UserSchema } from 'src/user/user.schema';
 import { AdminSchema } from 'src/admin/admin.schema';
+import { Address, AddressSchema } from 'src/address/address.schema';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AdminSchema } from 'src/admin/admin.schema';
       { name: Question.name, schema: QuestionSchema },
       { name: 'User', schema: UserSchema },
       { name: 'Admin', schema: AdminSchema },
+      { name: Address.name, schema: AddressSchema },
     ]),
   ],
   controllers: [AnalysisController],

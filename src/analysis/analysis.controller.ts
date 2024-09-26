@@ -35,7 +35,7 @@ export class AnalysisController {
   async analysisUsers() {
     return this.analysisService.analysisUsers();
   }
-  @Get('users-gender')
+  @Get('quarters')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
   @ApiOperation({ summary: 'Analyze user gender distribution' })
