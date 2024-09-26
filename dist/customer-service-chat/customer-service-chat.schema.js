@@ -13,7 +13,7 @@ exports.CustomerServiceChatSchema = exports.CustomerServiceChat = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const admin_schema_1 = require("../admin/admin.schema");
-const messahe_schema_1 = require("../message/messahe.schema");
+const customer_service_message_schema_1 = require("../customer-service-message/customer-service-message.schema");
 let CustomerServiceChat = class CustomerServiceChat {
 };
 exports.CustomerServiceChat = CustomerServiceChat;
@@ -22,7 +22,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], CustomerServiceChat.prototype, "isBusy", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: messahe_schema_1.Message.name }),
+    (0, mongoose_1.Prop)({ type: mongoose_2.Types.ObjectId, ref: customer_service_message_schema_1.CustomerServiceMessage.name }),
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], CustomerServiceChat.prototype, "lastMessage", void 0);
 __decorate([

@@ -32,7 +32,7 @@ export declare class CustomerServiceMessageService {
             _id: import("mongoose").Types.ObjectId;
         }>)[];
     }>;
-    joinChatByUser(chatId: string, user: string): Promise<{
+    chatMessages(chatId: string, user: string): Promise<{
         messages: (import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, CustomerServiceMessage> & CustomerServiceMessage & {
             _id: import("mongoose").Types.ObjectId;
         }> & import("mongoose").Document<unknown, {}, CustomerServiceMessage> & CustomerServiceMessage & {

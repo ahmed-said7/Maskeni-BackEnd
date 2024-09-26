@@ -38,14 +38,9 @@ export class CustomerServiceMessageService {
     const message = await this.msgModel.create(body);
     const userId = chat.user.toString();
     const admin = chat.customer_service?.toString();
-    const chatExist = await this.chatModel.findByIdAndUpdate(
-      chat.id,
-      {
-        lastMessage: message._id,
-      },
-      { new: true },
-    );
-    console.log(chatExist);
+    await this.chatModel.findByIdAndUpdate(chat.id, {
+      lastMessage: message._id,
+    });
     this.eventEmitter.emit(emittedEvents.AdminMessageCreated, {
       chat: chat._id.toString(),
       user: userId,
@@ -89,7 +84,7 @@ export class CustomerServiceMessageService {
   async joinChatByAdmin(chatId: string, user: string) {
     const chat = await this.chatModel.findOne({
       _id: chatId,
-      $or: [{ isBusy: true }, { customer_service: user }],
+      $or: [{ isBusy: false }, { customer_service: user }],
     });
     if (!chat) {
       throw new HttpException('chat not found', 400);
@@ -113,25 +108,18 @@ export class CustomerServiceMessageService {
     this.handleChatJoin(All_Role.Admin, user, chat._id.toString());
     return { messages };
   }
-  async joinChatByUser(chatId: string, user: string) {
-    const chat = await this.chatModel.findOne({
-      _id: chatId,
-      user,
-    });
-    if (!chat) {
-      throw new HttpException('chat not found', 400);
-    }
+  async chatMessages(chatId: string, user: string) {
+    // await this.validateChat(chatId, user);
+    const limit = 20;
     const messages = await this.msgModel
-      .find({
-        chat: chatId,
-      })
+      .find({ chat: chatId })
       .sort('-createdAt')
       .populate([
         { path: 'user', model: Admin.name, options: { strictPopulate: false } },
         { path: 'user', model: User.name, options: { strictPopulate: false } },
       ])
-      .limit(20);
-    this.handleChatJoin(All_Role.User, user, chat._id.toString());
+      .limit(limit);
+    this.handleChatJoin(All_Role.User, user, chatId);
     return { messages };
   }
   async onScroll(chatId: string, user: string, query: QueryMessageDto) {

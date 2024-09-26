@@ -9,9 +9,11 @@ import {
 import { CustomerServiceChatController } from './customer-service-chat.controller';
 import { CustomerServiceChatService } from './customer-service-chat.service';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
+import { CustomerServiceMessageModule } from 'src/customer-service-message/customer-service-message.module';
 
 @Module({
   imports: [
+    CustomerServiceMessageModule,
     ApiModule,
     MongooseModule.forFeature([
       {
@@ -30,5 +32,6 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
   ],
   controllers: [CustomerServiceChatController],
   providers: [CustomerServiceChatService],
+  exports: [CustomerServiceChatService],
 })
 export class CustomerServiceChatModule {}

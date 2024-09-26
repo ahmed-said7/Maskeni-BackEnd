@@ -15,12 +15,14 @@ const customer_service_chat_schema_1 = require("./customer-service-chat.schema")
 const customer_service_chat_controller_1 = require("./customer-service-chat.controller");
 const customer_service_chat_service_1 = require("./customer-service-chat.service");
 const admin_schema_1 = require("../admin/admin.schema");
+const customer_service_message_module_1 = require("../customer-service-message/customer-service-message.module");
 let CustomerServiceChatModule = class CustomerServiceChatModule {
 };
 exports.CustomerServiceChatModule = CustomerServiceChatModule;
 exports.CustomerServiceChatModule = CustomerServiceChatModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            customer_service_message_module_1.CustomerServiceMessageModule,
             api_module_1.ApiModule,
             mongoose_1.MongooseModule.forFeature([
                 {
@@ -39,6 +41,7 @@ exports.CustomerServiceChatModule = CustomerServiceChatModule = __decorate([
         ],
         controllers: [customer_service_chat_controller_1.CustomerServiceChatController],
         providers: [customer_service_chat_service_1.CustomerServiceChatService],
+        exports: [customer_service_chat_service_1.CustomerServiceChatService],
     })
 ], CustomerServiceChatModule);
 //# sourceMappingURL=customer-service-chat.module.js.map

@@ -7,6 +7,9 @@ import {
 } from './customer-service-chat.schema';
 import { ApiService } from 'src/common/Api/api.service';
 import { FindQuery } from 'src/common/types';
+import { CustomerServiceMessageService } from 'src/customer-service-message/customer-service-message.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { All_Role, emittedEvents } from 'src/common/enum';
 
 @Injectable()
 export class CustomerServiceChatService {
@@ -14,18 +17,27 @@ export class CustomerServiceChatService {
     @InjectModel(CustomerServiceChat.name)
     private chatModel: Model<CustomerServiceChatDocument>,
     private apiService: ApiService<CustomerServiceChatDocument, FindQuery>,
-    // private customerServiceMsg: CustomerServiceMessageService,
-    // private eventEmitter: EventEmitter2,
+    private customerServiceMsg: CustomerServiceMessageService,
+    private eventEmitter: EventEmitter2,
   ) {}
   async createChat(user: string) {
     const chatExist = await this.chatModel
       .findOne({ user })
       .populate('lastMessage');
     if (chatExist) {
-      return chatExist;
+      const { messages } = await this.customerServiceMsg.chatMessages(
+        chatExist._id.toString(),
+        user,
+      );
+      return { chat: chatExist, messages };
     }
     const chat = await this.chatModel.create({ user });
-    return { chat };
+    this.eventEmitter.emit(emittedEvents.AdminChatJoined, {
+      chat: chat._id.toString(),
+      user,
+      role: All_Role.User,
+    });
+    return { chat, messages: [] };
   }
   async getChatMemebers(user: string) {
     const chat = await this.chatModel

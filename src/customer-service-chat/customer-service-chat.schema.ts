@@ -1,14 +1,14 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Admin } from 'src/admin/admin.schema';
-import { Message } from 'src/message/messahe.schema';
+import { CustomerServiceMessage } from 'src/customer-service-message/customer-service-message.schema';
 
 @Schema({ timestamps: true })
 export class CustomerServiceChat {
   @Prop({ type: Boolean, default: false })
   isBusy: boolean;
 
-  @Prop({ type: Types.ObjectId, ref: Message.name })
+  @Prop({ type: Types.ObjectId, ref: CustomerServiceMessage.name })
   lastMessage: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'User' })

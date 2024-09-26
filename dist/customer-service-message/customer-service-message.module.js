@@ -44,6 +44,7 @@ exports.CustomerServiceMessageModule = CustomerServiceMessageModule = __decorate
         ],
         controllers: [customer_service_message_controller_1.CustomerServiceMessageController],
         providers: [customer_service_message_service_1.CustomerServiceMessageService],
+        exports: [customer_service_message_service_1.CustomerServiceMessageService],
     })
 ], CustomerServiceMessageModule);
 //# sourceMappingURL=customer-service-message.module.js.map

@@ -1,13 +1,13 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { CustomerServiceChat } from 'src/customer-service-chat/customer-service-chat.schema';
+// import { CustomerServiceChat } from 'src/customer-service-chat/customer-service-chat.schema';
 
 @Schema({ timestamps: true })
 export class CustomerServiceMessage {
   @Prop({ type: String, trim: true })
   content: string;
 
-  @Prop({ type: Types.ObjectId, ref: CustomerServiceChat.name })
+  @Prop({ type: Types.ObjectId, ref: 'CustomerServiceChat' })
   chat: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, refPath: 'type' })

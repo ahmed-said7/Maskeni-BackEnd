@@ -38,5 +38,6 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
   ],
   controllers: [CustomerServiceMessageController],
   providers: [CustomerServiceMessageService],
+  exports: [CustomerServiceMessageService],
 })
 export class CustomerServiceMessageModule {}

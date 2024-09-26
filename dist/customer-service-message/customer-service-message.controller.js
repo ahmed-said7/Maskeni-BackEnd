@@ -36,9 +36,6 @@ let CustomerServiceMessageController = class CustomerServiceMessageController {
     onScroll(chatId, req, query) {
         return this.msgService.onScroll(chatId, req.userId, query);
     }
-    joinUser(chatId, req) {
-        return this.msgService.joinChatByUser(chatId, req.userId);
-    }
     joinAdmin(chatId, req) {
         return this.msgService.joinChatByAdmin(chatId, req.userId);
     }
@@ -57,7 +54,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomerServiceMessageController.prototype, "createMessage", null);
 __decorate([
-    (0, common_1.Get)('admin-msg/:user'),
+    (0, common_1.Post)('admin-msg/:user'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
     (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     (0, swagger_1.ApiParam)({ name: 'user', description: 'ID of the user to send message' }),
@@ -93,22 +90,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CustomerServiceMessageController.prototype, "onScroll", null);
 __decorate([
-    (0, common_1.Get)('user-join/:chatId'),
-    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
-    (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
-    (0, swagger_1.ApiParam)({ name: 'chatId', description: 'ID of the chat to join as user' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'User joined chat successfully.' }),
-    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),
-    __param(0, (0, common_1.Param)('chatId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
-    __param(1, (0, common_1.Req)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
-], CustomerServiceMessageController.prototype, "joinUser", null);
-__decorate([
     (0, common_1.Get)('admin-join/:chatId'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
-    (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     (0, swagger_1.ApiParam)({ name: 'chatId', description: 'ID of the chat to join as admin' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Admin joined chat successfully.' }),
     (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),

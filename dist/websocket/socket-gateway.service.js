@@ -46,6 +46,7 @@ let MessagingGateway = class MessagingGateway {
             client.emit('customer:msgs', { msgs });
         }
         else {
+            console.log(client.type, client.userId);
             const room = 'admin:room';
             client.join(room);
             this.gatewayMap.setAdminSocket(client.userId, client);
@@ -59,7 +60,7 @@ let MessagingGateway = class MessagingGateway {
             this.gatewayMap.removeUserSocket(socket.userId);
         }
         else {
-            await this.CustomerChatModel.updateMany({ customer_service: socket.userId }, { isBusy: true, customer_service: null });
+            await this.CustomerChatModel.updateMany({ customer_service: socket.userId }, { isBusy: false, customer_service: null });
             this.gatewayMap.removeUserSocket(socket.userId);
         }
     }
@@ -120,7 +121,8 @@ let MessagingGateway = class MessagingGateway {
     async onChatAdminMsgCreated({ chat, user, admin, message, }) {
         const room = `chat:room:${chat}`;
         const senderSocket = this.gatewayMap.getUserSocket(user);
-        const recipientSocket = this.gatewayMap.getUserSocket(admin);
+        const recipientSocket = this.gatewayMap.getAdminSocket(admin);
+        console.log(recipientSocket);
         if (this.server.sockets.adapter.rooms.has(room)) {
             this.server.to(room).emit('on:chat:customer:message', { message, chat });
         }

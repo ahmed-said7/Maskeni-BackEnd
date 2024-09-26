@@ -18,20 +18,31 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const customer_service_chat_schema_1 = require("./customer-service-chat.schema");
 const api_service_1 = require("../common/Api/api.service");
+const customer_service_message_service_1 = require("../customer-service-message/customer-service-message.service");
+const event_emitter_1 = require("@nestjs/event-emitter");
+const enum_1 = require("../common/enum");
 let CustomerServiceChatService = class CustomerServiceChatService {
-    constructor(chatModel, apiService) {
+    constructor(chatModel, apiService, customerServiceMsg, eventEmitter) {
         this.chatModel = chatModel;
         this.apiService = apiService;
+        this.customerServiceMsg = customerServiceMsg;
+        this.eventEmitter = eventEmitter;
     }
     async createChat(user) {
         const chatExist = await this.chatModel
             .findOne({ user })
             .populate('lastMessage');
         if (chatExist) {
-            return chatExist;
+            const { messages } = await this.customerServiceMsg.chatMessages(chatExist._id.toString(), user);
+            return { chat: chatExist, messages };
         }
         const chat = await this.chatModel.create({ user });
-        return { chat };
+        this.eventEmitter.emit(enum_1.emittedEvents.AdminChatJoined, {
+            chat: chat._id.toString(),
+            user,
+            role: enum_1.All_Role.User,
+        });
+        return { chat, messages: [] };
     }
     async getChatMemebers(user) {
         const chat = await this.chatModel
@@ -57,6 +68,8 @@ exports.CustomerServiceChatService = CustomerServiceChatService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(customer_service_chat_schema_1.CustomerServiceChat.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
-        api_service_1.ApiService])
+        api_service_1.ApiService,
+        customer_service_message_service_1.CustomerServiceMessageService,
+        event_emitter_1.EventEmitter2])
 ], CustomerServiceChatService);
 //# sourceMappingURL=customer-service-chat.service.js.map

@@ -35,7 +35,7 @@ export class CustomerServiceMessageController {
     return this.msgService.createMessage(body, req.userId, req.role);
   }
 
-  @Get('admin-msg/:user')
+  @Post('admin-msg/:user')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User, All_Role.Admin, All_Role.SuperAdmin)
   @ApiParam({ name: 'user', description: 'ID of the user to send message' }) // Document path parameter
@@ -71,22 +71,22 @@ export class CustomerServiceMessageController {
     return this.msgService.onScroll(chatId, req.userId, query);
   }
 
-  @Get('user-join/:chatId')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User, All_Role.Admin, All_Role.SuperAdmin)
-  @ApiParam({ name: 'chatId', description: 'ID of the chat to join as user' })
-  @ApiResponse({ status: 200, description: 'User joined chat successfully.' })
-  @ApiResponse({ status: 403, description: 'Forbidden.' })
-  joinUser(
-    @Param('chatId', ValidateObjectIdPipe) chatId: string,
-    @Req() req: any,
-  ) {
-    return this.msgService.joinChatByUser(chatId, req.userId);
-  }
+  // @Get('user-join/:chatId')
+  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  // @Roles(All_Role.User)
+  // @ApiParam({ name: 'chatId', description: 'ID of the chat to join as user' })
+  // @ApiResponse({ status: 200, description: 'User joined chat successfully.' })
+  // @ApiResponse({ status: 403, description: 'Forbidden.' })
+  // joinUser(
+  //   @Param('chatId', ValidateObjectIdPipe) chatId: string,
+  //   @Req() req: any,
+  // ) {
+  //   return this.msgService.joinChatByUser(chatId, req.userId);
+  // }
 
   @Get('admin-join/:chatId')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User, All_Role.Admin, All_Role.SuperAdmin)
+  @Roles(All_Role.Admin, All_Role.SuperAdmin)
   @ApiParam({ name: 'chatId', description: 'ID of the chat to join as admin' })
   @ApiResponse({ status: 200, description: 'Admin joined chat successfully.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

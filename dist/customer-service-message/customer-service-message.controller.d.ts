@@ -25,15 +25,6 @@ export declare class CustomerServiceMessageController {
             _id: import("mongoose").Types.ObjectId;
         }>)[];
     }>;
-    joinUser(chatId: string, req: any): Promise<{
-        messages: (import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./customer-service-message.schema").CustomerServiceMessage> & import("./customer-service-message.schema").CustomerServiceMessage & {
-            _id: import("mongoose").Types.ObjectId;
-        }> & import("mongoose").Document<unknown, {}, import("./customer-service-message.schema").CustomerServiceMessage> & import("./customer-service-message.schema").CustomerServiceMessage & {
-            _id: import("mongoose").Types.ObjectId;
-        } & Required<{
-            _id: import("mongoose").Types.ObjectId;
-        }>)[];
-    }>;
     joinAdmin(chatId: string, req: any): Promise<{
         messages: (import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("./customer-service-message.schema").CustomerServiceMessage> & import("./customer-service-message.schema").CustomerServiceMessage & {
             _id: import("mongoose").Types.ObjectId;

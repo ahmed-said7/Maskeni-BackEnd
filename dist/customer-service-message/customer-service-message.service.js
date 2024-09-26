@@ -38,10 +38,9 @@ let CustomerServiceMessageService = class CustomerServiceMessageService {
         const message = await this.msgModel.create(body);
         const userId = chat.user.toString();
         const admin = chat.customer_service?.toString();
-        const chatExist = await this.chatModel.findByIdAndUpdate(chat.id, {
+        await this.chatModel.findByIdAndUpdate(chat.id, {
             lastMessage: message._id,
-        }, { new: true });
-        console.log(chatExist);
+        });
         this.eventEmitter.emit(enum_1.emittedEvents.AdminMessageCreated, {
             chat: chat._id.toString(),
             user: userId,
@@ -79,7 +78,7 @@ let CustomerServiceMessageService = class CustomerServiceMessageService {
     async joinChatByAdmin(chatId, user) {
         const chat = await this.chatModel.findOne({
             _id: chatId,
-            $or: [{ isBusy: true }, { customer_service: user }],
+            $or: [{ isBusy: false }, { customer_service: user }],
         });
         if (!chat) {
             throw new common_1.HttpException('chat not found', 400);
@@ -103,25 +102,17 @@ let CustomerServiceMessageService = class CustomerServiceMessageService {
         this.handleChatJoin(enum_1.All_Role.Admin, user, chat._id.toString());
         return { messages };
     }
-    async joinChatByUser(chatId, user) {
-        const chat = await this.chatModel.findOne({
-            _id: chatId,
-            user,
-        });
-        if (!chat) {
-            throw new common_1.HttpException('chat not found', 400);
-        }
+    async chatMessages(chatId, user) {
+        const limit = 20;
         const messages = await this.msgModel
-            .find({
-            chat: chatId,
-        })
+            .find({ chat: chatId })
             .sort('-createdAt')
             .populate([
             { path: 'user', model: admin_schema_1.Admin.name, options: { strictPopulate: false } },
             { path: 'user', model: user_schema_1.User.name, options: { strictPopulate: false } },
         ])
-            .limit(20);
-        this.handleChatJoin(enum_1.All_Role.User, user, chat._id.toString());
+            .limit(limit);
+        this.handleChatJoin(enum_1.All_Role.User, user, chatId);
         return { messages };
     }
     async onScroll(chatId, user, query) {
