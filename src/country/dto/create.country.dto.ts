@@ -31,8 +31,6 @@ export class CreateCountryDto {
   @IsString()
   @ApiProperty({ description: 'image of the country.' })
   image: string;
-
-  @ApiProperty({ description: 'Location object for the country.' })
   location: object; // Consider specifying a more detailed type if possible
 
   @IsArray()

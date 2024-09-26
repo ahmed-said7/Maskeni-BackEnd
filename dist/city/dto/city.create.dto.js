@@ -34,10 +34,6 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCityDto.prototype, "name", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Location details of the city', type: Object }),
-    __metadata("design:type", Object)
-], CreateCityDto.prototype, "location", void 0);
-__decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
     (0, class_transformer_1.Type)(() => InnerArrayDto),

@@ -26,7 +26,6 @@ export class CreateCityDto {
   @ApiProperty({ description: 'Name of the city' })
   name: string;
 
-  @ApiProperty({ description: 'Location details of the city', type: Object }) // Specify the type as Object if you don't have a specific type
   location: object;
 
   @IsArray()

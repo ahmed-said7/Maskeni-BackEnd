@@ -44,10 +44,6 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCountryDto.prototype, "image", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Location object for the country.' }),
-    __metadata("design:type", Object)
-], CreateCountryDto.prototype, "location", void 0);
-__decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
     (0, class_transformer_1.Type)(() => InnerArrayDto),
