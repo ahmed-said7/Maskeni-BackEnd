@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Address, AddressDocument } from 'src/address/address.schema';
 import { Gender_Type } from 'src/common/types';
 import { EventDocument } from 'src/event/event.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
@@ -22,7 +23,49 @@ export class AnalysisService {
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Address.name) private addressModel: Model<AddressDocument>,
   ) {}
+  async getPeopleByQuarterNotInArray(
+    // quarterIdsToExclude: Types.ObjectId[], // Array of quarters to exclude
+    page: string, // For pagination: number of records to skip
+    limit: string, // For pagination: number of records to return
+  ) {
+    const result = await this.addressModel.aggregate([
+      // Stage 1: Filter quarters that are not in the excluded array
+      // {
+      //   $match: {
+      //     quarter: { $nin: quarterIdsToExclude }, // Exclude these quarters
+      //   },
+      // },
+      // Stage 2: Group by quarter and user to ensure unique users
+      {
+        $group: {
+          _id: { quarter: '$quarter', user: '$user' }, // Group by quarter and user
+        },
+      },
+      // Stage 3: Group by quarter and count unique users
+      {
+        $group: {
+          _id: '$_id.quarter', // Group by quarter
+          numberOfPeople: { $sum: 1 }, // Count unique users in each quarter
+        },
+      },
+      // Optional: Populate the quarter information if needed
+      {
+        $lookup: {
+          from: 'quarters', // The collection for the Quarter schema
+          localField: '_id',
+          foreignField: '_id',
+          as: 'quarterInfo',
+        },
+      },
+      // Stage 4: Apply pagination using skip and limit
+      { $skip: (parseInt(page) - 1) * parseInt(limit) },
+      { $limit: parseInt(limit) },
+    ]);
+
+    return result;
+  }
   async getAllDocs() {
     const voluntaryCount = await this.voluntaryModel.countDocuments();
     const shareCount = await this.shareModel.countDocuments();

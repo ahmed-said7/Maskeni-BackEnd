@@ -1,10 +1,11 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { AnalysisService } from './analysis.service';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 import { All_Role } from 'src/common/enum';
 import { Roles } from 'src/common/decorator/roles';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { FindQuery } from 'src/common/types';
 
 @ApiTags('analysis') // This tag groups the endpoints under "analysis" in the Swagger UI
 @Controller('analysis')
@@ -33,6 +34,20 @@ export class AnalysisController {
   })
   async analysisUsers() {
     return this.analysisService.analysisUsers();
+  }
+  @Get('users-gender')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiOperation({ summary: 'Analyze user gender distribution' })
+  @ApiResponse({
+    status: 200,
+    description: 'User gender analysis data retrieved successfully.',
+  })
+  async quartersStatics(@Query() query: FindQuery) {
+    return this.analysisService.getPeopleByQuarterNotInArray(
+      query.page,
+      query.limit,
+    );
   }
 
   @Get('age-statistics')

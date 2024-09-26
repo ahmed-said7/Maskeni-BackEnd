@@ -13,6 +13,10 @@ exports.ValidateLocation = exports.Jop_Type = exports.Gender_Type = exports.Even
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class FindQuery {
+    constructor() {
+        this.page = '1';
+        this.limit = '10';
+    }
 }
 exports.FindQuery = FindQuery;
 __decorate([
@@ -28,6 +32,7 @@ __decorate([
         description: 'The number of items to return per page',
         example: '10',
     }),
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], FindQuery.prototype, "limit", void 0);
