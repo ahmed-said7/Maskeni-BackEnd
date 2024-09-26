@@ -41,6 +41,7 @@ export class DashboardAcceptedService {
       this.eventModel.find(),
       obj,
     );
+    console.log(obj);
     const events = await query
       .populate({
         path: 'user',

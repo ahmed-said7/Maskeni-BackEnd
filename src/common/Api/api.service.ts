@@ -36,6 +36,7 @@ export class ApiService<T, I extends IQuery> {
       'select',
       'sort',
     ];
+
     fields.forEach((field) => {
       delete filter[field];
     });

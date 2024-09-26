@@ -3,6 +3,7 @@ import { Transform } from 'class-transformer';
 import {
   IsBoolean,
   // IsBooleanString,
+  // IsBooleanString,
   IsNumber,
   IsOptional,
   // IsString,
@@ -36,7 +37,7 @@ export class DashboardArchivedDto {
     description: 'Indicates if the item ',
   })
   @Transform(({ value }) => value === 'true' || value === true)
-  isArchived: boolean;
+  isArchived: string;
 }
 
 export class DashboardDeletedDto {
@@ -55,7 +56,7 @@ export class DashboardDeletedDto {
     description: 'Indicates if the item ',
   })
   @Transform(({ value }) => value === 'true' || value === true)
-  isDeleted: boolean;
+  isDeleted: string;
 }
 
 export class DashboardAcceptedDto {
@@ -74,7 +75,7 @@ export class DashboardAcceptedDto {
     description: 'Indicates if the item ',
   })
   @Transform(({ value }) => value === 'true' || value === true)
-  isAccepted: boolean;
+  isAccepted: string;
 }
 
 export class DashboardUpdateArchivedDto {
@@ -83,7 +84,7 @@ export class DashboardUpdateArchivedDto {
     description: 'Indicates if the item ',
   })
   @Transform(({ value }) => value === 'true' || value === true)
-  isArchived: boolean;
+  isArchived: string;
 }
 
 export class DashboardUpdateDeletedDto {
@@ -92,7 +93,7 @@ export class DashboardUpdateDeletedDto {
     description: 'Indicates if the item ',
   })
   @Transform(({ value }) => value === 'true' || value === true)
-  isDeleted: boolean;
+  isDeleted: string;
 }
 
 export class DashboardUpdateAcceptedDto {
@@ -101,5 +102,5 @@ export class DashboardUpdateAcceptedDto {
     description: 'Indicates if the item ',
   })
   @Transform(({ value }) => value === 'true' || value === true)
-  isAccepted: boolean;
+  isAccepted: string;
 }
