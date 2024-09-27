@@ -5,12 +5,14 @@ import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 import { CommentService } from 'src/comment/comment.service';
 import { LikesService } from 'src/likes/likes.service';
 import { FindQuery } from 'src/common/types';
+import { ApiService } from 'src/common/Api/api.service';
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ReactionService<T extends IEntityType> {
   constructor(
     private commentService: CommentService,
     private likesService: LikesService,
+    private apiService: ApiService<any, any>,
   ) {}
   private PostModel: Model<T>;
   setModel(PostModel: Model<T>) {
@@ -133,7 +135,12 @@ export class ReactionService<T extends IEntityType> {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    return { totalPages: post.savedCount, page, limit, saved: post.saved };
+    const pagination = this.apiService.makePagination(
+      page,
+      limit,
+      post.savedCount,
+    );
+    return { pagination, saved: post.saved };
   }
   async deleteSaved(postId: string, userId: string) {
     const post = await this.PostModel.findOne({ 'saved.user': userId });
@@ -175,10 +182,14 @@ export class ReactionService<T extends IEntityType> {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    return {
-      totalPages: post.requestedCount,
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      post.requestedCount,
+    );
+    return {
+      totalPages: post.requestedCount,
+      pagination,
       requested: post.requested,
     };
   }
