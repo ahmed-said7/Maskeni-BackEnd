@@ -37,7 +37,7 @@ export class CustomerServiceMessageController {
 
   @Post('admin-msg/:user')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User, All_Role.Admin, All_Role.SuperAdmin)
+  @Roles(All_Role.Admin, All_Role.SuperAdmin)
   @ApiParam({ name: 'user', description: 'ID of the user to send message' }) // Document path parameter
   @ApiResponse({ status: 200, description: 'Message sent by admin.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

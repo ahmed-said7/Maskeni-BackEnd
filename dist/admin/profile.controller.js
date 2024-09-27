@@ -109,7 +109,7 @@ __decorate([
 __decorate([
     (0, common_1.Patch)('point/:location'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
-    (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     (0, swagger_1.ApiOperation)({ summary: 'Update admin address by location' }),
     (0, swagger_1.ApiParam)({
         name: 'location',

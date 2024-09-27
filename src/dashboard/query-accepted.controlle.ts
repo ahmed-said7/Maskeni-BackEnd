@@ -25,7 +25,7 @@ export class DashboardAcceptedController {
 
   @Get('events')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin, All_Role.User)
+  @Roles(All_Role.SuperAdmin, All_Role.Admin)
   @ApiQuery({ type: DashboardAcceptedDto, required: false })
   @ApiResponse({ status: 200, description: 'Retrieve all accepted events.' })
   async getAllAcceptedEvents(@Query() query: DashboardAcceptedDto) {

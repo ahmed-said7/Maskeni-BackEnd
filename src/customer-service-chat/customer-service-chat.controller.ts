@@ -22,7 +22,7 @@ export class CustomerServiceChatController {
 
   @Post()
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User, All_Role.Admin, All_Role.SuperAdmin)
+  @Roles(All_Role.User)
   @ApiOperation({ summary: 'Create a new chat' })
   @ApiResponse({ status: 201, description: 'Chat created successfully' })
   @ApiResponse({ status: 403, description: 'Forbidden' })

@@ -74,7 +74,7 @@ export class AdminProfileController {
 
   @Patch('point/:location')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User)
+  @Roles(All_Role.Admin, All_Role.SuperAdmin)
   @ApiOperation({ summary: 'Update admin address by location' })
   @ApiParam({
     name: 'location',

@@ -56,7 +56,7 @@ __decorate([
 __decorate([
     (0, common_1.Post)('admin-msg/:user'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
-    (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, roles_1.Roles)(enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
     (0, swagger_1.ApiParam)({ name: 'user', description: 'ID of the user to send message' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Message sent by admin.' }),
     (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden.' }),

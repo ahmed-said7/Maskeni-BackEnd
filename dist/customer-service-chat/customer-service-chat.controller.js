@@ -40,7 +40,7 @@ exports.CustomerServiceChatController = CustomerServiceChatController;
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
-    (0, roles_1.Roles)(enum_1.All_Role.User, enum_1.All_Role.Admin, enum_1.All_Role.SuperAdmin),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
     (0, swagger_1.ApiOperation)({ summary: 'Create a new chat' }),
     (0, swagger_1.ApiResponse)({ status: 201, description: 'Chat created successfully' }),
     (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
