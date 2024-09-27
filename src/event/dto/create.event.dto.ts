@@ -2,11 +2,13 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
   IsDateString,
+  IsEnum,
   IsMongoId,
   IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
+import { Event_Type } from 'src/common/types';
 
 export class CreateEventDto {
   @IsString()
@@ -37,6 +39,11 @@ export class CreateEventDto {
   @IsDateString()
   @ApiPropertyOptional({ description: 'Optional date for the event' })
   date?: string;
+
+  @IsOptional()
+  @IsEnum(Event_Type)
+  @ApiPropertyOptional({ description: 'Optional date for the event' })
+  type?: string;
 
   @IsDateString()
   @ApiProperty({ description: 'End date and time of the event' })

@@ -28,7 +28,7 @@ let ReactionService = class ReactionService {
     }
     async createComment(body) {
         const comment = await this.commentService.create(body);
-        if (!comment.parentComment) {
+        if (comment.parentComment) {
             return comment;
         }
         await this.PostModel.findByIdAndUpdate(body.post, {

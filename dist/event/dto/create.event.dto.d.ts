@@ -6,6 +6,7 @@ export declare class CreateEventDto {
     quarter: string;
     startedAt: string;
     date?: string;
+    type?: string;
     endedAt: string;
     images: string[];
     startAge: number;

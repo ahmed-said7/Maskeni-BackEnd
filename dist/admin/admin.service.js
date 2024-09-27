@@ -55,7 +55,6 @@ let AdminService = class AdminService {
         this.AdminModel.findOne({
             mobile: config.get('mobile'),
         }).then((admin) => {
-            console.log(admin);
             if (!admin) {
                 this.AdminModel.create({
                     mobile: config.get('mobile'),
@@ -96,7 +95,7 @@ let AdminService = class AdminService {
         if (!valid) {
             throw new common_1.HttpException('current password is not correct', 400);
         }
-        user.password = body.password;
+        user.password = await bcryptjs.hash(body.password, 10);
         user.passwordChangedAt = new Date();
         await user.save();
         return { admin: user, status: 'password has been updated' };

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateEventDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
+const types_1 = require("../../common/types");
 class CreateEventDto {
 }
 exports.CreateEventDto = CreateEventDto;
@@ -51,6 +52,12 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Optional date for the event' }),
     __metadata("design:type", String)
 ], CreateEventDto.prototype, "date", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(types_1.Event_Type),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Optional date for the event' }),
+    __metadata("design:type", String)
+], CreateEventDto.prototype, "type", void 0);
 __decorate([
     (0, class_validator_1.IsDateString)(),
     (0, swagger_1.ApiProperty)({ description: 'End date and time of the event' }),
