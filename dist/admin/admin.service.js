@@ -69,7 +69,7 @@ let AdminService = class AdminService {
     }
     async getAllAdmins(obj) {
         const { query, paginationObj } = await this.apiService.getAllDocs(this.AdminModel.find(), obj, {}, ['name']);
-        const admins = await query;
+        const admins = await query.select('-password');
         return { admins, pagination: paginationObj };
     }
     async updateQuarter(userId, role, body) {
@@ -118,18 +118,20 @@ let AdminService = class AdminService {
         }
         const updated = await this.AdminModel.findByIdAndUpdate(userId, body, {
             new: true,
-        });
+        }).select('-password');
         return { status: 'updated', admin: updated };
     }
     async deleteUser(userId) {
-        const deleted = await this.AdminModel.findByIdAndDelete(userId);
+        const deleted = await this.AdminModel.findByIdAndUpdate(userId, {
+            isDeleted: true,
+        });
         if (!deleted) {
             throw new common_1.HttpException('user not found', 400);
         }
         return { status: 'deleted' };
     }
     async getUser(userId) {
-        const admin = await this.AdminModel.findById(userId);
+        const admin = await this.AdminModel.findById(userId).select('-password');
         if (!admin) {
             throw new common_1.HttpException('admin not found', 400);
         }

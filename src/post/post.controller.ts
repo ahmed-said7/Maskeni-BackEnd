@@ -59,6 +59,47 @@ export class PostController {
   ) {
     return this.postService.getComments(postId, req.userId, query);
   }
+  @Post('saved/:postId')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  @ApiOperation({ summary: 'Save a post' })
+  @ApiResponse({ status: 200, description: 'The post has been saved.' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  addSaved(
+    @Param('postId', ValidateObjectIdPipe) postId: string,
+    @Req() req: any,
+  ) {
+    return this.postService.addSaved(postId, req.userId);
+  }
+
+  @Delete('saved/:postId')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  @ApiOperation({ summary: 'Remove a saved post' })
+  @ApiResponse({
+    status: 200,
+    description: 'The saved post has been removed.',
+  })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  removeSaved(
+    @Param('postId', ValidateObjectIdPipe) postId: string,
+    @Req() req: any,
+  ) {
+    return this.postService.deleteSaved(postId, req.userId);
+  }
+
+  @Get('saved/:postId')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  @ApiOperation({ summary: 'Get saved questions' })
+  @ApiResponse({ status: 200, description: 'List of saved questions.' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  getSavedPosts(
+    @Param('postId', ValidateObjectIdPipe) postId: string,
+    @Query() query: FindQuery,
+  ) {
+    return this.postService.getAllSaved(postId, query);
+  }
 
   @Post('comment/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)

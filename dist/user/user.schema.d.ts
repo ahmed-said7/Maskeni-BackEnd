@@ -61,6 +61,7 @@ export declare class User {
     icon: string;
     fcm: string;
     isBlocked: boolean;
+    isDeleted: boolean;
     gender: string;
     birthday: Date;
 }

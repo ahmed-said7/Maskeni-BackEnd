@@ -40,6 +40,15 @@ let PostController = class PostController {
     async getPostComments(req, postId, query) {
         return this.postService.getComments(postId, req.userId, query);
     }
+    addSaved(postId, req) {
+        return this.postService.addSaved(postId, req.userId);
+    }
+    removeSaved(postId, req) {
+        return this.postService.deleteSaved(postId, req.userId);
+    }
+    getSavedPosts(postId, query) {
+        return this.postService.getAllSaved(postId, query);
+    }
     async addPostComment(body, req, postId) {
         return this.postService.addComment(body, postId, req.userId);
     }
@@ -109,6 +118,48 @@ __decorate([
     __metadata("design:paramtypes", [Object, String, types_1.FindQuery]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "getPostComments", null);
+__decorate([
+    (0, common_1.Post)('saved/:postId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Save a post' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'The post has been saved.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    __param(0, (0, common_1.Param)('postId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], PostController.prototype, "addSaved", null);
+__decorate([
+    (0, common_1.Delete)('saved/:postId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Remove a saved post' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'The saved post has been removed.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    __param(0, (0, common_1.Param)('postId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], PostController.prototype, "removeSaved", null);
+__decorate([
+    (0, common_1.Get)('saved/:postId'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),
+    (0, roles_1.Roles)(enum_1.All_Role.User),
+    (0, swagger_1.ApiOperation)({ summary: 'Get saved questions' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of saved questions.' }),
+    (0, swagger_1.ApiResponse)({ status: 403, description: 'Forbidden' }),
+    __param(0, (0, common_1.Param)('postId', validate_mongo_pipe_1.ValidateObjectIdPipe)),
+    __param(1, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, types_1.FindQuery]),
+    __metadata("design:returntype", void 0)
+], PostController.prototype, "getSavedPosts", null);
 __decorate([
     (0, common_1.Post)('comment/:id'),
     (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard, authorization_guard_1.AuthorizationGuard),

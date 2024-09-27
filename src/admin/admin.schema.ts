@@ -30,6 +30,8 @@ export class Admin {
     lowercase: true,
   })
   fcm: string;
+  @Prop({ type: Boolean, default: false })
+  isDeleted: boolean;
 }
 export type AdminDocument = HydratedDocument<Admin>;
 export const AdminSchema = SchemaFactory.createForClass(Admin);

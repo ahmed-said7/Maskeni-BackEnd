@@ -53,6 +53,10 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Admin.prototype, "fcm", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], Admin.prototype, "isDeleted", void 0);
 exports.Admin = Admin = __decorate([
     (0, mongoose_1.Schema)({
         timestamps: true,

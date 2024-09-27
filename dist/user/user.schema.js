@@ -163,6 +163,10 @@ __decorate([
     __metadata("design:type", Boolean)
 ], User.prototype, "isBlocked", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ type: Boolean, default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "isDeleted", void 0);
+__decorate([
     (0, mongoose_1.Prop)({
         type: String,
         enum: [types_1.Gender_Type.male, types_1.Gender_Type.female],

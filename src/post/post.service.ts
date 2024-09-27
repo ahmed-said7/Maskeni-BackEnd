@@ -234,7 +234,7 @@ export class PostService {
     });
     return { status: 'saved deleted post' };
   }
-  async getAllSaved(postId: string, user: string, query: FindQuery) {
+  async getAllSaved(postId: string, query: FindQuery) {
     const post = await this.postModel.findOne({
       _id: postId,
     });

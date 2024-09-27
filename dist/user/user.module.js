@@ -41,8 +41,23 @@ exports.UserModule = UserModule = __decorate([
             twilio_module_1.TwilioModule,
             refresh_module_1.RefreshModule,
             firebase_module_1.FirebaseModule,
+            mongoose_1.MongooseModule.forFeatureAsync([
+                {
+                    name: user_schema_1.User.name,
+                    useFactory: async () => {
+                        const schema = user_schema_1.UserSchema;
+                        schema.pre(/^find/, function () {
+                            if (!this.getOptions().skipFilter) {
+                                this.find({
+                                    isDeleted: false,
+                                });
+                            }
+                        });
+                        return schema;
+                    },
+                },
+            ]),
             mongoose_1.MongooseModule.forFeature([
-                { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
                 { name: admin_schema_1.Admin.name, schema: admin_schema_1.AdminSchema },
             ]),
         ],

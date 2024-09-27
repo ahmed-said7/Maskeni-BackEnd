@@ -24,6 +24,21 @@ export declare class PostController {
         })[];
         pagination: import("../common/Api/api.service").Pagination;
     }>;
+    addSaved(postId: string, req: any): Promise<{
+        status: string;
+    }>;
+    removeSaved(postId: string, req: any): Promise<{
+        status: string;
+    }>;
+    getSavedPosts(postId: string, query: FindQuery): Promise<{
+        totalPages: number;
+        page: number;
+        limit: number;
+        saved: {
+            user: import("mongoose").Types.ObjectId;
+            createdAt?: Date;
+        }[];
+    }>;
     addPostComment(body: CreateCommentDto, req: any, postId: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, import("../comment/comment.schema").Comment> & import("../comment/comment.schema").Comment & {
         _id: import("mongoose").Types.ObjectId;
     }> & import("mongoose").Document<unknown, {}, import("../comment/comment.schema").Comment> & import("../comment/comment.schema").Comment & {

@@ -9,7 +9,7 @@ import { ShareController } from './share.controller';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { Query } from 'mongoose';
 export interface SearchQuery extends Query<any, any[] | any> {
-  skipFilter?: boolean;
+  // skipFilter?: boolean;
 }
 
 @Module({

@@ -159,6 +159,8 @@ export class User {
   @Prop({ type: Boolean, default: false })
   isBlocked: boolean;
 
+  @Prop({ type: Boolean, default: false })
+  isDeleted: boolean;
   // @Prop({ type: Types.ObjectId, ref: 'Quarter' })
   // quarter: Types.ObjectId;
 

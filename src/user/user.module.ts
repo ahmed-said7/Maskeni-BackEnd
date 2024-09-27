@@ -13,6 +13,7 @@ import { FirebaseModule } from 'src/firebase/firebase.module';
 import { UserFollowController } from './follow.controller';
 import { UserSavedController } from './saved.controller';
 import { QuarterModule } from 'src/quarter/quarter.module';
+import { SearchQuery } from 'src/share/share.module';
 
 @Module({
   controllers: [
@@ -30,8 +31,24 @@ import { QuarterModule } from 'src/quarter/quarter.module';
     RefreshModule,
     FirebaseModule,
     // UserFollowController,
+    MongooseModule.forFeatureAsync([
+      {
+        name: User.name,
+        useFactory: async () => {
+          const schema = UserSchema;
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.getOptions().skipFilter) {
+              this.find({
+                isDeleted: false,
+              });
+            }
+          });
+          return schema;
+        },
+      },
+    ]),
     MongooseModule.forFeature([
-      { name: User.name, schema: UserSchema },
+      // { name: User.name, schema: UserSchema },
       { name: Admin.name, schema: AdminSchema },
     ]),
   ],

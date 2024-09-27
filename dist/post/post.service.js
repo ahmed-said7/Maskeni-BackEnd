@@ -227,7 +227,7 @@ let PostService = class PostService {
         });
         return { status: 'saved deleted post' };
     }
-    async getAllSaved(postId, user, query) {
+    async getAllSaved(postId, query) {
         const post = await this.postModel.findOne({
             _id: postId,
         });

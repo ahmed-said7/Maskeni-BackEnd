@@ -149,7 +149,7 @@ let UserService = class UserService {
         }
         const updated = await this.Usermodel.findByIdAndUpdate(userId, body, {
             new: true,
-        });
+        }).select('-password');
         if (!updated) {
             throw new common_1.HttpException('user not found', 400);
         }
@@ -158,24 +158,36 @@ let UserService = class UserService {
     async blockUser(userId) {
         const updated = await this.Usermodel.findByIdAndUpdate(userId, {
             isBlocked: true,
-        });
+        }).select('-password');
         if (!updated) {
             throw new common_1.HttpException('user not found', 400);
         }
         return { status: 'blocked' };
     }
     async deleteUser(userId) {
-        const deleted = await this.Usermodel.findByIdAndDelete(userId);
+        const deleted = await this.Usermodel.findByIdAndUpdate(userId, {
+            isDeleted: true,
+        });
         if (!deleted) {
             throw new common_1.HttpException('user not found', 400);
         }
         return { status: 'deleted' };
     }
     async getUser(userId) {
-        const user = await this.Usermodel.findById(userId);
+        const user = await this.Usermodel.findById(userId).select('-password');
         if (!user) {
             throw new common_1.HttpException('user not found', 400);
         }
+        user.followers = undefined;
+        user.following = undefined;
+        user.savedEvent = undefined;
+        user.savedGroupPost = undefined;
+        user.savedQuestion = undefined;
+        user.savedShare = undefined;
+        user.savedEvent = undefined;
+        user.savedVoluntary = undefined;
+        user.requestedService = undefined;
+        user.savedService = undefined;
         return { user };
     }
     async addFollow(userId, user) {

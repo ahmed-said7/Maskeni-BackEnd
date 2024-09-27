@@ -7,6 +7,7 @@ export declare class Admin {
     role: string;
     icon: string;
     fcm: string;
+    isDeleted: boolean;
 }
 export type AdminDocument = HydratedDocument<Admin>;
 export declare const AdminSchema: import("mongoose").Schema<Admin, import("mongoose").Model<Admin, any, any, any, import("mongoose").Document<unknown, any, Admin> & Admin & {

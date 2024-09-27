@@ -88,7 +88,7 @@ export declare class PostService {
     deleteSaved(postId: string, user: string): Promise<{
         status: string;
     }>;
-    getAllSaved(postId: string, user: string, query: FindQuery): Promise<{
+    getAllSaved(postId: string, query: FindQuery): Promise<{
         totalPages: number;
         page: number;
         limit: number;
