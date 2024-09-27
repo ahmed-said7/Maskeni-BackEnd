@@ -28,8 +28,9 @@ __decorate([
 ], CreateOfferedDto.prototype, "details", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsEnum)(types_1.Jop_Type),
-    (0, swagger_1.ApiProperty)({ enum: types_1.Jop_Type }),
+    (0, swagger_1.ApiPropertyOptional)({ enum: types_1.Jop_Type }),
     __metadata("design:type", String)
 ], CreateOfferedDto.prototype, "type", void 0);
 __decorate([

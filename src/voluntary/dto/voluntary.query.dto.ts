@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsMongoId, IsOptional } from 'class-validator';
-import { FindQuery } from 'src/common/types';
+import { IsEnum, IsMongoId, IsOptional } from 'class-validator';
+import { Event_Type, FindQuery } from 'src/common/types';
 
 export class QueryVoluntaryDto extends FindQuery {
   @IsOptional()
@@ -9,6 +9,9 @@ export class QueryVoluntaryDto extends FindQuery {
   })
   date?: string;
 
+  @IsOptional()
+  @IsMongoId()
+  @ApiPropertyOptional({ description: 'Filter by the MongoDB ID of the user' })
   user?: string;
 
   @IsOptional()
@@ -36,6 +39,7 @@ export class QueryVoluntaryDto extends FindQuery {
   endAge?: number;
 
   @IsOptional()
+  @IsEnum(Event_Type)
   @ApiPropertyOptional({
     description: 'Filter by type of the voluntary activity',
   })

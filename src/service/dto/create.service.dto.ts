@@ -19,8 +19,9 @@ export class CreateOfferedDto {
   details: string;
 
   @IsString()
+  @IsOptional()
   @IsEnum(Jop_Type)
-  @ApiProperty({ enum: Jop_Type }) // Specify the enum for Swagger documentation
+  @ApiPropertyOptional({ enum: Jop_Type }) // Specify the enum for Swagger documentation
   type: Jop_Type; // Use Jop_Type directly
 
   @IsMongoId()

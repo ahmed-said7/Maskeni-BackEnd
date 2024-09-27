@@ -25,6 +25,12 @@ __decorate([
 ], QueryVoluntaryDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsMongoId)(),
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Filter by the MongoDB ID of the user' }),
+    __metadata("design:type", String)
+], QueryVoluntaryDto.prototype, "user", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiPropertyOptional)({
         description: 'Filter by start date of the voluntary activity',
     }),
@@ -53,6 +59,7 @@ __decorate([
 ], QueryVoluntaryDto.prototype, "endAge", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(types_1.Event_Type),
     (0, swagger_1.ApiPropertyOptional)({
         description: 'Filter by type of the voluntary activity',
     }),

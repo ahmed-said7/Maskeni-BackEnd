@@ -38,25 +38,12 @@ export class Voluntary {
   @Prop({ type: Number })
   endAge: number;
 
-  // @Prop({
-  //   type: {
-  //     type: String, // 'type' must be 'Point'
-  //     enum: ['Point'], // Only 'Point' is allowed
-  //     default: 'Point',
-  //   },
-  //   coordinates: {
-  //     type: [Number],
-  //     default: [50, 50],
-  //   },
-  // })
-  // location: {
-  //   type: 'Point';
-  //   coordinates: [number, number];
-  // };
   @Prop({ type: Types.ObjectId, ref: City.name })
   city: Types.ObjectId;
+
   @Prop({ type: Types.ObjectId, ref: Country.name })
   country: Types.ObjectId;
+
   @Prop({ type: Types.ObjectId, ref: Quarter.name })
   quarter: Types.ObjectId;
 
