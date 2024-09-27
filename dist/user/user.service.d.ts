@@ -173,8 +173,7 @@ export declare class UserService {
         }[];
     }>;
     getUserSavedService(userId: string, query: FindQuery): Promise<{
-        page: number;
-        limit: number;
+        pagination: import("src/common/Api/api.service").Pagination;
         savedService: {
             service: import("mongoose").Types.ObjectId;
             createdAt?: Date;
@@ -182,8 +181,7 @@ export declare class UserService {
         }[];
     }>;
     getUserRequestedService(userId: string, query: FindQuery): Promise<{
-        page: number;
-        limit: number;
+        pagination: import("src/common/Api/api.service").Pagination;
         requestedService: {
             service: import("mongoose").Types.ObjectId;
             createdAt?: Date;

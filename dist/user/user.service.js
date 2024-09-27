@@ -390,9 +390,10 @@ let UserService = class UserService {
             .populate({
             path: 'savedService.service',
         });
+        const count = (await this.Usermodel.findById(userId))?.savedService?.length;
+        const pagination = this.apiService.makePagination(page, limit, count);
         return {
-            page,
-            limit,
+            pagination,
             savedService: user.savedService,
         };
     }
@@ -409,9 +410,10 @@ let UserService = class UserService {
             .populate({
             path: 'requestedService.service',
         });
+        const count = (await this.Usermodel.findById(userId))?.requestedService?.length;
+        const pagination = this.apiService.makePagination(page, limit, count);
         return {
-            page,
-            limit,
+            pagination,
             requestedService: user.requestedService,
         };
     }

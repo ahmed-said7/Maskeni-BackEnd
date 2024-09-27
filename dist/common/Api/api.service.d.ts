@@ -24,6 +24,7 @@ export declare class ApiService<T, I extends IQuery> {
     private search;
     private select;
     private pagination;
+    makePagination(page: number, limit: number, count: number): Pagination;
     getAllDocs(query: Query<T[], T>, queryObj: I, obj?: {}, fields?: string[]): Promise<{
         query: Query<T[], T>;
         paginationObj: Pagination;

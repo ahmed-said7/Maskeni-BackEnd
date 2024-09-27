@@ -103,6 +103,24 @@ export class ApiService<T, I extends IQuery> {
       .limit(this.paginationObj.limit);
     return this;
   }
+  makePagination(page: number, limit: number, count: number) {
+    const paginationObj: Pagination = {};
+    const skip = (page - 1) * limit;
+    paginationObj.currentPage = page;
+    paginationObj.limit = limit;
+    paginationObj.skip = skip;
+    paginationObj.count = count;
+    paginationObj.numOfPages = Math.ceil(
+      paginationObj.count / paginationObj.limit,
+    );
+    if (page > 0) {
+      paginationObj.previousPage = page - 1;
+    }
+    if (page * limit < count) {
+      paginationObj.nextPage = page + 1;
+    }
+    return paginationObj;
+  }
   getAllDocs(
     query: Query<T[], T>,
     queryObj: I,

@@ -85,6 +85,22 @@ let ApiService = class ApiService {
             .limit(this.paginationObj.limit);
         return this;
     }
+    makePagination(page, limit, count) {
+        const paginationObj = {};
+        const skip = (page - 1) * limit;
+        paginationObj.currentPage = page;
+        paginationObj.limit = limit;
+        paginationObj.skip = skip;
+        paginationObj.count = count;
+        paginationObj.numOfPages = Math.ceil(paginationObj.count / paginationObj.limit);
+        if (page > 0) {
+            paginationObj.previousPage = page - 1;
+        }
+        if (page * limit < count) {
+            paginationObj.nextPage = page + 1;
+        }
+        return paginationObj;
+    }
     getAllDocs(query, queryObj, obj = {}, fields) {
         this.query = query;
         this.queryObj = queryObj;

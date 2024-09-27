@@ -239,10 +239,14 @@ export class UserService {
     if (!user) {
       throw new HttpException('post not found', 400);
     }
-    return {
-      totalPages: user.followersCount,
+    // const result = (await this.Usermodel.findById(userId))?.requestedService;
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      user.followersCount,
+    );
+    return {
+      pagination,
       followers: user.followers,
     };
   }
@@ -264,10 +268,14 @@ export class UserService {
     if (!user) {
       throw new HttpException('post not found', 400);
     }
-    return {
-      totalPages: user.followingCount,
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      user.followingCount,
+    );
+    return {
+      // totalPages: user.followingCount,
+      pagination,
       followers: user.following,
     };
   }
@@ -284,9 +292,14 @@ export class UserService {
       .populate({
         path: 'savedShare.share',
       });
-    return {
+    const result = (await this.Usermodel.findById(userId))?.savedService;
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      result.length,
+    );
+    return {
+      pagination,
       savedShare: user.savedShare,
     };
   }
@@ -303,9 +316,14 @@ export class UserService {
       .populate({
         path: 'savedQuestion.question',
       });
-    return {
+    const result = (await this.Usermodel.findById(userId))?.savedQuestion;
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      result.length,
+    );
+    return {
+      pagination,
       savedQuestion: user.savedQuestion,
     };
   }
@@ -322,9 +340,14 @@ export class UserService {
       .populate({
         path: 'savedVoluntary.voluntary',
       });
-    return {
+    const result = (await this.Usermodel.findById(userId))?.savedVoluntary;
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      result.length,
+    );
+    return {
+      pagination,
       savedVoluntary: user.savedVoluntary,
     };
   }
@@ -341,9 +364,14 @@ export class UserService {
       .populate({
         path: 'savedGroupPost.post',
       });
-    return {
+    const result = (await this.Usermodel.findById(userId))?.savedGroupPost;
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      result.length,
+    );
+    return {
+      pagination,
       savedVoluntary: user.savedVoluntary,
     };
   }
@@ -360,9 +388,14 @@ export class UserService {
       .populate({
         path: 'savedEvent.event',
       });
-    return {
+    const result = (await this.Usermodel.findById(userId))?.savedEvent;
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      result.length,
+    );
+    return {
+      pagination,
       savedEvent: user.savedEvent,
     };
   }
@@ -379,9 +412,14 @@ export class UserService {
       .populate({
         path: 'savedService.service',
       });
-    return {
+    const result = (await this.Usermodel.findById(userId))?.savedService;
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      result.length,
+    );
+    return {
+      pagination,
       savedService: user.savedService,
     };
   }
@@ -398,9 +436,14 @@ export class UserService {
       .populate({
         path: 'requestedService.service',
       });
-    return {
+    const result = (await this.Usermodel.findById(userId))?.requestedService;
+    const pagination = this.apiService.makePagination(
       page,
       limit,
+      result.length,
+    );
+    return {
+      pagination,
       requestedService: user.requestedService,
     };
   }
