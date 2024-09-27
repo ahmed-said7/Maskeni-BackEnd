@@ -25,18 +25,8 @@ export class AnalysisService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(Address.name) private addressModel: Model<AddressDocument>,
   ) {}
-  async getPeopleByQuarterNotInArray(
-    // quarterIdsToExclude: Types.ObjectId[], // Array of quarters to exclude
-    page: string, // For pagination: number of records to skip
-    limit: string, // For pagination: number of records to return
-  ) {
+  async getPeopleByQuarterNotInArray(page: string, limit: string) {
     const result = await this.addressModel.aggregate([
-      // Stage 1: Filter quarters that are not in the excluded array
-      // {
-      //   $match: {
-      //     quarter: { $nin: quarterIdsToExclude }, // Exclude these quarters
-      //   },
-      // },
       // Stage 2: Group by quarter and user to ensure unique users
       {
         $group: {
@@ -50,20 +40,32 @@ export class AnalysisService {
           numberOfPeople: { $sum: 1 }, // Count unique users in each quarter
         },
       },
+      // Log to check the current state before lookup
+      {
+        $project: {
+          _id: 1, // Include _id for lookup
+          numberOfPeople: 1,
+        },
+      },
       // Optional: Populate the quarter information if needed
+      {
+        $addFields: {
+          quarterIdAsObjectId: { $toObjectId: '$_id' }, // Convert _id (quarter) to ObjectId
+        },
+      },
+      // Stage 5: Populate the quarter information using the new ObjectId field
       {
         $lookup: {
           from: 'quarters', // The collection for the Quarter schema
-          localField: '_id',
-          foreignField: '_id',
+          localField: 'quarterIdAsObjectId', // Use the converted ObjectId field
+          foreignField: '_id', // Match with _id in the quarters collection
           as: 'quarterInfo',
         },
       },
-      // Stage 4: Apply pagination using skip and limit
       { $skip: (parseInt(page) - 1) * parseInt(limit) },
       { $limit: parseInt(limit) },
     ]);
-
+    // Log the aggregation result
     return result;
   }
   async getAllDocs() {

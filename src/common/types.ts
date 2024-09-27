@@ -21,7 +21,7 @@ export class FindQuery {
     example: '1',
   })
   @IsOptional()
-  page?: string = '1';
+  page?: string;
 
   // @ApiPropertyOptional({
   //   description: 'The sort order for the results',
@@ -41,7 +41,6 @@ export class FindQuery {
     description: 'The number of items to return per page',
     example: '10',
   })
-  @IsNumber()
   @IsOptional()
   limit?: string = '10';
 

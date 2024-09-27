@@ -1,12 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsString, IsNotEmpty } from 'class-validator';
+import { IsMongoId } from 'class-validator';
 
 export class CreateAddressDto {
-  @IsNotEmpty()
-  @IsString()
-  @ApiProperty({
-    description: 'The ID of the user associated with the address',
-  })
   user: string;
 
   @IsMongoId()

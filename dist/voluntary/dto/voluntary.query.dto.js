@@ -25,12 +25,6 @@ __decorate([
 ], QueryVoluntaryDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsMongoId)(),
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Filter by the MongoDB ID of the user' }),
-    __metadata("design:type", String)
-], QueryVoluntaryDto.prototype, "user", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
     (0, swagger_1.ApiPropertyOptional)({
         description: 'Filter by start date of the voluntary activity',
     }),

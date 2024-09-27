@@ -16,14 +16,6 @@ class CreateAddressDto {
 }
 exports.CreateAddressDto = CreateAddressDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)({
-        description: 'The ID of the user associated with the address',
-    }),
-    __metadata("design:type", String)
-], CreateAddressDto.prototype, "user", void 0);
-__decorate([
     (0, class_validator_1.IsMongoId)(),
     (0, swagger_1.ApiProperty)({
         description: 'The ID of the city',

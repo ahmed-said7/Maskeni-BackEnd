@@ -9,9 +9,6 @@ export class QueryVoluntaryDto extends FindQuery {
   })
   date?: string;
 
-  @IsOptional()
-  @IsMongoId()
-  @ApiPropertyOptional({ description: 'Filter by the MongoDB ID of the user' })
   user?: string;
 
   @IsOptional()

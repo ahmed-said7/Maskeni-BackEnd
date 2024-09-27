@@ -11,6 +11,7 @@ import { Question, QuestionSchema } from 'src/question/question.schema';
 import { UserSchema } from 'src/user/user.schema';
 import { AdminSchema } from 'src/admin/admin.schema';
 import { Address, AddressSchema } from 'src/address/address.schema';
+import { Quarter, QuarterSchema } from 'src/quarter/quarter.schema';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { Address, AddressSchema } from 'src/address/address.schema';
       { name: 'User', schema: UserSchema },
       { name: 'Admin', schema: AdminSchema },
       { name: Address.name, schema: AddressSchema },
+      { name: Quarter.name, schema: QuarterSchema },
     ]),
   ],
   controllers: [AnalysisController],
