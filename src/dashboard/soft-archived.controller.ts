@@ -110,4 +110,19 @@ export class SoftArchiveController {
   ) {
     return this.softArchiveService.softArchivePosts(id, updateArchivedDto);
   }
+  @Patch('groups/:id')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the group to soft archive' })
+  @ApiBody({ type: DashboardUpdateArchivedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft archive the group successfully.',
+  })
+  async softArchiveGroup(
+    @Param('id') id: string,
+    @Body() updateArchivedDto: DashboardUpdateArchivedDto,
+  ) {
+    return this.softArchiveService.softArchiveGroups(id, updateArchivedDto);
+  }
 }

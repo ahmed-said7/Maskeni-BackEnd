@@ -65,4 +65,12 @@ export class QueryAllController {
   async getAllPosts(@Query() query: DashboardSearchDto) {
     return this.dashboardAllService.getAllPosts(query);
   }
+  @Get('groups')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardSearchDto, required: false })
+  @ApiResponse({ status: 200, description: 'Retrieve all groups.' })
+  async getAllGroups(@Query() query: DashboardSearchDto) {
+    return this.dashboardAllService.getAllGroups(query);
+  }
 }

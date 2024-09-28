@@ -9,6 +9,7 @@ import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardArchivedDto } from './dto/dashboard.query.dto';
+import { Group, GroupDocument } from 'src/group/group.schema';
 
 @Injectable()
 export class DashboardArchivedService {
@@ -21,6 +22,7 @@ export class DashboardArchivedService {
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
     private apiService: ApiService<any, any>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
   ) {}
   async getAllArchivedQuestions(obj: DashboardArchivedDto) {
     // obj.isArchived = true;
@@ -122,5 +124,21 @@ export class DashboardArchivedService {
       })
       .setOptions({ skipFilter: true });
     return { posts, pagination: paginationObj };
+  }
+  async getAllArchivedGroups(obj: DashboardArchivedDto) {
+    // obj.isArchived = true;
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.groupModel.find(),
+      obj,
+      { isArchived: true },
+    );
+    const groups = await query
+      .populate({
+        path: 'admin',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .setOptions({ skipFilter: true });
+    return { groups, pagination: paginationObj };
   }
 }

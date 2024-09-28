@@ -110,4 +110,19 @@ export class SoftDeleteController {
   ) {
     return this.softDeleteService.softDeletePosts(id, updateDeletedDto);
   }
+  @Patch('groups/:id')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the group to soft delete' })
+  @ApiBody({ type: DashboardUpdateDeletedDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Soft delete the group successfully.',
+  })
+  async softDeleteGroup(
+    @Param('id') id: string,
+    @Body() updateDeletedDto: DashboardUpdateDeletedDto,
+  ) {
+    return this.softDeleteService.softDeleteGroups(id, updateDeletedDto);
+  }
 }

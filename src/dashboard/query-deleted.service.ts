@@ -9,6 +9,7 @@ import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardDeletedDto } from './dto/dashboard.query.dto';
+import { Group, GroupDocument } from 'src/group/group.schema';
 
 @Injectable()
 export class DashboardDeletedService {
@@ -21,6 +22,7 @@ export class DashboardDeletedService {
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
     private apiService: ApiService<any, any>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
   ) {}
   async getAllDeletedQuestions(obj: DashboardDeletedDto) {
     // obj.isDeleted = true;
@@ -85,6 +87,22 @@ export class DashboardDeletedService {
       })
       .setOptions({ skipFilter: true });
     return { voluntary, pagination: paginationObj };
+  }
+  async getAllDeletedGroup(obj: DashboardDeletedDto) {
+    // obj.isDeleted = true;
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.groupModel.find(),
+      obj,
+      { isDeleted: true },
+    );
+    const groups = await query
+      .populate({
+        path: 'admin',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .setOptions({ skipFilter: true });
+    return { groups, pagination: paginationObj };
   }
   async getAllDeletedService(obj: DashboardDeletedDto) {
     // obj.isDeleted = true;

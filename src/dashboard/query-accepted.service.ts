@@ -9,6 +9,7 @@ import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardAcceptedDto } from './dto/dashboard.query.dto';
+import { Group, GroupDocument } from 'src/group/group.schema';
 
 @Injectable()
 export class DashboardAcceptedService {
@@ -20,6 +21,7 @@ export class DashboardAcceptedService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
     private apiService: ApiService<any, any>,
   ) {}
   async getAllAcceptedQuestions(obj: DashboardAcceptedDto) {
@@ -93,23 +95,37 @@ export class DashboardAcceptedService {
       .setOptions({ skipFilter: true });
     return { events, pagination: paginationObj };
   }
-  // async getAllAcceptedPosts(obj: DashboardAcceptedDto) {
-  //   const { query, paginationObj } = await this.apiService.getAllDocs(
-  //     this.postModel.find(),
-  //     obj,
-  //   );
-  //   const posts = await query
-  //     .populate({
-  //       path: 'user',
-  //       model: 'User',
-  //       select: 'mobile name icon',
-  //     })
-  //     .populate({
-  //       path: 'group',
-  //       model: 'Group',
-  //       select: 'name image',
-  //     })
-  //     .setOptions({ skipFilter: true });
-  //   return { posts, pagination: paginationObj };
-  // }
+  async getAllAcceptedPosts(obj: DashboardAcceptedDto) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.postModel.find(),
+      obj,
+    );
+    const posts = await query
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'group',
+        model: 'Group',
+        select: 'name image',
+      })
+      .setOptions({ skipFilter: true });
+    return { posts, pagination: paginationObj };
+  }
+  async getAllAcceptedGroups(obj: DashboardAcceptedDto) {
+    const { query, paginationObj } = await this.apiService.getAllDocs(
+      this.groupModel.find(),
+      obj,
+    );
+    const groups = await query
+      .populate({
+        path: 'admin',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .setOptions({ skipFilter: true });
+    return { groups, pagination: paginationObj };
+  }
 }

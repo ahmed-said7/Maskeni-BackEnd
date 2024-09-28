@@ -8,6 +8,7 @@ import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardUpdateDeletedDto } from './dto/dashboard.query.dto';
+import { Group, GroupDocument } from 'src/group/group.schema';
 
 @Injectable()
 export class SoftDeleteService {
@@ -19,6 +20,7 @@ export class SoftDeleteService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
   ) {}
   async softDeleteQuestions(id: string, obj: DashboardUpdateDeletedDto) {
     const question = await this.questionModel
@@ -133,5 +135,24 @@ export class SoftDeleteService {
       throw new NotFoundException(`post with ID ${id} not found`);
     }
     return { post };
+  }
+  async softDeleteGroups(id: string, obj: DashboardUpdateDeletedDto) {
+    const group = await this.groupModel
+      .findOneAndUpdate(
+        {
+          _id: id,
+          isDeleted: !obj.isDeleted,
+        },
+        {
+          isDeleted: obj.isDeleted,
+          isAccepted: false,
+          isArchived: false,
+        },
+      )
+      .setOptions({ skipFilter: true });
+    if (!group) {
+      throw new NotFoundException(`group with ID ${id} not found`);
+    }
+    return { group };
   }
 }

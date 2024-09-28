@@ -70,4 +70,12 @@ export class DashboardArchivedController {
   async getAllArchivedPosts(@Query() query: DashboardArchivedDto) {
     return this.dashboardArchivedService.getAllArchivedPosts(query);
   }
+  @Get('groups')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardArchivedDto, required: false })
+  @ApiResponse({ status: 200, description: 'Retrieve all archived groups.' })
+  async getAllArchivedGroups(@Query() query: DashboardArchivedDto) {
+    return this.dashboardArchivedService.getAllArchivedGroups(query);
+  }
 }

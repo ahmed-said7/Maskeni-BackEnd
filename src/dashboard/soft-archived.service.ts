@@ -8,6 +8,7 @@ import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardUpdateArchivedDto } from './dto/dashboard.query.dto';
+import { Group, GroupDocument } from 'src/group/group.schema';
 
 @Injectable()
 export class SoftArchiveService {
@@ -19,6 +20,7 @@ export class SoftArchiveService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
   ) {}
   async softArchiveQuestions(id: string, obj: DashboardUpdateArchivedDto) {
     const question = await this.questionModel
@@ -133,5 +135,24 @@ export class SoftArchiveService {
       throw new NotFoundException(`post with ID ${id} not found`);
     }
     return { post };
+  }
+  async softArchiveGroups(id: string, obj: DashboardUpdateArchivedDto) {
+    const group = await this.groupModel
+      .findOneAndUpdate(
+        {
+          _id: id,
+          isArchived: !obj.isArchived,
+        },
+        {
+          isArchived: obj.isArchived,
+          isAccepted: false,
+          isDeleted: false,
+        },
+      )
+      .setOptions({ skipFilter: true });
+    if (!group) {
+      throw new NotFoundException(`group with ID ${id} not found`);
+    }
+    return { group };
   }
 }

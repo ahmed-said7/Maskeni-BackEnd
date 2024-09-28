@@ -8,6 +8,7 @@ import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardUpdateAcceptedDto } from './dto/dashboard.query.dto';
+import { Group, GroupDocument } from 'src/group/group.schema';
 
 @Injectable()
 export class SoftAcceptService {
@@ -19,6 +20,7 @@ export class SoftAcceptService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
   ) {}
   async softAcceptQuestions(id: string, obj: DashboardUpdateAcceptedDto) {
     const question = await this.questionModel
@@ -115,23 +117,42 @@ export class SoftAcceptService {
     }
     return { service };
   }
-  // async softAcceptPosts(id: string, obj: DashboardUpdateAcceptedDto) {
-  //   const post = await this.postModel
-  //     .findOneAndUpdate(
-  //       {
-  //         _id: id,
-  //         isAccepted: !obj.isAccepted,
-  //       },
-  //       {
-  //         isAccepted: obj.isAccepted,
-  //         isDeleted: false,
-  //         isArchived: false,
-  //       },
-  //     )
-  //     .setOptions({ skipFilter: true });
-  //   if (!post) {
-  //     throw new NotFoundException(`post with ID ${id} not found`);
-  //   }
-  //   return { post };
-  // }
+  async softAcceptGroup(id: string, obj: DashboardUpdateAcceptedDto) {
+    const group = await this.groupModel
+      .findOneAndUpdate(
+        {
+          _id: id,
+          isAccepted: !obj.isAccepted,
+        },
+        {
+          isAccepted: obj.isAccepted,
+          isDeleted: false,
+          isArchived: false,
+        },
+      )
+      .setOptions({ skipFilter: true });
+    if (!group) {
+      throw new NotFoundException(`group with ID ${id} not found`);
+    }
+    return { group };
+  }
+  async softAcceptPosts(id: string, obj: DashboardUpdateAcceptedDto) {
+    const post = await this.postModel
+      .findOneAndUpdate(
+        {
+          _id: id,
+          isAccepted: !obj.isAccepted,
+        },
+        {
+          isAccepted: obj.isAccepted,
+          isDeleted: false,
+          isArchived: false,
+        },
+      )
+      .setOptions({ skipFilter: true });
+    if (!post) {
+      throw new NotFoundException(`post with ID ${id} not found`);
+    }
+    return { post };
+  }
 }

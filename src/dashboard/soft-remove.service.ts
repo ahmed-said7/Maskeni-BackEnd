@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EventDocument } from 'src/event/event.schema';
+import { Group, GroupDocument } from 'src/group/group.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
 import { Question, QuestionDocument } from 'src/question/question.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
@@ -18,6 +19,7 @@ export class SoftRemoveService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
   ) {}
   async softRemoveQuestions(id: string) {
     const question = await this.questionModel
@@ -84,5 +86,15 @@ export class SoftRemoveService {
       throw new NotFoundException(`post with ID ${id} not found`);
     }
     return { post };
+  }
+  async softRemoveGroup(id: string) {
+    const group = await this.groupModel
+      .findOneAndDelete({ _id: id })
+      .setOptions({ skipFilter: true });
+    if (!group) {
+      throw new NotFoundException(`
+        group with ID ${id} not found`);
+    }
+    return { group };
   }
 }

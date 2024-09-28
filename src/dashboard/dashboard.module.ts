@@ -25,6 +25,7 @@ import { SoftRemoveController } from './soft-remove.controller';
 import { SoftDeleteController } from './soft-delete.controller';
 import { QueryAllController } from './query-all.controller';
 import { QueryAllService } from './query-all.service';
+import { Group, GroupSchema } from 'src/group/group.schema';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { QueryAllService } from './query-all.service';
       { name: Voluntary.name, schema: VoluntarySchema },
       { name: User.name, schema: UserSchema },
       { name: Admin.name, schema: AdminSchema },
+      { name: Group.name, schema: GroupSchema },
     ]),
   ],
   controllers: [

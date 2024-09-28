@@ -82,4 +82,12 @@ export class DashboardDeletedController {
   async getAllDeletedPosts(@Query() query: DashboardDeletedDto) {
     return this.dashboardDeletedService.getAllDeletedPosts(query);
   }
+  @Get('groups')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiQuery({ type: DashboardDeletedDto, required: false })
+  @ApiResponse({ status: 200, description: 'Retrieve all soft-deleted group.' })
+  async getAllDeletedGroups(@Query() query: DashboardDeletedDto) {
+    return this.dashboardDeletedService.getAllDeletedGroup(query);
+  }
 }

@@ -69,4 +69,12 @@ export class SoftRemoveController {
   async softRemovePost(@Param('id') id: string) {
     return this.softRemoveService.softRemovePosts(id);
   }
+  @Delete('groups/:id')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  @ApiParam({ name: 'id', description: 'ID of the group to soft remove' })
+  @ApiResponse({ description: 'Soft removed the group successfully.' })
+  async softRemoveGroups(@Param('id') id: string) {
+    return this.softRemoveService.softRemoveGroup(id);
+  }
 }
