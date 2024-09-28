@@ -72,7 +72,9 @@ export class QuarterService {
   }
 
   async remove(id: string) {
-    const result = await this.quarterModel.findByIdAndDelete(id);
+    const result = await this.quarterModel.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
     if (!result) {
       throw new NotFoundException(`Quarter with ID ${id} not found`);
     }

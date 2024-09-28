@@ -4,7 +4,11 @@ import { HydratedDocument, Types } from 'mongoose';
 @Schema()
 export class City {
   @Prop({ type: String })
-  name: string;
+  nameAr: string;
+  @Prop({ type: String })
+  nameEn: string;
+  @Prop({ type: String })
+  image: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Country' })
   country: Types.ObjectId;
@@ -21,7 +25,7 @@ export class City {
     type: string;
     coordinates: [number, number][][];
   };
-  @Prop({ type: Boolean })
+  @Prop({ type: Boolean, default: false })
   isDeleted: boolean;
 }
 export type CityDocument = HydratedDocument<City>;

@@ -23,8 +23,16 @@ class InnerArrayDto {
 
 export class CreateCityDto {
   @IsString()
-  @ApiProperty({ description: 'Name of the city' })
-  name: string;
+  @ApiProperty({ description: 'arabic Name of the city.' })
+  nameAr: string;
+
+  @IsString()
+  @ApiProperty({ description: 'english Name of the city.' })
+  nameEn: string;
+
+  @IsString()
+  @ApiProperty({ description: 'image of the city.' })
+  image: string;
 
   location: object;
 

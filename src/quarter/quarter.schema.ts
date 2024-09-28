@@ -28,6 +28,9 @@ export class Quarter {
 
   @Prop({ type: Types.ObjectId, ref: 'City' })
   city: Types.ObjectId;
+
+  @Prop({ type: Boolean, default: false })
+  isDeleted: boolean;
 }
 export type QuarterDocument = HydratedDocument<Quarter>;
 export const QuarterSchema = SchemaFactory.createForClass(Quarter);

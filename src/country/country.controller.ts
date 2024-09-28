@@ -32,12 +32,12 @@ export class CountryController {
     return this.countryService.create(body);
   }
 
-  @Get('all')
-  @ApiOperation({ summary: 'Get all countries' })
-  @ApiResponse({ status: 200, description: 'List of all countries.' })
-  async findAll() {
-    return this.countryService.findAll();
-  }
+  // @Get('all')
+  // @ApiOperation({ summary: 'Get all countries' })
+  // @ApiResponse({ status: 200, description: 'List of all countries.' })
+  // async findAll() {
+  //   return this.countryService.findAll();
+  // }
 
   @Get()
   @ApiOperation({ summary: 'Get countries with pagination and filters' })

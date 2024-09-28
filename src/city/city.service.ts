@@ -68,7 +68,9 @@ export class CityService {
   }
 
   async remove(id: string) {
-    const city = await this.cityModel.findByIdAndDelete(id);
+    const city = await this.cityModel.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
     if (!city) {
       throw new NotFoundException(`City with ID ${id} not found`);
     }

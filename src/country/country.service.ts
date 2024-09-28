@@ -85,7 +85,9 @@ export class CountryService {
   }
 
   async remove(id: string) {
-    const result = await this.countryModel.findByIdAndDelete(id);
+    const result = await this.countryModel.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
     if (!result) {
       throw new NotFoundException(`Quarter with ID ${id} not found`);
     }

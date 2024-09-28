@@ -32,12 +32,12 @@ export class CityController {
     return this.cityService.create(createCityDto);
   }
 
-  @Get('all')
-  @ApiOperation({ summary: 'Get all cities' }) // Operation summary for Swagger
-  @ApiResponse({ status: 200, description: 'List of cities.' }) // Successful response
-  async findAll(@Query('country') country: string) {
-    return this.cityService.findAll({ country });
-  }
+  // @Get('all')
+  // @ApiOperation({ summary: 'Get all cities' }) // Operation summary for Swagger
+  // @ApiResponse({ status: 200, description: 'List of cities.' }) // Successful response
+  // async findAll(@Query('country') country: string) {
+  //   return this.cityService.findAll({ country });
+  // }
 
   @Get()
   @ApiOperation({ summary: 'Get cities with query filters' }) // Operation summary for Swagger

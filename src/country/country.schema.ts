@@ -22,7 +22,7 @@ export class Country {
     type: string;
     coordinates: [number, number][][];
   };
-  @Prop({ type: Boolean })
+  @Prop({ type: Boolean, default: false })
   isDeleted: boolean;
 }
 export type CountryDocument = HydratedDocument<Country>;

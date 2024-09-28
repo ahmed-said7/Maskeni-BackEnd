@@ -8,6 +8,7 @@ import { CityModule } from 'src/city/city.module';
 import { AdminSchema } from 'src/admin/admin.schema';
 import { UserSchema } from 'src/user/user.schema';
 import { ApiModule } from 'src/common/Api/api.module';
+import { SearchQuery } from 'src/share/share.module';
 
 @Module({
   imports: [
@@ -20,6 +21,13 @@ import { ApiModule } from 'src/common/Api/api.module';
         useFactory: () => {
           const schema = QuarterSchema;
           schema.index({ location: '2dsphere' }); // Adding the 2dsphere index
+          schema.pre<SearchQuery>(/^find/, function () {
+            if (!this.getOptions().skipFilter) {
+              this.find({
+                isDeleted: false,
+              });
+            }
+          });
           return schema;
         },
       },
