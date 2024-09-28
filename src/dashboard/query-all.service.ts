@@ -118,7 +118,7 @@ export class QueryAllService {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.groupModel.find(),
       obj,
-      { isArchived: true },
+      // { isArchived: true },
     );
     const groups = await query
       .populate({
