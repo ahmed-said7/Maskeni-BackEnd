@@ -32,12 +32,12 @@ export class QuarterController {
     return this.quarterService.create(body);
   }
 
-  @Get('all')
-  @ApiOperation({ summary: 'Retrieve all quarters' })
-  @ApiResponse({ status: 200, description: 'List of all quarters.' })
-  async findAll(@Query('city') city: string) {
-    return this.quarterService.findAll({ city });
-  }
+  // @Get('all')
+  // @ApiOperation({ summary: 'Retrieve all quarters' })
+  // @ApiResponse({ status: 200, description: 'List of all quarters.' })
+  // async findAll(@Query('city') city: string) {
+  //   return this.quarterService.findAll({ city });
+  // }
 
   @Get()
   @ApiOperation({ summary: 'Find quarters with optional query parameters' })

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId } from 'class-validator';
+import { IsArray, IsMongoId, IsNumber, Max, Min } from 'class-validator';
 
 export class CreateAddressDto {
   user: string;
@@ -21,4 +21,13 @@ export class CreateAddressDto {
     description: 'The ID of the quarter',
   })
   quarter: string;
+
+  @IsArray()
+  @Min(2)
+  @Max(2)
+  @IsNumber({}, { each: true })
+  @ApiProperty({
+    description: 'location of user',
+  })
+  location: number;
 }

@@ -14,6 +14,8 @@ export class Address {
   quarter: Types.ObjectId;
   @Prop({ type: Types.ObjectId, ref: 'User' })
   user: Types.ObjectId;
+  @Prop({ type: [Number] })
+  location: [number, number];
 }
 export type AddressDocument = HydratedDocument<Address>;
 export const AddressSchema = SchemaFactory.createForClass(Address);
