@@ -9,7 +9,7 @@ export class UploadService {
     const uploaded = [];
     for await (const part of parts) {
       if (part.file) {
-        console.log(part.file._readableState);
+        console.log(part.file._readableState.buffer);
         const filename = `${v4()}-${Date.now()}.${part.mimetype.split('/')[1]}`;
         const valid = this.validateImage(part.file._readableState.buffer[0]);
         if (!valid) {
