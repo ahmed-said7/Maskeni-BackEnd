@@ -62,12 +62,12 @@ export class DashboardAcceptedController {
     return this.dashboardAcceptedService.getAllAcceptedService(query);
   }
 
-  @Get('posts')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiQuery({ type: DashboardAcceptedDto, required: false })
-  @ApiResponse({ status: 200, description: 'Retrieve all accepted posts.' })
-  async getAllAcceptedPosts(@Query() query: DashboardAcceptedDto) {
-    return this.dashboardAcceptedService.getAllAcceptedPosts(query);
-  }
+  // @Get('posts')
+  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  // @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  // @ApiQuery({ type: DashboardAcceptedDto, required: false })
+  // @ApiResponse({ status: 200, description: 'Retrieve all accepted posts.' })
+  // async getAllAcceptedPosts(@Query() query: DashboardAcceptedDto) {
+  //   return this.dashboardAcceptedService.getAllAcceptedPosts(query);
+  // }
 }

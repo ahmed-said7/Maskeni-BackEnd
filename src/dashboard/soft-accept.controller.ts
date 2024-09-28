@@ -95,19 +95,19 @@ export class SoftAcceptController {
     return this.softAcceptService.softAcceptService(id, updateAcceptedDto);
   }
 
-  @Patch('posts/:id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the post to soft accept' })
-  @ApiBody({ type: DashboardUpdateAcceptedDto })
-  @ApiResponse({
-    status: 200,
-    description: 'Soft accept the post successfully.',
-  })
-  async softAcceptPost(
-    @Param('id') id: string,
-    @Body() updateAcceptedDto: DashboardUpdateAcceptedDto,
-  ) {
-    return this.softAcceptService.softAcceptPosts(id, updateAcceptedDto);
-  }
+  // @Patch('posts/:id')
+  // @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  // @Roles(All_Role.SuperAdmin, All_Role.Admin)
+  // @ApiParam({ name: 'id', description: 'ID of the post to soft accept' })
+  // @ApiBody({ type: DashboardUpdateAcceptedDto })
+  // @ApiResponse({
+  //   status: 200,
+  //   description: 'Soft accept the post successfully.',
+  // })
+  // async softAcceptPost(
+  //   @Param('id') id: string,
+  //   @Body() updateAcceptedDto: DashboardUpdateAcceptedDto,
+  // ) {
+  //   return this.softAcceptService.softAcceptPosts(id, updateAcceptedDto);
+  // }
 }

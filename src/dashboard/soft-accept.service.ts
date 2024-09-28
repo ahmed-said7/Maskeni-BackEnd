@@ -115,23 +115,23 @@ export class SoftAcceptService {
     }
     return { service };
   }
-  async softAcceptPosts(id: string, obj: DashboardUpdateAcceptedDto) {
-    const post = await this.postModel
-      .findOneAndUpdate(
-        {
-          _id: id,
-          isAccepted: !obj.isAccepted,
-        },
-        {
-          isAccepted: obj.isAccepted,
-          isDeleted: false,
-          isArchived: false,
-        },
-      )
-      .setOptions({ skipFilter: true });
-    if (!post) {
-      throw new NotFoundException(`post with ID ${id} not found`);
-    }
-    return { post };
-  }
+  // async softAcceptPosts(id: string, obj: DashboardUpdateAcceptedDto) {
+  //   const post = await this.postModel
+  //     .findOneAndUpdate(
+  //       {
+  //         _id: id,
+  //         isAccepted: !obj.isAccepted,
+  //       },
+  //       {
+  //         isAccepted: obj.isAccepted,
+  //         isDeleted: false,
+  //         isArchived: false,
+  //       },
+  //     )
+  //     .setOptions({ skipFilter: true });
+  //   if (!post) {
+  //     throw new NotFoundException(`post with ID ${id} not found`);
+  //   }
+  //   return { post };
+  // }
 }

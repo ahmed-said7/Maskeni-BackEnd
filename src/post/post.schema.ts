@@ -40,8 +40,8 @@ export class Post {
   savedCount: number;
   @Prop({ type: Boolean, default: false })
   isDeleted: boolean;
-  @Prop({ type: Boolean, default: false })
-  isAccepted: boolean;
+  // @Prop({ type: Boolean, default: false })
+  // isAccepted: boolean;
   @Prop({ type: Boolean, default: false })
   isArchived: boolean;
 }

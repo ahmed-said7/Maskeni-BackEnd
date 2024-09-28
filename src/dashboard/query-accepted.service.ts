@@ -93,23 +93,23 @@ export class DashboardAcceptedService {
       .setOptions({ skipFilter: true });
     return { events, pagination: paginationObj };
   }
-  async getAllAcceptedPosts(obj: DashboardAcceptedDto) {
-    const { query, paginationObj } = await this.apiService.getAllDocs(
-      this.postModel.find(),
-      obj,
-    );
-    const posts = await query
-      .populate({
-        path: 'user',
-        model: 'User',
-        select: 'mobile name icon',
-      })
-      .populate({
-        path: 'group',
-        model: 'Group',
-        select: 'name image',
-      })
-      .setOptions({ skipFilter: true });
-    return { posts, pagination: paginationObj };
-  }
+  // async getAllAcceptedPosts(obj: DashboardAcceptedDto) {
+  //   const { query, paginationObj } = await this.apiService.getAllDocs(
+  //     this.postModel.find(),
+  //     obj,
+  //   );
+  //   const posts = await query
+  //     .populate({
+  //       path: 'user',
+  //       model: 'User',
+  //       select: 'mobile name icon',
+  //     })
+  //     .populate({
+  //       path: 'group',
+  //       model: 'Group',
+  //       select: 'name image',
+  //     })
+  //     .setOptions({ skipFilter: true });
+  //   return { posts, pagination: paginationObj };
+  // }
 }
