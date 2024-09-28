@@ -291,6 +291,7 @@ export class UserService {
       })
       .populate({
         path: 'savedShare.share',
+        model: 'Share',
       });
     const result = (await this.Usermodel.findById(userId))?.savedService;
     const pagination = this.apiService.makePagination(
@@ -315,6 +316,7 @@ export class UserService {
       })
       .populate({
         path: 'savedQuestion.question',
+        model: 'Question',
       });
     const result = (await this.Usermodel.findById(userId))?.savedQuestion;
     const pagination = this.apiService.makePagination(
@@ -339,6 +341,7 @@ export class UserService {
       })
       .populate({
         path: 'savedVoluntary.voluntary',
+        model: 'Voluntary',
       });
     const result = (await this.Usermodel.findById(userId))?.savedVoluntary;
     const pagination = this.apiService.makePagination(
@@ -363,6 +366,7 @@ export class UserService {
       })
       .populate({
         path: 'savedGroupPost.post',
+        model: 'Post',
       });
     const result = (await this.Usermodel.findById(userId))?.savedGroupPost;
     const pagination = this.apiService.makePagination(
@@ -387,6 +391,7 @@ export class UserService {
       })
       .populate({
         path: 'savedEvent.event',
+        model: 'Event',
       });
     const result = (await this.Usermodel.findById(userId))?.savedEvent;
     const pagination = this.apiService.makePagination(
@@ -411,6 +416,7 @@ export class UserService {
       })
       .populate({
         path: 'savedService.service',
+        model: 'Service',
       });
     const result = (await this.Usermodel.findById(userId))?.savedService;
     const pagination = this.apiService.makePagination(
@@ -435,6 +441,7 @@ export class UserService {
       })
       .populate({
         path: 'requestedService.service',
+        model: 'Service',
       });
     const result = (await this.Usermodel.findById(userId))?.requestedService;
     const pagination = this.apiService.makePagination(
