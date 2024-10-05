@@ -10,6 +10,9 @@ import { CreateVoluntaryDto } from './dto/voluntary.create.dto';
 import { UpdateVoluntaryDto } from './dto/voluntary.update.dto';
 import { Voluntary, VoluntaryDocument } from './voluntary.schema';
 import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
+import { Country } from 'src/country/country.schema';
+import { City } from 'src/city/city.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
 
 @Injectable()
 export class VoluntaryService {
@@ -88,6 +91,21 @@ export class VoluntaryService {
         path: 'likes',
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
       });
     if (!voluntaryExists) {
       throw new HttpException('voluntary not found', 400);

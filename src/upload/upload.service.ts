@@ -15,12 +15,14 @@ export class UploadService {
 
   async uploadImage(files: Express.Multer.File[]) {
     const uploaded = [];
+    console.log(files);
     for (const file of files) {
       const valid = this.validateImage(file.buffer);
       if (!valid) {
         throw new HttpException('Invalid file type', 400);
       }
       const image = await this.uploadFile(file);
+      console.log(image);
       uploaded.push(image);
     }
     if (uploaded.length == 1) {

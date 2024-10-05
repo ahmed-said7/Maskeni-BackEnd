@@ -11,6 +11,9 @@ import { CreateEventDto } from './dto/create.event.dto';
 import { UpdateEventDto } from './dto/update.event.dto';
 import { Ticket, TicketDocument } from 'src/ticket/ticket.schema';
 import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
+import { Country } from 'src/country/country.schema';
+import { City } from 'src/city/city.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
 
 @Injectable()
 export class EventService {
@@ -78,6 +81,21 @@ export class EventService {
         path: 'likes',
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
       });
     if (!eventExists) {
       throw new HttpException('event not found', 400);
@@ -105,6 +123,21 @@ export class EventService {
         path: 'likes',
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
       });
     return { events, pagination: paginationObj };
   }

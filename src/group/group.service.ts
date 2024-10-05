@@ -9,6 +9,9 @@ import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
 import { Group_Privacy } from 'src/common/enum';
 import { QueryGroupDto } from './dto/query.group.dto';
+import { Country } from 'src/country/country.schema';
+import { City } from 'src/city/city.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
 
 @Injectable()
 export class GroupServices {
@@ -24,7 +27,22 @@ export class GroupServices {
       filter || {},
       ['name'],
     );
-    const groups = await query;
+    const groups = await query
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { groups, pagination: paginationObj };
   }
   async createGroup(body: CreateGroupDto, req: any) {

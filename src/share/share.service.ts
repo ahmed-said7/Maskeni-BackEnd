@@ -10,6 +10,9 @@ import { CreateShareDto } from './dto/create.share.dto';
 import { UpdateShareDto } from './dto/update.share.dto';
 import { QueryShareDto } from './dto/query.share.dto';
 import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
+import { Quarter } from 'src/quarter/quarter.schema';
+import { City } from 'src/city/city.schema';
+import { Country } from 'src/country/country.schema';
 
 @Injectable()
 export class ShareService {
@@ -96,6 +99,21 @@ export class ShareService {
         path: 'likes',
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
       });
     return { shares, pagination: paginationObj };
   }

@@ -10,6 +10,9 @@ import { QueryOfferedDto } from './dto/query.service.dto';
 import { CreateOfferedDto } from './dto/create.service.dto';
 import { UpdateOfferedDto } from './dto/update.service.dto';
 import { Offered, OfferedDocument } from './offered-service.schema';
+import { City } from 'src/city/city.schema';
+import { Country } from 'src/country/country.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
 
 @Injectable()
 export class OfferedService {
@@ -73,6 +76,21 @@ export class OfferedService {
         path: 'likes',
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
       });
     if (!serviceExists) {
       throw new HttpException('service not found', 400);

@@ -10,6 +10,9 @@ import { CreateShareDto } from 'src/share/dto/create.share.dto';
 import { UpdateQuestionDto } from './dto/update.question.dto';
 import { QueryQuestionDto } from './dto/query.question.dto';
 import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
+import { Country } from 'src/country/country.schema';
+import { City } from 'src/city/city.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
 
 @Injectable()
 export class QuestionService {
@@ -77,6 +80,21 @@ export class QuestionService {
         path: 'likes',
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
       });
     if (!questionExists) {
       throw new HttpException('question not found', 400);
