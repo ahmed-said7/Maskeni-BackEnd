@@ -40,14 +40,18 @@ export class CommentService {
     return newComment;
   }
   // Get all comments
-  async findAll(obj: any) {
-    const { query, paginationObj } = await this.apiService.getAllDocs(
-      this.commentModel.find(),
-      obj,
-    );
-    const comments = await query;
-    return { comments, pagination: paginationObj };
-  }
+  // async findAll(obj: any) {
+  //   const { query, paginationObj } = await this.apiService.getAllDocs(
+  //     this.commentModel.find(),
+  //     obj,
+  //   );
+  //   const comments = await query.populate({
+  //     path: 'user',
+  //     select: 'name mobile icon',
+  //     model: 'User',
+  //   });
+  //   return { comments, pagination: paginationObj };
+  // }
   // Update a comment by its ID
   async update(id: string, userId: string, updateCommentDto: UpdateCommentDto) {
     const result = await this.commentModel.findOneAndUpdate(
@@ -88,10 +92,17 @@ export class CommentService {
       obj,
       { _id: { $in: ids } },
     );
-    const comments = await query.populate({
-      path: 'replies',
-      options: { limit: 1 }, // Only load the first few replies (can increase limit)
-    });
+    const comments = await query
+      .populate({
+        path: 'replies',
+        options: { limit: 1 }, // Only load the first few replies (can increase limit)
+        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      })
+      .populate({
+        path: 'user',
+        select: 'name mobile icon',
+        model: 'User',
+      });
     return { comments, pagination: paginationObj };
   }
   async getCommentsReplies(commentId: string, obj: CommentQueryDto) {
