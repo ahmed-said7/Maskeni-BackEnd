@@ -118,6 +118,21 @@ export class OfferedService {
         path: 'likes',
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
       });
     return { services, pagination: paginationObj };
   }
