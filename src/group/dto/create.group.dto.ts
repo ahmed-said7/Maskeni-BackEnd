@@ -37,4 +37,10 @@ export class CreateGroupDto {
   @ApiProperty({ description: 'URL of the image representing the group' })
   @IsString()
   image: string;
+
+  @IsString()
+  @ApiProperty({
+    description: 'The details of the address',
+  })
+  addressDetails: string;
 }

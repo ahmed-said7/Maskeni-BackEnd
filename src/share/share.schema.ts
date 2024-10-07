@@ -70,6 +70,9 @@ export class Share {
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
   user: Types.ObjectId;
+
+  @Prop({ type: String })
+  addressDetails: string;
 }
 
 export type ShareDocument = HydratedDocument<Share>;

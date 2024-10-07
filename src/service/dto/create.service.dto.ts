@@ -47,4 +47,10 @@ export class CreateOfferedDto {
   @IsNumber()
   @ApiPropertyOptional() // Optional property for price
   price?: number; // Mark as optional with a '?'
+
+  @IsString()
+  @ApiProperty({
+    description: 'The details of the address',
+  })
+  addressDetails: string;
 }

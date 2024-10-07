@@ -39,6 +39,9 @@ export class Group {
 
   @Prop({ type: Boolean, default: false })
   isArchived: boolean;
+
+  @Prop({ type: String })
+  addressDetails: string;
 }
 export type GroupDocument = HydratedDocument<Group>;
 // Generate the schema for Mongoose using the SchemaFactory

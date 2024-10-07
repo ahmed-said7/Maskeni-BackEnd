@@ -33,4 +33,10 @@ export class CreateQuestionDto {
     type: [String],
   })
   images: string[];
+
+  @IsString()
+  @ApiProperty({
+    description: 'The details of the address',
+  })
+  addressDetails: string;
 }

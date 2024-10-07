@@ -28,6 +28,8 @@ export class Question {
   //   type: 'Point';
   //   coordinates: [number, number];
   // };
+  @Prop({ type: String })
+  addressDetails: string;
   @Prop({ type: Types.ObjectId, ref: City.name })
   city: Types.ObjectId;
   @Prop({ type: Types.ObjectId, ref: Country.name })

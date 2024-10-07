@@ -12,6 +12,12 @@ import { Event_Type } from 'src/common/types';
 
 export class CreateEventDto {
   @IsString()
+  @ApiProperty({
+    description: 'The details of the address',
+  })
+  addressDetails: string;
+
+  @IsString()
   @ApiProperty({ description: 'Name of the event' })
   name: string;
 

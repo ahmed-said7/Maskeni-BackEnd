@@ -27,6 +27,9 @@ export class Event {
   @Prop({ type: String, enum: Event_Type, default: Event_Type.community })
   type?: string;
 
+  @Prop({ type: String })
+  addressDetails: string;
+
   // @Prop({
   //   type: {
   //     type: String, // 'type' must be 'Point'

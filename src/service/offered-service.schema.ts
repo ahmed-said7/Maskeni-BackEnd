@@ -92,6 +92,9 @@ export class Offered {
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
   user: Types.ObjectId;
+
+  @Prop({ type: String })
+  addressDetails: string;
 }
 
 export type OfferedDocument = HydratedDocument<Offered>;

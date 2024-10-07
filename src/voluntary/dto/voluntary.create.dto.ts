@@ -60,5 +60,12 @@ export class CreateVoluntaryDto {
   @IsNumber()
   @ApiProperty({ description: 'Maximum age limit for participation' })
   endAge: number;
+
+  @IsString()
+  @ApiProperty({
+    description: 'The details of the address',
+  })
+  addressDetails: string;
+
   user: string;
 }

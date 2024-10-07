@@ -16,6 +16,8 @@ export class Address {
   user: Types.ObjectId;
   @Prop({ type: [Number] })
   location: [number, number];
+  @Prop({ type: String })
+  addressDetails: string;
 }
 export type AddressDocument = HydratedDocument<Address>;
 export const AddressSchema = SchemaFactory.createForClass(Address);

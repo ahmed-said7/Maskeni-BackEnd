@@ -24,4 +24,10 @@ export class CreateShareDto {
   @IsString({ each: true }) // Ensures each element in the array is a string
   @ApiProperty({ type: [String] }) // Specifies that this is an array of strings
   images: string[];
+
+  @IsString()
+  @ApiProperty({
+    description: 'The details of the address',
+  })
+  addressDetails: string;
 }

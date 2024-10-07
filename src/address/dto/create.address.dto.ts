@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsMongoId, IsNumber, Max, Min } from 'class-validator';
+import {
+  IsArray,
+  IsMongoId,
+  IsNumber,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class CreateAddressDto {
   user: string;
@@ -30,4 +37,10 @@ export class CreateAddressDto {
     description: 'location of user',
   })
   location: number;
+
+  @IsString()
+  @ApiProperty({
+    description: 'The details of the address',
+  })
+  addressDetails: string;
 }
