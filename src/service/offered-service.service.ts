@@ -137,10 +137,18 @@ export class OfferedService {
     return { services, pagination: paginationObj };
   }
   async addLike(serviceId: string, user: string) {
-    return this.reactionService.createLike(serviceId, user);
+    const result = await this.reactionService.createLike(serviceId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $addToSet: { favoriteService: serviceId },
+    });
+    return result;
   }
   async removeLike(serviceId: string, user: string) {
-    return this.reactionService.deleteLike(serviceId, user);
+    const result = await this.reactionService.deleteLike(serviceId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $pull: { favoriteService: serviceId },
+    });
+    return result;
   }
   async getLikes(serviceId: string, query: FindQuery) {
     return this.reactionService.getAllLikes(serviceId, query);

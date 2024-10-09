@@ -5,6 +5,7 @@ import { Gender_Type } from 'src/common/types';
 import { Post } from 'src/post/post.schema';
 import { Question } from 'src/question/question.schema';
 import { Offered } from 'src/service/offered-service.schema';
+import { OfferedService } from 'src/service/offered-service.service';
 import { Share } from 'src/share/share.schema';
 import { Voluntary } from 'src/voluntary/voluntary.schema';
 
@@ -173,6 +174,29 @@ export class User {
 
   @Prop({ type: Date })
   birthday: Date;
+
+  @Prop({ type: [Types.ObjectId], ref: Post.name })
+  favoriteGroupPost: Types.ObjectId[];
+
+  @Prop({ type: [Types.ObjectId], ref: Event.name })
+  favoriteEvent: Types.ObjectId[];
+
+  @Prop({ type: [Types.ObjectId], ref: Share.name })
+  favoriteShare: Types.ObjectId[];
+
+  @Prop({ type: [Types.ObjectId], ref: Question.name })
+  favoriteQuestion: Types.ObjectId[];
+
+  @Prop({
+    type: [Types.ObjectId],
+    ref: Voluntary.name,
+  })
+  favoriteVoluntary: Types.ObjectId[];
+  @Prop({
+    type: [Types.ObjectId],
+    ref: OfferedService.name,
+  })
+  favoriteService: Types.ObjectId[];
 }
 export type UserDocument = HydratedDocument<User>;
 export const UserSchema = SchemaFactory.createForClass(User);

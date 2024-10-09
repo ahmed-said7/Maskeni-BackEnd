@@ -168,10 +168,18 @@ export class EventService {
     return { events, pagination: paginationObj };
   }
   async addLike(eventId: string, user: string) {
-    return this.reactionService.createLike(eventId, user);
+    const result = await this.reactionService.createLike(eventId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $addToSet: { favoriteEvent: eventId },
+    });
+    return result;
   }
   async removeLike(eventId: string, user: string) {
-    return this.reactionService.deleteLike(eventId, user);
+    const result = await this.reactionService.deleteLike(eventId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $addToSet: { favoriteEvent: eventId },
+    });
+    return result;
   }
   async getLikes(eventId: string, query: FindQuery) {
     return this.reactionService.getAllLikes(eventId, query);

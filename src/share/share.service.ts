@@ -133,10 +133,18 @@ export class ShareService {
     return { shares, pagination: paginationObj };
   }
   async addLike(shareId: string, user: string) {
-    return this.reactionService.createLike(shareId, user);
+    const result = await this.reactionService.createLike(shareId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $addToSet: { favoriteShare: shareId },
+    });
+    return result;
   }
   async removeLike(shareId: string, user: string) {
-    return this.reactionService.deleteLike(shareId, user);
+    const result = await this.reactionService.deleteLike(shareId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $pull: { favoriteShare: shareId },
+    });
+    return result;
   }
   async getLikes(shareId: string, query: FindQuery) {
     return this.reactionService.getAllLikes(shareId, query);

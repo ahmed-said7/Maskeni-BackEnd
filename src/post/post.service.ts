@@ -136,7 +136,11 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     // await this.validateGroup(post.group.toString(), user);
-    return this.reactionService.createLike(postId, user);
+    const result = await this.reactionService.createLike(postId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $addToSet: { favoriteGroupPost: postId },
+    });
+    return result;
   }
   private async validateGroup(groupId: string, user: string) {
     let groupExist = await this.groupModel.findOne({
@@ -167,7 +171,11 @@ export class PostService {
       throw new HttpException('post not found', 400);
     }
     // await this.validateGroup(post.group.toString(), user);
-    return this.reactionService.deleteLike(postId, user);
+    const result = await this.reactionService.deleteLike(postId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $pull: { favoriteGroupPost: postId },
+    });
+    return result;
   }
   async getLikes(postId: string, user: string, query: FindQuery) {
     const post = await this.postModel.findOne({

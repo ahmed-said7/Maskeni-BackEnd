@@ -158,7 +158,11 @@ export class VoluntaryService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    return this.reactionService.createLike(voluntaryId, user);
+    const result = await this.reactionService.createLike(voluntaryId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $addToSet: { favoriteVoluntary: voluntaryId },
+    });
+    return result;
   }
   async removeLike(voluntaryId: string, user: string) {
     const post = await this.voluntaryModel.findOne({
@@ -167,7 +171,11 @@ export class VoluntaryService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    return this.reactionService.deleteLike(voluntaryId, user);
+    const result = await this.reactionService.deleteLike(voluntaryId, user);
+    await this.userModel.findByIdAndUpdate(user, {
+      $pull: { favoriteVoluntary: voluntaryId },
+    });
+    return result;
   }
   async getLikes(voluntaryId: string, query: FindQuery) {
     return this.reactionService.getAllLikes(voluntaryId, query);
