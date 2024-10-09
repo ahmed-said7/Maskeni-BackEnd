@@ -137,6 +137,9 @@ export class OfferedService {
     const user = await this.userModel.findById(userId);
     services = services.map((service) => {
       service.isLiked = user.favoriteService.includes(service._id);
+      service.isSaved = service.saved.some(
+        (ele) => ele.user.toString() == userId,
+      );
       return service;
     });
     return { services, pagination: paginationObj };

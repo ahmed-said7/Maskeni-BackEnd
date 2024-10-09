@@ -75,6 +75,8 @@ export class Question {
   user: Types.ObjectId;
   @Prop({ type: Boolean })
   isLiked: boolean;
+  @Prop({ type: Boolean })
+  isSaved: boolean;
 }
 
 export type QuestionDocument = HydratedDocument<Question>;

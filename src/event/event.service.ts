@@ -142,6 +142,7 @@ export class EventService {
     const IUser = await this.userModel.findById(userId);
     events = events.map((event) => {
       event.isLiked = IUser.favoriteEvent.includes(event._id);
+      event.isSaved = event.saved.some((ele) => ele.user.toString() == userId);
       return event;
     });
     return { events, pagination: paginationObj };

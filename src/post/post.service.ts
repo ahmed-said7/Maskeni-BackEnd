@@ -97,6 +97,7 @@ export class PostService {
     const IUser = await this.userModel.findById(user);
     posts = posts.map((post) => {
       post.isLiked = IUser.favoriteGroupPost.includes(post._id);
+      post.isSaved = post.saved.some((ele) => ele.user.toString() == user);
       return post;
     });
     return { posts, pagination: paginationObj };
@@ -134,6 +135,7 @@ export class PostService {
     const IUser = await this.userModel.findById(user);
     posts = posts.map((post) => {
       post.isLiked = IUser.favoriteGroupPost.includes(post._id);
+      post.isSaved = post.saved.some((ele) => ele.user.toString() == user);
       return post;
     });
     return { posts, pagination: paginationObj };

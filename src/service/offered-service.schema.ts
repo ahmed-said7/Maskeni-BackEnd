@@ -97,6 +97,8 @@ export class Offered {
   addressDetails: string;
   @Prop({ type: Boolean })
   isLiked: boolean;
+  @Prop({ type: Boolean })
+  isSaved: boolean;
 }
 
 export type OfferedDocument = HydratedDocument<Offered>;

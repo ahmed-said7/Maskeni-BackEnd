@@ -152,6 +152,7 @@ export class VoluntaryService {
     const user = await this.userModel.findById(userId);
     voluntary = voluntary.map((vol) => {
       vol.isLiked = user.favoriteVoluntary.includes(vol._id);
+      vol.isSaved = vol.saved.some((ele) => ele.user.toString() == userId);
       return vol;
     });
     return { voluntary, pagination: paginationObj };

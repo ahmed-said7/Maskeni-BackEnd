@@ -88,6 +88,8 @@ export class Voluntary {
   user: Types.ObjectId;
   @Prop({ type: Boolean })
   isLiked: boolean;
+  @Prop({ type: Boolean })
+  isSaved: boolean;
 }
 
 export type VoluntaryDocument = HydratedDocument<Voluntary>;

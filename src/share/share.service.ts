@@ -133,6 +133,7 @@ export class ShareService {
     const user = await this.userModel.findById(userId);
     shares = shares.map((share) => {
       share.isLiked = user.favoriteShare.includes(share._id);
+      share.isSaved = share.saved.some((ele) => ele.user.toString() == userId);
       return share;
     });
     return { shares, pagination: paginationObj };

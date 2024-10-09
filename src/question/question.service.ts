@@ -126,6 +126,9 @@ export class QuestionService {
     const user = await this.userModel.findById(userId);
     questions = questions.map((question) => {
       question.isLiked = user.favoriteQuestion.includes(question._id);
+      question.isSaved = question.saved.some(
+        (ele) => ele.user.toString() == userId,
+      );
       return question;
     });
     return { questions, pagination: paginationObj };

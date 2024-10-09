@@ -46,6 +46,8 @@ export class Post {
   // isAccepted: boolean;
   @Prop({ type: Boolean, default: false })
   isArchived: boolean;
+  @Prop({ type: Boolean })
+  isSaved: boolean;
 }
 
 export type PostDocument = HydratedDocument<Post>;
