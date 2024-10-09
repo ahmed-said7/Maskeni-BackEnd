@@ -14,6 +14,7 @@ import { UserFollowController } from './follow.controller';
 import { UserSavedController } from './saved.controller';
 import { QuarterModule } from 'src/quarter/quarter.module';
 import { SearchQuery } from 'src/share/share.module';
+import { UserFavoriteController } from './favorite.controller';
 
 @Module({
   controllers: [
@@ -22,6 +23,7 @@ import { SearchQuery } from 'src/share/share.module';
     UserProfileController,
     UserFollowController,
     UserSavedController,
+    UserFavoriteController,
   ],
   providers: [UserService],
   imports: [

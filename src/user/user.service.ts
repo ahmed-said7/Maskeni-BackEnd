@@ -454,4 +454,154 @@ export class UserService {
       requestedService: user.requestedService,
     };
   }
+  async getUserFavoriteShare(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        favoriteShare: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'favoriteShare',
+        model: 'Share',
+      });
+    const result = (await this.Usermodel.findById(userId))?.favoriteService;
+    const pagination = this.apiService.makePagination(
+      page,
+      limit,
+      result.length,
+    );
+    return {
+      pagination,
+      favoriteShare: user.favoriteShare,
+    };
+  }
+  async getUserFavoriteQuestion(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        favoriteQuestion: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'favoriteQuestion',
+        model: 'Question',
+      });
+    const result = (await this.Usermodel.findById(userId))?.favoriteQuestion;
+    const pagination = this.apiService.makePagination(
+      page,
+      limit,
+      result.length,
+    );
+    return {
+      pagination,
+      favoriteQuestion: user.favoriteQuestion,
+    };
+  }
+  async getUserFavoriteVoluntary(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        favoriteVoluntary: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'favoriteVoluntary',
+        model: 'Voluntary',
+      });
+    const result = (await this.Usermodel.findById(userId))?.favoriteVoluntary;
+    const pagination = this.apiService.makePagination(
+      page,
+      limit,
+      result.length,
+    );
+    return {
+      pagination,
+      favoriteVoluntary: user.favoriteVoluntary,
+    };
+  }
+  async getUserFavoriteGroupPosts(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        favoriteGroupPost: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'favoriteGroupPost',
+        model: 'Post',
+      });
+    const result = (await this.Usermodel.findById(userId))?.favoriteGroupPost;
+    const pagination = this.apiService.makePagination(
+      page,
+      limit,
+      result.length,
+    );
+    return {
+      pagination,
+      favoriteVoluntary: user.favoriteVoluntary,
+    };
+  }
+  async getUserFavoriteEvent(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        favoriteEvent: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'favoriteEvent',
+        model: 'Event',
+      });
+    const result = (await this.Usermodel.findById(userId))?.favoriteEvent;
+    const pagination = this.apiService.makePagination(
+      page,
+      limit,
+      result.length,
+    );
+    return {
+      pagination,
+      favoriteEvent: user.favoriteEvent,
+    };
+  }
+  async getUserFavoriteService(userId: string, query: FindQuery) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const user = await this.Usermodel.findById(userId)
+      .select({
+        favoriteService: {
+          $slice: [skip, limit],
+        },
+      })
+      .populate({
+        path: 'favoriteService',
+        model: 'Service',
+      });
+    const result = (await this.Usermodel.findById(userId))?.favoriteService;
+    const pagination = this.apiService.makePagination(
+      page,
+      limit,
+      result.length,
+    );
+    return {
+      pagination,
+      favoriteService: user.favoriteService,
+    };
+  }
 }
