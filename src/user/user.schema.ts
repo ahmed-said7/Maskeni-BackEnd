@@ -5,7 +5,6 @@ import { Gender_Type } from 'src/common/types';
 import { Post } from 'src/post/post.schema';
 import { Question } from 'src/question/question.schema';
 import { Offered } from 'src/service/offered-service.schema';
-import { OfferedService } from 'src/service/offered-service.service';
 import { Share } from 'src/share/share.schema';
 import { Voluntary } from 'src/voluntary/voluntary.schema';
 
@@ -194,7 +193,7 @@ export class User {
   favoriteVoluntary: Types.ObjectId[];
   @Prop({
     type: [Types.ObjectId],
-    ref: OfferedService.name,
+    ref: Offered.name,
   })
   favoriteService: Types.ObjectId[];
 }

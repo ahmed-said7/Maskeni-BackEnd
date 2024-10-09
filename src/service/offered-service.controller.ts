@@ -76,8 +76,8 @@ export class OfferedController {
   @ApiOperation({ summary: 'Retrieve all services' })
   @ApiOkResponse({ description: 'Successfully retrieved all services.' })
   @ApiQuery({ type: QueryOfferedDto, required: false })
-  getAllServices(@Query() query: QueryOfferedDto) {
-    return this.offeredService.getAllservices(query);
+  getAllServices(@Query() query: QueryOfferedDto, @Req() req: any) {
+    return this.offeredService.getAllservices(query, req.userId);
   }
 
   @Patch(':serviceId')

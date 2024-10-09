@@ -21,7 +21,7 @@ export class PostService {
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private reactionService: ReactionService<PostDocument>,
-    private apiService: ApiService<GroupDocument, FindQuery>,
+    private apiService: ApiService<PostDocument, FindQuery>,
     private likesService: LikesService,
     private commentService: CommentService,
   ) {
@@ -77,7 +77,7 @@ export class PostService {
         group: groupId,
       },
     );
-    const posts = await query
+    let posts = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -94,6 +94,11 @@ export class PostService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       });
+    const IUser = await this.userModel.findById(user);
+    posts = posts.map((post) => {
+      post.isLiked = IUser.favoriteGroupPost.includes(post._id);
+      return post;
+    });
     return { posts, pagination: paginationObj };
   }
   async getUserGroupsPosts(user: string, obj: FindQuery) {
@@ -108,7 +113,7 @@ export class PostService {
         group: { $in: ids },
       },
     );
-    const posts = await query
+    let posts = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -126,6 +131,11 @@ export class PostService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       });
+    const IUser = await this.userModel.findById(user);
+    posts = posts.map((post) => {
+      post.isLiked = IUser.favoriteGroupPost.includes(post._id);
+      return post;
+    });
     return { posts, pagination: paginationObj };
   }
   async addLike(postId: string, user: string) {

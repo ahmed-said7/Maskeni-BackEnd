@@ -70,8 +70,8 @@ export class ShareController {
   @Roles(All_Role.User)
   @ApiOperation({ summary: 'Get all shares' })
   @ApiResponse({ status: 200, description: 'Returns all shares' })
-  getAllShare(@Query() query: QueryShareDto) {
-    return this.shareService.getAllShare(query);
+  getAllShare(@Query() query: QueryShareDto, @Req() req: any) {
+    return this.shareService.getAllShare(query, req.userId);
   }
 
   @Patch(':shareId')

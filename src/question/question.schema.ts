@@ -73,6 +73,8 @@ export class Question {
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
   user: Types.ObjectId;
+  @Prop({ type: Boolean })
+  isLiked: boolean;
 }
 
 export type QuestionDocument = HydratedDocument<Question>;

@@ -23,6 +23,8 @@ export class Event {
 
   @Prop({ type: String })
   details?: string;
+  @Prop({ type: Boolean })
+  isLiked?: boolean;
 
   @Prop({ type: String, enum: Event_Type, default: Event_Type.community })
   type?: string;

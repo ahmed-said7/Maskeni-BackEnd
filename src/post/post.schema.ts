@@ -5,6 +5,8 @@ import { Likes } from 'src/likes/likes.schema';
 
 @Schema({ timestamps: true })
 export class Post {
+  @Prop({ type: Boolean })
+  isLiked: boolean;
   @Prop({ type: String, required: true, trim: true })
   content: string;
 

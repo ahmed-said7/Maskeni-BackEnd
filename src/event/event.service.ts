@@ -102,12 +102,12 @@ export class EventService {
     }
     return { event: eventExists };
   }
-  async getAllEvents(obj: QueryEventDto) {
+  async getAllEvents(obj: QueryEventDto, userId: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.eventModel.find(),
       obj,
     );
-    const events = await query
+    let events = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -139,6 +139,11 @@ export class EventService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
+    const IUser = await this.userModel.findById(userId);
+    events = events.map((event) => {
+      event.isLiked = IUser.favoriteEvent.includes(event._id);
+      return event;
+    });
     return { events, pagination: paginationObj };
   }
   async getAllPreviousReservedEvents(obj: QueryEventDto, user: string) {

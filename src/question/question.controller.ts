@@ -75,8 +75,8 @@ export class QuestionController {
   @ApiOperation({ summary: 'Get all questions' })
   @ApiResponse({ status: 200, description: 'List of all questions.' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  getAllQuestion(@Query() query: QueryQuestionDto) {
-    return this.questionService.getAllQuestion(query);
+  getAllQuestion(@Query() query: QueryQuestionDto, @Req() req: any) {
+    return this.questionService.getAllQuestion(query, req.userId);
   }
 
   @Patch(':questionId')

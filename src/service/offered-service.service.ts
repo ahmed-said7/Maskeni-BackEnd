@@ -97,12 +97,12 @@ export class OfferedService {
     }
     return { service: serviceExists };
   }
-  async getAllservices(obj: QueryOfferedDto) {
+  async getAllservices(obj: QueryOfferedDto, userId: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.serviceModel.find(),
       obj,
     );
-    const services = await query
+    let services = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -134,6 +134,11 @@ export class OfferedService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
+    const user = await this.userModel.findById(userId);
+    services = services.map((service) => {
+      service.isLiked = user.favoriteService.includes(service._id);
+      return service;
+    });
     return { services, pagination: paginationObj };
   }
   async addLike(serviceId: string, user: string) {

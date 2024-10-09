@@ -86,6 +86,8 @@ export class Voluntary {
 
   @Prop({ type: Types.ObjectId, ref: 'User' })
   user: Types.ObjectId;
+  @Prop({ type: Boolean })
+  isLiked: boolean;
 }
 
 export type VoluntaryDocument = HydratedDocument<Voluntary>;

@@ -112,12 +112,12 @@ export class VoluntaryService {
     }
     return { voluntary: voluntaryExists };
   }
-  async getAllVoluntary(obj: QueryVoluntaryDto) {
+  async getAllVoluntary(obj: QueryVoluntaryDto, userId: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.voluntaryModel.find(),
       obj,
     );
-    const voluntary = await query
+    let voluntary = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -149,6 +149,11 @@ export class VoluntaryService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
+    const user = await this.userModel.findById(userId);
+    voluntary = voluntary.map((vol) => {
+      vol.isLiked = user.favoriteVoluntary.includes(vol._id);
+      return vol;
+    });
     return { voluntary, pagination: paginationObj };
   }
   async addLike(voluntaryId: string, user: string) {

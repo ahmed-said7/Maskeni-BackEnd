@@ -65,8 +65,8 @@ export class EventController {
   @ApiOperation({ summary: 'Get all events' })
   @ApiResponse({ status: 200, description: 'List of all events.' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  async getAllEvents(@Query() query: QueryEventDto) {
-    return this.eventService.getAllEvents(query);
+  async getAllEvents(@Query() query: QueryEventDto, @Req() req: any) {
+    return this.eventService.getAllEvents(query, req.userId);
   }
 
   @Get('future')

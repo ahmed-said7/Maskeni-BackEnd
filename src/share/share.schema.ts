@@ -73,6 +73,8 @@ export class Share {
 
   @Prop({ type: String })
   addressDetails: string;
+  @Prop({ type: Boolean })
+  isLiked: boolean;
 }
 
 export type ShareDocument = HydratedDocument<Share>;

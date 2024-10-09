@@ -93,12 +93,12 @@ export class ShareService {
     }
     return { share: shareExists };
   }
-  async getAllShare(obj: QueryShareDto) {
+  async getAllShare(obj: QueryShareDto, userId: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.shareModel.find(),
       obj,
     );
-    const shares = await query
+    let shares = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -130,6 +130,11 @@ export class ShareService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
+    const user = await this.userModel.findById(userId);
+    shares = shares.map((share) => {
+      share.isLiked = user.favoriteShare.includes(share._id);
+      return share;
+    });
     return { shares, pagination: paginationObj };
   }
   async addLike(shareId: string, user: string) {

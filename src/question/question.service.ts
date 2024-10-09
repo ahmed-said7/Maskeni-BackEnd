@@ -101,12 +101,12 @@ export class QuestionService {
     }
     return { question: questionExists };
   }
-  async getAllQuestion(obj: QueryQuestionDto) {
+  async getAllQuestion(obj: QueryQuestionDto, userId: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
       this.questionModel.find(),
       obj,
     );
-    const questions = await query
+    let questions = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -123,6 +123,11 @@ export class QuestionService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       });
+    const user = await this.userModel.findById(userId);
+    questions = questions.map((question) => {
+      question.isLiked = user.favoriteQuestion.includes(question._id);
+      return question;
+    });
     return { questions, pagination: paginationObj };
   }
   async addLike(questionId: string, user: string) {
