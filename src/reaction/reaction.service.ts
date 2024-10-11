@@ -6,6 +6,7 @@ import { CommentService } from 'src/comment/comment.service';
 import { LikesService } from 'src/likes/likes.service';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
+// import { count } from 'console';
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class ReactionService<T extends IEntityType> {
@@ -76,11 +77,11 @@ export class ReactionService<T extends IEntityType> {
       post: postId,
       user: userId,
     });
-    await this.PostModel.findByIdAndUpdate(postId, {
+    const post = await this.PostModel.findByIdAndUpdate(postId, {
       $addToSet: { likes: like._id },
       $inc: { likesCount: 1 },
     });
-    return { status: 'like created' };
+    return { status: 'like created', count: post.likeCount + 1 };
   }
   async getAllLikes(postId: string, query: FindQuery) {
     const page = parseInt(query.page) || 1;
@@ -99,11 +100,11 @@ export class ReactionService<T extends IEntityType> {
       post: postId,
       user: userId,
     });
-    await this.PostModel.findByIdAndUpdate(postId, {
+    const post = await this.PostModel.findByIdAndUpdate(postId, {
       $pull: { likes: like._id },
       $inc: { likesCount: -1 },
     });
-    return { status: 'like deleted' };
+    return { status: 'like deleted', count: post.likeCount + 1 };
   }
   async createSaved(postId: string, userId: string) {
     const post = await this.PostModel.findOne({ 'saved.user': userId });
