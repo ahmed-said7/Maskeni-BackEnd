@@ -250,7 +250,10 @@ export class EventController {
   @ApiOperation({ summary: 'Get an event by ID' })
   @ApiResponse({ status: 200, description: 'Event details.' })
   @ApiResponse({ status: 404, description: 'Event not found.' })
-  async getEvent(@Param('eventId', ValidateObjectIdPipe) eventId: string) {
-    return this.eventService.getEvent(eventId);
+  async getEvent(
+    @Param('eventId', ValidateObjectIdPipe) eventId: string,
+    @Req() req: any,
+  ) {
+    return this.eventService.getEvent(eventId, req.userId);
   }
 }

@@ -63,7 +63,7 @@ export class EventService {
     await eventExists.save();
     return { status: 'deleted' };
   }
-  async getEvent(eventId: string) {
+  async getEvent(eventId: string, userId: string) {
     const eventExists = await this.eventModel
       .findById(eventId)
       .populate({
@@ -100,6 +100,11 @@ export class EventService {
     if (!eventExists) {
       throw new HttpException('event not found', 400);
     }
+    const user = await this.userModel.findById(userId);
+    eventExists.isLiked = user.favoriteEvent.includes(eventExists._id);
+    eventExists.isSaved = eventExists.saved.some(
+      (ele) => ele.user.toString() == userId,
+    );
     return { event: eventExists };
   }
   async getAllEvents(obj: QueryEventDto, userId: string) {

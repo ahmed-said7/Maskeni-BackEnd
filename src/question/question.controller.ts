@@ -27,6 +27,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+// import { AllMethods } from 'supertest/types';
 
 @ApiTags('Questions')
 @ApiBearerAuth()
@@ -258,7 +259,10 @@ export class QuestionController {
   @ApiResponse({ status: 200, description: 'The question details.' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 404, description: 'Question not found' })
-  getQuestion(@Param('questionId', ValidateObjectIdPipe) questionId: string) {
-    return this.questionService.getQuestion(questionId);
+  getQuestion(
+    @Param('questionId', ValidateObjectIdPipe) questionId: string,
+    @Req() req: any,
+  ) {
+    return this.questionService.getQuestion(questionId, req.userId);
   }
 }

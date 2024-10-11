@@ -240,7 +240,8 @@ export class VoluntaryController {
   })
   getVoluntaryById(
     @Param('voluntaryId', ValidateObjectIdPipe) voluntaryId: string,
+    @Req() req: any,
   ) {
-    return this.voluntaryService.getVoluntary(voluntaryId);
+    return this.voluntaryService.getVoluntary(voluntaryId, req.userId);
   }
 }

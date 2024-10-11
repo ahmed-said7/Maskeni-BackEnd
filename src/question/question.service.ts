@@ -62,7 +62,7 @@ export class QuestionService {
     await questionExists.save();
     return { status: 'deleted' };
   }
-  async getQuestion(questionId: string) {
+  async getQuestion(questionId: string, userId: string) {
     const questionExists = await this.questionModel
       .findById(questionId)
       .populate({
@@ -99,6 +99,11 @@ export class QuestionService {
     if (!questionExists) {
       throw new HttpException('question not found', 400);
     }
+    const user = await this.userModel.findById(userId);
+    questionExists.isLiked = user.favoriteQuestion.includes(questionExists._id);
+    questionExists.isSaved = questionExists.saved.some(
+      (ele) => ele.user.toString() == userId,
+    );
     return { question: questionExists };
   }
   async getAllQuestion(obj: QueryQuestionDto, userId: string) {

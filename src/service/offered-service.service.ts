@@ -58,7 +58,7 @@ export class OfferedService {
     await serviceExists.save();
     return { status: 'deleted' };
   }
-  async getService(serviceId: string) {
+  async getService(serviceId: string, userId: string) {
     const serviceExists = await this.serviceModel
       .findById(serviceId)
       .populate({
@@ -95,6 +95,11 @@ export class OfferedService {
     if (!serviceExists) {
       throw new HttpException('service not found', 400);
     }
+    const user = await this.userModel.findById(userId);
+    serviceExists.isLiked = user.favoriteService.includes(serviceExists._id);
+    serviceExists.isSaved = serviceExists.saved.some(
+      (ele) => ele.user.toString() == userId,
+    );
     return { service: serviceExists };
   }
   async getAllservices(obj: QueryOfferedDto, userId: string) {

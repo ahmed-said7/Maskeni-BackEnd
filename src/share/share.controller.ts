@@ -231,7 +231,10 @@ export class ShareController {
   @ApiOperation({ summary: 'Get a share by ID' })
   @ApiResponse({ status: 200, description: 'Returns the specified share' })
   @ApiResponse({ status: 404, description: 'Share not found' })
-  getShare(@Param('shareId', ValidateObjectIdPipe) shareId: string) {
-    return this.shareService.getShare(shareId);
+  getShare(
+    @Param('shareId', ValidateObjectIdPipe) shareId: string,
+    @Req() req: any,
+  ) {
+    return this.shareService.getShare(shareId, req.userId);
   }
 }

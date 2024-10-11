@@ -73,7 +73,7 @@ export class VoluntaryService {
     await voluntaryExists.save();
     return { status: 'deleted' };
   }
-  async getVoluntary(voluntaryId: string) {
+  async getVoluntary(voluntaryId: string, userId: string) {
     const voluntaryExists = await this.voluntaryModel
       .findById(voluntaryId)
       .populate({
@@ -110,6 +110,13 @@ export class VoluntaryService {
     if (!voluntaryExists) {
       throw new HttpException('voluntary not found', 400);
     }
+    const user = await this.userModel.findById(userId);
+    voluntaryExists.isLiked = user.favoriteVoluntary.includes(
+      voluntaryExists._id,
+    );
+    voluntaryExists.isSaved = voluntaryExists.saved.some(
+      (ele) => ele.user.toString() == userId,
+    );
     return { voluntary: voluntaryExists };
   }
   async getAllVoluntary(obj: QueryVoluntaryDto, userId: string) {

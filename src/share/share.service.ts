@@ -54,7 +54,7 @@ export class ShareService {
     await shareExists.save();
     return { status: 'deleted' };
   }
-  async getShare(shareId: string) {
+  async getShare(shareId: string, userId: string) {
     const shareExists = await this.shareModel
       .findById(shareId)
       .populate({
@@ -91,6 +91,11 @@ export class ShareService {
     if (!shareExists) {
       throw new HttpException('share not found', 400);
     }
+    const user = await this.userModel.findById(userId);
+    shareExists.isLiked = user.favoriteVoluntary.includes(shareExists._id);
+    shareExists.isSaved = shareExists.saved.some(
+      (ele) => ele.user.toString() == userId,
+    );
     return { share: shareExists };
   }
   async getAllShare(obj: QueryShareDto, userId: string) {
