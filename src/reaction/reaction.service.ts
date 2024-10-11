@@ -30,7 +30,7 @@ export class ReactionService<T extends IEntityType> {
       return comment;
     }
     await this.PostModel.findByIdAndUpdate(body.post, {
-      $addToSet: { comments: comment._id },
+      $push: { comments: comment._id },
       $inc: { commentCount: 1 },
     });
     return comment;
@@ -77,11 +77,17 @@ export class ReactionService<T extends IEntityType> {
       post: postId,
       user: userId,
     });
-    const post = await this.PostModel.findByIdAndUpdate(postId, {
-      $addToSet: { likes: like._id },
-      $inc: { likesCount: 1 },
-    });
-    return { status: 'like created', count: post.likeCount + 1 };
+    const post = await this.PostModel.findByIdAndUpdate(
+      postId,
+      {
+        $push: { likes: like._id },
+        $inc: { likesCount: 1 },
+      },
+      {
+        new: true,
+      },
+    );
+    return { status: 'like created', post };
   }
   async getAllLikes(postId: string, query: FindQuery) {
     const page = parseInt(query.page) || 1;
@@ -100,23 +106,36 @@ export class ReactionService<T extends IEntityType> {
       post: postId,
       user: userId,
     });
-    const post = await this.PostModel.findByIdAndUpdate(postId, {
-      $pull: { likes: like._id },
-      $inc: { likesCount: -1 },
-    });
-    return { status: 'like deleted', count: post.likeCount + 1 };
+    const post = await this.PostModel.findByIdAndUpdate(
+      postId,
+      {
+        $pull: { likes: like._id },
+        $inc: { likesCount: -1 },
+      },
+      {
+        new: true,
+      },
+    );
+    return { status: 'like deleted', post };
   }
   async createSaved(postId: string, userId: string) {
     const post = await this.PostModel.findOne({ 'saved.user': userId });
     if (post) {
       throw new HttpException('already saved', 400);
     }
-    await this.PostModel.findByIdAndUpdate(postId, {
-      $addToSet: {
-        saved: { user: userId, createdAt: new Date() },
-        $inc: { savedCount: 1 },
+    const postSaved = await this.PostModel.findByIdAndUpdate(
+      postId,
+      {
+        $push: {
+          saved: { user: userId, createdAt: new Date() },
+          $inc: { savedCount: 1 },
+        },
       },
-    });
+      {
+        new: true,
+      },
+    );
+    return { status: 'saved', post: postSaved };
   }
   async getAllSaved(query: FindQuery, id: string) {
     const page = parseInt(query.page) || 1;
@@ -148,7 +167,7 @@ export class ReactionService<T extends IEntityType> {
     if (!post) {
       throw new HttpException('not saved', 400);
     }
-    await this.PostModel.findByIdAndUpdate(
+    const postSaved = await this.PostModel.findByIdAndUpdate(
       postId,
       {
         $pull: { saved: { user: userId } },
@@ -156,18 +175,26 @@ export class ReactionService<T extends IEntityType> {
       },
       { new: true },
     );
+    return { status: 'unsaved successfully', post: postSaved };
   }
   async createRequestedService(postId: string, userId: string) {
     const post = await this.PostModel.findOne({ 'requested.user': userId });
     if (post) {
       throw new HttpException('already requested', 400);
     }
-    await this.PostModel.findByIdAndUpdate(postId, {
-      $addToSet: {
-        requested: { user: userId, createdAt: new Date() },
+    const reqService = await this.PostModel.findByIdAndUpdate(
+      postId,
+      {
+        $push: {
+          requested: { user: userId, createdAt: new Date() },
+        },
+        $inc: { requestedCount: 1 },
       },
-      $inc: { requestedCount: 1 },
-    });
+      {
+        new: true,
+      },
+    );
+    return { status: 'requested successfully', post: reqService };
   }
   async getAllRequestedServices(query: FindQuery, id: string) {
     const page = parseInt(query.page) || 1;
@@ -199,7 +226,7 @@ export class ReactionService<T extends IEntityType> {
     if (!post) {
       throw new HttpException('not requested', 400);
     }
-    await this.PostModel.findByIdAndUpdate(
+    const reqService = await this.PostModel.findByIdAndUpdate(
       postId,
       {
         $pull: { requested: { user: userId } },
@@ -207,5 +234,6 @@ export class ReactionService<T extends IEntityType> {
       },
       { new: true },
     );
+    return { status: 'unrequested successfully', post: reqService };
   }
 }

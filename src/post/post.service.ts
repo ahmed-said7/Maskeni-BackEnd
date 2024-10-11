@@ -235,11 +235,11 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    // await this.reactionService.createSaved(postId, user);
+    const result = await this.reactionService.createSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: { savedGroupPost: { post: postId } },
     });
-    return { status: 'saved added post' };
+    return result;
   }
   async deleteSaved(postId: string, user: string) {
     const post = await this.postModel.findOne({
@@ -248,11 +248,11 @@ export class PostService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    // await this.reactionService.deleteSaved(postId, user);
+    const result = await this.reactionService.deleteSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedGroupPost: { post: postId } },
     });
-    return { status: 'saved deleted post' };
+    return result;
   }
   async getAllSaved(postId: string, query: FindQuery) {
     const post = await this.postModel.findOne({

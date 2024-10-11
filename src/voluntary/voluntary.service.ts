@@ -81,17 +81,17 @@ export class VoluntaryService {
         model: 'User',
         select: 'mobile name icon',
       })
-      .populate({
-        path: 'comments',
-        select: '-likes -comments -replies',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate({
-        path: 'likes',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
+      // .populate({
+      //   path: 'comments',
+      //   select: '-likes -comments -replies',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
+      // .populate({
+      //   path: 'likes',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
       .populate({
         path: 'country',
         select: 'image nameAr nameEn',
@@ -217,13 +217,13 @@ export class VoluntaryService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.createSaved(voluntaryId, user);
+    const result = await this.reactionService.createSaved(voluntaryId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: {
         savedVoluntary: { voluntary: voluntaryId, createdAt: new Date() },
       },
     });
-    return { status: 'saved added post' };
+    return result;
   }
   async deleteSaved(voluntaryId: string, user: string) {
     const post = await this.voluntaryModel.findOne({
@@ -232,11 +232,11 @@ export class VoluntaryService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.deleteSaved(voluntaryId, user);
+    const result = await this.reactionService.deleteSaved(voluntaryId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedVoluntary: { voluntary: voluntaryId } },
     });
-    return { status: 'saved deleted post' };
+    return result;
   }
   async getAllSaved(voluntaryId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, voluntaryId);

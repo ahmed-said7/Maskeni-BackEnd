@@ -66,17 +66,17 @@ export class OfferedService {
         model: 'User',
         select: 'mobile name icon',
       })
-      .populate({
-        path: 'comments',
-        select: '-likes -comments -replies',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate({
-        path: 'likes',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
+      // .populate({
+      //   path: 'comments',
+      //   select: '-likes -comments -replies',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
+      // .populate({
+      //   path: 'likes',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
       .populate({
         path: 'country',
         select: 'image nameAr nameEn',
@@ -190,13 +190,13 @@ export class OfferedService {
     if (!service) {
       throw new HttpException('service not found', 400);
     }
-    await this.reactionService.createSaved(serviceId, user);
+    const result = await this.reactionService.createSaved(serviceId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: {
         savedservice: { service: serviceId, createdAt: new Date() },
       },
     });
-    return { status: 'saved added post' };
+    return result;
   }
   async deleteSaved(serviceId: string, user: string) {
     const service = await this.serviceModel.findOne({
@@ -205,11 +205,11 @@ export class OfferedService {
     if (!service) {
       throw new HttpException('service not found', 400);
     }
-    await this.reactionService.deleteSaved(serviceId, user);
+    const result = await this.reactionService.deleteSaved(serviceId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedService: { service: serviceId } },
     });
-    return { status: 'saved deleted post' };
+    return result;
   }
   async getAllSaved(serviceId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, serviceId);
@@ -221,13 +221,16 @@ export class OfferedService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.createRequestedService(serviceId, user);
+    const result = await this.reactionService.createRequestedService(
+      serviceId,
+      user,
+    );
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: {
         requestedService: { service: serviceId, createdAt: new Date() },
       },
     });
-    return { status: 'saved added post' };
+    return result;
   }
   async deleteRequested(serviceId: string, user: string) {
     const post = await this.serviceModel.findOne({
@@ -236,11 +239,14 @@ export class OfferedService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.deleteRequestedService(serviceId, user);
+    const result = await this.reactionService.deleteRequestedService(
+      serviceId,
+      user,
+    );
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { requestedService: { service: serviceId } },
     });
-    return { status: 'saved deleted post' };
+    return result;
   }
   async getAllRequested(serviceId: string, query: FindQuery) {
     return this.reactionService.getAllRequestedServices(query, serviceId);

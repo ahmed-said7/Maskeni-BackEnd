@@ -62,17 +62,17 @@ export class ShareService {
         model: 'User',
         select: 'mobile name icon',
       })
-      .populate({
-        path: 'comments',
-        select: '-likes -comments -replies',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate({
-        path: 'likes',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
+      // .populate({
+      //   path: 'comments',
+      //   select: '-likes -comments -replies',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
+      // .populate({
+      //   path: 'likes',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
       .populate({
         path: 'country',
         select: 'image nameAr nameEn',
@@ -184,11 +184,11 @@ export class ShareService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.createSaved(shareId, user);
+    const result = await this.reactionService.createSaved(shareId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: { savedShare: { share: shareId, createdAt: new Date() } },
     });
-    return { status: 'saved added post' };
+    return result;
   }
   async deleteSaved(shareId: string, user: string) {
     const post = await this.shareModel.findOne({
@@ -197,11 +197,11 @@ export class ShareService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.deleteSaved(shareId, user);
+    const result = await this.reactionService.deleteSaved(shareId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedShare: { share: shareId } },
     });
-    return { status: 'saved deleted post' };
+    return result;
   }
   async getAllSaved(shareId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, shareId);

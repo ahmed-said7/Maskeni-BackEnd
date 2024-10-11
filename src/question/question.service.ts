@@ -70,17 +70,17 @@ export class QuestionService {
         model: 'User',
         select: 'mobile name icon',
       })
-      .populate({
-        path: 'comments',
-        select: '-likes -comments -replies',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate({
-        path: 'likes',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
+      // .populate({
+      //   path: 'comments',
+      //   select: '-likes -comments -replies',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
+      // .populate({
+      //   path: 'likes',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
       .populate({
         path: 'country',
         select: 'image nameAr nameEn',
@@ -179,13 +179,13 @@ export class QuestionService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.createSaved(questionId, user);
+    const result = await this.reactionService.createSaved(questionId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: {
         savedQuestion: { question: questionId, createdAt: new Date() },
       },
     });
-    return { status: 'saved added post' };
+    return result;
   }
   async deleteSaved(questionId: string, user: string) {
     const post = await this.questionModel.findOne({
@@ -194,11 +194,11 @@ export class QuestionService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.deleteSaved(questionId, user);
+    const result = await this.reactionService.deleteSaved(questionId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedQuestion: { question: questionId } },
     });
-    return { status: 'saved deleted post' };
+    return result;
   }
   async getAllSaved(questionId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, questionId);

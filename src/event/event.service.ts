@@ -71,17 +71,17 @@ export class EventService {
         model: 'User',
         select: 'mobile name icon',
       })
-      .populate({
-        path: 'comments',
-        select: '-likes -comments -replies',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate({
-        path: 'likes',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
+      // .populate({
+      //   path: 'comments',
+      //   select: '-likes -comments -replies',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
+      // .populate({
+      //   path: 'likes',
+      //   populate: { path: 'user', select: 'name mobile icon', model: 'User' },
+      //   options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      // })
       .populate({
         path: 'country',
         select: 'image nameAr nameEn',
@@ -219,11 +219,11 @@ export class EventService {
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    await this.reactionService.createSaved(eventId, user);
+    const result = await this.reactionService.createSaved(eventId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: { savedEvent: { event: eventId } },
     });
-    return { status: 'saved added post' };
+    return result;
   }
   async deleteSaved(eventId: string, user: string) {
     const event = await this.eventModel.findOne({
@@ -232,11 +232,11 @@ export class EventService {
     if (!event) {
       throw new HttpException('event not found', 400);
     }
-    await this.reactionService.deleteSaved(eventId, user);
+    const result = await this.reactionService.deleteSaved(eventId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $pull: { savedEvent: { event: eventId } },
     });
-    return { status: 'saved deleted event' };
+    return result;
   }
   async getAllSaved(eventId: string, query: FindQuery) {
     return this.reactionService.getAllSaved(query, eventId);
