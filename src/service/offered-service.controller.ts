@@ -244,8 +244,11 @@ export class OfferedController {
   @ApiOperation({ summary: 'Retrieve a service by ID' })
   @ApiOkResponse({ description: 'Successfully retrieved the service.' })
   @ApiParam({ name: 'serviceId', required: true })
-  getServiceById(@Param('serviceId', ValidateObjectIdPipe) serviceId: string) {
-    return this.offeredService.getService(serviceId);
+  getServiceById(
+    @Param('serviceId', ValidateObjectIdPipe) serviceId: string,
+    @Req() req: any,
+  ) {
+    return this.offeredService.getService(serviceId, req.userId);
   }
 
   @Post('request/:serviceId')
