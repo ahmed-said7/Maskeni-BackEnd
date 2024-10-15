@@ -3,9 +3,6 @@ import { IsMongoId, IsOptional } from 'class-validator';
 import { FindQuery } from 'src/common/types';
 
 export class QueryShareDto extends FindQuery {
-  @IsOptional()
-  @IsMongoId()
-  @ApiPropertyOptional({ description: 'ID of the user' })
   user?: string; // Made optional
 
   @IsOptional()

@@ -73,6 +73,15 @@ export class ShareController {
   getAllShare(@Query() query: QueryShareDto, @Req() req: any) {
     return this.shareService.getAllShare(query, req.userId);
   }
+  @Get('profile')
+  @UseGuards(AuthenticationGuard)
+  @Roles(All_Role.User)
+  @ApiOperation({ summary: 'Get all shares' })
+  @ApiResponse({ status: 200, description: 'Returns all shares' })
+  getAllShareProfile(@Query() query: QueryShareDto, @Req() req: any) {
+    query.user = req.userId;
+    return this.shareService.getAllShare(query, req.userId);
+  }
 
   @Patch(':shareId')
   @UseGuards(AuthenticationGuard)

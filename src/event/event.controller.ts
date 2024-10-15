@@ -68,6 +68,16 @@ export class EventController {
   async getAllEvents(@Query() query: QueryEventDto, @Req() req: any) {
     return this.eventService.getAllEvents(query, req.userId);
   }
+  @Get('profile')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  @ApiOperation({ summary: 'Get all events' })
+  @ApiResponse({ status: 200, description: 'List of all events.' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  async getAllEventsProfile(@Query() query: QueryEventDto, @Req() req: any) {
+    query.user = req.userId;
+    return this.eventService.getAllEvents(query, req.userId);
+  }
 
   @Get('future')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)

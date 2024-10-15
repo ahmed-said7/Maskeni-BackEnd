@@ -10,11 +10,6 @@ export class QueryVoluntaryDto extends FindQuery {
   date?: string;
 
   @IsOptional()
-  @IsMongoId()
-  @ApiPropertyOptional({ description: 'Filter by the MongoDB ID of the user' })
-  user?: string;
-
-  @IsOptional()
   @ApiPropertyOptional({
     description: 'Filter by start date of the voluntary activity',
   })
@@ -68,4 +63,5 @@ export class QueryVoluntaryDto extends FindQuery {
       'Filter by MongoDB ID of the quarter where the activity takes place',
   })
   quarter?: string;
+  user?: string;
 }

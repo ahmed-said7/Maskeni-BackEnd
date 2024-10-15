@@ -79,6 +79,16 @@ export class QuestionController {
   getAllQuestion(@Query() query: QueryQuestionDto, @Req() req: any) {
     return this.questionService.getAllQuestion(query, req.userId);
   }
+  @Get('profile')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  @ApiOperation({ summary: 'Get all questions' })
+  @ApiResponse({ status: 200, description: 'List of all questions.' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  getAllQuestionProfile(@Query() query: QueryQuestionDto, @Req() req: any) {
+    query.user = req.userId;
+    return this.questionService.getAllQuestion(query, req.userId);
+  }
 
   @Patch(':questionId')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)

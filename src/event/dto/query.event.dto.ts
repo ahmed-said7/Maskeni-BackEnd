@@ -56,4 +56,5 @@ export class QueryEventDto extends FindQuery {
     description: 'ID of the quarter related to the event',
   })
   quarter?: string;
+  user?: string;
 }

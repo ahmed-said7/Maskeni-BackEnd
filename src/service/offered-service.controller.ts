@@ -79,6 +79,16 @@ export class OfferedController {
   getAllServices(@Query() query: QueryOfferedDto, @Req() req: any) {
     return this.offeredService.getAllservices(query, req.userId);
   }
+  @Get('profile')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  @ApiOperation({ summary: 'Retrieve all services' })
+  @ApiOkResponse({ description: 'Successfully retrieved all services.' })
+  @ApiQuery({ type: QueryOfferedDto, required: false })
+  getAllServicesProfile(@Query() query: QueryOfferedDto, @Req() req: any) {
+    query.user = req.userId;
+    return this.offeredService.getAllservices(query, req.userId);
+  }
 
   @Patch(':serviceId')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)

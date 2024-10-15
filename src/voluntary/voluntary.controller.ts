@@ -61,6 +61,14 @@ export class VoluntaryController {
   getAllVoluntarys(@Query() query: QueryVoluntaryDto, @Req() req: any) {
     return this.voluntaryService.getAllVoluntary(query, req.userId);
   }
+  @Get('profile')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  @ApiOperation({ summary: 'Get all voluntary activities with filters' })
+  getAllVoluntarysProfile(@Query() query: QueryVoluntaryDto, @Req() req: any) {
+    query.user = req.userId;
+    return this.voluntaryService.getAllVoluntary(query, req.userId);
+  }
 
   @Patch(':voluntaryId')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)

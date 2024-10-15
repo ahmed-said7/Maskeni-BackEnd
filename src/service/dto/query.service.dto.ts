@@ -27,4 +27,5 @@ export class QueryOfferedDto extends FindQuery {
   @IsMongoId() // Validate that quarter is a valid MongoDB ObjectId
   @ApiPropertyOptional()
   quarter?: string; // Mark as optional with a '?'
+  user?: string; // Mark as optional with a '?'
 }
