@@ -7,6 +7,7 @@ import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { FeedQueryDto } from './dto/feed.query.dto';
+import { User, UserDocument } from 'src/user/user.schema';
 
 export class FeedService {
   constructor(
@@ -16,15 +17,39 @@ export class FeedService {
     @InjectModel(Share.name) private shareModel: Model<ShareDocument>,
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
-  async getFeed(query: FeedQueryDto) {
+  async getFeed(query: FeedQueryDto, userId: string) {
     const { page = 1, limit = 10 } = query;
     const skip = (page - 1) * limit;
+    const half = Math.floor(limit / 2);
     delete query.page;
     delete query.limit;
+    const sharesCount = await this.shareModel.countDocuments(query);
+    const questionsCount = await this.questionModel.countDocuments(query);
+    const count = sharesCount + questionsCount;
+    const currentPage = page;
+    const previousPage = currentPage > 1 ? currentPage - 1 : null;
+    const numOfPages = Math.floor(count / limit);
+    const remainingShares = await this.shareModel
+      .countDocuments(query)
+      .skip(skip)
+      .limit(half);
+    const remainingQuestions = await this.shareModel
+      .countDocuments(query)
+      .skip(skip)
+      .limit(half);
+    let shareLimit = half;
+    let questionLimit = half;
+    if (remainingShares < half && remainingQuestions == half) {
+      questionLimit = half - remainingShares + remainingQuestions;
+      shareLimit = remainingShares;
+    } else if (remainingShares == half && remainingQuestions < half) {
+      questionLimit = remainingQuestions;
+      shareLimit = half - remainingQuestions + remainingShares;
+    }
 
-    // Fetch data from all models with pagination at DB level
-    const shares = await this.shareModel
+    let shares = await this.shareModel
       .find(query)
       .populate({
         path: 'user',
@@ -44,8 +69,14 @@ export class FeedService {
       })
       .populate('country')
       .skip(skip)
-      .limit(limit);
-    const voluntary = await this.voluntaryModel
+      .limit(shareLimit);
+    const user = await this.userModel.findById(userId);
+    shares = shares.map((share) => {
+      share.isLiked = user.favoriteShare.includes(share._id);
+      share.isSaved = share.saved.some((ele) => ele.user.toString() == userId);
+      return share;
+    });
+    let questions = await this.questionModel
       .find(query)
       .populate({
         path: 'user',
@@ -65,97 +96,43 @@ export class FeedService {
       })
       .populate('country')
       .skip(skip)
-      .limit(limit);
-    const offered = await this.serviceModel
-      .find(query)
-      .populate({
-        path: 'user',
-        model: 'User',
-        select: 'mobile name icon',
-      })
-      .populate({
-        path: 'comments',
-        select: '-likes -comments -replies',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate({
-        path: 'likes',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate('country')
-      .skip(skip)
-      .limit(limit);
-    const questions = await this.questionModel
-      .find(query)
-      .populate({
-        path: 'user',
-        model: 'User',
-        select: 'mobile name icon',
-      })
-      .populate({
-        path: 'comments',
-        select: '-likes -comments -replies',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate({
-        path: 'likes',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate('country')
-      .skip(skip)
-      .limit(limit);
-
-    const events = await this.eventModel
-      .find(query)
-      .populate({
-        path: 'user',
-        model: 'User',
-        select: 'mobile name icon',
-      })
-      .populate({
-        path: 'comments',
-        select: '-likes -comments -replies',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate({
-        path: 'likes',
-        populate: { path: 'user', select: 'name mobile icon', model: 'User' },
-        options: { limit: 1 }, // Only load the first few replies (can increase limit)
-      })
-      .populate('country')
-      .skip(skip)
-      .limit(limit);
+      .limit(questionLimit);
+    questions = questions.map((question) => {
+      question.isLiked = user.favoriteQuestion.includes(question._id);
+      question.isSaved = question.saved.some(
+        (ele) => ele.user.toString() == userId,
+      );
+      return question;
+    });
 
     // Combine all the data into one array
     const combinedFeed = [
       ...shares,
-      ...voluntary,
-      ...offered,
+      // ...voluntary,
+      // ...offered,
       ...questions,
-      ...events,
+      // ...events,
     ];
 
     // // Sort the combined feed by 'createdAt' in descending order
-    // const sortedFeed = combinedFeed.sort(
-    //   (a, b) =>
-    //     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    // );
+    const sortedFeed = combinedFeed.sort(
+      (a: any, b: any) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    );
 
     // Return paginated feed along with pagination details
-    const totalItems = combinedFeed.length;
+    // const totalItems = combinedFeed.length;
 
     return {
-      feed: combinedFeed,
+      feed: sortedFeed,
       pagination: {
-        total: totalItems,
-        page,
         limit,
-        pages: Math.ceil(totalItems / limit),
+        currentPage,
+        previousPage,
+        skip,
+        count,
+        numOfPages,
+        // pages: Math.ceil(totalItems / limit),
       },
     };
   }
