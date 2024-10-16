@@ -26,8 +26,8 @@ export class ShareService {
   }
   async createShare(body: CreateShareDto, user: string) {
     body.user = user;
-    const event = await this.shareModel.create(body);
-    return { event };
+    const share = await this.shareModel.create(body);
+    return share;
   }
   async updateShare(shareId: string, body: UpdateShareDto, user: string) {
     const shareExists = await this.shareModel.findById(shareId);
