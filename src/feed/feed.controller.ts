@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
 import { FeedService } from './feed.service';
 import { FeedQueryDto } from './dto/feed.query.dto';
 import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
@@ -33,5 +33,11 @@ export class FeedController {
   })
   async getFeed(@Query() query: FeedQueryDto, @Req() req: any) {
     return this.feedService.getFeed(query, req.userId);
+  }
+  @Get(':id')
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
+  @Roles(All_Role.User)
+  async getOne(@Param('id') id: string, @Req() req: any) {
+    return this.feedService.getOne(id, req.userId);
   }
 }

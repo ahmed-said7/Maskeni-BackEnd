@@ -11,6 +11,7 @@ import { User, UserDocument } from 'src/user/user.schema';
 import { Quarter } from 'src/quarter/quarter.schema';
 import { City } from 'src/city/city.schema';
 import { Country } from 'src/country/country.schema';
+import { NotFoundException } from '@nestjs/common';
 
 export class FeedService {
   constructor(
@@ -166,5 +167,62 @@ export class FeedService {
         // pages: Math.ceil(totalItems / limit),
       },
     };
+  }
+  async getOne(id: string, userId: string) {
+    let postExist = await this.questionModel
+      .findById(id)
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
+    if (!postExist) {
+      postExist = await this.shareModel
+        .findById(id)
+        .populate({
+          path: 'user',
+          model: 'User',
+          select: 'mobile name icon',
+        })
+        .populate({
+          path: 'country',
+          select: 'image nameAr nameEn',
+          model: Country.name,
+        })
+        .populate({
+          path: 'city',
+          select: 'image nameAr nameEn',
+          model: City.name,
+        })
+        .populate({
+          path: 'quarter',
+          select: 'image nameAr nameEn',
+          model: Quarter.name,
+        });
+    }
+    if (!postExist) {
+      throw new NotFoundException('post not found');
+    }
+    const user = await this.userModel.findById(userId);
+    postExist.isLiked = user.favoriteQuestion.includes(postExist._id);
+    postExist.isSaved = postExist.saved.some(
+      (ele) => ele.user.toString() == userId,
+    );
+    return { post: postExist };
   }
 }
