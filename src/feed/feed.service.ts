@@ -86,6 +86,7 @@ export class FeedService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       })
+      .select('-updatedAt')
       .skip(skip)
       .limit(shareLimit);
     const user = await this.userModel.findById(userId);
@@ -127,6 +128,7 @@ export class FeedService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       })
+      .select('-updatedAt')
       .skip(skip)
       .limit(questionLimit);
     questions = questions.map((question) => {
