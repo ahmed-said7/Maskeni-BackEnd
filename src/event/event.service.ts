@@ -162,6 +162,21 @@ export class EventService {
     );
     const events = await query
       .populate({ path: 'user', select: 'name mobile icon' })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      })
       .select('-comments -likes -saved');
     return { events, pagination: paginationObj };
   }
@@ -175,6 +190,21 @@ export class EventService {
     );
     const events = await query
       .populate({ path: 'user', select: 'name mobile icon' })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      })
       .select('-comments -likes -saved');
     return { events, pagination: paginationObj };
   }
@@ -247,8 +277,24 @@ export class EventService {
       obj,
       { isArchived: true, user },
     );
-    const groups = await query.setOptions({ skipFilter: true });
-    return { groups, pagination: paginationObj };
+    const events = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
+    return { events, pagination: paginationObj };
   }
   async getMyDeletedEvents(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
@@ -256,7 +302,23 @@ export class EventService {
       obj,
       { isDeleted: true, user },
     );
-    const groups = await query.setOptions({ skipFilter: true });
-    return { groups, pagination: paginationObj };
+    const events = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
+    return { events, pagination: paginationObj };
   }
 }

@@ -8,6 +8,9 @@ import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { FeedQueryDto } from './dto/feed.query.dto';
 import { User, UserDocument } from 'src/user/user.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
+import { City } from 'src/city/city.schema';
+import { Country } from 'src/country/country.schema';
 
 export class FeedService {
   constructor(
@@ -67,7 +70,21 @@ export class FeedService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       })
-      .populate('country')
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      })
       .skip(skip)
       .limit(shareLimit);
     const user = await this.userModel.findById(userId);
@@ -94,7 +111,21 @@ export class FeedService {
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
       })
-      .populate('country')
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      })
       .skip(skip)
       .limit(questionLimit);
     questions = questions.map((question) => {

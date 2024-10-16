@@ -136,7 +136,23 @@ export class GroupServices {
       obj,
       { isArchived: true, admin: user },
     );
-    const groups = await query.setOptions({ skipFilter: true });
+    const groups = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { groups, pagination: paginationObj };
   }
   async getMyDeletedGroups(obj: FindQuery, user: string) {
@@ -145,7 +161,23 @@ export class GroupServices {
       obj,
       { isDeleted: true, admin: user },
     );
-    const groups = await query.setOptions({ skipFilter: true });
+    const groups = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { groups, pagination: paginationObj };
   }
 }

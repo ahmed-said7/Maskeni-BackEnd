@@ -257,7 +257,23 @@ export class OfferedService {
       obj,
       { isArchived: true, user },
     );
-    const services = await query.setOptions({ skipFilter: true });
+    const services = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { services, pagination: paginationObj };
   }
   async getMyDeletedServices(obj: FindQuery, user: string) {
@@ -266,7 +282,23 @@ export class OfferedService {
       obj,
       { isDeleted: true, user },
     );
-    const services = await query.setOptions({ skipFilter: true });
+    const services = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { services, pagination: paginationObj };
   }
 }

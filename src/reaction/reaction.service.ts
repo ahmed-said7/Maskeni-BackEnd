@@ -152,6 +152,21 @@ export class ReactionService<T extends IEntityType> {
         model: 'User',
         path: 'saved.user',
       });
+    // .populate({
+    //   path: 'country',
+    //   select: 'image nameAr nameEn',
+    //   model: Country.name,
+    // })
+    // .populate({
+    //   path: 'city',
+    //   select: 'image nameAr nameEn',
+    //   model: City.name,
+    // })
+    // .populate({
+    //   path: 'quarter',
+    //   select: 'image nameAr nameEn',
+    //   model: Quarter.name,
+    // });
     if (!post) {
       throw new HttpException('post not found', 400);
     }

@@ -212,7 +212,23 @@ export class ShareService {
       obj,
       { isArchived: true, user },
     );
-    const events = await query.setOptions({ skipFilter: true });
+    const events = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { events, pagination: paginationObj };
   }
   async getMyDeletdShare(obj: FindQuery, user: string) {
@@ -221,7 +237,23 @@ export class ShareService {
       obj,
       { isDeleted: true, user },
     );
-    const events = await query.setOptions({ skipFilter: true });
+    const events = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { events, pagination: paginationObj };
   }
 }

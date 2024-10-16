@@ -127,6 +127,21 @@ export class QuestionService {
         path: 'likes',
         populate: { path: 'user', select: 'name mobile icon', model: 'User' },
         options: { limit: 1 }, // Only load the first few replies (can increase limit)
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
       });
     const user = await this.userModel.findById(userId);
     questions = questions.map((question) => {
@@ -209,7 +224,23 @@ export class QuestionService {
       obj,
       { isArchived: true, user },
     );
-    const questions = await query.setOptions({ skipFilter: true });
+    const questions = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { questions, pagination: paginationObj };
   }
   async getMyDeletedQuestion(obj: FindQuery, user: string) {
@@ -218,7 +249,23 @@ export class QuestionService {
       obj,
       { isDeleted: true, user },
     );
-    const questions = await query.setOptions({ skipFilter: true });
+    const questions = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { questions, pagination: paginationObj };
   }
 }
