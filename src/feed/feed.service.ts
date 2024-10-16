@@ -39,7 +39,7 @@ export class FeedService {
       .countDocuments(query)
       .skip(skip)
       .limit(half);
-    const remainingQuestions = await this.shareModel
+    const remainingQuestions = await this.questionModel
       .countDocuments(query)
       .skip(skip)
       .limit(half);

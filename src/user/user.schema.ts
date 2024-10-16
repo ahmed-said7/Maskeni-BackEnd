@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { User_Role } from 'src/common/enum';
-import { Gender_Type } from 'src/common/types';
 import { Post } from 'src/post/post.schema';
 import { Question } from 'src/question/question.schema';
 import { Offered } from 'src/service/offered-service.schema';
