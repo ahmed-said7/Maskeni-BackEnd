@@ -20,14 +20,6 @@ export class UserSavedController {
     return this.userSavedService.getUserSavedShare(req.userId, query);
   }
 
-  @Get('questions')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get user saved questions' }) // Summary for the endpoint
-  async getUserSavedQuestion(@Req() req: any, @Query() query: FindQuery) {
-    return this.userSavedService.getUserSavedQuestion(req.userId, query);
-  }
-
   @Get('voluntaries')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)

@@ -12,22 +12,6 @@ import { ApiTags, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 export class SoftAcceptController {
   constructor(private readonly softAcceptService: SoftAcceptService) {}
 
-  @Patch('questions/:id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the question to soft accept' }) // Document path parameter
-  @ApiBody({ type: DashboardUpdateAcceptedDto }) // Document body parameter
-  @ApiResponse({
-    status: 200,
-    description: 'Soft accept the question successfully.',
-  }) // Document response
-  async softAcceptQuestion(
-    @Param('id') id: string,
-    @Body() updateAcceptedDto: DashboardUpdateAcceptedDto,
-  ) {
-    return this.softAcceptService.softAcceptQuestions(id, updateAcceptedDto);
-  }
-
   @Patch('events/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)

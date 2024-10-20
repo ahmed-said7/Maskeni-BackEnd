@@ -20,14 +20,6 @@ export class UserFavoriteController {
     return this.userService.getUserFavoriteShare(req.userId, query);
   }
 
-  @Get('questions')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get user saved questions' }) // Summary for the endpoint
-  async getUserFavoriteQuestion(@Req() req: any, @Query() query: FindQuery) {
-    return this.userService.getUserFavoriteQuestion(req.userId, query);
-  }
-
   @Get('voluntaries')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)

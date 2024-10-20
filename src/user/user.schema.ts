@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { User_Role } from 'src/common/enum';
 import { Post } from 'src/post/post.schema';
-import { Question } from 'src/question/question.schema';
 import { Offered } from 'src/service/offered-service.schema';
 import { Share } from 'src/share/share.schema';
 import { Voluntary } from 'src/voluntary/voluntary.schema';
@@ -61,7 +60,7 @@ export class User {
 
   @Prop({
     _id: Types.ObjectId,
-    question: { type: Types.ObjectId, ref: Question.name },
+    question: { type: Types.ObjectId },
     createdAt: { type: Date, default: new Date() },
   })
   savedQuestion: {
@@ -179,9 +178,6 @@ export class User {
 
   @Prop({ type: [Types.ObjectId], ref: Share.name })
   favoriteShare: Types.ObjectId[];
-
-  @Prop({ type: [Types.ObjectId], ref: Question.name })
-  favoriteQuestion: Types.ObjectId[];
 
   @Prop({
     type: [Types.ObjectId],

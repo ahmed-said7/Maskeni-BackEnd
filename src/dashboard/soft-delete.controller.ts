@@ -12,22 +12,6 @@ import { ApiTags, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 export class SoftDeleteController {
   constructor(private readonly softDeleteService: SoftDeleteService) {}
 
-  @Patch('questions/:id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the question to soft delete' }) // Document path parameter
-  @ApiBody({ type: DashboardUpdateDeletedDto }) // Document body parameter
-  @ApiResponse({
-    status: 200,
-    description: 'Soft delete the question successfully.',
-  }) // Document response
-  async softDeleteQuestion(
-    @Param('id') id: string,
-    @Body() updateDeletedDto: DashboardUpdateDeletedDto,
-  ) {
-    return this.softDeleteService.softDeleteQuestions(id, updateDeletedDto);
-  }
-
   @Patch('events/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)

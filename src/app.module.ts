@@ -20,7 +20,6 @@ import { AddressModule } from './address/address.module';
 import { VoluntaryModule } from './voluntary/voluntary.module';
 import { ShareModule } from './share/share.module';
 import { ServiceModule } from './service/offered-service.module';
-import { QuestionModule } from './question/question.module';
 import { PostModule } from './post/post.module';
 import { FaxModule } from './fax/fax.module';
 import { AdminModule } from './admin/admin.module';
@@ -34,7 +33,6 @@ import { CustomerServiceChatModule } from './customer-service-chat/customer-serv
 import { GatewayModule } from './websocket/gateway.module';
 import { AnalysisModule } from './analysis/analysis.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { FeedModule } from './feed/feed.module';
 
 @Module({
   imports: [
@@ -62,7 +60,6 @@ import { FeedModule } from './feed/feed.module';
     VoluntaryModule,
     ShareModule,
     ServiceModule,
-    QuestionModule,
     PostModule,
     FaxModule,
     AddressModule,
@@ -76,7 +73,6 @@ import { FeedModule } from './feed/feed.module';
     GatewayModule,
     AnalysisModule,
     DashboardModule,
-    FeedModule,
   ],
   controllers: [AppController],
   providers: [

@@ -10,21 +10,6 @@ export class Share {
   @Prop({ type: String, required: true, trim: true })
   content: string;
 
-  // @Prop({
-  //   type: {
-  //     type: String, // 'type' must be 'Point'
-  //     enum: ['Point'], // Only 'Point' is allowed
-  //     default: 'Point',
-  //   },
-  //   coordinates: {
-  //     type: [Number],
-  //     default: [50, 50],
-  //   },
-  // })
-  // location: {
-  //   type: 'Point';
-  //   coordinates: [number, number];
-  // };
   @Prop({ type: Types.ObjectId, ref: City.name })
   city: Types.ObjectId;
   @Prop({ type: Types.ObjectId, ref: Country.name })
@@ -40,7 +25,7 @@ export class Share {
 
   @Prop({ type: Boolean, default: false })
   isArchived: boolean;
-  @Prop({ type: String, default: 'share' })
+  @Prop({ type: String })
   postType?: string;
 
   @Prop({ type: [Types.ObjectId], ref: 'Comment', default: [] })

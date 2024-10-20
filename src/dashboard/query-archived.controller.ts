@@ -14,15 +14,6 @@ export class DashboardArchivedController {
     private readonly dashboardArchivedService: DashboardArchivedService,
   ) {}
 
-  @Get('questions')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiQuery({ type: DashboardArchivedDto, required: false }) // Document query parameters
-  @ApiResponse({ status: 200, description: 'Retrieve all archived questions.' }) // Document response
-  async getAllArchivedQuestions(@Query() query: DashboardArchivedDto) {
-    return this.dashboardArchivedService.getAllArchivedQuestions(query);
-  }
-
   @Get('events')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)

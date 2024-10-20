@@ -304,31 +304,6 @@ export class UserService {
       savedShare: user.savedShare,
     };
   }
-  async getUserSavedQuestion(userId: string, query: FindQuery) {
-    const page = parseInt(query.page) || 1;
-    const limit = parseInt(query.limit) || 10;
-    const skip = (page - 1) * limit;
-    const user = await this.Usermodel.findById(userId)
-      .select({
-        savedQuestion: {
-          $slice: [skip, limit],
-        },
-      })
-      .populate({
-        path: 'savedQuestion.question',
-        model: 'Question',
-      });
-    const result = (await this.Usermodel.findById(userId))?.savedQuestion;
-    const pagination = this.apiService.makePagination(
-      page,
-      limit,
-      result.length,
-    );
-    return {
-      pagination,
-      savedQuestion: user.savedQuestion,
-    };
-  }
   async getUserSavedVoluntary(userId: string, query: FindQuery) {
     const page = parseInt(query.page) || 1;
     const limit = parseInt(query.limit) || 10;
@@ -477,31 +452,6 @@ export class UserService {
     return {
       pagination,
       favoriteShare: user.favoriteShare,
-    };
-  }
-  async getUserFavoriteQuestion(userId: string, query: FindQuery) {
-    const page = parseInt(query.page) || 1;
-    const limit = parseInt(query.limit) || 10;
-    const skip = (page - 1) * limit;
-    const user = await this.Usermodel.findById(userId)
-      .select({
-        favoriteQuestion: {
-          $slice: [skip, limit],
-        },
-      })
-      .populate({
-        path: 'favoriteQuestion',
-        model: 'Question',
-      });
-    const result = (await this.Usermodel.findById(userId))?.favoriteQuestion;
-    const pagination = this.apiService.makePagination(
-      page,
-      limit,
-      result.length,
-    );
-    return {
-      pagination,
-      favoriteQuestion: user.favoriteQuestion,
     };
   }
   async getUserFavoriteVoluntary(userId: string, query: FindQuery) {

@@ -12,22 +12,6 @@ import { ApiTags, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 export class SoftArchiveController {
   constructor(private readonly softArchiveService: SoftArchiveService) {}
 
-  @Patch('questions/:id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the question to soft archive' }) // Document path parameter
-  @ApiBody({ type: DashboardUpdateArchivedDto }) // Document body parameter
-  @ApiResponse({
-    status: 200,
-    description: 'Soft archive the question successfully.',
-  }) // Document response
-  async softArchiveQuestion(
-    @Param('id') id: string,
-    @Body() updateArchivedDto: DashboardUpdateArchivedDto,
-  ) {
-    return this.softArchiveService.softArchiveQuestions(id, updateArchivedDto);
-  }
-
   @Patch('events/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)

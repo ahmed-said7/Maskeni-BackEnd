@@ -30,4 +30,8 @@ export class CreateShareDto {
     description: 'The details of the address',
   })
   addressDetails: string;
+
+  @IsString()
+  @ApiProperty()
+  postType: string;
 }

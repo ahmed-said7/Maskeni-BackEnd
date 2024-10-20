@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Question, QuestionSchema } from 'src/question/question.schema';
 import { Event, EventSchema } from 'src/event/event.schema';
 import { Post, PostSchema } from 'src/post/post.schema';
 import { Offered, OfferedSchema } from 'src/service/offered-service.schema';
@@ -31,7 +30,6 @@ import { Group, GroupSchema } from 'src/group/group.schema';
   imports: [
     ApiModule,
     MongooseModule.forFeature([
-      { name: Question.name, schema: QuestionSchema },
       { name: Event.name, schema: EventSchema },
       { name: Post.name, schema: PostSchema },
       { name: Offered.name, schema: OfferedSchema },

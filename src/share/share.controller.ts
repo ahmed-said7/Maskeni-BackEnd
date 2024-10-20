@@ -21,22 +21,17 @@ import { AuthenticationGuard } from 'src/common/guards/authentication.guard';
 import { Roles } from 'src/common/decorator/roles';
 import { All_Role } from 'src/common/enum';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
-import { ApiResponse, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Share') // Tag for grouping related operations
+@ApiTags('Feed') // Tag for grouping related operations
 // @ApiBearerAuth() // Adds Bearer Auth requirement
-@Controller('share')
+@Controller('feed')
 export class ShareController {
   constructor(private shareService: ShareService) {}
 
   @Get('deleted')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get deleted shares' })
-  @ApiResponse({
-    status: 200,
-    description: 'Returns deleted shares for the user',
-  })
   async getMyDeletedShare(@Query() query: FindQuery, @Req() req: any) {
     const userId = req.userId; // Assuming user ID is stored in the request object
     return this.shareService.getMyDeletdShare(query, userId);
@@ -45,50 +40,35 @@ export class ShareController {
   @Get('archived')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get archived shares' })
-  @ApiResponse({
-    status: 200,
-    description: 'Returns archived shares for the user',
-  })
   async getMyArchivedShare(@Query() query: FindQuery, @Req() req: any) {
     const userId = req.userId; // Assuming user ID is stored in the request object
     return this.shareService.getMyArcivedShare(query, userId);
   }
 
   @Post()
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Create a new share' })
-  @ApiResponse({ status: 201, description: 'Successfully created a share' })
-  @ApiResponse({ status: 400, description: 'Invalid input' })
   createShare(@Body() body: CreateShareDto, @Req() req: any) {
     return this.shareService.createShare(body, req.userId);
   }
 
   @Get()
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get all shares' })
-  @ApiResponse({ status: 200, description: 'Returns all shares' })
   getAllShare(@Query() query: QueryShareDto, @Req() req: any) {
     return this.shareService.getAllShare(query, req.userId);
   }
   @Get('profile')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get all shares' })
-  @ApiResponse({ status: 200, description: 'Returns all shares' })
   getAllShareProfile(@Query() query: QueryShareDto, @Req() req: any) {
     query.user = req.userId;
     return this.shareService.getAllShare(query, req.userId);
   }
 
   @Patch(':shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Update a share by ID' })
-  @ApiResponse({ status: 200, description: 'Successfully updated the share' })
-  @ApiResponse({ status: 404, description: 'Share not found' })
   updateShare(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Body() body: UpdateShareDto,
@@ -98,11 +78,8 @@ export class ShareController {
   }
 
   @Delete(':shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Delete a share by ID' })
-  @ApiResponse({ status: 200, description: 'Successfully deleted the share' })
-  @ApiResponse({ status: 404, description: 'Share not found' })
   deleteShare(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Req() req: any,
@@ -111,11 +88,8 @@ export class ShareController {
   }
 
   @Post('comment/:shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Add a comment to a share' })
-  @ApiResponse({ status: 201, description: 'Successfully added a comment' })
-  @ApiResponse({ status: 404, description: 'Share not found' })
   createShareComment(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Body() body: CreateCommentDto,
@@ -125,13 +99,8 @@ export class ShareController {
   }
 
   @Get('comment/:shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get comments for a share' })
-  @ApiResponse({
-    status: 200,
-    description: 'Returns comments for the specified share',
-  })
   getShareComment(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Query() query: FindQuery,
@@ -140,11 +109,8 @@ export class ShareController {
   }
 
   @Delete('comment/:commentId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Delete a comment by ID' })
-  @ApiResponse({ status: 200, description: 'Successfully deleted the comment' })
-  @ApiResponse({ status: 404, description: 'Comment not found' })
   deleteShareComment(
     @Param('commentId', ValidateObjectIdPipe) commentId: string,
     @Req() req: any,
@@ -153,11 +119,8 @@ export class ShareController {
   }
 
   @Post('likes/:shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Like a share' })
-  @ApiResponse({ status: 200, description: 'Successfully liked the share' })
-  @ApiResponse({ status: 404, description: 'Share not found' })
   addShareLike(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Req() req: any,
@@ -166,11 +129,8 @@ export class ShareController {
   }
 
   @Delete('likes/:shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Remove like from a share' })
-  @ApiResponse({ status: 200, description: 'Successfully removed the like' })
-  @ApiResponse({ status: 404, description: 'Share not found' })
   removeShareLike(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Req() req: any,
@@ -179,13 +139,8 @@ export class ShareController {
   }
 
   @Get('likes/:shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get likes for a share' })
-  @ApiResponse({
-    status: 200,
-    description: 'Returns likes for the specified share',
-  })
   getShareLikes(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Query() query: FindQuery,
@@ -194,11 +149,8 @@ export class ShareController {
   }
 
   @Post('saved/:shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Save a share' })
-  @ApiResponse({ status: 200, description: 'Successfully saved the share' })
-  @ApiResponse({ status: 404, description: 'Share not found' })
   addSavedShare(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Req() req: any,
@@ -207,14 +159,8 @@ export class ShareController {
   }
 
   @Delete('saved/:shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Remove saved share' })
-  @ApiResponse({
-    status: 200,
-    description: 'Successfully removed the saved share',
-  })
-  @ApiResponse({ status: 404, description: 'Share not found' })
   removeSavedShare(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Req() req: any,
@@ -223,10 +169,8 @@ export class ShareController {
   }
 
   @Get('saved/:shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get all saved shares' })
-  @ApiResponse({ status: 200, description: 'Returns all saved shares' })
   getSavedShares(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Query() query: QueryShareDto,
@@ -235,11 +179,8 @@ export class ShareController {
   }
 
   @Get(':shareId')
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get a share by ID' })
-  @ApiResponse({ status: 200, description: 'Returns the specified share' })
-  @ApiResponse({ status: 404, description: 'Share not found' })
   getShare(
     @Param('shareId', ValidateObjectIdPipe) shareId: string,
     @Req() req: any,

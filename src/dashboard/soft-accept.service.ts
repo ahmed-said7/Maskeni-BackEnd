@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EventDocument } from 'src/event/event.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
-import { Question, QuestionDocument } from 'src/question/question.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
@@ -19,28 +18,8 @@ export class SoftAcceptService {
     @InjectModel(Share.name) private shareModel: Model<ShareDocument>,
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
-    @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
   ) {}
-  async softAcceptQuestions(id: string, obj: DashboardUpdateAcceptedDto) {
-    const question = await this.questionModel
-      .findOneAndUpdate(
-        {
-          _id: id,
-          isAccepted: !obj.isAccepted,
-        },
-        {
-          isAccepted: obj.isAccepted,
-          isDeleted: false,
-          isArchived: false,
-        },
-      )
-      .setOptions({ skipFilter: true });
-    if (!question) {
-      throw new NotFoundException(`Question with ID ${id} not found`);
-    }
-    return { question };
-  }
   async softAcceptEvents(id: string, obj: DashboardUpdateAcceptedDto) {
     const event = await this.eventModel
       .findOneAndUpdate(

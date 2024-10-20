@@ -12,15 +12,6 @@ import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
 export class QueryAllController {
   constructor(private readonly dashboardAllService: QueryAllService) {}
 
-  @Get('questions')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiQuery({ type: DashboardSearchDto, required: false }) // Document query parameters
-  @ApiResponse({ status: 200, description: 'Retrieve all questions.' }) // Document response
-  async getAllQuestions(@Query() query: DashboardSearchDto) {
-    return this.dashboardAllService.getAllQuestions(query);
-  }
-
   @Get('events')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)

@@ -7,7 +7,6 @@ import { Voluntary, VoluntarySchema } from 'src/voluntary/voluntary.schema';
 import { Share, ShareSchema } from 'src/share/share.schema';
 import { Event, EventSchema } from 'src/event/event.schema';
 import { Post, PostSchema } from 'src/post/post.schema';
-import { Question, QuestionSchema } from 'src/question/question.schema';
 import { UserSchema } from 'src/user/user.schema';
 import { AdminSchema } from 'src/admin/admin.schema';
 import { Address, AddressSchema } from 'src/address/address.schema';
@@ -21,7 +20,6 @@ import { Quarter, QuarterSchema } from 'src/quarter/quarter.schema';
       { name: Share.name, schema: ShareSchema },
       { name: Event.name, schema: EventSchema },
       { name: Post.name, schema: PostSchema },
-      { name: Question.name, schema: QuestionSchema },
       { name: 'User', schema: UserSchema },
       { name: 'Admin', schema: AdminSchema },
       { name: Address.name, schema: AddressSchema },

@@ -14,15 +14,6 @@ export class DashboardAcceptedController {
     private readonly dashboardAcceptedService: DashboardAcceptedService,
   ) {}
 
-  @Get('questions')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiQuery({ type: DashboardAcceptedDto, required: false }) // Document query parameters
-  @ApiResponse({ status: 200, description: 'Retrieve all accepted questions.' }) // Document response
-  async getAllAcceptedQuestions(@Query() query: DashboardAcceptedDto) {
-    return this.dashboardAcceptedService.getAllAcceptedQuestions(query);
-  }
-
   @Get('events')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)

@@ -11,15 +11,6 @@ import { ApiTags, ApiResponse, ApiParam } from '@nestjs/swagger';
 export class SoftRemoveController {
   constructor(private readonly softRemoveService: SoftRemoveService) {}
 
-  @Delete('questions/:id')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the question to soft remove' }) // Document path parameter
-  @ApiResponse({ description: 'Soft removed the question successfully.' }) // Document response
-  async softRemoveQuestion(@Param('id') id: string) {
-    return this.softRemoveService.softRemoveQuestions(id);
-  }
-
   @Delete('events/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)

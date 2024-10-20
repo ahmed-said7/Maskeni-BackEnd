@@ -14,18 +14,6 @@ export class DashboardDeletedController {
     private readonly dashboardDeletedService: DashboardDeletedService,
   ) {}
 
-  @Get('questions')
-  @UseGuards(AuthenticationGuard, AuthorizationGuard)
-  @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiQuery({ type: DashboardDeletedDto, required: false }) // Document query parameters
-  @ApiResponse({
-    status: 200,
-    description: 'Retrieve all soft-deleted questions.',
-  }) // Document response
-  async getAllDeletedQuestions(@Query() query: DashboardDeletedDto) {
-    return this.dashboardDeletedService.getAllDeletedQuestions(query);
-  }
-
   @Get('events')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
