@@ -20,13 +20,13 @@ export class SoftRemoveController {
     return this.softRemoveService.softRemoveEvents(id);
   }
 
-  @Delete('shares/:id')
+  @Delete('feed/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the share to soft remove' })
-  @ApiResponse({ description: 'Soft removed the share successfully.' })
-  async softRemoveShare(@Param('id') id: string) {
-    return this.softRemoveService.softRemoveShares(id);
+  @ApiParam({ name: 'id', description: 'ID of the feed to soft remove' })
+  @ApiResponse({ description: 'Soft removed the feed successfully.' })
+  async softRemoveFeed(@Param('id') id: string) {
+    return this.softRemoveService.softRemoveFeed(id);
   }
 
   @Delete('voluntary/:id')

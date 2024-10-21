@@ -5,10 +5,10 @@ import { ApiService } from 'src/common/Api/api.service';
 import { EventDocument } from 'src/event/event.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
-import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardAcceptedDto } from './dto/dashboard.query.dto';
 import { Group, GroupDocument } from 'src/group/group.schema';
+import { Feed, FeedDocument } from 'src/share/feed.schema';
 
 @Injectable()
 export class DashboardAcceptedService {
@@ -16,7 +16,7 @@ export class DashboardAcceptedService {
     @InjectModel(Offered.name) private serviceModel: Model<OfferedDocument>,
     @InjectModel(Voluntary.name)
     private voluntaryModel: Model<VoluntaryDocument>,
-    @InjectModel(Share.name) private shareModel: Model<ShareDocument>,
+    @InjectModel(Feed.name) private feedModel: Model<FeedDocument>,
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
@@ -37,19 +37,19 @@ export class DashboardAcceptedService {
       .setOptions({ skipFilter: true });
     return { events, pagination: paginationObj };
   }
-  async getAllAcceptedShares(obj: DashboardAcceptedDto) {
+  async getAllAcceptedFeed(obj: DashboardAcceptedDto) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
-      this.shareModel.find(),
+      this.feedModel.find(),
       obj,
     );
-    const shares = await query
+    const posts = await query
       .populate({
         path: 'user',
         model: 'User',
         select: 'mobile name icon',
       })
       .setOptions({ skipFilter: true });
-    return { shares, pagination: paginationObj };
+    return { posts, pagination: paginationObj };
   }
   async getAllAcceptedVoluntary(obj: DashboardAcceptedDto) {
     const { query, paginationObj } = await this.apiService.getAllDocs(

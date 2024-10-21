@@ -3,11 +3,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ApiModule } from 'src/common/Api/api.module';
 import { User, UserSchema } from 'src/user/user.schema';
 import { ReactionModule } from 'src/reaction/reaction.module';
-import { Share, ShareSchema } from './share.schema';
-import { ShareService } from './share.service';
-import { ShareController } from './share.controller';
+import { FeedController } from './feed.controller';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { Query } from 'mongoose';
+import { FeedService } from './feed.service';
+import { Feed, FeedSchema } from './feed.schema';
 export interface SearchQuery extends Query<any, any[] | any> {
   // skipFilter?: boolean;
 }
@@ -28,9 +28,9 @@ export interface SearchQuery extends Query<any, any[] | any> {
     ]),
     MongooseModule.forFeatureAsync([
       {
-        name: Share.name,
+        name: Feed.name,
         useFactory: async () => {
-          const schema = ShareSchema;
+          const schema = FeedSchema;
           schema.pre<SearchQuery>(/^find/, function () {
             if (!this.getOptions().skipFilter) {
               this.find({
@@ -45,7 +45,7 @@ export interface SearchQuery extends Query<any, any[] | any> {
       },
     ]),
   ],
-  providers: [ShareService],
-  controllers: [ShareController],
+  providers: [FeedService],
+  controllers: [FeedController],
 })
-export class ShareModule {}
+export class FeedModule {}

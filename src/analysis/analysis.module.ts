@@ -4,7 +4,7 @@ import { AnalysisService } from './analysis.service';
 import { AnalysisController } from './analysis.controller';
 import { Offered, OfferedSchema } from 'src/service/offered-service.schema';
 import { Voluntary, VoluntarySchema } from 'src/voluntary/voluntary.schema';
-import { Share, ShareSchema } from 'src/share/share.schema';
+import { Share, ShareSchema } from 'src/share/feed.schema';
 import { Event, EventSchema } from 'src/event/event.schema';
 import { Post, PostSchema } from 'src/post/post.schema';
 import { UserSchema } from 'src/user/user.schema';

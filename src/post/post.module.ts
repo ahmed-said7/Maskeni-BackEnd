@@ -10,7 +10,7 @@ import { Group, GroupSchema } from 'src/group/group.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { LikesModule } from 'src/likes/likes.module';
 import { CommentModule } from 'src/comment/comment.module';
-import { SearchQuery } from 'src/share/share.module';
+import { SearchQuery } from 'src/share/feed.module';
 
 @Module({
   imports: [

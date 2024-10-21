@@ -6,7 +6,7 @@ import { Likes } from 'src/likes/likes.schema';
 import { Quarter } from 'src/quarter/quarter.schema';
 
 @Schema({ timestamps: true })
-export class Share {
+export class Feed {
   @Prop({ type: String, required: true, trim: true })
   content: string;
 
@@ -64,5 +64,5 @@ export class Share {
   isSaved: boolean;
 }
 
-export type ShareDocument = HydratedDocument<Share>;
-export const ShareSchema = SchemaFactory.createForClass(Share);
+export type FeedDocument = HydratedDocument<Feed>;
+export const FeedSchema = SchemaFactory.createForClass(Feed);

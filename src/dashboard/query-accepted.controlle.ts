@@ -23,13 +23,13 @@ export class DashboardAcceptedController {
     return this.dashboardAcceptedService.getAllAcceptedEvents(query);
   }
 
-  @Get('shares')
+  @Get('feed')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
   @ApiQuery({ type: DashboardAcceptedDto, required: false })
-  @ApiResponse({ status: 200, description: 'Retrieve all accepted shares.' })
-  async getAllAcceptedShares(@Query() query: DashboardAcceptedDto) {
-    return this.dashboardAcceptedService.getAllAcceptedShares(query);
+  @ApiResponse({ status: 200, description: 'Retrieve all accepted feed.' })
+  async getAllAcceptedFeed(@Query() query: DashboardAcceptedDto) {
+    return this.dashboardAcceptedService.getAllAcceptedFeed(query);
   }
 
   @Get('voluntary')

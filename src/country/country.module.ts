@@ -6,7 +6,7 @@ import { CountryService } from './country.service';
 import { ApiModule } from 'src/common/Api/api.module';
 import { UserSchema } from 'src/user/user.schema';
 import { AdminSchema } from 'src/admin/admin.schema';
-import { SearchQuery } from 'src/share/share.module';
+import { SearchQuery } from 'src/share/feed.module';
 
 @Module({
   imports: [

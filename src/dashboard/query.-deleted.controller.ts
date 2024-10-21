@@ -26,16 +26,16 @@ export class DashboardDeletedController {
     return this.dashboardDeletedService.getAllDeletedEvents(query);
   }
 
-  @Get('shares')
+  @Get('feed')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
   @ApiQuery({ type: DashboardDeletedDto, required: false })
   @ApiResponse({
     status: 200,
-    description: 'Retrieve all soft-deleted shares.',
+    description: 'Retrieve all soft-deleted feed.',
   })
-  async getAllDeletedShares(@Query() query: DashboardDeletedDto) {
-    return this.dashboardDeletedService.getAllDeletedShares(query);
+  async getAllDeletedFeed(@Query() query: DashboardDeletedDto) {
+    return this.dashboardDeletedService.getAllDeletedFeed(query);
   }
 
   @Get('voluntary')

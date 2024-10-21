@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Event, EventSchema } from 'src/event/event.schema';
 import { Post, PostSchema } from 'src/post/post.schema';
 import { Offered, OfferedSchema } from 'src/service/offered-service.schema';
-import { Share, ShareSchema } from 'src/share/share.schema';
 import { Voluntary, VoluntarySchema } from 'src/voluntary/voluntary.schema';
 import { ApiModule } from 'src/common/Api/api.module';
 import { User, UserSchema } from 'src/user/user.schema';
@@ -25,6 +24,7 @@ import { SoftDeleteController } from './soft-delete.controller';
 import { QueryAllController } from './query-all.controller';
 import { QueryAllService } from './query-all.service';
 import { Group, GroupSchema } from 'src/group/group.schema';
+import { Feed, FeedSchema } from 'src/share/feed.schema';
 
 @Module({
   imports: [
@@ -33,7 +33,7 @@ import { Group, GroupSchema } from 'src/group/group.schema';
       { name: Event.name, schema: EventSchema },
       { name: Post.name, schema: PostSchema },
       { name: Offered.name, schema: OfferedSchema },
-      { name: Share.name, schema: ShareSchema },
+      { name: Feed.name, schema: FeedSchema },
       { name: Voluntary.name, schema: VoluntarySchema },
       { name: User.name, schema: UserSchema },
       { name: Admin.name, schema: AdminSchema },

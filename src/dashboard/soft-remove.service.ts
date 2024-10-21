@@ -5,7 +5,7 @@ import { EventDocument } from 'src/event/event.schema';
 import { Group, GroupDocument } from 'src/group/group.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
-import { Share, ShareDocument } from 'src/share/share.schema';
+import { Feed, FeedDocument } from 'src/share/feed.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class SoftRemoveService {
     @InjectModel(Offered.name) private serviceModel: Model<OfferedDocument>,
     @InjectModel(Voluntary.name)
     private voluntaryModel: Model<VoluntaryDocument>,
-    @InjectModel(Share.name) private shareModel: Model<ShareDocument>,
+    @InjectModel(Feed.name) private feedModel: Model<FeedDocument>,
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
@@ -30,16 +30,16 @@ export class SoftRemoveService {
     }
     return { event };
   }
-  async softRemoveShares(id: string) {
-    const share = await this.shareModel
+  async softRemoveFeed(id: string) {
+    const post = await this.feedModel
       .findOneAndDelete({
         _id: id,
       })
       .setOptions({ skipFilter: true });
-    if (!share) {
-      throw new NotFoundException(`share with ID ${id} not found`);
+    if (!post) {
+      throw new NotFoundException(`post with ID ${id} not found`);
     }
-    return { share };
+    return { post };
   }
   async softRemoveVoluntary(id: string) {
     const voluntary = await this.voluntaryModel

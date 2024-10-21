@@ -23,13 +23,13 @@ export class DashboardArchivedController {
     return this.dashboardArchivedService.getAllArchivedEvents(query);
   }
 
-  @Get('shares')
+  @Get('feed')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
   @ApiQuery({ type: DashboardArchivedDto, required: false })
-  @ApiResponse({ status: 200, description: 'Retrieve all archived shares.' })
+  @ApiResponse({ status: 200, description: 'Retrieve all archived feed.' })
   async getAllArchivedShares(@Query() query: DashboardArchivedDto) {
-    return this.dashboardArchivedService.getAllArchivedShares(query);
+    return this.dashboardArchivedService.getAllArchivedFeed(query);
   }
 
   @Get('voluntary')

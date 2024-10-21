@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsMongoId, IsString } from 'class-validator';
 
-export class CreateShareDto {
+export class CreateFeedDto {
   @IsString()
   @ApiProperty()
   content: string;

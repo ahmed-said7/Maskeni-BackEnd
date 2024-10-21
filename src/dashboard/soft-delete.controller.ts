@@ -28,20 +28,20 @@ export class SoftDeleteController {
     return this.softDeleteService.softDeleteEvents(id, updateDeletedDto);
   }
 
-  @Patch('shares/:id')
+  @Patch('feed/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the share to soft delete' })
+  @ApiParam({ name: 'id', description: 'ID of the feed to soft delete' })
   @ApiBody({ type: DashboardUpdateDeletedDto })
   @ApiResponse({
     status: 200,
-    description: 'Soft delete the share successfully.',
+    description: 'Soft delete the feed successfully.',
   })
-  async softDeleteShare(
+  async softDeleteFeed(
     @Param('id') id: string,
     @Body() updateDeletedDto: DashboardUpdateDeletedDto,
   ) {
-    return this.softDeleteService.softDeleteShares(id, updateDeletedDto);
+    return this.softDeleteService.softDeleteFeed(id, updateDeletedDto);
   }
 
   @Patch('voluntary/:id')

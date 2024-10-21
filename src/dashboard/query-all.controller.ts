@@ -21,13 +21,13 @@ export class QueryAllController {
     return this.dashboardAllService.getAllEvents(query);
   }
 
-  @Get('shares')
+  @Get('feed')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
   @ApiQuery({ type: DashboardSearchDto, required: false })
-  @ApiResponse({ status: 200, description: 'Retrieve all shares.' })
-  async getAllShares(@Query() query: DashboardSearchDto) {
-    return this.dashboardAllService.getAllShares(query);
+  @ApiResponse({ status: 200, description: 'Retrieve all feed.' })
+  async getAllFeed(@Query() query: DashboardSearchDto) {
+    return this.dashboardAllService.getAllFeed(query);
   }
 
   @Get('voluntary')

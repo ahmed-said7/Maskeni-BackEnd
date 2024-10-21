@@ -28,20 +28,20 @@ export class SoftArchiveController {
     return this.softArchiveService.softArchiveEvents(id, updateArchivedDto);
   }
 
-  @Patch('shares/:id')
+  @Patch('feed/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the share to soft archive' })
+  @ApiParam({ name: 'id', description: 'ID of the feed to soft archive' })
   @ApiBody({ type: DashboardUpdateArchivedDto })
   @ApiResponse({
     status: 200,
-    description: 'Soft archive the share successfully.',
+    description: 'Soft archive the feed successfully.',
   })
-  async softArchiveShare(
+  async softArchiveFeed(
     @Param('id') id: string,
     @Body() updateArchivedDto: DashboardUpdateArchivedDto,
   ) {
-    return this.softArchiveService.softArchiveShares(id, updateArchivedDto);
+    return this.softArchiveService.softArchiveFeed(id, updateArchivedDto);
   }
 
   @Patch('voluntary/:id')

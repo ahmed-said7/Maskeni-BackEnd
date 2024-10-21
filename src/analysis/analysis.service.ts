@@ -6,7 +6,7 @@ import { Gender_Type } from 'src/common/types';
 import { EventDocument } from 'src/event/event.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
-import { Share, ShareDocument } from 'src/share/share.schema';
+import { Share, ShareDocument } from 'src/share/feed.schema';
 import { User, UserDocument } from 'src/user/user.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 

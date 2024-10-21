@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsMongoId, IsOptional } from 'class-validator';
 import { FindQuery } from 'src/common/types';
 
-export class QueryShareDto extends FindQuery {
+export class QueryFeedDto extends FindQuery {
   user?: string; // Made optional
 
   @IsOptional()

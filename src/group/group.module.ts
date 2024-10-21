@@ -7,7 +7,7 @@ import { User, UserSchema } from 'src/user/user.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 // import { ApiAcceptedResponse } from '@nestjs/swagger';
 import { ApiModule } from 'src/common/Api/api.module';
-import { SearchQuery } from 'src/share/share.module';
+import { SearchQuery } from 'src/share/feed.module';
 
 @Module({
   imports: [

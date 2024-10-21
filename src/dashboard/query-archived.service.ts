@@ -5,10 +5,10 @@ import { ApiService } from 'src/common/Api/api.service';
 import { EventDocument } from 'src/event/event.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
-import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardArchivedDto } from './dto/dashboard.query.dto';
 import { Group, GroupDocument } from 'src/group/group.schema';
+import { Feed, FeedDocument } from 'src/share/feed.schema';
 
 @Injectable()
 export class DashboardArchivedService {
@@ -16,7 +16,7 @@ export class DashboardArchivedService {
     @InjectModel(Offered.name) private serviceModel: Model<OfferedDocument>,
     @InjectModel(Voluntary.name)
     private voluntaryModel: Model<VoluntaryDocument>,
-    @InjectModel(Share.name) private shareModel: Model<ShareDocument>,
+    @InjectModel(Feed.name) private feedModel: Model<FeedDocument>,
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     private apiService: ApiService<any, any>,
@@ -38,21 +38,21 @@ export class DashboardArchivedService {
       .setOptions({ skipFilter: true });
     return { events, pagination: paginationObj };
   }
-  async getAllArchivedShares(obj: DashboardArchivedDto) {
+  async getAllArchivedFeed(obj: DashboardArchivedDto) {
     // obj.isArchived = true;
     const { query, paginationObj } = await this.apiService.getAllDocs(
-      this.shareModel.find(),
+      this.feedModel.find(),
       obj,
       { isArchived: true },
     );
-    const shares = await query
+    const posts = await query
       .populate({
         path: 'user',
         model: 'User',
         select: 'mobile name icon',
       })
       .setOptions({ skipFilter: true });
-    return { shares, pagination: paginationObj };
+    return { posts, pagination: paginationObj };
   }
   async getAllArchivedVoluntary(obj: DashboardArchivedDto) {
     // obj.isArchived = true;

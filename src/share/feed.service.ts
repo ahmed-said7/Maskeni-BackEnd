@@ -5,58 +5,58 @@ import { ApiService } from 'src/common/Api/api.service';
 import { ReactionService } from 'src/reaction/reaction.service';
 import { FindQuery } from 'src/common/types';
 import { User, UserDocument } from 'src/user/user.schema';
-import { Share, ShareDocument } from './share.schema';
-import { CreateShareDto } from './dto/create.share.dto';
-import { UpdateShareDto } from './dto/update.share.dto';
-import { QueryShareDto } from './dto/query.share.dto';
+import { Feed, FeedDocument } from './feed.schema';
 import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 import { Quarter } from 'src/quarter/quarter.schema';
 import { City } from 'src/city/city.schema';
 import { Country } from 'src/country/country.schema';
+import { QueryFeedDto } from './dto/query.feed.dto';
+import { UpdateFeedDto } from './dto/update.feed.dto';
+import { CreateFeedDto } from './dto/create.feed.dto';
 
 @Injectable()
-export class ShareService {
+export class FeedService {
   constructor(
-    @InjectModel(Share.name) private shareModel: Model<ShareDocument>,
+    @InjectModel(Feed.name) private postModel: Model<FeedDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private reactionService: ReactionService<ShareDocument>,
-    private apiService: ApiService<ShareDocument, FindQuery>,
+    private reactionService: ReactionService<FeedDocument>,
+    private apiService: ApiService<FeedDocument, FindQuery>,
   ) {
-    this.reactionService.setModel(shareModel);
+    this.reactionService.setModel(postModel);
   }
-  async createShare(body: CreateShareDto, user: string) {
+  async create(body: CreateFeedDto, user: string) {
     body.user = user;
-    const share = await this.shareModel.create(body);
-    return share;
+    const post = await this.postModel.create(body);
+    return post;
   }
-  async updateShare(shareId: string, body: UpdateShareDto, user: string) {
-    const shareExists = await this.shareModel.findById(shareId);
-    if (!shareExists) {
+  async updateOne(postId: string, body: UpdateFeedDto, user: string) {
+    const postExist = await this.postModel.findById(postId);
+    if (!postExist) {
       throw new HttpException('share not found', 400);
     }
-    if (shareExists.user.toString() != user) {
+    if (postExist.user.toString() != user) {
       throw new HttpException('you are not allowed to update share', 400);
     }
-    const share = await this.shareModel.findByIdAndUpdate(shareId, body, {
+    const post = await this.postModel.findByIdAndUpdate(postId, body, {
       new: true,
     });
-    return { share };
+    return { post };
   }
-  async deleteShare(shareId: string, user: string) {
-    const shareExists = await this.shareModel.findById(shareId);
-    if (!shareExists) {
+  async deleteOne(shareId: string, user: string) {
+    const postExist = await this.postModel.findById(shareId);
+    if (!postExist) {
       throw new HttpException('share not found', 400);
     }
-    if (shareExists.user.toString() != user) {
+    if (postExist.user.toString() != user) {
       throw new HttpException('you are not allowed to delete share', 400);
     }
-    shareExists.isDeleted = true;
-    await shareExists.save();
+    postExist.isDeleted = true;
+    await postExist.save();
     return { status: 'deleted' };
   }
-  async getShare(shareId: string, userId: string) {
-    const shareExists = await this.shareModel
-      .findById(shareId)
+  async getOne(postId: string, userId: string) {
+    const postExist = await this.postModel
+      .findById(postId)
       .populate({
         path: 'user',
         model: 'User',
@@ -88,22 +88,22 @@ export class ShareService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
-    if (!shareExists) {
+    if (!postExist) {
       throw new HttpException('share not found', 400);
     }
     const user = await this.userModel.findById(userId);
-    shareExists.isLiked = user.favoriteVoluntary.includes(shareExists._id);
-    shareExists.isSaved = shareExists.saved.some(
+    postExist.isLiked = user.favoriteVoluntary.includes(postExist._id);
+    postExist.isSaved = postExist.saved.some(
       (ele) => ele.user.toString() == userId,
     );
-    return { share: shareExists };
+    return { post: postExist };
   }
-  async getAllShare(obj: QueryShareDto, userId: string) {
+  async getAll(obj: QueryFeedDto, userId: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
-      this.shareModel.find(),
+      this.postModel.find(),
       obj,
     );
-    let shares = await query
+    let posts = await query
       .populate({
         path: 'user',
         model: 'User',
@@ -136,39 +136,39 @@ export class ShareService {
         model: Quarter.name,
       });
     const user = await this.userModel.findById(userId);
-    shares = shares.map((share) => {
+    posts = posts.map((share) => {
       share.isLiked = user.favoriteShare.includes(share._id);
       share.isSaved = share.saved.some((ele) => ele.user.toString() == userId);
       return share;
     });
-    return { shares, pagination: paginationObj };
+    return { posts, pagination: paginationObj };
   }
-  async addLike(shareId: string, user: string) {
-    const result = await this.reactionService.createLike(shareId, user);
+  async addLike(postId: string, user: string) {
+    const result = await this.reactionService.createLike(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { favoriteShare: shareId },
+      $addToSet: { favoriteShare: postId },
     });
     return result;
   }
-  async removeLike(shareId: string, user: string) {
-    const result = await this.reactionService.deleteLike(shareId, user);
+  async removeLike(postId: string, user: string) {
+    const result = await this.reactionService.deleteLike(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $pull: { favoriteShare: shareId },
+      $pull: { favoriteShare: postId },
     });
     return result;
   }
-  async getLikes(shareId: string, query: FindQuery) {
-    return this.reactionService.getAllLikes(shareId, query);
+  async getLikes(postId: string, query: FindQuery) {
+    return this.reactionService.getAllLikes(postId, query);
   }
-  async addComment(body: CreateCommentDto, shareId: string, user: string) {
-    const post = await this.shareModel.findOne({
-      _id: shareId,
+  async addComment(body: CreateCommentDto, postId: string, user: string) {
+    const post = await this.postModel.findOne({
+      _id: postId,
     });
     if (!post) {
       throw new HttpException('post not found', 400);
     }
     body.user = user;
-    body.post = shareId;
+    body.post = postId;
     return this.reactionService.createComment(body);
   }
   async removeComment(commentId: string, user: string) {
@@ -177,42 +177,42 @@ export class ShareService {
   async getComments(shareId: string, query: FindQuery) {
     return this.reactionService.getAllComments(query, shareId);
   }
-  async addSaved(shareId: string, user: string) {
-    const post = await this.shareModel.findOne({
-      _id: shareId,
+  async addSaved(postId: string, user: string) {
+    const post = await this.postModel.findOne({
+      _id: postId,
     });
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    const result = await this.reactionService.createSaved(shareId, user);
+    const result = await this.reactionService.createSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedShare: { share: shareId, createdAt: new Date() } },
+      $addToSet: { savedShare: { share: postId, createdAt: new Date() } },
     });
     return result;
   }
-  async deleteSaved(shareId: string, user: string) {
-    const post = await this.shareModel.findOne({
-      _id: shareId,
+  async deleteSaved(postId: string, user: string) {
+    const post = await this.postModel.findOne({
+      _id: postId,
     });
     if (!post) {
       throw new HttpException('post not found', 400);
     }
-    const result = await this.reactionService.deleteSaved(shareId, user);
+    const result = await this.reactionService.deleteSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $pull: { savedShare: { share: shareId } },
+      $pull: { savedShare: { share: postId } },
     });
     return result;
   }
-  async getAllSaved(shareId: string, query: FindQuery) {
-    return this.reactionService.getAllSaved(query, shareId);
+  async getAllSaved(postId: string, query: FindQuery) {
+    return this.reactionService.getAllSaved(query, postId);
   }
-  async getMyArcivedShare(obj: FindQuery, user: string) {
+  async getMyArcived(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
-      this.shareModel.find(),
+      this.postModel.find(),
       obj,
       { isArchived: true, user },
     );
-    const events = await query
+    const posts = await query
       .setOptions({ skipFilter: true })
       .populate({
         path: 'country',
@@ -229,15 +229,15 @@ export class ShareService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
-    return { events, pagination: paginationObj };
+    return { posts, pagination: paginationObj };
   }
-  async getMyDeletdShare(obj: FindQuery, user: string) {
+  async getMyDeletd(obj: FindQuery, user: string) {
     const { query, paginationObj } = await this.apiService.getAllDocs(
-      this.shareModel.find(),
+      this.postModel.find(),
       obj,
       { isDeleted: true, user },
     );
-    const events = await query
+    const posts = await query
       .setOptions({ skipFilter: true })
       .populate({
         path: 'country',
@@ -254,6 +254,6 @@ export class ShareService {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
-    return { events, pagination: paginationObj };
+    return { posts, pagination: paginationObj };
   }
 }

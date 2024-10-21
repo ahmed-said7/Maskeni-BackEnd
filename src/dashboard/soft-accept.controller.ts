@@ -28,20 +28,20 @@ export class SoftAcceptController {
     return this.softAcceptService.softAcceptEvents(id, updateAcceptedDto);
   }
 
-  @Patch('shares/:id')
+  @Patch('feed/:id')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.SuperAdmin, All_Role.Admin)
-  @ApiParam({ name: 'id', description: 'ID of the share to soft accept' })
+  @ApiParam({ name: 'id', description: 'ID of the feed to soft accept' })
   @ApiBody({ type: DashboardUpdateAcceptedDto })
   @ApiResponse({
     status: 200,
-    description: 'Soft accept the share successfully.',
+    description: 'Soft accept the feed successfully.',
   })
-  async softAcceptShare(
+  async softAcceptFeed(
     @Param('id') id: string,
     @Body() updateAcceptedDto: DashboardUpdateAcceptedDto,
   ) {
-    return this.softAcceptService.softAcceptShares(id, updateAcceptedDto);
+    return this.softAcceptService.softAcceptFeed(id, updateAcceptedDto);
   }
 
   @Patch('voluntary/:id')

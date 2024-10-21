@@ -18,7 +18,6 @@ import { TicketModule } from './ticket/ticket.module';
 import { GroupModule } from './group/group.module';
 import { AddressModule } from './address/address.module';
 import { VoluntaryModule } from './voluntary/voluntary.module';
-import { ShareModule } from './share/share.module';
 import { ServiceModule } from './service/offered-service.module';
 import { PostModule } from './post/post.module';
 import { FaxModule } from './fax/fax.module';
@@ -33,6 +32,7 @@ import { CustomerServiceChatModule } from './customer-service-chat/customer-serv
 import { GatewayModule } from './websocket/gateway.module';
 import { AnalysisModule } from './analysis/analysis.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { FeedModule } from './share/feed.module';
 
 @Module({
   imports: [
@@ -58,7 +58,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     EventEmitterModule.forRoot({ global: true }),
     AddressModule,
     VoluntaryModule,
-    ShareModule,
+    FeedModule,
     ServiceModule,
     PostModule,
     FaxModule,

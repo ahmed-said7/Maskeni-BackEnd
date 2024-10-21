@@ -4,10 +4,10 @@ import { Model } from 'mongoose';
 import { EventDocument } from 'src/event/event.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
-import { Share, ShareDocument } from 'src/share/share.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardUpdateArchivedDto } from './dto/dashboard.query.dto';
 import { Group, GroupDocument } from 'src/group/group.schema';
+import { Feed, FeedDocument } from 'src/share/feed.schema';
 
 @Injectable()
 export class SoftArchiveService {
@@ -15,7 +15,7 @@ export class SoftArchiveService {
     @InjectModel(Offered.name) private serviceModel: Model<OfferedDocument>,
     @InjectModel(Voluntary.name)
     private voluntaryModel: Model<VoluntaryDocument>,
-    @InjectModel(Share.name) private shareModel: Model<ShareDocument>,
+    @InjectModel(Feed.name) private feedModel: Model<FeedDocument>,
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
@@ -39,8 +39,8 @@ export class SoftArchiveService {
     }
     return { event };
   }
-  async softArchiveShares(id: string, obj: DashboardUpdateArchivedDto) {
-    const share = await this.shareModel
+  async softArchiveFeed(id: string, obj: DashboardUpdateArchivedDto) {
+    const post = await this.feedModel
       .findOneAndUpdate(
         {
           _id: id,
@@ -53,10 +53,10 @@ export class SoftArchiveService {
         },
       )
       .setOptions({ skipFilter: true });
-    if (!share) {
-      throw new NotFoundException(`share with ID ${id} not found`);
+    if (!post) {
+      throw new NotFoundException(`post with ID ${id} not found`);
     }
-    return { share };
+    return { post };
   }
   async softArchiveVoluntary(id: string, obj: DashboardUpdateArchivedDto) {
     const voluntary = await this.voluntaryModel
