@@ -13,7 +13,7 @@ import { FirebaseModule } from 'src/firebase/firebase.module';
 import { UserFollowController } from './follow.controller';
 import { UserSavedController } from './saved.controller';
 import { QuarterModule } from 'src/quarter/quarter.module';
-import { SearchQuery } from 'src/share/feed.module';
+import { SearchQuery } from 'src/feed/feed.module';
 import { UserFavoriteController } from './favorite.controller';
 
 @Module({

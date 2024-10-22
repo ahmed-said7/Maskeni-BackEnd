@@ -24,7 +24,7 @@ import { SoftDeleteController } from './soft-delete.controller';
 import { QueryAllController } from './query-all.controller';
 import { QueryAllService } from './query-all.service';
 import { Group, GroupSchema } from 'src/group/group.schema';
-import { Feed, FeedSchema } from 'src/share/feed.schema';
+import { Feed, FeedSchema } from 'src/feed/feed.schema';
 
 @Module({
   imports: [

@@ -32,7 +32,7 @@ import { CustomerServiceChatModule } from './customer-service-chat/customer-serv
 import { GatewayModule } from './websocket/gateway.module';
 import { AnalysisModule } from './analysis/analysis.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { FeedModule } from './share/feed.module';
+import { FeedModule } from './feed/feed.module';
 
 @Module({
   imports: [

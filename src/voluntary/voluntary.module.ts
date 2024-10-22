@@ -7,7 +7,7 @@ import { VoluntaryService } from './voluntary.service';
 import { VoluntaryController } from './voluntary.controller';
 import { Voluntary, VoluntarySchema } from './voluntary.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
-import { SearchQuery } from 'src/share/feed.module';
+import { SearchQuery } from 'src/feed/feed.module';
 
 @Module({
   imports: [

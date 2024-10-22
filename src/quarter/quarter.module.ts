@@ -8,7 +8,7 @@ import { CityModule } from 'src/city/city.module';
 import { AdminSchema } from 'src/admin/admin.schema';
 import { UserSchema } from 'src/user/user.schema';
 import { ApiModule } from 'src/common/Api/api.module';
-import { SearchQuery } from 'src/share/feed.module';
+import { SearchQuery } from 'src/feed/feed.module';
 
 @Module({
   imports: [

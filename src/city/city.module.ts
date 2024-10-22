@@ -6,7 +6,7 @@ import { CityService } from './city.service';
 import { User, UserSchema } from 'src/user/user.schema';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { ApiModule } from 'src/common/Api/api.module';
-import { SearchQuery } from 'src/share/feed.module';
+import { SearchQuery } from 'src/feed/feed.module';
 // import { CountryModule } from 'src/country/country.module';
 
 @Module({

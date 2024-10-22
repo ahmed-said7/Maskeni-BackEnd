@@ -8,7 +8,7 @@ import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardSearchDto } from './dto/dashboard.query.dto';
 import { Group, GroupDocument } from 'src/group/group.schema';
-import { Feed, FeedDocument } from 'src/share/feed.schema';
+import { Feed, FeedDocument } from 'src/feed/feed.schema';
 
 @Injectable()
 export class QueryAllService {

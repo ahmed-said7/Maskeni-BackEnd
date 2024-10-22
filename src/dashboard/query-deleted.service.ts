@@ -5,7 +5,7 @@ import { ApiService } from 'src/common/Api/api.service';
 import { EventDocument } from 'src/event/event.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
-import { Feed, FeedDocument } from 'src/share/feed.schema';
+import { Feed, FeedDocument } from 'src/feed/feed.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 import { DashboardDeletedDto } from './dto/dashboard.query.dto';
 import { Group, GroupDocument } from 'src/group/group.schema';

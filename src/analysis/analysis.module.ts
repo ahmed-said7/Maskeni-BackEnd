@@ -10,7 +10,7 @@ import { UserSchema } from 'src/user/user.schema';
 import { AdminSchema } from 'src/admin/admin.schema';
 import { Address, AddressSchema } from 'src/address/address.schema';
 import { Quarter, QuarterSchema } from 'src/quarter/quarter.schema';
-import { Feed, FeedSchema } from 'src/share/feed.schema';
+import { Feed, FeedSchema } from 'src/feed/feed.schema';
 
 @Module({
   imports: [

@@ -11,8 +11,8 @@ import { Quarter } from 'src/quarter/quarter.schema';
 import { City } from 'src/city/city.schema';
 import { Country } from 'src/country/country.schema';
 import { QueryFeedDto } from './dto/query.feed.dto';
-import { UpdateFeedDto } from './dto/update.feed.dto';
 import { CreateFeedDto } from './dto/create.feed.dto';
+import { UpdateFeedDto } from './dto/update.feed.dto';
 
 @Injectable()
 export class FeedService {

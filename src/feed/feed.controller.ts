@@ -18,10 +18,10 @@ import { Roles } from 'src/common/decorator/roles';
 import { All_Role } from 'src/common/enum';
 import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 import { ApiTags } from '@nestjs/swagger';
-import { FeedService } from './feed.service';
 import { CreateFeedDto } from './dto/create.feed.dto';
 import { QueryFeedDto } from './dto/query.feed.dto';
 import { UpdateFeedDto } from './dto/update.feed.dto';
+import { FeedService } from './feed.service';
 
 @ApiTags('Feed') // Tag for grouping related operations
 // @ApiBearerAuth() // Adds Bearer Auth requirement

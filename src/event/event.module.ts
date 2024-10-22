@@ -10,7 +10,7 @@ import { ReactionModule } from 'src/reaction/reaction.module';
 import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { CommentSchema } from 'src/comment/comment.schema';
 import { LikesSchema } from 'src/likes/likes.schema';
-import { SearchQuery } from 'src/share/feed.module';
+import { SearchQuery } from 'src/feed/feed.module';
 
 @Module({
   imports: [

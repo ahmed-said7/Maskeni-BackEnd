@@ -7,7 +7,7 @@ import { Admin, AdminSchema } from 'src/admin/admin.schema';
 import { OfferedService } from './offered-service.service';
 import { OfferedController } from './offered-service.controller';
 import { Offered, OfferedSchema } from './offered-service.schema';
-import { SearchQuery } from 'src/share/feed.module';
+import { SearchQuery } from 'src/feed/feed.module';
 
 @Module({
   imports: [

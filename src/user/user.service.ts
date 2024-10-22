@@ -13,7 +13,7 @@ import { FirebaseService } from 'src/firebase/firebase.service';
 import { v4 } from 'uuid';
 import { QuarterService } from 'src/quarter/quarter.service';
 import { All_Role } from 'src/common/enum';
-import { Feed } from 'src/share/feed.schema';
+import { Feed } from 'src/feed/feed.schema';
 
 @Injectable()
 export class UserService {

@@ -3,7 +3,7 @@ import { HydratedDocument, Types } from 'mongoose';
 import { User_Role } from 'src/common/enum';
 import { Post } from 'src/post/post.schema';
 import { Offered } from 'src/service/offered-service.schema';
-import { Feed } from 'src/share/feed.schema';
+import { Feed } from 'src/feed/feed.schema';
 import { Voluntary } from 'src/voluntary/voluntary.schema';
 
 @Schema({ timestamps: true })
