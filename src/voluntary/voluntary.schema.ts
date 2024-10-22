@@ -25,6 +25,8 @@ export class Voluntary {
 
   @Prop({ type: Date })
   date?: Date;
+  @Prop({ type: Date })
+  savedAt: Date;
 
   @Prop({ type: Date })
   startedAt?: Date;

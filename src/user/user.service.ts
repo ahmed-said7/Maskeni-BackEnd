@@ -300,9 +300,14 @@ export class UserService {
       limit,
       result.length,
     );
+    const saved = user.savedFeed.map((ele) => {
+      // @ts-ignore
+      ele.feed.savedAt = ele.createdAt;
+      return ele.feed;
+    });
     return {
       pagination,
-      savedFeed: user.savedFeed,
+      savedFeed: saved,
     };
   }
   async getUserSavedVoluntary(userId: string, query: FindQuery) {
@@ -325,9 +330,14 @@ export class UserService {
       limit,
       result.length,
     );
+    const saved = user.savedVoluntary.map((ele) => {
+      // @ts-ignore
+      ele.voluntary.savedAt = ele.createdAt;
+      return ele.voluntary;
+    });
     return {
       pagination,
-      savedVoluntary: user.savedVoluntary,
+      savedVoluntary: saved,
     };
   }
   async getUserSavedGroupPosts(userId: string, query: FindQuery) {
@@ -350,9 +360,14 @@ export class UserService {
       limit,
       result.length,
     );
+    const saved = user.savedGroupPost.map((ele) => {
+      // @ts-ignore
+      ele.post.savedAt = ele.createdAt;
+      return ele.post;
+    });
     return {
       pagination,
-      savedVoluntary: user.savedVoluntary,
+      savedVoluntary: saved,
     };
   }
   async getUserSavedEvent(userId: string, query: FindQuery) {
@@ -375,9 +390,14 @@ export class UserService {
       limit,
       result.length,
     );
+    const saved = user.savedEvent.map((ele) => {
+      // @ts-ignore
+      ele.event.savedAt = ele.createdAt;
+      return ele.event;
+    });
     return {
       pagination,
-      savedEvent: user.savedEvent,
+      savedEvent: saved,
     };
   }
   async getUserSavedService(userId: string, query: FindQuery) {
@@ -400,9 +420,14 @@ export class UserService {
       limit,
       result.length,
     );
+    const saved = user.savedService.map((ele) => {
+      // @ts-ignore
+      ele.service.savedAt = ele.createdAt;
+      return ele.service;
+    });
     return {
       pagination,
-      savedService: user.savedService,
+      savedService: saved,
     };
   }
   async getUserRequestedService(userId: string, query: FindQuery) {
@@ -425,6 +450,11 @@ export class UserService {
       limit,
       result.length,
     );
+    const saved = user.requestedService.map((ele) => {
+      // @ts-ignore
+      ele.service.savedAt = ele.createdAt;
+      return ele.service;
+    });
     return {
       pagination,
       requestedService: user.requestedService,

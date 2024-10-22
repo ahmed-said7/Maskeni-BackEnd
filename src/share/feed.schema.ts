@@ -62,6 +62,8 @@ export class Feed {
   isLiked: boolean;
   @Prop({ type: Boolean })
   isSaved: boolean;
+  @Prop({ type: Date })
+  savedAt: Date;
 }
 
 export type FeedDocument = HydratedDocument<Feed>;

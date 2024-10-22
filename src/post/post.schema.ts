@@ -48,6 +48,8 @@ export class Post {
   isArchived: boolean;
   @Prop({ type: Boolean })
   isSaved: boolean;
+  @Prop({ type: Date })
+  savedAt: Date;
 }
 
 export type PostDocument = HydratedDocument<Post>;

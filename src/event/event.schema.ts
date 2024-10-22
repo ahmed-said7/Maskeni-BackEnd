@@ -107,6 +107,9 @@ export class Event {
 
   @Prop({ type: Types.ObjectId, ref: User.name })
   user: Types.ObjectId;
+
+  @Prop({ type: Date })
+  savedAt: Date;
 }
 
 export type EventDocument = HydratedDocument<Event>;

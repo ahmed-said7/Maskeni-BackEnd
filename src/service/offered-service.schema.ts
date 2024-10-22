@@ -26,6 +26,9 @@ export class Offered {
   @Prop({ type: String, enum: Jop_Type, default: Jop_Type.education })
   type?: string;
 
+  @Prop({ type: Date })
+  savedAt: Date;
+
   // @Prop({
   //   type: {
   //     type: String, // 'type' must be 'Point'
