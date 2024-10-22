@@ -13,6 +13,7 @@ import { FirebaseService } from 'src/firebase/firebase.service';
 import { v4 } from 'uuid';
 import { QuarterService } from 'src/quarter/quarter.service';
 import { All_Role } from 'src/common/enum';
+import { Feed } from 'src/share/feed.schema';
 
 @Injectable()
 export class UserService {
@@ -172,7 +173,7 @@ export class UserService {
     user.savedEvent = undefined;
     user.savedGroupPost = undefined;
     user.savedQuestion = undefined;
-    user.savedShare = undefined;
+    user.savedFeed = undefined;
     user.savedEvent = undefined;
     user.savedVoluntary = undefined;
     user.requestedService = undefined;
@@ -279,7 +280,7 @@ export class UserService {
       followers: user.following,
     };
   }
-  async getUserSavedShare(userId: string, query: FindQuery) {
+  async getUserSavedFeed(userId: string, query: FindQuery) {
     const page = parseInt(query.page) || 1;
     const limit = parseInt(query.limit) || 10;
     const skip = (page - 1) * limit;
@@ -290,10 +291,10 @@ export class UserService {
         },
       })
       .populate({
-        path: 'savedShare.share',
-        model: 'Share',
+        path: 'savedFeed.feed',
+        model: Feed.name,
       });
-    const result = (await this.Usermodel.findById(userId))?.savedService;
+    const result = (await this.Usermodel.findById(userId))?.savedFeed;
     const pagination = this.apiService.makePagination(
       page,
       limit,
@@ -301,7 +302,7 @@ export class UserService {
     );
     return {
       pagination,
-      savedShare: user.savedShare,
+      savedFeed: user.savedFeed,
     };
   }
   async getUserSavedVoluntary(userId: string, query: FindQuery) {
@@ -429,21 +430,21 @@ export class UserService {
       requestedService: user.requestedService,
     };
   }
-  async getUserFavoriteShare(userId: string, query: FindQuery) {
+  async getUserFavoriteFeed(userId: string, query: FindQuery) {
     const page = parseInt(query.page) || 1;
     const limit = parseInt(query.limit) || 10;
     const skip = (page - 1) * limit;
     const user = await this.Usermodel.findById(userId)
       .select({
-        favoriteShare: {
+        favoriteFeed: {
           $slice: [skip, limit],
         },
       })
       .populate({
-        path: 'favoriteShare',
-        model: 'Share',
+        path: 'favoriteFeed',
+        model: Feed.name,
       });
-    const result = (await this.Usermodel.findById(userId))?.favoriteService;
+    const result = (await this.Usermodel.findById(userId))?.favoriteFeed;
     const pagination = this.apiService.makePagination(
       page,
       limit,
@@ -451,7 +452,7 @@ export class UserService {
     );
     return {
       pagination,
-      favoriteShare: user.favoriteShare,
+      favoriteFeed: user.favoriteFeed,
     };
   }
   async getUserFavoriteVoluntary(userId: string, query: FindQuery) {

@@ -12,12 +12,12 @@ import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 export class UserSavedController {
   constructor(private readonly userSavedService: UserService) {}
 
-  @Get('shares')
+  @Get('feed')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get user saved shares' }) // Summary for the endpoint
-  async getUserSavedShare(@Req() req: any, @Query() query: FindQuery) {
-    return this.userSavedService.getUserSavedShare(req.userId, query);
+  @ApiOperation({ summary: 'Get user saved feed' }) // Summary for the endpoint
+  async getUserSavedFeed(@Req() req: any, @Query() query: FindQuery) {
+    return this.userSavedService.getUserSavedFeed(req.userId, query);
   }
 
   @Get('voluntaries')

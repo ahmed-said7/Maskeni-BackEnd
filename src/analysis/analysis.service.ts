@@ -6,7 +6,7 @@ import { Gender_Type } from 'src/common/types';
 import { EventDocument } from 'src/event/event.schema';
 import { PostDocument, Post } from 'src/post/post.schema';
 import { Offered, OfferedDocument } from 'src/service/offered-service.schema';
-import { Share, ShareDocument } from 'src/share/feed.schema';
+import { Feed, FeedDocument } from 'src/share/feed.schema';
 import { User, UserDocument } from 'src/user/user.schema';
 import { Voluntary, VoluntaryDocument } from 'src/voluntary/voluntary.schema';
 
@@ -17,7 +17,7 @@ export class AnalysisService {
     private serviceModel: Model<OfferedDocument>,
     @InjectModel(Voluntary.name)
     private voluntaryModel: Model<VoluntaryDocument>,
-    @InjectModel(Share.name) private shareModel: Model<ShareDocument>,
+    @InjectModel(Feed.name) private feedModel: Model<FeedDocument>,
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
@@ -68,7 +68,7 @@ export class AnalysisService {
   }
   async getAllDocs() {
     const voluntaryCount = await this.voluntaryModel.countDocuments();
-    const shareCount = await this.shareModel.countDocuments();
+    const shareCount = await this.feedModel.countDocuments();
     const eventCount = await this.eventModel.countDocuments();
     const postCount = await this.postModel.countDocuments();
     const serviceCount = await this.serviceModel.countDocuments();

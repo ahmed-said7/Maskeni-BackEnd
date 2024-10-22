@@ -137,7 +137,7 @@ export class FeedService {
       });
     const user = await this.userModel.findById(userId);
     posts = posts.map((share) => {
-      share.isLiked = user.favoriteShare.includes(share._id);
+      share.isLiked = user.favoriteFeed.includes(share._id);
       share.isSaved = share.saved.some((ele) => ele.user.toString() == userId);
       return share;
     });
@@ -146,14 +146,14 @@ export class FeedService {
   async addLike(postId: string, user: string) {
     const result = await this.reactionService.createLike(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { favoriteShare: postId },
+      $addToSet: { favoriteFeed: postId },
     });
     return result;
   }
   async removeLike(postId: string, user: string) {
     const result = await this.reactionService.deleteLike(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $pull: { favoriteShare: postId },
+      $pull: { favoriteFeed: postId },
     });
     return result;
   }
@@ -186,7 +186,7 @@ export class FeedService {
     }
     const result = await this.reactionService.createSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedShare: { share: postId, createdAt: new Date() } },
+      $addToSet: { savedFeed: { feed: postId, createdAt: new Date() } },
     });
     return result;
   }
@@ -199,7 +199,7 @@ export class FeedService {
     }
     const result = await this.reactionService.deleteSaved(postId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $pull: { savedShare: { share: postId } },
+      $pull: { savedFeed: { feed: postId } },
     });
     return result;
   }

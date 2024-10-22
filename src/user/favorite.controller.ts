@@ -12,12 +12,12 @@ import { AuthorizationGuard } from 'src/common/guards/authorization.guard';
 export class UserFavoriteController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('shares')
+  @Get('feed')
   @UseGuards(AuthenticationGuard, AuthorizationGuard)
   @Roles(All_Role.User)
-  @ApiOperation({ summary: 'Get user saved shares' }) // Summary for the endpoint
+  @ApiOperation({ summary: 'Get user saved feed' }) // Summary for the endpoint
   async getUserFavoriteShare(@Req() req: any, @Query() query: FindQuery) {
-    return this.userService.getUserFavoriteShare(req.userId, query);
+    return this.userService.getUserFavoriteFeed(req.userId, query);
   }
 
   @Get('voluntaries')

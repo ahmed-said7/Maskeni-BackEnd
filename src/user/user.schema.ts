@@ -3,7 +3,7 @@ import { HydratedDocument, Types } from 'mongoose';
 import { User_Role } from 'src/common/enum';
 import { Post } from 'src/post/post.schema';
 import { Offered } from 'src/service/offered-service.schema';
-import { Share } from 'src/share/feed.schema';
+import { Feed } from 'src/share/feed.schema';
 import { Voluntary } from 'src/voluntary/voluntary.schema';
 
 @Schema({ timestamps: true })
@@ -49,11 +49,11 @@ export class User {
 
   @Prop({
     _id: Types.ObjectId,
-    share: { type: Types.ObjectId, ref: Share.name },
+    feed: { type: Types.ObjectId, ref: Feed.name },
     createdAt: { type: Date, default: new Date() },
   })
-  savedShare: {
-    share: Types.ObjectId;
+  savedFeed: {
+    feed: Types.ObjectId;
     createdAt?: Date;
     _id: Types.ObjectId;
   }[];
@@ -176,8 +176,8 @@ export class User {
   @Prop({ type: [Types.ObjectId], ref: Event.name })
   favoriteEvent: Types.ObjectId[];
 
-  @Prop({ type: [Types.ObjectId], ref: Share.name })
-  favoriteShare: Types.ObjectId[];
+  @Prop({ type: [Types.ObjectId], ref: Feed.name })
+  favoriteFeed: Types.ObjectId[];
 
   @Prop({
     type: [Types.ObjectId],
