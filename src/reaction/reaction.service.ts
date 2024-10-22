@@ -196,7 +196,10 @@ export class ReactionService<T extends IEntityType> {
     return { status: 'unsaved successfully', post: postSaved };
   }
   async createRequestedService(postId: string, userId: string) {
-    const post = await this.PostModel.findOne({ 'requested.user': userId });
+    const post = await this.PostModel.findOne({
+      _id: postId,
+      'requested.user': userId,
+    });
     if (post) {
       throw new HttpException('already requested', 400);
     }
