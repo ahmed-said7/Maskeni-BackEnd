@@ -119,7 +119,10 @@ export class ReactionService<T extends IEntityType> {
     return { status: 'like deleted', post };
   }
   async createSaved(postId: string, userId: string) {
-    const post = await this.PostModel.findOne({ 'saved.user': userId });
+    const post = await this.PostModel.findOne({
+      _id: postId,
+      'saved.user': userId,
+    });
     if (post) {
       throw new HttpException('already saved', 400);
     }
