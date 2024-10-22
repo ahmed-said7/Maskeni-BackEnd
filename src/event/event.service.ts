@@ -251,7 +251,7 @@ export class EventService {
     }
     const result = await this.reactionService.createSaved(eventId, user);
     await this.userModel.findByIdAndUpdate(user, {
-      $addToSet: { savedEvent: { event: eventId } },
+      $addToSet: { savedEvent: { event: eventId, createdAt: new Date() } },
     });
     return result;
   }
