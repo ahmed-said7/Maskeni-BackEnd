@@ -17,6 +17,7 @@ import { Feed } from 'src/feed/feed.schema';
 import { City } from 'src/city/city.schema';
 import { Quarter } from 'src/quarter/quarter.schema';
 import { Country } from 'src/country/country.schema';
+import { Offered } from 'src/service/offered-service.schema';
 
 @Injectable()
 export class UserService {
@@ -503,7 +504,7 @@ export class UserService {
       })
       .populate({
         path: 'savedService.service',
-        model: 'Service',
+        model: Offered.name,
         populate: [
           {
             path: 'user',
@@ -525,7 +526,7 @@ export class UserService {
             select: 'image nameAr nameEn',
             model: Country.name,
           },
-        ]
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.savedService;
     const pagination = this.apiService.makePagination(
@@ -555,7 +556,7 @@ export class UserService {
       })
       .populate({
         path: 'requestedService.service',
-        model: 'Service',
+        model: Offered.name,
         populate: [
           {
             path: 'user',
@@ -795,7 +796,7 @@ export class UserService {
       })
       .populate({
         path: 'favoriteService',
-        model: 'Service',
+        model: Offered.name,
         populate: [
           {
             path: 'user',
