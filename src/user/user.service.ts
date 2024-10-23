@@ -14,6 +14,9 @@ import { v4 } from 'uuid';
 import { QuarterService } from 'src/quarter/quarter.service';
 import { All_Role } from 'src/common/enum';
 import { Feed } from 'src/feed/feed.schema';
+import { City } from 'src/city/city.schema';
+import { Quarter } from 'src/quarter/quarter.schema';
+import { Country } from 'src/country/country.schema';
 
 @Injectable()
 export class UserService {
@@ -293,6 +296,28 @@ export class UserService {
       .populate({
         path: 'savedFeed.feed',
         model: Feed.name,
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.savedFeed;
     const pagination = this.apiService.makePagination(
@@ -323,6 +348,28 @@ export class UserService {
       .populate({
         path: 'savedVoluntary.voluntary',
         model: 'Voluntary',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.savedVoluntary;
     const pagination = this.apiService.makePagination(
@@ -353,6 +400,28 @@ export class UserService {
       .populate({
         path: 'savedGroupPost.post',
         model: 'Post',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.savedGroupPost;
     const pagination = this.apiService.makePagination(
@@ -383,6 +452,28 @@ export class UserService {
       .populate({
         path: 'savedEvent.event',
         model: 'Event',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.savedEvent;
     const pagination = this.apiService.makePagination(
@@ -413,6 +504,28 @@ export class UserService {
       .populate({
         path: 'savedService.service',
         model: 'Service',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ]
       });
     const result = (await this.Usermodel.findById(userId))?.savedService;
     const pagination = this.apiService.makePagination(
@@ -443,6 +556,28 @@ export class UserService {
       .populate({
         path: 'requestedService.service',
         model: 'Service',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.requestedService;
     const pagination = this.apiService.makePagination(
@@ -473,6 +608,28 @@ export class UserService {
       .populate({
         path: 'favoriteFeed',
         model: Feed.name,
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.favoriteFeed;
     const pagination = this.apiService.makePagination(
@@ -498,6 +655,28 @@ export class UserService {
       .populate({
         path: 'favoriteVoluntary',
         model: 'Voluntary',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.favoriteVoluntary;
     const pagination = this.apiService.makePagination(
@@ -523,6 +702,28 @@ export class UserService {
       .populate({
         path: 'favoriteGroupPost',
         model: 'Post',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.favoriteGroupPost;
     const pagination = this.apiService.makePagination(
@@ -548,6 +749,28 @@ export class UserService {
       .populate({
         path: 'favoriteEvent',
         model: 'Event',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ]
       });
     const result = (await this.Usermodel.findById(userId))?.favoriteEvent;
     const pagination = this.apiService.makePagination(
@@ -573,6 +796,28 @@ export class UserService {
       .populate({
         path: 'favoriteService',
         model: 'Service',
+        populate: [
+          {
+            path: 'user',
+            model: 'User',
+            select: 'mobile name icon',
+          },
+          {
+            path: 'quarter',
+            select: 'image nameAr nameEn',
+            model: Quarter.name,
+          },
+          {
+            path: 'city',
+            select: 'image nameAr nameEn',
+            model: City.name,
+          },
+          {
+            path: 'country',
+            select: 'image nameAr nameEn',
+            model: Country.name,
+          },
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.favoriteService;
     const pagination = this.apiService.makePagination(
