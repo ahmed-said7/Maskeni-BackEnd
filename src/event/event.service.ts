@@ -280,6 +280,11 @@ export class EventService {
     const events = await query
       .setOptions({ skipFilter: true })
       .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
         path: 'country',
         select: 'image nameAr nameEn',
         model: Country.name,
@@ -304,6 +309,11 @@ export class EventService {
     );
     const events = await query
       .setOptions({ skipFilter: true })
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
       .populate({
         path: 'country',
         select: 'image nameAr nameEn',

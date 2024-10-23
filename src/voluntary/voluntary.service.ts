@@ -256,7 +256,28 @@ export class VoluntaryService {
       obj,
       { isArchived: true, user },
     );
-    const voluntary = await query.setOptions({ skipFilter: true });
+    const voluntary = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { voluntary, pagination: paginationObj };
   }
 }

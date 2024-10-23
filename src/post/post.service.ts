@@ -13,6 +13,9 @@ import { User, UserDocument } from 'src/user/user.schema';
 import { LikesService } from 'src/likes/likes.service';
 import { CreateCommentDto } from 'src/comment/dto/create.comment.dto';
 import { CommentService } from 'src/comment/comment.service';
+import { Quarter } from 'src/quarter/quarter.schema';
+import { City } from 'src/city/city.schema';
+import { Country } from 'src/country/country.schema';
 
 @Injectable()
 export class PostService {
@@ -270,7 +273,28 @@ export class PostService {
       obj,
       { isArchived: true, user },
     );
-    const posts = await query.setOptions({ skipFilter: true });
+    const posts = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { posts, pagination: paginationObj };
   }
   async getMyDeletedPosts(obj: FindQuery, user: string) {
@@ -279,7 +303,28 @@ export class PostService {
       obj,
       { isDeleted: true, user },
     );
-    const posts = await query.setOptions({ skipFilter: true });
+    const posts = await query
+      .setOptions({ skipFilter: true })
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { posts, pagination: paginationObj };
   }
 }
