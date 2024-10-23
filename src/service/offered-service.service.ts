@@ -193,7 +193,7 @@ export class OfferedService {
     const result = await this.reactionService.createSaved(serviceId, user);
     await this.userModel.findByIdAndUpdate(user, {
       $addToSet: {
-        savedservice: { service: serviceId, createdAt: new Date() },
+        savedService: { service: serviceId, createdAt: new Date() },
       },
     });
     return result;

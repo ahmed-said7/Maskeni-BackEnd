@@ -771,7 +771,7 @@ export class UserService {
             select: 'image nameAr nameEn',
             model: Country.name,
           },
-        ]
+        ],
       });
     const result = (await this.Usermodel.findById(userId))?.favoriteEvent;
     const pagination = this.apiService.makePagination(
