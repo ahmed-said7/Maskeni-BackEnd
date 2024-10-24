@@ -29,6 +29,10 @@ export class LikesService {
     const newLike = await this.likesModel.create(likeDto);
     return newLike;
   }
+  async isLiked(user: string, post: string) {
+    const existingLike = await this.likesModel.findOne({ user, post });
+    return !!existingLike;
+  }
   // Remove a like, but ensure the user has liked the post before
   async removeLikeFromPost(likeDto: LikeDto) {
     const { user, post } = likeDto;

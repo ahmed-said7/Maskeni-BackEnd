@@ -9,6 +9,8 @@ import { ApiService } from 'src/common/Api/api.service';
 import { Quarter } from 'src/quarter/quarter.schema';
 import { City } from 'src/city/city.schema';
 import { Country } from 'src/country/country.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from 'src/user/user.schema';
 // import { count } from 'console';
 
 @Injectable({ scope: Scope.TRANSIENT })
@@ -17,6 +19,7 @@ export class ReactionService<T extends IEntityType> {
     private commentService: CommentService,
     private likesService: LikesService,
     private apiService: ApiService<any, any>,
+    @InjectModel(User.name) private userModel: Model<User>,
   ) {}
   private PostModel: Model<T>;
   setModel(PostModel: Model<T>) {
@@ -111,6 +114,11 @@ export class ReactionService<T extends IEntityType> {
         model: Quarter.name,
       });
     post.isLiked = true;
+    const isSaved = await this.PostModel.findOne({
+      _id: postId,
+      'saved.user': userId,
+    });
+    post.isSaved = !!isSaved;
     return { status: 'like created', post };
   }
   async getAllLikes(postId: string, query: FindQuery) {
@@ -161,17 +169,22 @@ export class ReactionService<T extends IEntityType> {
         model: Quarter.name,
       });
     post.isLiked = false;
+    const isSaved = await this.PostModel.findOne({
+      _id: postId,
+      'saved.user': userId,
+    });
+    post.isSaved = !!isSaved;
     return { status: 'like deleted', post };
   }
   async createSaved(postId: string, userId: string) {
-    const post = await this.PostModel.findOne({
+    let post = await this.PostModel.findOne({
       _id: postId,
       'saved.user': userId,
     });
     if (post) {
       throw new HttpException('already saved', 400);
     }
-    const postSaved = await this.PostModel.findByIdAndUpdate(
+    post = await this.PostModel.findByIdAndUpdate(
       postId,
       {
         $push: {
@@ -204,7 +217,8 @@ export class ReactionService<T extends IEntityType> {
         model: Quarter.name,
       });
     post.isSaved = true;
-    return { status: 'saved', post: postSaved };
+    post.isLiked = await this.likesService.isLiked(userId, postId);
+    return { status: 'saved', post };
   }
   async getAllSaved(query: FindQuery, id: string) {
     const page = parseInt(query.page) || 1;
@@ -247,11 +261,14 @@ export class ReactionService<T extends IEntityType> {
     return { pagination, saved: post.saved };
   }
   async deleteSaved(postId: string, userId: string) {
-    const post = await this.PostModel.findOne({ 'saved.user': userId });
+    let post = await this.PostModel.findOne({
+      _id: postId,
+      'saved.user': userId,
+    });
     if (!post) {
       throw new HttpException('not saved', 400);
     }
-    const postSaved = await this.PostModel.findByIdAndUpdate(
+    post = await this.PostModel.findByIdAndUpdate(
       postId,
       {
         $pull: { saved: { user: userId } },
@@ -280,7 +297,8 @@ export class ReactionService<T extends IEntityType> {
         model: Quarter.name,
       });
     post.isSaved = false;
-    return { status: 'unsaved successfully', post: postSaved };
+    post.isLiked = await this.likesService.isLiked(userId, postId);
+    return { status: 'unsaved successfully', post };
   }
   async createRequestedService(postId: string, userId: string) {
     const post = await this.PostModel.findOne({
@@ -350,7 +368,10 @@ export class ReactionService<T extends IEntityType> {
     };
   }
   async deleteRequestedService(postId: string, userId: string) {
-    const post = await this.PostModel.findOne({ 'requested.user': userId });
+    const post = await this.PostModel.findOne({
+      _id: postId,
+      'requested.user': userId,
+    });
     if (!post) {
       throw new HttpException('not requested', 400);
     }
