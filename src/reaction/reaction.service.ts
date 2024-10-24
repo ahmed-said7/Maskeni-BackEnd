@@ -110,6 +110,7 @@ export class ReactionService<T extends IEntityType> {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
+    post.isLiked = true;
     return { status: 'like created', post };
   }
   async getAllLikes(postId: string, query: FindQuery) {
@@ -159,6 +160,7 @@ export class ReactionService<T extends IEntityType> {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
+    post.isLiked = false;
     return { status: 'like deleted', post };
   }
   async createSaved(postId: string, userId: string) {
@@ -201,6 +203,7 @@ export class ReactionService<T extends IEntityType> {
         select: 'image nameAr nameEn',
         model: Quarter.name,
       });
+    post.isSaved = true;
     return { status: 'saved', post: postSaved };
   }
   async getAllSaved(query: FindQuery, id: string) {
@@ -255,7 +258,28 @@ export class ReactionService<T extends IEntityType> {
         $inc: { savedCount: -1 },
       },
       { new: true },
-    );
+    )
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
+    post.isSaved = false;
     return { status: 'unsaved successfully', post: postSaved };
   }
   async createRequestedService(postId: string, userId: string) {

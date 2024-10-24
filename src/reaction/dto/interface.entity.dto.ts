@@ -10,5 +10,7 @@ interface IEntity {
   savedCount: number;
   user: Types.ObjectId;
   requestedCount?: number;
+  isLiked?: boolean;
+  isSaved?: boolean;
 }
 export type IEntityType = HydratedDocument<IEntity>;
