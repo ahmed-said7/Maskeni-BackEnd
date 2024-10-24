@@ -92,7 +92,7 @@ export class FeedService {
       throw new HttpException('share not found', 400);
     }
     const user = await this.userModel.findById(userId);
-    postExist.isLiked = user.favoriteVoluntary.includes(postExist._id);
+    postExist.isLiked = user.favoriteFeed.includes(postExist._id);
     postExist.isSaved = postExist.saved.some(
       (ele) => ele.user.toString() == userId,
     );
