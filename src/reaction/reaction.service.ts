@@ -6,6 +6,9 @@ import { CommentService } from 'src/comment/comment.service';
 import { LikesService } from 'src/likes/likes.service';
 import { FindQuery } from 'src/common/types';
 import { ApiService } from 'src/common/Api/api.service';
+import { Quarter } from 'src/quarter/quarter.schema';
+import { City } from 'src/city/city.schema';
+import { Country } from 'src/country/country.schema';
 // import { count } from 'console';
 
 @Injectable({ scope: Scope.TRANSIENT })
@@ -86,7 +89,27 @@ export class ReactionService<T extends IEntityType> {
       {
         new: true,
       },
-    );
+    )
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { status: 'like created', post };
   }
   async getAllLikes(postId: string, query: FindQuery) {
@@ -115,7 +138,27 @@ export class ReactionService<T extends IEntityType> {
       {
         new: true,
       },
-    );
+    )
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { status: 'like deleted', post };
   }
   async createSaved(postId: string, userId: string) {
@@ -137,7 +180,27 @@ export class ReactionService<T extends IEntityType> {
       {
         new: true,
       },
-    );
+    )
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { status: 'saved', post: postSaved };
   }
   async getAllSaved(query: FindQuery, id: string) {
@@ -214,7 +277,27 @@ export class ReactionService<T extends IEntityType> {
       {
         new: true,
       },
-    );
+    )
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { status: 'requested successfully', post: reqService };
   }
   async getAllRequestedServices(query: FindQuery, id: string) {
@@ -254,7 +337,27 @@ export class ReactionService<T extends IEntityType> {
         $inc: { requestedCount: -1 },
       },
       { new: true },
-    );
+    )
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'mobile name icon',
+      })
+      .populate({
+        path: 'country',
+        select: 'image nameAr nameEn',
+        model: Country.name,
+      })
+      .populate({
+        path: 'city',
+        select: 'image nameAr nameEn',
+        model: City.name,
+      })
+      .populate({
+        path: 'quarter',
+        select: 'image nameAr nameEn',
+        model: Quarter.name,
+      });
     return { status: 'unrequested successfully', post: reqService };
   }
 }
