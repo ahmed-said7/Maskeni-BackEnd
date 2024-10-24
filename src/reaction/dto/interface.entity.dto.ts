@@ -10,8 +10,5 @@ interface IEntity {
   savedCount: number;
   user: Types.ObjectId;
   requestedCount?: number;
-  quarter: Types.ObjectId;
-  country: Types.ObjectId;
-  city: Types.ObjectId;
 }
 export type IEntityType = HydratedDocument<IEntity>;
