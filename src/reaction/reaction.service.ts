@@ -87,7 +87,7 @@ export class ReactionService<T extends IEntityType> {
       postId,
       {
         $push: { likes: like._id },
-        $inc: { likesCount: 1 },
+        $inc: { likeCount: 1 },
       },
       {
         new: true,
@@ -142,7 +142,7 @@ export class ReactionService<T extends IEntityType> {
       postId,
       {
         $pull: { likes: like._id },
-        $inc: { likesCount: -1 },
+        $inc: { likeCount: -1 },
       },
       {
         new: true,
