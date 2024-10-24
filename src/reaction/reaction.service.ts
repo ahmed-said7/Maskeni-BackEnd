@@ -9,8 +9,8 @@ import { ApiService } from 'src/common/Api/api.service';
 import { Quarter } from 'src/quarter/quarter.schema';
 import { City } from 'src/city/city.schema';
 import { Country } from 'src/country/country.schema';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/user/user.schema';
+// import { InjectModel } from '@nestjs/mongoose';
+// import { User } from 'src/user/user.schema';
 // import { count } from 'console';
 
 @Injectable({ scope: Scope.TRANSIENT })
@@ -19,7 +19,7 @@ export class ReactionService<T extends IEntityType> {
     private commentService: CommentService,
     private likesService: LikesService,
     private apiService: ApiService<any, any>,
-    @InjectModel(User.name) private userModel: Model<User>,
+    // @InjectModel(User.name) private userModel: Model<User>,
   ) {}
   private PostModel: Model<T>;
   setModel(PostModel: Model<T>) {
